@@ -1,1 +1,77 @@
+{
+  "categories": [
+    "Fruits & Légumes",
+    "Produits laitiers & Œufs",
+    "Fromage & Charcuterie",
+    "Boulangerie & Pâtisserie",
+    "Épicerie salée",
+    "Épicerie sucrée",
+    "Snacks & Chips",
+    "Café, Thé & Infusions",
+    "Boissons",
+    "Eaux",
+    "Surgelés",
+    "Hygiène & Soins",
+    "Hygiène et entretien",
+    "Bébé & Maman",
+    "Animaux",
+    "Cuisine du monde",
+    "Fruits secs & Graines",
+    "Promotions"
+  ],
+  "products": [
+    { "id": 1, "name": "Pomme Golden", "category": "Fruits & Légumes", "price": 3.5, "unit": "kg", "image": "placeholder.jpg" },
+    { "id": 2, "name": "Banane", "category": "Fruits & Légumes", "price": 4.9, "unit": "kg", "image": "placeholder.jpg" },
+    { "id": 3, "name": "Orange", "category": "Fruits & Légumes", "price": 3.2, "unit": "kg", "image": "placeholder.jpg" },
+    { "id": 4, "name": "Tomate", "category": "Fruits & Légumes", "price": 2.9, "unit": "kg", "image": "placeholder.jpg" },
+    { "id": 5, "name": "Pomme de terre", "category": "Fruits & Légumes", "price": 1.9, "unit": "kg", "image": "placeholder.jpg" },
+    { "id": 6, "name": "Oignon", "category": "Fruits & Légumes", "price": 2.3, "unit": "kg", "image": "placeholder.jpg" },
 
+    { "id": 7, "name": "Lait 1L", "category": "Produits laitiers & Œufs", "price": 2.2, "unit": "pièce", "image": "placeholder.jpg" },
+    { "id": 8, "name": "Yaourt nature (pack)", "category": "Produits laitiers & Œufs", "price": 4.5, "unit": "pack", "image": "placeholder.jpg" },
+    { "id": 9, "name": "Œufs fermiers (6)", "category": "Produits laitiers & Œufs", "price": 5.9, "unit": "boîte", "image": "placeholder.jpg" },
+
+    { "id": 10, "name": "Fromage râpé 200g", "category": "Fromage & Charcuterie", "price": 7.5, "unit": "pièce", "image": "placeholder.jpg" },
+    { "id": 11, "name": "Fromage en tranches", "category": "Fromage & Charcuterie", "price": 6.9, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 12, "name": "Pain baguette", "category": "Boulangerie & Pâtisserie", "price": 1.2, "unit": "pièce", "image": "placeholder.jpg" },
+    { "id": 13, "name": "Croissant", "category": "Boulangerie & Pâtisserie", "price": 1.5, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 14, "name": "Pâtes 500g", "category": "Épicerie salée", "price": 2.3, "unit": "pièce", "image": "placeholder.jpg" },
+    { "id": 15, "name": "Riz 1kg", "category": "Épicerie salée", "price": 4.2, "unit": "pièce", "image": "placeholder.jpg" },
+    { "id": 16, "name": "Huile 1L", "category": "Épicerie salée", "price": 12.9, "unit": "pièce", "image": "placeholder.jpg" },
+    { "id": 17, "name": "Harissa", "category": "Épicerie salée", "price": 3.0, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 18, "name": "Chocolat", "category": "Épicerie sucrée", "price": 4.5, "unit": "pièce", "image": "placeholder.jpg" },
+    { "id": 19, "name": "Biscuits", "category": "Épicerie sucrée", "price": 3.8, "unit": "pièce", "image": "placeholder.jpg" },
+    { "id": 20, "name": "Confiture", "category": "Épicerie sucrée", "price": 6.5, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 21, "name": "Chips", "category": "Snacks & Chips", "price": 2.9, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 22, "name": "Café", "category": "Café, Thé & Infusions", "price": 9.9, "unit": "pièce", "image": "placeholder.jpg" },
+    { "id": 23, "name": "Thé", "category": "Café, Thé & Infusions", "price": 6.9, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 24, "name": "Boisson gazeuse", "category": "Boissons", "price": 2.5, "unit": "pièce", "image": "placeholder.jpg" },
+    { "id": 25, "name": "Jus", "category": "Boissons", "price": 3.9, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 26, "name": "Eau 1.5L", "category": "Eaux", "price": 1.2, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 27, "name": "Frites surgelées", "category": "Surgelés", "price": 8.5, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 28, "name": "Shampoing", "category": "Hygiène & Soins", "price": 9.5, "unit": "pièce", "image": "placeholder.jpg" },
+    { "id": 29, "name": "Gel douche", "category": "Hygiène & Soins", "price": 7.5, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 30, "name": "Lessive", "category": "Hygiène et entretien", "price": 18.0, "unit": "pièce", "image": "placeholder.jpg" },
+    { "id": 31, "name": "Liquide vaisselle", "category": "Hygiène et entretien", "price": 6.5, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 32, "name": "Couches", "category": "Bébé & Maman", "price": 26.0, "unit": "pack", "image": "placeholder.jpg" },
+
+    { "id": 33, "name": "Croquettes chat", "category": "Animaux", "price": 14.5, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 34, "name": "Épices (curry)", "category": "Cuisine du monde", "price": 4.0, "unit": "pièce", "image": "placeholder.jpg" },
+
+    { "id": 35, "name": "Amandes", "category": "Fruits secs & Graines", "price": 32.0, "unit": "kg", "image": "placeholder.jpg" },
+
+    { "id": 36, "name": "Miel Thym/Zaatar 250ml", "category": "Promotions", "price": 30.0, "unit": "pièce", "image": "placeholder.jpg" }
+  ]
+}
