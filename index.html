@@ -18,6 +18,7 @@
       --radius:18px;
       --radius-sm:14px;
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -25,13 +26,16 @@
       background: radial-gradient(1200px 800px at 10% -10%, #1a1a1f 0%, var(--bg) 55%);
       color:var(--text);
     }
-    .wrap{max-width:1100px;margin:0 auto;padding:14px 12px 60px}
+
+    .wrap{max-width:1100px;margin:0 auto;padding:14px 12px 48px}
+
     header{
       position:sticky;top:0;z-index:20;
       background:linear-gradient(180deg, rgba(11,11,12,.95) 0%, rgba(11,11,12,.78) 75%, rgba(11,11,12,.0) 100%);
       backdrop-filter: blur(8px);
       padding:10px 0 14px;
     }
+
     .topbar{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       border:1px solid rgba(255,255,255,.06);
@@ -39,11 +43,14 @@
       border-radius:22px;
       padding:10px 12px;
     }
+
     .brand{display:flex;gap:10px;align-items:center}
     .logo{
       width:42px;height:42px;border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
-      background:#111;overflow:hidden;display:grid;place-items:center;
+      background:#111;
+      overflow:hidden;
+      display:grid;place-items:center;
     }
     .logo img{width:100%;height:100%;object-fit:cover}
     .brand h1{margin:0;font-size:15px;letter-spacing:.6px}
@@ -52,6 +59,7 @@
     .header-actions{display:flex;align-items:center;gap:10px}
     .header-info{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted)}
     .header-info strong{color:var(--text)}
+    .header-qr{display:flex;align-items:center;gap:8px}
     .qr-mini{
       width:44px;height:44px;border-radius:12px;
       border:1px solid rgba(255,255,255,.10);
@@ -59,52 +67,113 @@
     }
     .qr-mini img{width:100%;height:100%;object-fit:cover}
 
-    .section-title{margin:18px 0 10px;font-size:16px;color:var(--text)}
+    .cart-button{
+      display:flex;align-items:center;gap:10px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(18,18,20,.85);
+      padding:8px 10px;border-radius:999px;
+      user-select:none;
+      min-width:140px;justify-content:space-between;
+    }
+    .cart-total-mini{font-size:12px;color:var(--muted)}
+    .cart-count-badge{
+      min-width:22px;height:22px;border-radius:999px;
+      background:var(--accent);color:#021a0c;
+      display:grid;place-items:center;
+      font-weight:800;font-size:12px;
+    }
 
-    .categories-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+    .section-title{
+      margin:18px 0 10px;
+      font-size:16px;
+      color:var(--text);
+    }
+
+    .categories-list{
+      display:flex;flex-wrap:wrap;gap:8px;
+      margin-bottom:12px;
+    }
     .category-pill{
-      padding:7px 10px;border-radius:999px;
+      padding:7px 10px;
+      border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background:rgba(16,16,18,.7);
-      color:var(--text);font-size:12px;cursor:pointer;white-space:nowrap;
+      color:var(--text);
+      font-size:12px;
+      cursor:pointer;
+      white-space:nowrap;
     }
     .category-pill.active{
       background:var(--accent-soft);
       border-color:rgba(0,200,83,.45);
-      color:#eafff2;font-weight:800;
+      color:#eafff2;
+      font-weight:700;
     }
 
-    .row-tools{
-      display:flex;flex-wrap:wrap;gap:8px;align-items:center;
-      margin:10px 0 10px;
+    .search-row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin:10px 0 12px;
+      flex-wrap:wrap;
     }
-    .search{
-      flex:1;min-width:220px;
-      padding:10px 12px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(18,18,20,.8);
-      color:var(--text);outline:none;
+    .search-bar{
+      display:flex;gap:8px;align-items:center;
+      flex:1;
+      min-width:260px;
     }
-    .btn{
-      border:none;background:rgba(255,255,255,.10);
-      color:var(--text);padding:10px 12px;border-radius:999px;
-      cursor:pointer;font-weight:700;
-    }
-    .btn-accent{background:var(--accent);color:#021a0c;font-weight:900}
-    .select{
-      padding:10px 12px;border-radius:999px;
+    .search-bar input{
+      flex:1;
+      padding:10px 12px;
+      border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background:rgba(18,18,20,.8);
       color:var(--text);
       outline:none;
     }
-    .info-line{color:var(--muted);font-size:12px;margin:6px 0 0}
+    .icon-btn{
+      border:none;
+      background:rgba(18,18,20,.9);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:800;
+    }
+    .icon-btn.green{
+      background:var(--accent);
+      color:#021a0c;
+      border:none;
+    }
+
+    .pager-tools{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-left:auto;
+    }
+    .pager-tools label{
+      font-size:12px;
+      color:var(--muted);
+    }
+    select{
+      background:rgba(18,18,20,.85);
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:999px;
+      padding:8px 10px;
+      outline:none;
+      cursor:pointer;
+      font-size:12px;
+    }
 
     .products-grid{
       display:grid;
       grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
       gap:10px;
     }
+
     .product-card{
       border-radius:var(--radius-sm);
       border:1px solid rgba(255,255,255,.08);
@@ -113,41 +182,54 @@
       display:flex;
       flex-direction:column;
       gap:8px;
-      min-height:330px;
+      min-height:320px;
     }
 
-    /* ✅ Image: même zone, jamais coupée */
-    .media{
+    /* ✅ IMAGE: même hauteur + centrée + jamais coupée */
+    .product-media{
       width:100%;
-      height:150px;
+      height:140px;
       border-radius:12px;
       border:1px solid rgba(255,255,255,.08);
       background:#0b0b0c;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:8px;
       overflow:hidden;
+      padding:8px;
     }
-    .media img{
+    .product-media img{
       width:100%;
       height:100%;
       object-fit:contain;
       object-position:center;
       display:block;
+      filter: none;
     }
 
-    .product-header{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
-    .product-name{font-weight:900;font-size:13px;line-height:1.15}
+    .product-header{
+      display:flex;justify-content:space-between;gap:8px;align-items:flex-start;
+    }
+    .product-name{font-weight:800;font-size:13px;line-height:1.15}
     .product-meta{font-size:12px;color:var(--muted);margin-top:2px}
-    .product-price{font-weight:900;font-size:14px;text-align:right;white-space:nowrap}
-    .small-text{font-size:12px;color:var(--muted)}
+    .product-price{
+      font-weight:900;
+      font-size:14px;
+      text-align:right;
+      white-space:nowrap;
+    }
 
-    .product-actions{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .product-actions{
+      margin-top:auto;
+      display:flex;justify-content:space-between;align-items:center;gap:8px;
+    }
+
     .qty-control{
       display:inline-flex;align-items:center;
-      border-radius:999px;border:1px solid rgba(255,255,255,.10);
-      overflow:hidden;background:rgba(16,16,18,.75);
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+      background:rgba(16,16,18,.75);
     }
     .qty-control button{
       border:none;background:transparent;color:var(--text);
@@ -156,23 +238,39 @@
     .qty-control span{padding:0 10px;color:var(--text);min-width:22px;text-align:center}
 
     .btn-add{
-      flex:1;border:none;background:var(--accent);color:#021a0c;
-      font-weight:900;padding:10px 10px;border-radius:999px;cursor:pointer;line-height:1.1;
+      flex:1;
+      border:none;
+      background:var(--accent);
+      color:#021a0c;
+      font-weight:900;
+      padding:10px 10px;
+      border-radius:999px;
+      cursor:pointer;
+      line-height:1.1;
     }
 
-    /* ✅ Pagination */
-    .pager{
-      display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;
-      margin:16px 0 0;
+    .small-text{font-size:12px;color:var(--muted)}
+    #loading{padding:12px;color:var(--muted)}
+    #empty{padding:12px;color:var(--muted);display:none}
+
+    /* Pagination bar */
+    .pagination{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      margin:14px 0 0;
+      flex-wrap:wrap;
     }
     .page-btn{
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(18,18,20,.8);
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(18,18,20,.85);
       color:var(--text);
       padding:8px 12px;
       border-radius:999px;
       cursor:pointer;
       font-weight:800;
+      font-size:12px;
       min-width:44px;
       text-align:center;
     }
@@ -182,10 +280,20 @@
       color:#eafff2;
     }
     .page-btn:disabled{
-      opacity:.45;cursor:not-allowed;
+      opacity:.45;
+      cursor:not-allowed;
+    }
+    .page-info{
+      font-size:12px;
+      color:var(--muted);
+      padding:0 6px;
     }
 
-    #loading{padding:12px;color:var(--muted)}
+    @media (max-width:540px){
+      .header-info{display:none}
+      .product-card{min-height:310px}
+      .product-media{height:130px}
+    }
   </style>
 </head>
 
@@ -194,7 +302,9 @@
     <div class="wrap">
       <div class="topbar">
         <div class="brand">
-          <div class="logo"><img src="logo-maxi-jdc-market.jpg" alt="MAXI JDC MARKET"></div>
+          <div class="logo">
+            <img src="logo-maxi-jdc-market.jpg" alt="MAXI JDC MARKET">
+          </div>
           <div>
             <h1>MAXI JDC MARKET</h1>
             <div class="slogan">Des prix mini – Un MAXI choix</div>
@@ -208,8 +318,18 @@
             <div>📱 WhatsApp : <strong>00216 25 600 978</strong></div>
           </div>
 
-          <div class="qr-mini" title="QR site">
-            <img src="qr-maxi-jdc-site.jpg" alt="QR MAXI JDC MARKET">
+          <div class="header-qr">
+            <div class="qr-mini" title="QR site">
+              <img src="qr-maxi-jdc-site.jpg" alt="QR MAXI JDC MARKET">
+            </div>
+          </div>
+
+          <div class="cart-button">
+            <div>
+              <div style="font-weight:800">🧺 Panier</div>
+              <div class="cart-total-mini"><span id="mini-cart-total">0,000</span> dt</div>
+            </div>
+            <div class="cart-count-badge" id="mini-cart-count">0</div>
           </div>
         </div>
       </div>
@@ -217,54 +337,134 @@
       <h3 class="section-title">Catégories</h3>
       <div class="categories-list" id="categories-container"></div>
 
-      <div class="row-tools">
-        <input id="search" class="search" placeholder="Rechercher un produit…" />
-        <button id="clear-search" class="btn" type="button">Effacer</button>
+      <div class="search-row">
+        <div class="search-bar">
+          <input id="search" placeholder="Rechercher un produit…" />
+          <button id="clear-search" class="icon-btn" type="button">X</button>
+        </div>
 
-        <select id="per-page" class="select" title="Articles par page">
-          <option value="24">24 / page</option>
-          <option value="48">48 / page</option>
-          <option value="72" selected>72 / page</option>
-          <option value="120">120 / page</option>
-        </select>
+        <div class="pager-tools">
+          <label for="pageSize">Par page</label>
+          <select id="pageSize">
+            <option value="16">16</option>
+            <option value="24" selected>24</option>
+            <option value="36">36</option>
+            <option value="60">60</option>
+          </select>
+        </div>
       </div>
-
-      <div class="info-line" id="info-line"></div>
 
       <h3 class="section-title">Produits</h3>
       <div id="loading">Chargement des produits…</div>
+      <div id="empty">Aucun produit trouvé.</div>
       <div class="products-grid" id="products-container"></div>
 
-      <div class="pager" id="pager"></div>
+      <div class="pagination" id="pagination"></div>
     </div>
   </header>
 
   <script>
+    // =========================
+    // CONFIG
+    // =========================
     const PRODUCTS_JSON_URL = "products.json";
-    const PLACEHOLDER_FILE = "placeholder.jpg"; // mets bien ce fichier dans images/products/
+    const PLACEHOLDER = "placeholder.jpg";
 
-    // ✅ Corrections par code (tes exemples)
+    // ✅ Tes corrections (codes → catégorie)
     const CATEGORY_OVERRIDES_BY_CODE = {
       "2481": "Hygiène et entretien",
       "3143": "Hygiène et entretien",
       "2482": "Hygiène et entretien",
       "4497": "Hygiène et entretien",
+
       "4484": "Épicerie salée",
       "4485": "Épicerie salée",
+
       "2999": "Surgelés",
       "2639": "Surgelés",
+
       "1335": "Fruits secs & Graines",
       "4322": "Boissons"
     };
 
+    // ✅ Règles “smart” si d’autres erreurs arrivent
     function smartCategoryFix(name, currentCat){
       const n = (name || "").toUpperCase();
 
-      if (/(JUDY|LILAS|LESSIVE|LAVANT|SOL|SURFACES|JEL LAVANT|LIQUIDE VAISSELLE)/.test(n)) return "Hygiène et entretien";
-      if (/(SALADE|MECHWIA|HARISSA|THONA|MAKROUNA|CONSERVE|SAUCE|TOMATE)/.test(n)) return "Épicerie salée";
-      if (/(GLACE|BOUZA|LONDON DAIRY|ICE|CORNET)/.test(n)) return "Surgelés";
+      // Nettoyage / entretien
+      if (/(JUDY|LILAS|LESSIVE|LAVANT|SOL|SURFACES|JEL LAVANT|LIQUIDE VAISSELLE|NETTOYANT)/.test(n))
+        return "Hygiène et entretien";
+
+      // Salades / conserves salées
+      if (/(SALADE|MECHWIA|HARISSA|THONA|MAKROUNA|CONSERVE|SAUCE|TOMATE|SANNEFA)/.test(n))
+        return "Épicerie salée";
+
+      // Glaces / bouza / surgelés
+      if (/(GLACE|BOUZA|LONDON DAIRY|ICE|CORNET|FROZEN)/.test(n))
+        return "Surgelés";
+
+      // Boissons (ex: “à boire”, “jus”, etc.)
+      if (/(A BOIRE|JUS|BOISSON|SODA|NECTAR)/.test(n))
+        return "Boissons";
 
       return currentCat;
+    }
+
+    // =========================
+    // IMAGE PATH
+    // =========================
+    // RÈGLE SIMPLE POUR TOI :
+    // - Tu upload une photo nommée 4731.jpg dans /images/products/
+    // - Tu peux laisser "image":"placeholder.jpg" dans products.json
+    // => le site met automatiquement images/products/4731.jpg
+    function resolveImagePath(product){
+      const code = String(product.code || product.CODE_ARTICLE || product.id || "").trim();
+      const raw = String(product.image || product.imageUrl || product.IMAGE_URL || "").trim();
+
+      // Si un chemin complet est fourni, on le garde
+      if (raw && raw !== PLACEHOLDER && raw !== ("images/products/" + PLACEHOLDER) && raw !== ("images/" + PLACEHOLDER)){
+        if (!raw.includes("/")) return "images/products/" + raw; // ex: "4731.jpg"
+        return raw; // ex: "images/products/4731.jpg"
+      }
+
+      // Sinon: automatique via code
+      if (code) return "images/products/" + code + ".jpg";
+
+      return "images/products/" + PLACEHOLDER;
+    }
+
+    // Si l'image n'existe pas: fallback vers /images/<code>.jpg puis placeholder
+    function attachImageFallback(imgEl, product){
+      const code = String(product.code || product.CODE_ARTICLE || product.id || "").trim();
+      let tried = 0;
+
+      imgEl.addEventListener("error", () => {
+        tried++;
+        if (tried === 1 && code) {
+          imgEl.src = "images/" + code + ".jpg";
+          return;
+        }
+        imgEl.src = "images/products/" + PLACEHOLDER;
+      });
+    }
+
+    // =========================
+    // STATE
+    // =========================
+    let ALL = [];
+    let activeCategory = "Tout";
+    let searchTerm = "";
+
+    // Pagination
+    let pageSize = 24;
+    let currentPage = 1;
+
+    // =========================
+    // HELPERS
+    // =========================
+    function fmtDt(n){
+      const x = Number(n || 0);
+      return x.toFixed(3).replace(".", ",");
     }
 
     function normalizeCategory(c){
@@ -272,51 +472,19 @@
       return s ? s : "Divers";
     }
 
-    // ✅ Image auto: si "image" est vide/placeholder => images/products/<CODE>.jpg
-    function resolveImagePath(product){
-      const code = String(product.code || product.CODE_ARTICLE || product.id || "").trim();
-      const raw = String(product.image || product.imageUrl || product.IMAGE_URL || "").trim();
-
-      if (raw && raw !== PLACEHOLDER_FILE && raw !== ("images/products/" + PLACEHOLDER_FILE)){
-        if (!raw.includes("/")) return "images/products/" + raw; // ex: "4731.jpg"
-        return raw;
-      }
-      if (code) return "images/products/" + code + ".jpg";
-      return "images/products/" + PLACEHOLDER_FILE;
+    function safeNum(v){
+      const n = Number(String(v ?? "").replace(",", ".").trim());
+      return Number.isFinite(n) ? n : 0;
     }
 
-    // ✅ fallback: .jpg -> .jpeg -> .png -> placeholder
-    function attachImageFallback(imgEl, product){
-      const code = String(product.code || product.CODE_ARTICLE || product.id || "").trim();
-      const tries = [];
-      if (code){
-        tries.push("images/products/" + code + ".jpg");
-        tries.push("images/products/" + code + ".jpeg");
-        tries.push("images/products/" + code + ".png");
-        tries.push("images/" + code + ".jpg");
-        tries.push("images/" + code + ".jpeg");
-        tries.push("images/" + code + ".png");
-      }
-      tries.push("images/products/" + PLACEHOLDER_FILE);
-
-      let i = 0;
-      imgEl.addEventListener("error", () => {
-        i++;
-        imgEl.src = tries[Math.min(i, tries.length - 1)];
-      }, { once:false });
+    function getProductsArray(data){
+      // support: [..]  OR  {products:[..]} OR {items:[..]} OR {data:[..]}
+      if (Array.isArray(data)) return data;
+      if (data && Array.isArray(data.products)) return data.products;
+      if (data && Array.isArray(data.items)) return data.items;
+      if (data && Array.isArray(data.data)) return data.data;
+      return [];
     }
-
-    function fmtDt(n){
-      const x = Number(n || 0);
-      return x.toFixed(3).replace(".", ",");
-    }
-
-    // ===== STATE =====
-    let ALL = [];
-    let activeCategory = "Tout";
-    let searchTerm = "";
-    let page = 1;
-    let perPage = 72;
 
     function buildCategories(products){
       const set = new Set(["Tout"]);
@@ -333,7 +501,7 @@
         b.textContent = cat;
         b.onclick = () => {
           activeCategory = cat;
-          page = 1;
+          currentPage = 1; // reset page
           render();
         };
         wrap.appendChild(b);
@@ -350,207 +518,255 @@
       return hay.includes(q);
     }
 
-    function renderPager(totalItems){
-      const pager = document.getElementById("pager");
-      pager.innerHTML = "";
+    function paginate(list){
+      const total = list.length;
+      const totalPages = Math.max(1, Math.ceil(total / pageSize));
+      currentPage = Math.min(currentPage, totalPages);
 
-      const totalPages = Math.max(1, Math.ceil(totalItems / perPage));
-      if (page > totalPages) page = totalPages;
+      const start = (currentPage - 1) * pageSize;
+      const end = start + pageSize;
+      return {
+        total,
+        totalPages,
+        slice: list.slice(start, end)
+      };
+    }
+
+    function renderPagination(total, totalPages){
+      const el = document.getElementById("pagination");
+      el.innerHTML = "";
+
+      if (total === 0) return;
+      if (totalPages <= 1) {
+        const info = document.createElement("div");
+        info.className = "page-info";
+        info.textContent = `${total} article(s)`;
+        el.appendChild(info);
+        return;
+      }
 
       const prev = document.createElement("button");
       prev.className = "page-btn";
       prev.textContent = "◀";
-      prev.disabled = (page === 1);
-      prev.onclick = () => { page--; render(); };
-      pager.appendChild(prev);
+      prev.disabled = (currentPage <= 1);
+      prev.onclick = () => { currentPage--; render(); };
+      el.appendChild(prev);
 
-      // afficher pages autour de la page courante (max 7 boutons)
-      const windowSize = 7;
-      let start = Math.max(1, page - Math.floor(windowSize/2));
-      let end = Math.min(totalPages, start + windowSize - 1);
-      start = Math.max(1, end - windowSize + 1);
+      // pages affichées (max 7 boutons)
+      const maxBtns = 7;
+      let start = Math.max(1, currentPage - 3);
+      let end = Math.min(totalPages, start + maxBtns - 1);
+      start = Math.max(1, end - maxBtns + 1);
 
-      if (start > 1){
+      if (start > 1) {
         const b1 = document.createElement("button");
         b1.className = "page-btn";
         b1.textContent = "1";
-        b1.onclick = () => { page = 1; render(); };
-        pager.appendChild(b1);
+        b1.onclick = () => { currentPage = 1; render(); };
+        el.appendChild(b1);
 
-        const dots = document.createElement("span");
-        dots.style.color = "var(--muted)";
-        dots.style.padding = "0 6px";
-        dots.textContent = "…";
-        pager.appendChild(dots);
+        if (start > 2){
+          const dots = document.createElement("div");
+          dots.className = "page-info";
+          dots.textContent = "…";
+          el.appendChild(dots);
+        }
       }
 
       for (let p = start; p <= end; p++){
         const b = document.createElement("button");
-        b.className = "page-btn" + (p === page ? " active" : "");
+        b.className = "page-btn" + (p === currentPage ? " active" : "");
         b.textContent = String(p);
-        b.onclick = () => { page = p; render(); };
-        pager.appendChild(b);
+        b.onclick = () => { currentPage = p; render(); };
+        el.appendChild(b);
       }
 
-      if (end < totalPages){
-        const dots = document.createElement("span");
-        dots.style.color = "var(--muted)";
-        dots.style.padding = "0 6px";
-        dots.textContent = "…";
-        pager.appendChild(dots);
+      if (end < totalPages) {
+        if (end < totalPages - 1){
+          const dots = document.createElement("div");
+          dots.className = "page-info";
+          dots.textContent = "…";
+          el.appendChild(dots);
+        }
 
-        const blast = document.createElement("button");
-        blast.className = "page-btn";
-        blast.textContent = String(totalPages);
-        blast.onclick = () => { page = totalPages; render(); };
-        pager.appendChild(blast);
+        const bl = document.createElement("button");
+        bl.className = "page-btn";
+        bl.textContent = String(totalPages);
+        bl.onclick = () => { currentPage = totalPages; render(); };
+        el.appendChild(bl);
       }
 
       const next = document.createElement("button");
       next.className = "page-btn";
       next.textContent = "▶";
-      next.disabled = (page === totalPages);
-      next.onclick = () => { page++; render(); };
-      pager.appendChild(next);
+      next.disabled = (currentPage >= totalPages);
+      next.onclick = () => { currentPage++; render(); };
+      el.appendChild(next);
+
+      const info = document.createElement("div");
+      info.className = "page-info";
+      info.textContent = `Page ${currentPage}/${totalPages} • ${total} article(s)`;
+      el.appendChild(info);
+    }
+
+    function makeCard(p){
+      const card = document.createElement("div");
+      card.className = "product-card";
+
+      const media = document.createElement("div");
+      media.className = "product-media";
+
+      const img = document.createElement("img");
+      img.alt = p.name || "Produit";
+      img.src = resolveImagePath(p);
+      attachImageFallback(img, p);
+
+      media.appendChild(img);
+
+      const header = document.createElement("div");
+      header.className = "product-header";
+
+      const left = document.createElement("div");
+
+      const name = document.createElement("div");
+      name.className = "product-name";
+      name.textContent = p.name;
+
+      const meta = document.createElement("div");
+      meta.className = "product-meta";
+      meta.textContent = `${p.category} • ${p.code || ""}`.trim();
+
+      left.appendChild(name);
+      left.appendChild(meta);
+
+      const price = document.createElement("div");
+      price.className = "product-price";
+      price.innerHTML = `${fmtDt(p.price)} dt<br/><span class="small-text">/ ${p.unit || "pièce"}</span>`;
+
+      header.appendChild(left);
+      header.appendChild(price);
+
+      const actions = document.createElement("div");
+      actions.className = "product-actions";
+
+      const qty = document.createElement("div");
+      qty.className = "qty-control";
+      const minus = document.createElement("button");
+      minus.textContent = "−";
+      const qspan = document.createElement("span");
+      qspan.textContent = "1";
+      const plus = document.createElement("button");
+      plus.textContent = "+";
+
+      minus.onclick = () => qspan.textContent = String(Math.max(1, Number(qspan.textContent)-1));
+      plus.onclick  = () => qspan.textContent = String(Number(qspan.textContent)+1);
+
+      qty.appendChild(minus);
+      qty.appendChild(qspan);
+      qty.appendChild(plus);
+
+      const add = document.createElement("button");
+      add.className = "btn-add";
+      add.textContent = "Ajouter au panier";
+      add.onclick = () => {
+        // mini panier simple (compteur + total) – sans popup
+        const countEl = document.getElementById("mini-cart-count");
+        const totalEl = document.getElementById("mini-cart-total");
+        const c = Number(countEl.textContent || 0) + Number(qspan.textContent || 1);
+        const t = safeNum(totalEl.textContent.replace(",", ".")) + (safeNum(p.price) * Number(qspan.textContent || 1));
+        countEl.textContent = String(c);
+        totalEl.textContent = fmtDt(t);
+      };
+
+      actions.appendChild(qty);
+      actions.appendChild(add);
+
+      card.appendChild(media);
+      card.appendChild(header);
+      card.appendChild(actions);
+
+      return card;
     }
 
     function render(){
-      // categories
-      renderCategories(buildCategories(ALL));
+      const cats = buildCategories(ALL);
+      renderCategories(cats);
 
       const filtered = ALL.filter(productMatches);
-      const total = filtered.length;
-
-      const totalPages = Math.max(1, Math.ceil(total / perPage));
-      const start = (page - 1) * perPage;
-      const end = start + perPage;
-      const slice = filtered.slice(start, end);
-
-      document.getElementById("info-line").textContent =
-        `Affichage ${Math.min(start+1,total)}–${Math.min(end,total)} sur ${total} produit(s) • Page ${page}/${totalPages}`;
+      const { total, totalPages, slice } = paginate(filtered);
 
       const grid = document.getElementById("products-container");
       grid.innerHTML = "";
 
-      slice.forEach(p => {
-        const card = document.createElement("div");
-        card.className = "product-card";
-
-        const media = document.createElement("div");
-        media.className = "media";
-        const img = document.createElement("img");
-        img.alt = p.name || "Produit";
-        img.src = resolveImagePath(p);
-        attachImageFallback(img, p);
-        media.appendChild(img);
-
-        const header = document.createElement("div");
-        header.className = "product-header";
-
-        const left = document.createElement("div");
-        const name = document.createElement("div");
-        name.className = "product-name";
-        name.textContent = p.name;
-
-        const meta = document.createElement("div");
-        meta.className = "product-meta";
-        meta.textContent = `${p.category} • ${p.code || ""}`.trim();
-
-        left.appendChild(name);
-        left.appendChild(meta);
-
-        const price = document.createElement("div");
-        price.className = "product-price";
-        price.innerHTML = `${fmtDt(p.price)} dt<br/><span class="small-text">/ ${p.unit || "pièce"}</span>`;
-
-        header.appendChild(left);
-        header.appendChild(price);
-
-        const actions = document.createElement("div");
-        actions.className = "product-actions";
-
-        const qty = document.createElement("div");
-        qty.className = "qty-control";
-        const minus = document.createElement("button");
-        minus.textContent = "−";
-        const qspan = document.createElement("span");
-        qspan.textContent = "1";
-        const plus = document.createElement("button");
-        plus.textContent = "+";
-        minus.onclick = () => qspan.textContent = String(Math.max(1, Number(qspan.textContent)-1));
-        plus.onclick  = () => qspan.textContent = String(Number(qspan.textContent)+1);
-        qty.appendChild(minus); qty.appendChild(qspan); qty.appendChild(plus);
-
-        const add = document.createElement("button");
-        add.className = "btn-add";
-        add.textContent = "Ajouter au panier";
-        add.onclick = () => alert(`✅ Ajouté : ${p.name} (x${qspan.textContent})`);
-
-        actions.appendChild(qty);
-        actions.appendChild(add);
-
-        card.appendChild(media);
-        card.appendChild(header);
-        card.appendChild(actions);
-
-        grid.appendChild(card);
-      });
-
-      renderPager(total);
       document.getElementById("loading").style.display = "none";
+      document.getElementById("empty").style.display = (total === 0) ? "block" : "none";
+
+      slice.forEach(p => grid.appendChild(makeCard(p)));
+      renderPagination(total, totalPages);
     }
 
+    // =========================
+    // LOAD
+    // =========================
     async function init(){
       const res = await fetch(PRODUCTS_JSON_URL, { cache:"no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
       const data = await res.json();
 
-      const items = Array.isArray(data) ? data : (data.products || []);
+      const items = getProductsArray(data);
 
       ALL = items.map((r) => {
-        const code = String(r.code || r.CODE_ARTICLE || r.id || r.ID || "").trim();
-        const name = String(r.name || r.DESIGNATION || r.designation || "").trim();
-        let category = normalizeCategory(r.category || r.CATEGORIE || "Divers");
+        const code = String(r.code || r.CODE_ARTICLE || r.id || r.Code || "").trim();
+        const name = String(r.name || r.DESIGNATION || r.designation || r.NOM || "").trim();
+        let category = normalizeCategory(r.category || r.CATEGORIE || r.categorie || "Divers");
 
+        // override code
         if (CATEGORY_OVERRIDES_BY_CODE[code]) category = CATEGORY_OVERRIDES_BY_CODE[code];
+
+        // smart fix
         category = smartCategoryFix(name, category);
 
-        const price = Number(
-          r.price ?? r.PRIX ?? r.PRX ?? r.prix ?? 0
-        );
-
-        const unit = String(
-          r.unit ?? r.UNITE ?? r.unite ?? "pièce"
-        ).trim() || "pièce";
-
-        const image = String(r.image ?? r.IMAGE ?? r.imageUrl ?? PLACEHOLDER_FILE).trim() || PLACEHOLDER_FILE;
-
-        return { code, name, category, price, unit, image };
+        return {
+          code,
+          name: name || ("Article " + code),
+          category,
+          price: safeNum(r.price ?? r.PRX ?? r.PRIX ?? r.prix),
+          unit: String(r.unit || r.UNITE || r.unite || "pièce"),
+          image: String(r.image || r.imageUrl || r.IMAGE_URL || PLACEHOLDER)
+        };
       });
 
+      // tri (optionnel): par catégorie puis nom
+      ALL.sort((a,b) => (a.category.localeCompare(b.category) || a.name.localeCompare(b.name)));
+
+      renderCategories(buildCategories(ALL));
       render();
     }
 
-    // UI events
+    // events
     document.getElementById("search").addEventListener("input", (e)=>{
       searchTerm = e.target.value || "";
-      page = 1;
+      currentPage = 1;
       render();
     });
+
     document.getElementById("clear-search").onclick = ()=>{
       document.getElementById("search").value = "";
       searchTerm = "";
-      page = 1;
+      currentPage = 1;
       render();
     };
-    document.getElementById("per-page").addEventListener("change", (e)=>{
-      perPage = Number(e.target.value || 72);
-      page = 1;
+
+    document.getElementById("pageSize").addEventListener("change", (e)=>{
+      pageSize = Number(e.target.value || 24);
+      currentPage = 1;
       render();
     });
 
     init().catch(err=>{
       console.error(err);
-      document.getElementById("loading").textContent = "Erreur de chargement (products.json).";
+      document.getElementById("loading").textContent =
+        "Erreur de chargement (products.json). Vérifie que products.json est à la racine du dépôt.";
     });
   </script>
 </body>
