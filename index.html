@@ -25,15 +25,13 @@
       background: radial-gradient(1200px 800px at 10% -10%, #1a1a1f 0%, var(--bg) 55%);
       color:var(--text);
     }
-    .wrap{max-width:1100px;margin:0 auto;padding:14px 12px 48px}
-
+    .wrap{max-width:1100px;margin:0 auto;padding:14px 12px 60px}
     header{
       position:sticky;top:0;z-index:20;
       background:linear-gradient(180deg, rgba(11,11,12,.95) 0%, rgba(11,11,12,.78) 75%, rgba(11,11,12,.0) 100%);
       backdrop-filter: blur(8px);
       padding:10px 0 14px;
     }
-
     .topbar{
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       border:1px solid rgba(255,255,255,.06);
@@ -61,25 +59,9 @@
     }
     .qr-mini img{width:100%;height:100%;object-fit:cover}
 
-    .cart-button{
-      display:flex;align-items:center;gap:10px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(18,18,20,.85);
-      padding:8px 10px;border-radius:999px;
-      cursor:pointer;user-select:none;
-      min-width:140px;justify-content:space-between;
-    }
-    .cart-total-mini{font-size:12px;color:var(--muted)}
-    .cart-count-badge{
-      min-width:22px;height:22px;border-radius:999px;
-      background:var(--accent);color:#021a0c;
-      display:grid;place-items:center;
-      font-weight:800;font-size:12px;
-    }
-
     .section-title{margin:18px 0 10px;font-size:16px;color:var(--text)}
 
-    .categories-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+    .categories-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
     .category-pill{
       padding:7px 10px;border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
@@ -89,59 +71,79 @@
     .category-pill.active{
       background:var(--accent-soft);
       border-color:rgba(0,200,83,.45);
-      color:#eafff2;font-weight:700;
+      color:#eafff2;font-weight:800;
     }
 
-    .search-bar{display:flex;gap:8px;align-items:center;margin:10px 0 12px}
-    .search-bar input{
-      flex:1;padding:10px 12px;border-radius:999px;
+    .row-tools{
+      display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+      margin:10px 0 10px;
+    }
+    .search{
+      flex:1;min-width:220px;
+      padding:10px 12px;border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background:rgba(18,18,20,.8);
       color:var(--text);outline:none;
     }
-    .search-bar button{
-      border:none;background:var(--accent);color:#021a0c;
-      padding:10px 14px;border-radius:999px;font-weight:800;cursor:pointer;
+    .btn{
+      border:none;background:rgba(255,255,255,.10);
+      color:var(--text);padding:10px 12px;border-radius:999px;
+      cursor:pointer;font-weight:700;
     }
+    .btn-accent{background:var(--accent);color:#021a0c;font-weight:900}
+    .select{
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(18,18,20,.8);
+      color:var(--text);
+      outline:none;
+    }
+    .info-line{color:var(--muted);font-size:12px;margin:6px 0 0}
 
     .products-grid{
       display:grid;
       grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
       gap:10px;
     }
-
     .product-card{
       border-radius:var(--radius-sm);
       border:1px solid rgba(255,255,255,.08);
       background:rgba(18,18,20,.92);
       padding:10px;
-      display:flex;flex-direction:column;gap:8px;
-      min-height:320px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      min-height:330px;
     }
 
-    /* ✅ IMAGES : toujours propres, pas coupées */
-    .product-img{
+    /* ✅ Image: même zone, jamais coupée */
+    .media{
       width:100%;
-      height:140px;
+      height:150px;
       border-radius:12px;
       border:1px solid rgba(255,255,255,.08);
-      background:#ffffff;
+      background:#0b0b0c;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px;
+      overflow:hidden;
+    }
+    .media img{
+      width:100%;
+      height:100%;
       object-fit:contain;
       object-position:center;
       display:block;
-      padding:6px;
     }
 
     .product-header{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
-    .product-name{font-weight:800;font-size:13px;line-height:1.15}
+    .product-name{font-weight:900;font-size:13px;line-height:1.15}
     .product-meta{font-size:12px;color:var(--muted);margin-top:2px}
     .product-price{font-weight:900;font-size:14px;text-align:right;white-space:nowrap}
     .small-text{font-size:12px;color:var(--muted)}
 
-    .product-actions{
-      margin-top:auto;
-      display:flex;justify-content:space-between;align-items:center;gap:8px;
-    }
+    .product-actions{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px}
     .qty-control{
       display:inline-flex;align-items:center;
       border-radius:999px;border:1px solid rgba(255,255,255,.10);
@@ -158,38 +160,32 @@
       font-weight:900;padding:10px 10px;border-radius:999px;cursor:pointer;line-height:1.1;
     }
 
-    #loading{padding:12px;color:var(--muted)}
-
     /* ✅ Pagination */
     .pager{
-      display:flex;flex-wrap:wrap;gap:8px;
-      align-items:center;justify-content:center;
-      margin:14px 0 4px;
+      display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;
+      margin:16px 0 0;
     }
     .page-btn{
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(18,18,20,.85);
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(18,18,20,.8);
       color:var(--text);
       padding:8px 12px;
       border-radius:999px;
       cursor:pointer;
-      font-size:12px;
-      user-select:none;
+      font-weight:800;
+      min-width:44px;
+      text-align:center;
     }
     .page-btn.active{
       background:var(--accent-soft);
       border-color:rgba(0,200,83,.45);
-      font-weight:800;
+      color:#eafff2;
     }
     .page-btn:disabled{
       opacity:.45;cursor:not-allowed;
     }
-    .pager-info{
-      text-align:center;
-      color:var(--muted);
-      font-size:12px;
-      margin-bottom:10px;
-    }
+
+    #loading{padding:12px;color:var(--muted)}
   </style>
 </head>
 
@@ -198,9 +194,7 @@
     <div class="wrap">
       <div class="topbar">
         <div class="brand">
-          <div class="logo">
-            <img src="logo-maxi-jdc-market.jpg" alt="MAXI JDC MARKET">
-          </div>
+          <div class="logo"><img src="logo-maxi-jdc-market.jpg" alt="MAXI JDC MARKET"></div>
           <div>
             <h1>MAXI JDC MARKET</h1>
             <div class="slogan">Des prix mini – Un MAXI choix</div>
@@ -217,165 +211,112 @@
           <div class="qr-mini" title="QR site">
             <img src="qr-maxi-jdc-site.jpg" alt="QR MAXI JDC MARKET">
           </div>
-
-          <div class="cart-button" id="open-cart">
-            <div>
-              <div style="font-weight:800">🧺 Panier</div>
-              <div class="cart-total-mini"><span id="mini-cart-total">0,000</span> dt</div>
-            </div>
-            <div class="cart-count-badge" id="mini-cart-count">0</div>
-          </div>
         </div>
       </div>
 
       <h3 class="section-title">Catégories</h3>
       <div class="categories-list" id="categories-container"></div>
 
-      <div class="search-bar">
-        <input id="search" placeholder="Rechercher un produit…" />
-        <button id="clear-search" type="button">X</button>
+      <div class="row-tools">
+        <input id="search" class="search" placeholder="Rechercher un produit…" />
+        <button id="clear-search" class="btn" type="button">Effacer</button>
+
+        <select id="per-page" class="select" title="Articles par page">
+          <option value="24">24 / page</option>
+          <option value="48">48 / page</option>
+          <option value="72" selected>72 / page</option>
+          <option value="120">120 / page</option>
+        </select>
       </div>
+
+      <div class="info-line" id="info-line"></div>
 
       <h3 class="section-title">Produits</h3>
       <div id="loading">Chargement des produits…</div>
       <div class="products-grid" id="products-container"></div>
 
-      <!-- Pagination -->
       <div class="pager" id="pager"></div>
-      <div class="pager-info" id="pager-info"></div>
     </div>
   </header>
 
   <script>
-    // =========================
-    // CONFIG
-    // =========================
     const PRODUCTS_JSON_URL = "products.json";
+    const PLACEHOLDER_FILE = "placeholder.jpg"; // mets bien ce fichier dans images/products/
 
-    // ✅ Mets ici le nom de ton placeholder (le fichier doit être dans /images/products/)
-    const PLACEHOLDER = "placeholder.jpg";
-
-    // ✅ Nombre d'articles par page (tu peux changer)
-    const PAGE_SIZE = 24;
-
-    // ✅ Corrections exactes par code (tes exemples)
+    // ✅ Corrections par code (tes exemples)
     const CATEGORY_OVERRIDES_BY_CODE = {
       "2481": "Hygiène et entretien",
       "3143": "Hygiène et entretien",
       "2482": "Hygiène et entretien",
       "4497": "Hygiène et entretien",
-
       "4484": "Épicerie salée",
       "4485": "Épicerie salée",
-
       "2999": "Surgelés",
       "2639": "Surgelés",
-
       "1335": "Fruits secs & Graines",
-      "4322": "Boissons",
-
-      // Exemple “pomme” dans produit ménage
-      "4202": "Hygiène et entretien"
+      "4322": "Boissons"
     };
 
-    // ✅ Règles intelligentes (corrige les erreurs de classement)
     function smartCategoryFix(name, currentCat){
       const n = (name || "").toUpperCase();
 
-      // Nettoyage / entretien
-      if (/(JUDY|LILAS|LESSIVE|LAVANT|SOL|SURFACES|JEL LAVANT|LIQUIDE VAISSELLE|ASSOUPLISSANT|DETERGENT|NETTOYANT)/.test(n))
-        return "Hygiène et entretien";
-
-      // Salé / conserves / sauces
-      if (/(SALADE|MECHWIA|HARISSA|THONA|MAKROUNA|CONSERVE|SAUCE|TOMATE|OLIVE|CORNICHON)/.test(n))
-        return "Épicerie salée";
-
-      // Glaces / bouza / frozen
-      if (/(GLACE|BOUZA|LONDON DAIRY|ICE|CORNET|SORBET)/.test(n))
-        return "Surgelés";
-
-      // Lait à boire / boissons lactées
-      if (/(A BOIRE|NATILAIT|LAIT|MILK)/.test(n))
-        return "Boissons";
+      if (/(JUDY|LILAS|LESSIVE|LAVANT|SOL|SURFACES|JEL LAVANT|LIQUIDE VAISSELLE)/.test(n)) return "Hygiène et entretien";
+      if (/(SALADE|MECHWIA|HARISSA|THONA|MAKROUNA|CONSERVE|SAUCE|TOMATE)/.test(n)) return "Épicerie salée";
+      if (/(GLACE|BOUZA|LONDON DAIRY|ICE|CORNET)/.test(n)) return "Surgelés";
 
       return currentCat;
     }
 
-    // ✅ Chemin image automatique : images/products/<CODE>.jpg
+    function normalizeCategory(c){
+      const s = String(c || "Divers").trim();
+      return s ? s : "Divers";
+    }
+
+    // ✅ Image auto: si "image" est vide/placeholder => images/products/<CODE>.jpg
     function resolveImagePath(product){
       const code = String(product.code || product.CODE_ARTICLE || product.id || "").trim();
-      const raw  = String(product.image || product.imageUrl || product.IMAGE_URL || "").trim();
+      const raw = String(product.image || product.imageUrl || product.IMAGE_URL || "").trim();
 
-      // si raw est un chemin complet -> on le garde
-      if (raw && raw !== PLACEHOLDER && !raw.endsWith("/"+PLACEHOLDER)){
-        if (!raw.includes("/")) return "images/products/" + raw; // raw = "4731.jpg"
+      if (raw && raw !== PLACEHOLDER_FILE && raw !== ("images/products/" + PLACEHOLDER_FILE)){
+        if (!raw.includes("/")) return "images/products/" + raw; // ex: "4731.jpg"
         return raw;
       }
-
-      // sinon on force images/products/<code>.jpg
       if (code) return "images/products/" + code + ".jpg";
-
-      // fallback
-      return "images/products/" + PLACEHOLDER;
+      return "images/products/" + PLACEHOLDER_FILE;
     }
 
-    // fallback si l’image n’existe pas
-    function attachImageFallback(imgEl){
+    // ✅ fallback: .jpg -> .jpeg -> .png -> placeholder
+    function attachImageFallback(imgEl, product){
+      const code = String(product.code || product.CODE_ARTICLE || product.id || "").trim();
+      const tries = [];
+      if (code){
+        tries.push("images/products/" + code + ".jpg");
+        tries.push("images/products/" + code + ".jpeg");
+        tries.push("images/products/" + code + ".png");
+        tries.push("images/" + code + ".jpg");
+        tries.push("images/" + code + ".jpeg");
+        tries.push("images/" + code + ".png");
+      }
+      tries.push("images/products/" + PLACEHOLDER_FILE);
+
+      let i = 0;
       imgEl.addEventListener("error", () => {
-        imgEl.src = "images/products/" + PLACEHOLDER;
-      });
+        i++;
+        imgEl.src = tries[Math.min(i, tries.length - 1)];
+      }, { once:false });
     }
 
-    // =========================
-    // PANIER (simple)
-    // =========================
-    const CART_KEY = "maxi_cart_v1";
-    function loadCart(){
-      try { return JSON.parse(localStorage.getItem(CART_KEY) || "{}"); }
-      catch(e){ return {}; }
-    }
-    function saveCart(cart){
-      localStorage.setItem(CART_KEY, JSON.stringify(cart));
-      updateCartMini();
-    }
-    function cartAdd(p, qty){
-      const cart = loadCart();
-      const key = String(p.code || p.id || p.name);
-      if (!cart[key]) cart[key] = { code:p.code, name:p.name, price:p.price, unit:p.unit, qty:0 };
-      cart[key].qty += qty;
-      saveCart(cart);
-    }
-    function updateCartMini(){
-      const cart = loadCart();
-      let count = 0;
-      let total = 0;
-      Object.values(cart).forEach(it=>{
-        count += Number(it.qty || 0);
-        total += Number(it.qty || 0) * Number(it.price || 0);
-      });
-      document.getElementById("mini-cart-count").textContent = String(count);
-      document.getElementById("mini-cart-total").textContent = fmtDt(total);
-    }
-
-    // =========================
-    // APP STATE
-    // =========================
-    let ALL = [];
-    let activeCategory = "Tout";
-    let searchTerm = "";
-    let currentPage = 1;
-
-    // =========================
-    // UI HELPERS
-    // =========================
     function fmtDt(n){
       const x = Number(n || 0);
       return x.toFixed(3).replace(".", ",");
     }
-    function normalizeCategory(c){
-      const s = String(c || "Divers").trim();
-      return s || "Divers";
-    }
+
+    // ===== STATE =====
+    let ALL = [];
+    let activeCategory = "Tout";
+    let searchTerm = "";
+    let page = 1;
+    let perPage = 72;
 
     function buildCategories(products){
       const set = new Set(["Tout"]);
@@ -392,7 +333,7 @@
         b.textContent = cat;
         b.onclick = () => {
           activeCategory = cat;
-          currentPage = 1; // reset page à chaque changement catégorie
+          page = 1;
           render();
         };
         wrap.appendChild(b);
@@ -409,106 +350,104 @@
       return hay.includes(q);
     }
 
-    function paginate(list){
-      const total = list.length;
-      const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-      currentPage = Math.min(currentPage, pages);
-
-      const start = (currentPage - 1) * PAGE_SIZE;
-      const end = start + PAGE_SIZE;
-      return { pageItems: list.slice(start, end), total, pages };
-    }
-
-    function renderPager(total, pages){
+    function renderPager(totalItems){
       const pager = document.getElementById("pager");
-      const info  = document.getElementById("pager-info");
-
       pager.innerHTML = "";
-      info.textContent = "";
 
-      if (pages <= 1){
-        return;
-      }
+      const totalPages = Math.max(1, Math.ceil(totalItems / perPage));
+      if (page > totalPages) page = totalPages;
 
       const prev = document.createElement("button");
       prev.className = "page-btn";
-      prev.textContent = "◀ Précédent";
-      prev.disabled = currentPage === 1;
-      prev.onclick = ()=>{ currentPage--; render(); };
+      prev.textContent = "◀";
+      prev.disabled = (page === 1);
+      prev.onclick = () => { page--; render(); };
       pager.appendChild(prev);
 
-      // Afficher quelques pages autour (1 ... x x x ... last)
-      const windowSize = 5;
-      const half = Math.floor(windowSize/2);
-      let start = Math.max(1, currentPage - half);
-      let end = Math.min(pages, start + windowSize - 1);
+      // afficher pages autour de la page courante (max 7 boutons)
+      const windowSize = 7;
+      let start = Math.max(1, page - Math.floor(windowSize/2));
+      let end = Math.min(totalPages, start + windowSize - 1);
       start = Math.max(1, end - windowSize + 1);
 
-      function addPageBtn(p){
+      if (start > 1){
+        const b1 = document.createElement("button");
+        b1.className = "page-btn";
+        b1.textContent = "1";
+        b1.onclick = () => { page = 1; render(); };
+        pager.appendChild(b1);
+
+        const dots = document.createElement("span");
+        dots.style.color = "var(--muted)";
+        dots.style.padding = "0 6px";
+        dots.textContent = "…";
+        pager.appendChild(dots);
+      }
+
+      for (let p = start; p <= end; p++){
         const b = document.createElement("button");
-        b.className = "page-btn" + (p === currentPage ? " active" : "");
+        b.className = "page-btn" + (p === page ? " active" : "");
         b.textContent = String(p);
-        b.onclick = ()=>{ currentPage = p; render(); };
+        b.onclick = () => { page = p; render(); };
         pager.appendChild(b);
       }
 
-      if (start > 1){
-        addPageBtn(1);
-        if (start > 2){
-          const dots = document.createElement("span");
-          dots.style.color = "var(--muted)";
-          dots.textContent = "…";
-          pager.appendChild(dots);
-        }
-      }
+      if (end < totalPages){
+        const dots = document.createElement("span");
+        dots.style.color = "var(--muted)";
+        dots.style.padding = "0 6px";
+        dots.textContent = "…";
+        pager.appendChild(dots);
 
-      for (let p=start; p<=end; p++) addPageBtn(p);
-
-      if (end < pages){
-        if (end < pages-1){
-          const dots2 = document.createElement("span");
-          dots2.style.color = "var(--muted)";
-          dots2.textContent = "…";
-          pager.appendChild(dots2);
-        }
-        addPageBtn(pages);
+        const blast = document.createElement("button");
+        blast.className = "page-btn";
+        blast.textContent = String(totalPages);
+        blast.onclick = () => { page = totalPages; render(); };
+        pager.appendChild(blast);
       }
 
       const next = document.createElement("button");
       next.className = "page-btn";
-      next.textContent = "Suivant ▶";
-      next.disabled = currentPage === pages;
-      next.onclick = ()=>{ currentPage++; render(); };
+      next.textContent = "▶";
+      next.disabled = (page === totalPages);
+      next.onclick = () => { page++; render(); };
       pager.appendChild(next);
-
-      info.textContent = `Page ${currentPage} / ${pages} — ${total} article(s)`;
     }
 
     function render(){
-      // refresh style catégories
+      // categories
       renderCategories(buildCategories(ALL));
 
       const filtered = ALL.filter(productMatches);
-      const { pageItems, total, pages } = paginate(filtered);
+      const total = filtered.length;
+
+      const totalPages = Math.max(1, Math.ceil(total / perPage));
+      const start = (page - 1) * perPage;
+      const end = start + perPage;
+      const slice = filtered.slice(start, end);
+
+      document.getElementById("info-line").textContent =
+        `Affichage ${Math.min(start+1,total)}–${Math.min(end,total)} sur ${total} produit(s) • Page ${page}/${totalPages}`;
 
       const grid = document.getElementById("products-container");
       grid.innerHTML = "";
 
-      pageItems.forEach(p => {
+      slice.forEach(p => {
         const card = document.createElement("div");
         card.className = "product-card";
 
+        const media = document.createElement("div");
+        media.className = "media";
         const img = document.createElement("img");
-        img.className = "product-img";
         img.alt = p.name || "Produit";
         img.src = resolveImagePath(p);
-        attachImageFallback(img);
+        attachImageFallback(img, p);
+        media.appendChild(img);
 
         const header = document.createElement("div");
         header.className = "product-header";
 
         const left = document.createElement("div");
-
         const name = document.createElement("div");
         name.className = "product-name";
         name.textContent = p.name;
@@ -532,48 +471,35 @@
 
         const qty = document.createElement("div");
         qty.className = "qty-control";
-
         const minus = document.createElement("button");
         minus.textContent = "−";
-
         const qspan = document.createElement("span");
         qspan.textContent = "1";
-
         const plus = document.createElement("button");
         plus.textContent = "+";
-
         minus.onclick = () => qspan.textContent = String(Math.max(1, Number(qspan.textContent)-1));
         plus.onclick  = () => qspan.textContent = String(Number(qspan.textContent)+1);
-
-        qty.appendChild(minus);
-        qty.appendChild(qspan);
-        qty.appendChild(plus);
+        qty.appendChild(minus); qty.appendChild(qspan); qty.appendChild(plus);
 
         const add = document.createElement("button");
         add.className = "btn-add";
         add.textContent = "Ajouter au panier";
-        add.onclick = () => {
-          cartAdd(p, Number(qspan.textContent || 1));
-        };
+        add.onclick = () => alert(`✅ Ajouté : ${p.name} (x${qspan.textContent})`);
 
         actions.appendChild(qty);
         actions.appendChild(add);
 
-        card.appendChild(img);
+        card.appendChild(media);
         card.appendChild(header);
         card.appendChild(actions);
 
         grid.appendChild(card);
       });
 
+      renderPager(total);
       document.getElementById("loading").style.display = "none";
-      renderPager(total, pages);
-      updateCartMini();
     }
 
-    // =========================
-    // LOAD
-    // =========================
     async function init(){
       const res = await fetch(PRODUCTS_JSON_URL, { cache:"no-store" });
       const data = await res.json();
@@ -581,49 +507,46 @@
       const items = Array.isArray(data) ? data : (data.products || []);
 
       ALL = items.map((r) => {
-        const code = String(r.code || r.CODE_ARTICLE || r.id || "").trim();
-        const name = String(r.name || r.DESIGNATION || "").trim();
-        let category = normalizeCategory(r.category || "Divers");
+        const code = String(r.code || r.CODE_ARTICLE || r.id || r.ID || "").trim();
+        const name = String(r.name || r.DESIGNATION || r.designation || "").trim();
+        let category = normalizeCategory(r.category || r.CATEGORIE || "Divers");
 
-        // 1) Override par code
         if (CATEGORY_OVERRIDES_BY_CODE[code]) category = CATEGORY_OVERRIDES_BY_CODE[code];
-
-        // 2) Correction automatique par mots
         category = smartCategoryFix(name, category);
 
-        return {
-          code,
-          name,
-          category,
-          price: Number(r.price || r.PRX || r.PRIX || 0),
-          unit: String(r.unit || "pièce"),
-          image: String(r.image || PLACEHOLDER)
-        };
+        const price = Number(
+          r.price ?? r.PRIX ?? r.PRX ?? r.prix ?? 0
+        );
+
+        const unit = String(
+          r.unit ?? r.UNITE ?? r.unite ?? "pièce"
+        ).trim() || "pièce";
+
+        const image = String(r.image ?? r.IMAGE ?? r.imageUrl ?? PLACEHOLDER_FILE).trim() || PLACEHOLDER_FILE;
+
+        return { code, name, category, price, unit, image };
       });
 
-      renderCategories(buildCategories(ALL));
       render();
     }
 
-    // Search
+    // UI events
     document.getElementById("search").addEventListener("input", (e)=>{
       searchTerm = e.target.value || "";
-      currentPage = 1;
+      page = 1;
       render();
     });
     document.getElementById("clear-search").onclick = ()=>{
       document.getElementById("search").value = "";
       searchTerm = "";
-      currentPage = 1;
+      page = 1;
       render();
     };
-
-    // click panier (simple)
-    document.getElementById("open-cart").onclick = ()=>{
-      const cart = loadCart();
-      const lines = Object.values(cart).map(it => `${it.name} x${it.qty} = ${fmtDt(it.qty*it.price)} dt`);
-      alert(lines.length ? lines.join("\n") : "Panier vide.");
-    };
+    document.getElementById("per-page").addEventListener("change", (e)=>{
+      perPage = Number(e.target.value || 72);
+      page = 1;
+      render();
+    });
 
     init().catch(err=>{
       console.error(err);
