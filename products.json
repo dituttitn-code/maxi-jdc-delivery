@@ -74,12 +74,12 @@
 
     { "id": 36, "name": "Miel Thym/Zaatar 250ml", "category": "Promotions", "price": 30.0, "unit": "pièce", "image": "placeholder.jpg" }
     ,
-    { "id": 37, "code": "4731", "name": "VANCAT COMPACT LAVENDER 5KG", "category": "Animaux", "price": 19.4, "unit": "pièce", "image": "images/products/4731.jpg" },
-    { "id": 38, "code": "4729", "name": "VANCAT COMPACT CLASSIC 5KG", "category": "Animaux", "price": 18.5, "unit": "pièce", "image": "images/products/4729.jpg" },
+    { "id": 37, "code": "4731", "name": "VANCAT COMPACT LAVENDER 5KG", "category": "Animaux", "price": 19.4, "unit": "pièce", "image": "images/4731.jpg" },
+    { "id": 38, "code": "4729", "name": "VANCAT COMPACT CLASSIC 5KG", "category": "Animaux", "price": 18.5, "unit": "pièce", "image": "images/4729.jpg" },
     { "id": 39, "code": "4754", "name": "MORANDO PROFESSIONNEL GATTO PÂTÉ AGNELLO 400GR", "category": "Animaux", "price": 6.8, "unit": "pièce", "image": "images/products/placeholder.jpg" },
     { "id": 40, "code": "4220", "name": "MIICHA", "category": "Animaux", "price": 4.8, "unit": "pièce", "image": "images/products/placeholder.jpg" },
     { "id": 41, "code": "4736", "name": "MIGLIOR GATTO PROFESSIONNEL PÂTÉ PESCE & GAMBERETTI", "category": "Animaux", "price": 6.8, "unit": "pièce", "image": "images/products/placeholder.jpg" },
-    { "id": 42, "code": "4737", "name": "MIGLIOR GATTO AGNELLO 100GR", "category": "Animaux", "price": 4.8, "unit": "pièce", "image": "images/products/4737.jpg" },
+    { "id": 42, "code": "4737", "name": "MIGLIOR GATTO AGNELLO 100GR", "category": "Animaux", "price": 4.8, "unit": "pièce", "image": "images/4737.jpg" },
     { "id": 43, "code": "4744", "name": "MIGLIOR GATTO STERILISED SALMONE 85GR", "category": "Animaux", "price": 3.5, "unit": "pièce", "image": "images/products/placeholder.jpg" },
     { "id": 44, "code": "4740", "name": "MIGLIOR GATTO STERILISED POLLO AGNELLO ORTAGGI 100GR", "category": "Animaux", "price": 3.8, "unit": "pièce", "image": "images/products/placeholder.jpg" },
     { "id": 45, "code": "4743", "name": "MIGLIOR GATTO STERILISED PESCE AZZURO 85GR", "category": "Animaux", "price": 3.5, "unit": "pièce", "image": "images/products/placeholder.jpg" },
