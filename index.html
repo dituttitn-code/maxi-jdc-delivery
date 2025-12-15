@@ -18,7 +18,6 @@
       --radius:18px;
       --radius-sm:14px;
     }
-
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -26,7 +25,6 @@
       background: radial-gradient(1200px 800px at 10% -10%, #1a1a1f 0%, var(--bg) 55%);
       color:var(--text);
     }
-
     .wrap{max-width:1100px;margin:0 auto;padding:14px 12px 48px}
 
     header{
@@ -43,14 +41,11 @@
       border-radius:22px;
       padding:10px 12px;
     }
-
     .brand{display:flex;gap:10px;align-items:center}
     .logo{
       width:42px;height:42px;border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
-      background:#111;
-      overflow:hidden;
-      display:grid;place-items:center;
+      background:#111;overflow:hidden;display:grid;place-items:center;
     }
     .logo img{width:100%;height:100%;object-fit:cover}
     .brand h1{margin:0;font-size:15px;letter-spacing:.6px}
@@ -59,7 +54,6 @@
     .header-actions{display:flex;align-items:center;gap:10px}
     .header-info{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted)}
     .header-info strong{color:var(--text)}
-    .header-qr{display:flex;align-items:center;gap:8px}
     .qr-mini{
       width:44px;height:44px;border-radius:12px;
       border:1px solid rgba(255,255,255,.10);
@@ -83,54 +77,31 @@
       font-weight:800;font-size:12px;
     }
 
-    .section-title{
-      margin:18px 0 10px;
-      font-size:16px;
-      color:var(--text);
-    }
+    .section-title{margin:18px 0 10px;font-size:16px;color:var(--text)}
 
-    .categories-list{
-      display:flex;flex-wrap:wrap;gap:8px;
-      margin-bottom:12px;
-    }
+    .categories-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
     .category-pill{
-      padding:7px 10px;
-      border-radius:999px;
+      padding:7px 10px;border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background:rgba(16,16,18,.7);
-      color:var(--text);
-      font-size:12px;
-      cursor:pointer;
-      white-space:nowrap;
+      color:var(--text);font-size:12px;cursor:pointer;white-space:nowrap;
     }
     .category-pill.active{
       background:var(--accent-soft);
       border-color:rgba(0,200,83,.45);
-      color:#eafff2;
-      font-weight:700;
+      color:#eafff2;font-weight:700;
     }
 
-    .search-bar{
-      display:flex;gap:8px;align-items:center;
-      margin:10px 0 12px;
-    }
+    .search-bar{display:flex;gap:8px;align-items:center;margin:10px 0 12px}
     .search-bar input{
-      flex:1;
-      padding:10px 12px;
-      border-radius:999px;
+      flex:1;padding:10px 12px;border-radius:999px;
       border:1px solid rgba(255,255,255,.10);
       background:rgba(18,18,20,.8);
-      color:var(--text);
-      outline:none;
+      color:var(--text);outline:none;
     }
     .search-bar button{
-      border:none;
-      background:var(--accent);
-      color:#021a0c;
-      padding:10px 14px;
-      border-radius:999px;
-      font-weight:800;
-      cursor:pointer;
+      border:none;background:var(--accent);color:#021a0c;
+      padding:10px 14px;border-radius:999px;font-weight:800;cursor:pointer;
     }
 
     .products-grid{
@@ -144,48 +115,37 @@
       border:1px solid rgba(255,255,255,.08);
       background:rgba(18,18,20,.92);
       padding:10px;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
+      display:flex;flex-direction:column;gap:8px;
       min-height:320px;
     }
 
-    /* ✅ FIX IMAGE: pas coupée, centrée, même taille */
+    /* ✅ IMAGES : toujours propres, pas coupées */
     .product-img{
       width:100%;
       height:140px;
       border-radius:12px;
       border:1px solid rgba(255,255,255,.08);
-      background:#0b0b0c;
-      object-fit:contain;     /* IMPORTANT */
-      object-position:center; /* IMPORTANT */
+      background:#ffffff;
+      object-fit:contain;
+      object-position:center;
       display:block;
-      padding:6px;            /* un petit air autour */
+      padding:6px;
     }
 
-    .product-header{
-      display:flex;justify-content:space-between;gap:8px;align-items:flex-start;
-    }
+    .product-header{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
     .product-name{font-weight:800;font-size:13px;line-height:1.15}
     .product-meta{font-size:12px;color:var(--muted);margin-top:2px}
-    .product-price{
-      font-weight:900;
-      font-size:14px;
-      text-align:right;
-      white-space:nowrap;
-    }
+    .product-price{font-weight:900;font-size:14px;text-align:right;white-space:nowrap}
+    .small-text{font-size:12px;color:var(--muted)}
 
     .product-actions{
       margin-top:auto;
       display:flex;justify-content:space-between;align-items:center;gap:8px;
     }
-
     .qty-control{
       display:inline-flex;align-items:center;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      overflow:hidden;
-      background:rgba(16,16,18,.75);
+      border-radius:999px;border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;background:rgba(16,16,18,.75);
     }
     .qty-control button{
       border:none;background:transparent;color:var(--text);
@@ -194,19 +154,42 @@
     .qty-control span{padding:0 10px;color:var(--text);min-width:22px;text-align:center}
 
     .btn-add{
-      flex:1;
-      border:none;
-      background:var(--accent);
-      color:#021a0c;
-      font-weight:900;
-      padding:10px 10px;
-      border-radius:999px;
-      cursor:pointer;
-      line-height:1.1;
+      flex:1;border:none;background:var(--accent);color:#021a0c;
+      font-weight:900;padding:10px 10px;border-radius:999px;cursor:pointer;line-height:1.1;
     }
 
-    .small-text{font-size:12px;color:var(--muted)}
     #loading{padding:12px;color:var(--muted)}
+
+    /* ✅ Pagination */
+    .pager{
+      display:flex;flex-wrap:wrap;gap:8px;
+      align-items:center;justify-content:center;
+      margin:14px 0 4px;
+    }
+    .page-btn{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(18,18,20,.85);
+      color:var(--text);
+      padding:8px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:12px;
+      user-select:none;
+    }
+    .page-btn.active{
+      background:var(--accent-soft);
+      border-color:rgba(0,200,83,.45);
+      font-weight:800;
+    }
+    .page-btn:disabled{
+      opacity:.45;cursor:not-allowed;
+    }
+    .pager-info{
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:10px;
+    }
   </style>
 </head>
 
@@ -231,10 +214,8 @@
             <div>📱 WhatsApp : <strong>00216 25 600 978</strong></div>
           </div>
 
-          <div class="header-qr">
-            <div class="qr-mini" title="QR site">
-              <img src="qr-maxi-jdc-site.jpg" alt="QR MAXI JDC MARKET">
-            </div>
+          <div class="qr-mini" title="QR site">
+            <img src="qr-maxi-jdc-site.jpg" alt="QR MAXI JDC MARKET">
           </div>
 
           <div class="cart-button" id="open-cart">
@@ -258,6 +239,10 @@
       <h3 class="section-title">Produits</h3>
       <div id="loading">Chargement des produits…</div>
       <div class="products-grid" id="products-container"></div>
+
+      <!-- Pagination -->
+      <div class="pager" id="pager"></div>
+      <div class="pager-info" id="pager-info"></div>
     </div>
   </header>
 
@@ -266,74 +251,110 @@
     // CONFIG
     // =========================
     const PRODUCTS_JSON_URL = "products.json";
+
+    // ✅ Mets ici le nom de ton placeholder (le fichier doit être dans /images/products/)
     const PLACEHOLDER = "placeholder.jpg";
 
-    // ✅ corrections codes (ce que tu m’as envoyé)
+    // ✅ Nombre d'articles par page (tu peux changer)
+    const PAGE_SIZE = 24;
+
+    // ✅ Corrections exactes par code (tes exemples)
     const CATEGORY_OVERRIDES_BY_CODE = {
       "2481": "Hygiène et entretien",
       "3143": "Hygiène et entretien",
       "2482": "Hygiène et entretien",
       "4497": "Hygiène et entretien",
+
       "4484": "Épicerie salée",
       "4485": "Épicerie salée",
+
       "2999": "Surgelés",
       "2639": "Surgelés",
+
       "1335": "Fruits secs & Graines",
-      "4322": "Boissons"
+      "4322": "Boissons",
+
+      // Exemple “pomme” dans produit ménage
+      "4202": "Hygiène et entretien"
     };
 
-    // ✅ règles (si d’autres erreurs similaires arrivent)
+    // ✅ Règles intelligentes (corrige les erreurs de classement)
     function smartCategoryFix(name, currentCat){
       const n = (name || "").toUpperCase();
 
-      // Produits nettoyage
-      if (/(JUDY|LILAS|LESSIVE|LAVANT|SOL|SURFACES|JEL LAVANT|LIQUIDE VAISSELLE)/.test(n)) return "Hygiène et entretien";
+      // Nettoyage / entretien
+      if (/(JUDY|LILAS|LESSIVE|LAVANT|SOL|SURFACES|JEL LAVANT|LIQUIDE VAISSELLE|ASSOUPLISSANT|DETERGENT|NETTOYANT)/.test(n))
+        return "Hygiène et entretien";
 
-      // Salades / conserves salées
-      if (/(SALADE|MECHWIA|HARISSA|THONA|MAKROUNA|CONSERVE|SAUCE|TOMATE)/.test(n)) return "Épicerie salée";
+      // Salé / conserves / sauces
+      if (/(SALADE|MECHWIA|HARISSA|THONA|MAKROUNA|CONSERVE|SAUCE|TOMATE|OLIVE|CORNICHON)/.test(n))
+        return "Épicerie salée";
 
       // Glaces / bouza / frozen
-      if (/(GLACE|BOUZA|LONDON DAIRY|ICE|CORNET)/.test(n)) return "Surgelés";
+      if (/(GLACE|BOUZA|LONDON DAIRY|ICE|CORNET|SORBET)/.test(n))
+        return "Surgelés";
+
+      // Lait à boire / boissons lactées
+      if (/(A BOIRE|NATILAIT|LAIT|MILK)/.test(n))
+        return "Boissons";
 
       return currentCat;
     }
 
-    // ✅ Chemin image automatique :
-    // Si image = placeholder.jpg → on essaye images/products/<CODE>.jpg puis images/<CODE>.jpg
+    // ✅ Chemin image automatique : images/products/<CODE>.jpg
     function resolveImagePath(product){
       const code = String(product.code || product.CODE_ARTICLE || product.id || "").trim();
+      const raw  = String(product.image || product.imageUrl || product.IMAGE_URL || "").trim();
 
-      const raw = String(product.image || product.imageUrl || product.IMAGE_URL || "").trim();
-
-      // Si l’utilisateur a mis un chemin complet (ex: images/products/4731.jpg), on le garde
-      if (raw && raw !== PLACEHOLDER && raw !== "images/products/" + PLACEHOLDER && raw !== "images/" + PLACEHOLDER){
-        // si raw ne contient pas "/", on suppose que c’est un nom de fichier dans images/products/
-        if (!raw.includes("/")) return "images/products/" + raw;
+      // si raw est un chemin complet -> on le garde
+      if (raw && raw !== PLACEHOLDER && !raw.endsWith("/"+PLACEHOLDER)){
+        if (!raw.includes("/")) return "images/products/" + raw; // raw = "4731.jpg"
         return raw;
       }
 
-      // Sinon on génère automatiquement depuis le code
-      if (code){
-        return "images/products/" + code + ".jpg";
-      }
+      // sinon on force images/products/<code>.jpg
+      if (code) return "images/products/" + code + ".jpg";
 
       // fallback
       return "images/products/" + PLACEHOLDER;
     }
 
-    // fallback si l’image n’existe pas → essayer images/<code>.jpg puis placeholder
-    function attachImageFallback(imgEl, product){
-      const code = String(product.code || product.CODE_ARTICLE || product.id || "").trim();
-      let tried = 0;
-
+    // fallback si l’image n’existe pas
+    function attachImageFallback(imgEl){
       imgEl.addEventListener("error", () => {
-        tried++;
-        if (tried === 1 && code) {
-          imgEl.src = "images/" + code + ".jpg"; // au cas où tu as mis les images direct dans /images/
-          return;
-        }
         imgEl.src = "images/products/" + PLACEHOLDER;
       });
+    }
+
+    // =========================
+    // PANIER (simple)
+    // =========================
+    const CART_KEY = "maxi_cart_v1";
+    function loadCart(){
+      try { return JSON.parse(localStorage.getItem(CART_KEY) || "{}"); }
+      catch(e){ return {}; }
+    }
+    function saveCart(cart){
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+      updateCartMini();
+    }
+    function cartAdd(p, qty){
+      const cart = loadCart();
+      const key = String(p.code || p.id || p.name);
+      if (!cart[key]) cart[key] = { code:p.code, name:p.name, price:p.price, unit:p.unit, qty:0 };
+      cart[key].qty += qty;
+      saveCart(cart);
+    }
+    function updateCartMini(){
+      const cart = loadCart();
+      let count = 0;
+      let total = 0;
+      Object.values(cart).forEach(it=>{
+        count += Number(it.qty || 0);
+        total += Number(it.qty || 0) * Number(it.price || 0);
+      });
+      document.getElementById("mini-cart-count").textContent = String(count);
+      document.getElementById("mini-cart-total").textContent = fmtDt(total);
     }
 
     // =========================
@@ -342,6 +363,7 @@
     let ALL = [];
     let activeCategory = "Tout";
     let searchTerm = "";
+    let currentPage = 1;
 
     // =========================
     // UI HELPERS
@@ -350,11 +372,9 @@
       const x = Number(n || 0);
       return x.toFixed(3).replace(".", ",");
     }
-
     function normalizeCategory(c){
       const s = String(c || "Divers").trim();
-      if (!s) return "Divers";
-      return s;
+      return s || "Divers";
     }
 
     function buildCategories(products){
@@ -372,6 +392,7 @@
         b.textContent = cat;
         b.onclick = () => {
           activeCategory = cat;
+          currentPage = 1; // reset page à chaque changement catégorie
           render();
         };
         wrap.appendChild(b);
@@ -388,15 +409,92 @@
       return hay.includes(q);
     }
 
-    function render(){
-      // categories active style refresh
-      renderCategories(buildCategories(ALL.filter(p => true)));
+    function paginate(list){
+      const total = list.length;
+      const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+      currentPage = Math.min(currentPage, pages);
 
-      const list = ALL.filter(productMatches);
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const end = start + PAGE_SIZE;
+      return { pageItems: list.slice(start, end), total, pages };
+    }
+
+    function renderPager(total, pages){
+      const pager = document.getElementById("pager");
+      const info  = document.getElementById("pager-info");
+
+      pager.innerHTML = "";
+      info.textContent = "";
+
+      if (pages <= 1){
+        return;
+      }
+
+      const prev = document.createElement("button");
+      prev.className = "page-btn";
+      prev.textContent = "◀ Précédent";
+      prev.disabled = currentPage === 1;
+      prev.onclick = ()=>{ currentPage--; render(); };
+      pager.appendChild(prev);
+
+      // Afficher quelques pages autour (1 ... x x x ... last)
+      const windowSize = 5;
+      const half = Math.floor(windowSize/2);
+      let start = Math.max(1, currentPage - half);
+      let end = Math.min(pages, start + windowSize - 1);
+      start = Math.max(1, end - windowSize + 1);
+
+      function addPageBtn(p){
+        const b = document.createElement("button");
+        b.className = "page-btn" + (p === currentPage ? " active" : "");
+        b.textContent = String(p);
+        b.onclick = ()=>{ currentPage = p; render(); };
+        pager.appendChild(b);
+      }
+
+      if (start > 1){
+        addPageBtn(1);
+        if (start > 2){
+          const dots = document.createElement("span");
+          dots.style.color = "var(--muted)";
+          dots.textContent = "…";
+          pager.appendChild(dots);
+        }
+      }
+
+      for (let p=start; p<=end; p++) addPageBtn(p);
+
+      if (end < pages){
+        if (end < pages-1){
+          const dots2 = document.createElement("span");
+          dots2.style.color = "var(--muted)";
+          dots2.textContent = "…";
+          pager.appendChild(dots2);
+        }
+        addPageBtn(pages);
+      }
+
+      const next = document.createElement("button");
+      next.className = "page-btn";
+      next.textContent = "Suivant ▶";
+      next.disabled = currentPage === pages;
+      next.onclick = ()=>{ currentPage++; render(); };
+      pager.appendChild(next);
+
+      info.textContent = `Page ${currentPage} / ${pages} — ${total} article(s)`;
+    }
+
+    function render(){
+      // refresh style catégories
+      renderCategories(buildCategories(ALL));
+
+      const filtered = ALL.filter(productMatches);
+      const { pageItems, total, pages } = paginate(filtered);
+
       const grid = document.getElementById("products-container");
       grid.innerHTML = "";
 
-      list.forEach(p => {
+      pageItems.forEach(p => {
         const card = document.createElement("div");
         card.className = "product-card";
 
@@ -404,12 +502,13 @@
         img.className = "product-img";
         img.alt = p.name || "Produit";
         img.src = resolveImagePath(p);
-        attachImageFallback(img, p);
+        attachImageFallback(img);
 
         const header = document.createElement("div");
         header.className = "product-header";
 
         const left = document.createElement("div");
+
         const name = document.createElement("div");
         name.className = "product-name";
         name.textContent = p.name;
@@ -433,10 +532,13 @@
 
         const qty = document.createElement("div");
         qty.className = "qty-control";
+
         const minus = document.createElement("button");
         minus.textContent = "−";
+
         const qspan = document.createElement("span");
         qspan.textContent = "1";
+
         const plus = document.createElement("button");
         plus.textContent = "+";
 
@@ -451,8 +553,7 @@
         add.className = "btn-add";
         add.textContent = "Ajouter au panier";
         add.onclick = () => {
-          alert(`✅ Ajouté : ${p.name} (x${qspan.textContent})`);
-          // ici tu peux connecter ton panier actuel si tu veux
+          cartAdd(p, Number(qspan.textContent || 1));
         };
 
         actions.appendChild(qty);
@@ -466,6 +567,8 @@
       });
 
       document.getElementById("loading").style.display = "none";
+      renderPager(total, pages);
+      updateCartMini();
     }
 
     // =========================
@@ -475,7 +578,6 @@
       const res = await fetch(PRODUCTS_JSON_URL, { cache:"no-store" });
       const data = await res.json();
 
-      // support 2 formats: [..] ou {categories:[..], products:[..]}
       const items = Array.isArray(data) ? data : (data.products || []);
 
       ALL = items.map((r) => {
@@ -483,10 +585,10 @@
         const name = String(r.name || r.DESIGNATION || "").trim();
         let category = normalizeCategory(r.category || "Divers");
 
-        // 1) override par code
+        // 1) Override par code
         if (CATEGORY_OVERRIDES_BY_CODE[code]) category = CATEGORY_OVERRIDES_BY_CODE[code];
 
-        // 2) correction automatique par mots-clés
+        // 2) Correction automatique par mots
         category = smartCategoryFix(name, category);
 
         return {
@@ -499,7 +601,6 @@
         };
       });
 
-      // UI
       renderCategories(buildCategories(ALL));
       render();
     }
@@ -507,12 +608,21 @@
     // Search
     document.getElementById("search").addEventListener("input", (e)=>{
       searchTerm = e.target.value || "";
+      currentPage = 1;
       render();
     });
     document.getElementById("clear-search").onclick = ()=>{
       document.getElementById("search").value = "";
       searchTerm = "";
+      currentPage = 1;
       render();
+    };
+
+    // click panier (simple)
+    document.getElementById("open-cart").onclick = ()=>{
+      const cart = loadCart();
+      const lines = Object.values(cart).map(it => `${it.name} x${it.qty} = ${fmtDt(it.qty*it.price)} dt`);
+      alert(lines.length ? lines.join("\n") : "Panier vide.");
     };
 
     init().catch(err=>{
