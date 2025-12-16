@@ -1,36 +1,35 @@
-code,designation,price
-4720,VERMICELLE DE 500G-ROSE BLANCHE-,0.48
-4382,TAGLIATELLE N2 WARDA 250GR,1.8
-3609,SPAGHETTI INTEGRALES WARDA 500G,1.9
-2037,SPAGHETTI 3 RANDA 500G,0.48
-1244,SPAGHETTI 1 RANDA 500G,0.48
-4657,SPAGETTI INTEGRALI 500G DIVELLA,7.3
-2025,SEMOULE FINE RANDA 1KG,0.85
-4677,SEMOULE FIN DE 1KG,0.85
-3607,PENNE INTEGRALE 500GR,2.2
-4596,PATE LONGUE N3 500GR WARDA,0.48
-3795,PAPILLON 1 RANDA 500G,1.3
-4080,NWASSER ARTISANALE,5.5
-1276,MHAMMAS FIN RANDA 500G,0.45
-4727,MHAMES N2 WARDA,0.48
-4303,HLALEM WARDA 500G,3.3
-4759,LASAGNE WARDA 500GR,2.4
-4426,COUDE 2 WARDA 500G,0.48
-3611,COUDE 2 5 CEREALES 500GR WARDA,1.9
-4848,COUDE 1 WARDA 500G,0.48
-4425,COQUIETTE DE 500GR WARDA,0.48
-3463,FARFALLE TRICOLORE PANZANI 55G,8.8
-1254,ESCARGOT 2 RANDA 500G,0.48
-6190000000000,CANNELLONI RANDA 250G,1.8
-3798,COUSCOUS MOYEN DE 1KG(CC15)-CARAVAN-,0.85
-2035,COUSCOUS MOYEN DE 1KG,0.8
-2598,COUSCOUS FIN DARNA,0.8
-3952,COUSCOUS EXPRESS FIN 500GR,1.3
-4829,COUSCOUS COMPLET 1KG EPI D OR,2.2
-4081,COUSCOUS ARTISANALE,4.5
-1280,CHORBA MILLET-500G-RANDA,0.5
-2034,CHORBA FRIC 250GR FRIGA,0.5
-2023,CHORBA 2 500GR WARDA,0.85
-2031,MASFOUF RANDA 1KG,0.8
-4301,HARISA SAHLIA380G,3.5
-
+code,name,price,unit,image
+4720,Vermicelle Rose Blanche 500 g,0.48,pièce,images/products/placeholder.jpg
+4382,Tagliatelle N2 Warda 250 g,1.8,pièce,images/products/placeholder.jpg
+3609,Spaghetti intégrales Warda 500 g,1.9,pièce,images/products/placeholder.jpg
+2037,Spaghetti 3 Randa 500 g,0.48,pièce,images/products/placeholder.jpg
+1244,Spaghetti 1 Randa 500 g,0.48,pièce,images/products/placeholder.jpg
+4657,Spaghetti Integrali Divella 500 g,7.3,pièce,images/products/placeholder.jpg
+2025,Semoule fine Randa 1 kg,0.85,pièce,images/products/placeholder.jpg
+4677,Semoule fine 1 kg,0.85,pièce,images/products/placeholder.jpg
+3607,Penne intégrale Warda 500 g,2.2,pièce,images/products/placeholder.jpg
+4596,Pâte longue N3 Warda 500 g,0.48,pièce,images/products/placeholder.jpg
+3795,Papillon 1 Randa 500 g,1.3,pièce,images/products/placeholder.jpg
+4080,Nwasser artisanale,5.5,pièce,images/products/placeholder.jpg
+1276,Mhammès fin Randa 500 g,0.45,pièce,images/products/placeholder.jpg
+4727,Mhammès N2 Warda,0.48,pièce,images/products/placeholder.jpg
+4303,Hlalem Warda 500 g,3.3,pièce,images/products/placeholder.jpg
+4759,Lasagne Warda 500 g,2.4,pièce,images/products/placeholder.jpg
+4426,Coude 2 Warda 500 g,0.48,pièce,images/products/placeholder.jpg
+3611,Coude 2 – 5 céréales Warda 500 g,1.9,pièce,images/products/placeholder.jpg
+4848,Coude 1 Warda 500 g,0.48,pièce,images/products/placeholder.jpg
+4425,Coquiette Warda 500 g,0.48,pièce,images/products/placeholder.jpg
+3463,Farfalle tricolore Panzani 500 g,8.8,pièce,images/products/placeholder.jpg
+1254,Escargot 2 Randa 500 g,0.48,pièce,images/products/placeholder.jpg
+6190000000000,Cannelloni Randa 250 g,1.8,pièce,images/products/placeholder.jpg
+3798,Couscous moyen Caravan 1 kg,0.85,pièce,images/products/placeholder.jpg
+2035,Couscous moyen 1 kg,0.8,pièce,images/products/placeholder.jpg
+2598,Couscous fin Darna,0.8,pièce,images/products/placeholder.jpg
+3952,Couscous express fin 500 g,1.3,pièce,images/products/placeholder.jpg
+4829,Couscous complet Épi d’Or 1 kg,2.2,pièce,images/products/placeholder.jpg
+4081,Couscous artisanal,4.5,pièce,images/products/placeholder.jpg
+1280,Chorba millet 500 g Randa,0.5,pièce,images/products/placeholder.jpg
+2034,Chorba frik 250 g Friga,0.5,pièce,images/products/placeholder.jpg
+2023,Chorba 2 Warda 500 g,0.85,pièce,images/products/placeholder.jpg
+2031,Masfouf Randa 1 kg,0.8,pièce,images/products/placeholder.jpg
+4301,Harissa Sahlia 380 g,3.5,pièce,images/products/placeholder.jpg
