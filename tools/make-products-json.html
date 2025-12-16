@@ -1,1 +1,208 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MAXI JDC MARKET — Générateur products.json</title>
+  <style>
+    body{font-family:system-ui,Arial;max-width:980px;margin:24px auto;padding:0 16px}
+    textarea{width:100%;min-height:220px}
+    button{padding:10px 14px;margin:6px 6px 6px 0;cursor:pointer}
+    .ok{color:#0a7}
+    .err{color:#b00}
+    code{background:#f3f3f3;padding:2px 5px;border-radius:4px}
+  </style>
+</head>
+<body>
+  <h2>Générer <code>products.json</code> à partir des CSV de <code>/data</code></h2>
+
+  <p>
+    ✅ Ce script lit chaque CSV et met <b>category = nom professionnel</b> (mapping ci-dessous).  
+    ✅ Prix = <b>PV_TTC</b>.  
+    ✅ Image = <code>images/products/CODE.jpg</code> si existe (sinon <code>images/products/placeholder.jpg</code>).
+  </p>
+
+  <h3>1) Liste des CSV (une ligne par fichier)</h3>
+  <p>Adapte si tu changes un nom de fichier. (Garde exactement les noms comme dans ton repo.)</p>
+  <textarea id="files">Animaux.CSV
+Bébé et Maman.CSV
+Café.CSV
+Chips.CSV
+Chocolas et Biscuits.CSV
+Cuisine du monde.CSV
+Eaux.CSV
+Fromage.CSV
+Fruits Secs.CSV
+Fruits et legumes.CSV
+Hygiene et entretien.CSV
+Hygiene et Soins.CSV
+Jus et Boissons.CSV
+Lait et Dérivés.CSV
+Pates et Conserves.CSV
+Salami.CSV
+Surgele.CSV
+Vipa.CSV</textarea>
+
+  <h3>2) Mapping “CSV → Catégorie pro”</h3>
+  <p>Tu m’as demandé des noms style Carrefour. Tu peux modifier ici si tu veux.</p>
+  <textarea id="map">Animaux.CSV=Animaux
+Bébé et Maman.CSV=Bébé & Maman
+Café.CSV=Café, Thé & Infusions
+Chips.CSV=Snacks & Chips
+Chocolas et Biscuits.CSV=Épicerie sucrée
+Cuisine du monde.CSV=Cuisine du monde
+Eaux.CSV=Eaux
+Fromage.CSV=Fromage & Crèmerie
+Fruits Secs.CSV=Fruits secs & Graines
+Fruits et legumes.CSV=Fruits & Légumes
+Hygiene et entretien.CSV=Hygiène & Entretien
+Hygiene et Soins.CSV=Hygiène & Soins
+Jus et Boissons.CSV=Boissons & Jus
+Lait et Dérivés.CSV=Lait & Dérivés
+Pates et Conserves.CSV=Épicerie salée
+Salami.CSV=Charcuterie
+Surgele.CSV=Surgelés
+Vipa.CSV=Épicerie healthy</textarea>
+
+  <div>
+    <button id="btnRun">Générer products.json</button>
+    <button id="btnDownload" disabled>Télécharger products.json</button>
+  </div>
+
+  <p id="status"></p>
+  <pre id="log" style="white-space:pre-wrap;"></pre>
+
+<script>
+const $ = (id) => document.getElementById(id);
+
+function parseMap(text){
+  const m = new Map();
+  text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean).forEach(line=>{
+    const idx = line.indexOf("=");
+    if(idx>0){
+      const k = line.slice(0, idx).trim();
+      const v = line.slice(idx+1).trim();
+      m.set(k, v);
+    }
+  });
+  return m;
+}
+
+function parseCSV(text){
+  // CSV simple "CODE_ARTICLE;DESIGNATION;PV_TTC" ou "CODE_ARTICLE,DESIGNATION,PV_TTC"
+  const lines = text.split(/\r?\n/).filter(l => l.trim().length);
+  if(!lines.length) return [];
+  const sep = (lines[0].includes(";") ? ";" : ",");
+  const header = lines[0].split(sep).map(h => h.trim());
+  const idxCode = header.findIndex(h => h.toUpperCase().includes("CODE"));
+  const idxName = header.findIndex(h => h.toUpperCase().includes("DESIGN"));
+  const idxPrice = header.findIndex(h => h.toUpperCase().includes("PV"));
+  const rows = [];
+  for(let i=1;i<lines.length;i++){
+    const cols = lines[i].split(sep);
+    const code = (cols[idxCode] ?? "").trim();
+    const name = (cols[idxName] ?? "").trim();
+    let priceRaw = (cols[idxPrice] ?? "").trim();
+    // prix peut être "6,5" -> 6.5
+    priceRaw = priceRaw.replace(",", ".");
+    const price = Number(priceRaw);
+    if(!code || !name || !Number.isFinite(price)) continue;
+    rows.push({ code, name, price });
+  }
+  return rows;
+}
+
+let generatedJSON = null;
+
+$("btnRun").addEventListener("click", async () => {
+  $("status").textContent = "Lecture des CSV...";
+  $("status").className = "";
+  $("log").textContent = "";
+  generatedJSON = null;
+  $("btnDownload").disabled = true;
+
+  const files = $("files").value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  const map = parseMap($("map").value);
+
+  const categoriesSet = new Set();
+  const products = [];
+  let idCounter = 1;
+  let loaded = 0;
+
+  for(const f of files){
+    const url = "../data/" + encodeURIComponent(f);
+    let text;
+    try{
+      const res = await fetch(url, { cache: "no-store" });
+      if(!res.ok) throw new Error(res.status + " " + res.statusText);
+      text = await res.text();
+    }catch(err){
+      $("log").textContent += `❌ Impossible de lire ${f} (${url}) : ${err}\n`;
+      continue;
+    }
+
+    const cat = map.get(f) || f.replace(/\.csv$/i,"").trim();
+    categoriesSet.add(cat);
+
+    const rows = parseCSV(text);
+    loaded += rows.length;
+
+    rows.forEach(r=>{
+      products.push({
+        id: idCounter++,
+        code: String(r.code),
+        name: r.name,
+        category: cat,
+        price: r.price,
+        unit: "pièce",
+        image: `images/products/${r.code}.jpg`
+      });
+    });
+  }
+
+  // tri simple par catégorie puis nom
+  products.sort((a,b)=>{
+    if(a.category !== b.category) return a.category.localeCompare(b.category, "fr");
+    return a.name.localeCompare(b.name, "fr");
+  });
+
+  // construit categories dans l'ordre du mapping (puis le reste)
+  const orderedCats = [];
+  for(const line of $("map").value.split(/\r?\n/)){
+    const l = line.trim();
+    if(!l) continue;
+    const idx = l.indexOf("=");
+    if(idx>0){
+      const c = l.slice(idx+1).trim();
+      if(c && categoriesSet.has(c) && !orderedCats.includes(c)) orderedCats.push(c);
+    }
+  }
+  for(const c of Array.from(categoriesSet).sort((a,b)=>a.localeCompare(b,"fr"))){
+    if(!orderedCats.includes(c)) orderedCats.push(c);
+  }
+
+  generatedJSON = {
+    categories: orderedCats,
+    products
+  };
+
+  $("status").textContent = `✅ OK: ${products.length} produits chargés.`;
+  $("status").className = "ok";
+  $("btnDownload").disabled = false;
+  $("log").textContent += `✅ Total produits: ${products.length}\n✅ Total catégories: ${orderedCats.length}\n`;
+});
+
+$("btnDownload").addEventListener("click", () => {
+  if(!generatedJSON) return;
+  const blob = new Blob([JSON.stringify(generatedJSON, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "products.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+</script>
+
+</body>
+</html>
 
