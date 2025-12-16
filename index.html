@@ -3,89 +3,125 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MAXI JDC MARKET — Commandez en ligne</title>
+  <title>MAXI JDC MARKET – Commande</title>
 
   <style>
     :root{
-      --bg:#0c0f14;
-      --panel:#121826;
-      --panel2:#0f1522;
+      --bg:#0f1115;
+      --panel:#151923;
+      --panel2:#0f131b;
       --text:#e9eef7;
-      --muted:#a9b3c7;
+      --muted:#a7b0c0;
+      --accent:#38d66b;
+      --accent2:#2bbd5b;
+      --danger:#ff5c5c;
       --border:rgba(255,255,255,.08);
-      --green:#2ee66b;
-      --green2:#1db954;
-      --chip:#1a2234;
-      --shadow:0 12px 30px rgba(0,0,0,.35);
-      --radius:18px;
+      --shadow:0 8px 30px rgba(0,0,0,.35);
+      --radius:16px;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 20% 0%, #18223a 0%, var(--bg) 60%);
+      background: radial-gradient(1200px 600px at 30% 0%, rgba(56,214,107,.18), transparent 60%),
+                  radial-gradient(1000px 700px at 100% 20%, rgba(56,214,107,.10), transparent 55%),
+                  var(--bg);
       color:var(--text);
     }
-    .container{max-width:1200px;margin:0 auto;padding:18px}
+    a{color:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:18px}
     header{
-      display:flex;gap:16px;align-items:center;justify-content:space-between;
-      padding:14px 16px;border:1px solid var(--border);background:rgba(18,24,38,.72);
-      border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter: blur(10px);
-      position:sticky;top:10px;z-index:50;
+      display:flex;gap:14px;align-items:center;justify-content:space-between;
+      background:rgba(21,25,35,.75); border:1px solid var(--border);
+      border-radius:var(--radius); padding:14px 16px; box-shadow:var(--shadow);
+      backdrop-filter: blur(10px);
     }
-    .brand{display:flex;align-items:center;gap:12px;min-width:240px}
-    .brand img{width:44px;height:44px;border-radius:999px;object-fit:cover}
-    .brand .t1{font-weight:800;letter-spacing:.3px}
-    .brand .t2{font-size:12px;color:var(--muted);margin-top:2px}
-    .top-right{display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:40px;height:40px;border-radius:50%;
+      background:linear-gradient(135deg, rgba(56,214,107,.9), rgba(56,214,107,.2));
+      display:grid;place-items:center;font-weight:800;color:#07110a;
+    }
+    .title{line-height:1.15}
+    .title b{display:block;font-size:15px}
+    .title small{color:var(--muted)}
+    .topRight{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
     .pill{
-      display:flex;align-items:center;gap:8px;
-      padding:10px 12px;border-radius:999px;border:1px solid var(--border);
-      background:rgba(15,21,34,.8);color:var(--text);font-size:13px;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;border:1px solid var(--border);
+      background:rgba(15,19,27,.7);
+      color:var(--muted); font-size:12px;
     }
-    .pill b{color:var(--green)}
     .btn{
-      cursor:pointer;border:1px solid var(--border);background:rgba(26,34,52,.9);
-      color:var(--text);padding:10px 12px;border-radius:999px;
-      transition:transform .08s ease, background .15s ease;
-      user-select:none;
+      border:0; cursor:pointer;
+      padding:10px 14px;border-radius:999px;
+      background:var(--accent); color:#06120a; font-weight:700;
+      transition: transform .05s ease;
     }
-    .btn:hover{transform:translateY(-1px);background:rgba(36,47,72,.95)}
-    .btn.primary{background:linear-gradient(180deg,var(--green),var(--green2));border:none;color:#07110a;font-weight:800}
-    .btn.ghost{background:transparent}
-    .btn.active{outline:2px solid rgba(46,230,107,.35);background:rgba(46,230,107,.10)}
-    .row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-    .searchbar{
-      margin-top:14px;
-      padding:14px 16px;border:1px solid var(--border);background:rgba(18,24,38,.55);
-      border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter: blur(10px);
-      display:flex;gap:12px;align-items:center;flex-wrap:wrap;
-    }
-    input[type="search"]{
-      flex:1;min-width:240px;
-      background:rgba(0,0,0,.25);border:1px solid var(--border);
-      color:var(--text);padding:12px 14px;border-radius:999px;
-      outline:none;
-    }
-    .chips{
-      margin-top:14px;
-      padding:14px 16px;border:1px solid var(--border);background:rgba(18,24,38,.45);
-      border-radius:var(--radius);
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
-    }
-    .chip{
-      padding:10px 12px;border-radius:999px;background:var(--chip);
-      border:1px solid var(--border);cursor:pointer;font-size:13px;
-      user-select:none;
-      white-space:nowrap;
-    }
-    .chip.active{background:rgba(46,230,107,.14);border-color:rgba(46,230,107,.35)}
-    .meta{
-      margin-left:auto;color:var(--muted);font-size:13px;
-      display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+    .btn:active{transform:scale(.98)}
+    .btn.secondary{
+      background:transparent; color:var(--text);
+      border:1px solid var(--border);
     }
 
-    /* GRID stable (anti-clignotement) */
+    .panel{
+      margin-top:14px;
+      background:rgba(21,25,35,.65);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .controls{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    }
+    .searchRow{
+      display:flex;gap:10px;align-items:center;flex:1;min-width:260px;
+    }
+    input[type="search"]{
+      width:100%;
+      background:rgba(15,19,27,.75);
+      border:1px solid var(--border);
+      border-radius:999px;
+      padding:12px 14px;
+      color:var(--text);
+      outline:none;
+    }
+    .cats{
+      display:flex;gap:8px;flex-wrap:wrap;margin-top:12px
+    }
+    .cat{
+      cursor:pointer;
+      border:1px solid var(--border);
+      background:rgba(15,19,27,.70);
+      color:var(--text);
+      padding:8px 12px;border-radius:999px;
+      font-size:12px;
+      user-select:none;
+    }
+    .cat.active{
+      border-color: rgba(56,214,107,.55);
+      background: rgba(56,214,107,.16);
+    }
+
+    .metaRow{
+      margin-top:10px;
+      display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      color:var(--muted);font-size:12px;
+    }
+    .pager{
+      display:flex;gap:8px;align-items:center;
+    }
+    .iconBtn{
+      width:36px;height:36px;border-radius:12px;
+      background:rgba(15,19,27,.75);
+      border:1px solid var(--border);
+      color:var(--text);
+      cursor:pointer;
+      display:grid;place-items:center;
+    }
     .grid{
       margin-top:14px;
       display:grid;
@@ -94,515 +130,400 @@
     }
     @media (max-width:1100px){ .grid{grid-template-columns: repeat(4,1fr);} }
     @media (max-width:900px){ .grid{grid-template-columns: repeat(3,1fr);} }
-    @media (max-width:640px){ .grid{grid-template-columns: repeat(2,1fr);} }
+    @media (max-width:650px){ .grid{grid-template-columns: repeat(2,1fr);} }
+    @media (max-width:420px){ .grid{grid-template-columns: 1fr;} }
 
     .card{
+      background:rgba(15,19,27,.72);
       border:1px solid var(--border);
-      background:linear-gradient(180deg, rgba(18,24,38,.75), rgba(15,21,34,.65));
-      border-radius:16px;
+      border-radius:18px;
+      padding:10px;
       overflow:hidden;
-      box-shadow:0 10px 25px rgba(0,0,0,.22);
-      display:flex;
-      flex-direction:column;
-      min-height:320px;
-      contain: content; /* aide performance */
+      /* IMPORTANT: pas d’animation => pas de clignotement */
     }
-    .imgwrap{
+    .thumb{
       width:100%;
-      aspect-ratio: 1 / 1;
-      background:rgba(0,0,0,.25);
+      height:150px;
+      border-radius:14px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.06);
       display:flex;align-items:center;justify-content:center;
-      border-bottom:1px solid var(--border);
+      overflow:hidden;
     }
-    .imgwrap img{
-      width:100%;
-      height:100%;
-      object-fit:cover; /* ajuste photo */
+    .thumb img{
+      width:100%;height:100%;
+      object-fit:cover;   /* ✅ photos bien ajustées */
       display:block;
     }
-    .cbody{padding:12px 12px 10px;display:flex;flex-direction:column;gap:8px;flex:1}
-    .name{font-weight:800;line-height:1.15;font-size:13px}
-    .sub{color:var(--muted);font-size:12px}
-    .price{display:flex;justify-content:space-between;align-items:baseline;margin-top:auto}
-    .price .p{font-size:16px;font-weight:900}
-    .price .u{font-size:12px;color:var(--muted)}
-    .actions{display:flex;gap:10px;align-items:center;margin-top:8px}
+    .pname{margin:10px 0 2px;font-weight:800;font-size:13px}
+    .pmeta{color:var(--muted);font-size:12px}
+    .row{
+      margin-top:10px;
+      display:flex;align-items:center;justify-content:space-between;gap:8px;
+    }
+    .price{font-weight:900}
     .qty{
-      display:flex;align-items:center;gap:8px;border:1px solid var(--border);
-      background:rgba(0,0,0,.2);border-radius:999px;padding:6px 10px;
-    }
-    .qty button{
-      width:26px;height:26px;border-radius:999px;border:1px solid var(--border);
-      background:rgba(255,255,255,.06);color:var(--text);cursor:pointer;
-    }
-    .qty span{min-width:18px;text-align:center;font-weight:800}
-    .add{
-      flex:1;
-      border:none;border-radius:999px;
-      background:linear-gradient(180deg,var(--green),var(--green2));
-      color:#07110a;font-weight:900;padding:10px 10px;cursor:pointer;
-    }
-
-    .footbar{
-      margin:16px 0 24px;
-      display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;
-      color:var(--muted);
-    }
-
-    .toast{
-      position:fixed;right:18px;bottom:18px;
-      background:rgba(18,24,38,.92);
+      display:flex;align-items:center;gap:6px;
+      background:rgba(255,255,255,.05);
       border:1px solid var(--border);
-      border-radius:14px;padding:12px 14px;
-      box-shadow:var(--shadow);
-      display:none;
-      max-width:min(420px, calc(100vw - 36px));
-      z-index:99;
+      border-radius:999px;
+      padding:6px 8px;
     }
-    .toast.show{display:block}
-    .toast b{color:var(--green)}
+    .qbtn{
+      width:28px;height:28px;border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(15,19,27,.6);
+      color:var(--text);
+      cursor:pointer;
+      display:grid;place-items:center;
+      font-weight:900;
+    }
+    .qnum{min-width:18px;text-align:center;font-weight:800}
+    .add{
+      padding:10px 12px;border-radius:999px;border:0;
+      background:var(--accent);color:#07130a;font-weight:900;cursor:pointer;
+    }
+    .empty{
+      padding:18px;color:var(--muted);text-align:center;
+      border:1px dashed rgba(255,255,255,.15);
+      border-radius:16px;
+      grid-column:1/-1;
+    }
   </style>
 </head>
-
 <body>
-  <div class="container">
+  <div class="wrap">
     <header>
       <div class="brand">
-        <img src="img/logo.png" alt="MAXI JDC MARKET" onerror="this.style.display='none'">
-        <div>
-          <div class="t1">MAXI JDC MARKET</div>
-          <div class="t2">Des prix mini — Un MAXI choix</div>
+        <div class="logo">M</div>
+        <div class="title">
+          <b>MAXI JDC MARKET</b>
+          <small>Des prix mini — Un MAXI choix</small>
         </div>
       </div>
-
-      <div class="top-right">
-        <div class="pill">📍 Jardins de Carthage, derrière mosquée Essalem</div>
-        <div class="pill">🕘 7h – 1h du matin</div>
-        <div class="pill">💬 WhatsApp: <b id="waNum">00216 25 600 978</b></div>
-        <button class="btn primary" id="btnWhatsApp">Panier WhatsApp</button>
+      <div class="topRight">
+        <span class="pill">📍 Jardins de Carthage, derrière mosquée Esselem</span>
+        <span class="pill">🕒 7h – 1h</span>
+        <span class="pill">💬 WhatsApp: <b>00216 25 600 978</b></span>
+        <button id="btnWhats" class="btn">Panier WhatsApp</button>
       </div>
     </header>
 
-    <div class="searchbar">
-      <input id="q" type="search" placeholder="Rechercher un produit (nom, catégorie, code)..." autocomplete="off" />
-      <button class="btn ghost" id="btnClear">Effacer</button>
-      <button class="btn" id="btnAll">Recherche globale</button>
-    </div>
-
-    <div class="chips" id="chips">
-      <div class="meta">
-        <span id="countInfo">Chargement…</span>
-        <span id="pageInfo"></span>
-        <button class="btn" id="prev">◀</button>
-        <button class="btn" id="next">▶</button>
+    <div class="panel">
+      <div class="controls">
+        <div class="searchRow">
+          <input id="q" type="search" placeholder="Rechercher un produit (nom, catégorie, code)..." />
+          <button id="btnClear" class="btn secondary">Effacer</button>
+        </div>
+        <div class="pager">
+          <span id="counter" class="pill">0 article(s)</span>
+          <span id="pageInfo" class="pill">Page 1/1</span>
+          <button id="prev" class="iconBtn" title="Précédent">◀</button>
+          <button id="next" class="iconBtn" title="Suivant">▶</button>
+        </div>
       </div>
-    </div>
 
-    <div class="grid" id="grid"></div>
+      <div id="cats" class="cats"></div>
 
-    <div class="footbar">
-      <div>Conditions: minimum livraison 15 dt • Livraison gratuite si total ≥ 30 dt • Sinon frais 5 dt • Retrait magasin possible</div>
-      <div style="opacity:.9">MAXI JDC MARKET</div>
+      <div class="metaRow">
+        <div class="pill">
+          Conditions: minimum livraison 15 dt • Livraison gratuite si total ≥ 30 dt • Sinon frais 5 dt • Retrait magasin possible
+        </div>
+        <div class="pill" id="cartInfo">Panier: 0.000 dt</div>
+      </div>
+
+      <div id="grid" class="grid"></div>
     </div>
   </div>
 
-  <div class="toast" id="toast"></div>
+  <script>
+    // ========= CONFIG =========
+    const JSON_URL = 'products.json';  // ✅ doit rester à la racine
 
-<script>
-/* =========================
-   CONFIG
-========================= */
-const WHATSAPP_NUMBER = "21625600978"; // sans espaces ni +
-const PRODUCTS_IMG_DIR = "img/products"; // /img/products/1407.jpg
-const CSV_DIR = "data"; // /data/Fromage.CSV
-
-// Noms PRO (style Carrefour)
-const CATEGORY_LABELS = {
-  "Animaux.CSV": "Produits animaux",
-  "Bébé et Maman.CSV": "Bébé & Maman",
-  "Café.CSV": "Café & Capsules",
-  "Chips.CSV": "Snacking salé",
-  "Chocolas et Biscuits.CSV": "Épicerie sucrée",
-  "Cuisine du monde.CSV": "Cuisine du monde",
-  "Eaux.CSV": "Eaux & Boissons sans sucre",
-  "Fromage.CSV": "Fromage & Crèmerie",
-  "Fruits Secs.CSV": "Fruits secs & Graines",
-  "Fruits et legumes.CSV": "Fruits & Légumes",
-  "Hygiene et entretien.CSV": "Hygiène & Entretien",
-  "Hygiene et Soins.CSV": "Hygiène & Soins",
-  "Jus et Boissons.CSV": "Boissons & Jus",
-  "Lait et Dérivés.CSV": "Lait & Dérivés",
-  "Pates et Conserves.CSV": "Épicerie salée",
-  "Salami.CSV": "Charcuterie",
-  "Surgele.CSV": "Surgelés",
-  "Vipa.CSV": "Épicerie healthy"
-};
-
-// Liste exacte (comme ta capture)
-const CSV_FILES = [
-  "Animaux.CSV",
-  "Bébé et Maman.CSV",
-  "Café.CSV",
-  "Chips.CSV",
-  "Chocolas et Biscuits.CSV",
-  "Cuisine du monde.CSV",
-  "Eaux.CSV",
-  "Fromage.CSV",
-  "Fruits Secs.CSV",
-  "Fruits et legumes.CSV",
-  "Hygiene et entretien.CSV",
-  "Hygiene et Soins.CSV",
-  "Jus et Boissons.CSV",
-  "Lait et Dérivés.CSV",
-  "Pates et Conserves.CSV",
-  "Salami.CSV",
-  "Surgele.CSV",
-  "Vipa.CSV"
-];
-
-const PAGE_SIZE = 25;
-
-/* =========================
-   STATE
-========================= */
-let allProducts = [];          // [{code, name, price, categoryKey, categoryLabel}]
-let activeCategory = "ALL";    // "ALL" ou categoryKey = filename
-let query = "";
-let page = 1;
-let cart = new Map();          // code -> qty
-let isRendering = false;
-
-/* =========================
-   HELPERS
-========================= */
-function norm(s){
-  return (s ?? "")
-    .toString()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
-    .toLowerCase().trim();
-}
-
-function moneyDT(v){
-  // Support virgule ou point
-  let x = (v ?? "").toString().replace(",", ".").trim();
-  let n = Number(x);
-  if (Number.isNaN(n)) return "";
-  // afficher 1 ou 2 décimales selon besoin
-  return (Math.round(n * 100) / 100).toFixed(n % 1 === 0 ? 0 : 1) + " dt";
-}
-
-function getImgUrl(code){
-  // JPG par défaut
-  return `${PRODUCTS_IMG_DIR}/${encodeURIComponent(code)}.jpg`;
-}
-
-function toast(msg){
-  const el = document.getElementById("toast");
-  el.innerHTML = msg;
-  el.classList.add("show");
-  clearTimeout(el._t);
-  el._t = setTimeout(()=>el.classList.remove("show"), 2300);
-}
-
-/* CSV parser simple (virgule ou point-virgule) */
-function parseCSV(text){
-  const lines = text.split(/\r?\n/).filter(l => l.trim() !== "");
-  if (!lines.length) return [];
-  const header = lines[0];
-  const sep = header.includes(";") ? ";" : ",";
-  const rows = [];
-  for (let i=1;i<lines.length;i++){
-    const line = lines[i];
-    const cols = line.split(sep).map(c => c.trim());
-    // attendu: CODE_ARTICLE, DESIGNATION, PV_TTC
-    if (cols.length < 3) continue;
-    rows.push({
-      code: cols[0],
-      name: cols[1],
-      price: cols[2]
-    });
-  }
-  return rows;
-}
-
-async function loadOneCSV(fileName){
-  const url = `${CSV_DIR}/${encodeURIComponent(fileName)}`;
-  const res = await fetch(url, {cache:"no-store"});
-  if (!res.ok) throw new Error(`Impossible de charger ${fileName}`);
-  const text = await res.text();
-  const rows = parseCSV(text);
-
-  const label = CATEGORY_LABELS[fileName] || fileName.replace(/\.csv$/i,"");
-  return rows
-    .filter(r => r.code && r.name)
-    .map(r => ({
-      code: r.code.trim(),
-      name: r.name.trim(),
-      price: r.price?.trim() ?? "",
-      categoryKey: fileName,
-      categoryLabel: label
-    }));
-}
-
-/* =========================
-   UI BUILD
-========================= */
-function buildCategoryChips(){
-  const chips = document.getElementById("chips");
-  // Garder la zone meta déjà dedans -> on reconstruit proprement
-  chips.innerHTML = "";
-
-  // Bouton ALL
-  const allChip = document.createElement("div");
-  allChip.className = "chip" + (activeCategory==="ALL" ? " active":"");
-  allChip.textContent = "Toutes catégories";
-  allChip.onclick = () => { activeCategory="ALL"; page=1; render(); };
-  chips.appendChild(allChip);
-
-  // Chips catégories
-  for (const f of CSV_FILES){
-    const c = document.createElement("div");
-    c.className = "chip" + (activeCategory===f ? " active":"");
-    c.textContent = CATEGORY_LABELS[f] || f;
-    c.onclick = () => { activeCategory=f; page=1; render(); };
-    chips.appendChild(c);
-  }
-
-  // Meta à droite
-  const meta = document.createElement("div");
-  meta.className = "meta";
-  meta.innerHTML = `
-    <span id="countInfo"></span>
-    <span id="pageInfo"></span>
-    <button class="btn" id="prev">◀</button>
-    <button class="btn" id="next">▶</button>
-  `;
-  chips.appendChild(meta);
-
-  document.getElementById("prev").onclick = () => { if(page>1){ page--; render(); } };
-  document.getElementById("next").onclick = () => { page++; render(); };
-}
-
-function filteredProducts(){
-  const qn = norm(query);
-  return allProducts.filter(p => {
-    if (activeCategory !== "ALL" && p.categoryKey !== activeCategory) return false;
-    if (!qn) return true;
-    return (
-      norm(p.name).includes(qn) ||
-      norm(p.categoryLabel).includes(qn) ||
-      norm(p.code).includes(qn)
-    );
-  });
-}
-
-/* Render stable anti-clignotement */
-function render(){
-  if (isRendering) return;
-  isRendering = true;
-
-  // Chips active state
-  buildCategoryChips();
-
-  const list = filteredProducts();
-  const total = list.length;
-
-  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-  if (page > totalPages) page = totalPages;
-
-  const start = (page-1)*PAGE_SIZE;
-  const pageItems = list.slice(start, start + PAGE_SIZE);
-
-  document.getElementById("countInfo").textContent = `${total} article(s)`;
-  document.getElementById("pageInfo").textContent = `Page ${page}/${totalPages}`;
-
-  const grid = document.getElementById("grid");
-
-  // IMPORTANT: on évite “clignotement” en ne faisant pas d’animations et en remplaçant d’un coup
-  const frag = document.createDocumentFragment();
-
-  for (const p of pageItems){
-    const card = document.createElement("div");
-    card.className = "card";
-
-    const imgWrap = document.createElement("div");
-    imgWrap.className = "imgwrap";
-
-    const img = document.createElement("img");
-    img.loading = "lazy";
-    img.alt = p.name;
-
-    // Image fallback si pas trouvée
-    img.src = getImgUrl(p.code);
-    img.onerror = () => {
-      img.onerror = null;
-      img.src = "img/placeholder.png"; // (optionnel) sinon on cache
-      img.style.objectFit = "contain";
-      img.style.opacity = ".9";
-    };
-    imgWrap.appendChild(img);
-
-    const body = document.createElement("div");
-    body.className = "cbody";
-    body.innerHTML = `
-      <div class="name">${escapeHtml(p.name)}</div>
-      <div class="sub">${escapeHtml(p.categoryLabel)} • ${escapeHtml(p.code)}</div>
-      <div class="price">
-        <div class="p">${moneyDT(p.price) || ""}</div>
-        <div class="u">/ pièce</div>
-      </div>
-    `;
-
-    const actions = document.createElement("div");
-    actions.className = "actions";
-
-    const qty = document.createElement("div");
-    qty.className = "qty";
-
-    const minus = document.createElement("button");
-    minus.textContent = "−";
-    const plus = document.createElement("button");
-    plus.textContent = "+";
-    const qSpan = document.createElement("span");
-    qSpan.textContent = cart.get(p.code) || 1;
-
-    minus.onclick = () => {
-      let v = (cart.get(p.code) || 1) - 1;
-      if (v < 1) v = 1;
-      cart.set(p.code, v);
-      qSpan.textContent = v;
-    };
-    plus.onclick = () => {
-      let v = (cart.get(p.code) || 1) + 1;
-      cart.set(p.code, v);
-      qSpan.textContent = v;
+    const state = {
+      data: null,
+      selectedCategory: '__ALL__',
+      query: '',
+      page: 1,
+      perPage: 20,
+      cart: new Map(), // code/id -> qty
     };
 
-    qty.appendChild(minus);
-    qty.appendChild(qSpan);
-    qty.appendChild(plus);
+    // ========= UTILS =========
+    const $ = (id) => document.getElementById(id);
 
-    const add = document.createElement("button");
-    add.className = "add";
-    add.textContent = "Ajouter";
-    add.onclick = () => {
-      const v = cart.get(p.code) || 1;
-      toast(`✅ Ajouté: <b>${escapeHtml(p.name)}</b> (x${v})`);
-    };
-
-    actions.appendChild(qty);
-    actions.appendChild(add);
-
-    body.appendChild(actions);
-
-    card.appendChild(imgWrap);
-    card.appendChild(body);
-
-    frag.appendChild(card);
-  }
-
-  // Swap d’un coup
-  grid.innerHTML = "";
-  grid.appendChild(frag);
-
-  isRendering = false;
-}
-
-function escapeHtml(s){
-  return (s ?? "").toString()
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
-/* =========================
-   WHATSAPP CART
-========================= */
-function buildWhatsAppMessage(){
-  const list = filteredProducts(); // ou allProducts? -> ici on prend ceux du panier seulement
-  const items = [];
-  let totalLines = 0;
-
-  // construire depuis cart
-  for (const [code, qty] of cart.entries()){
-    const p = allProducts.find(x => x.code === code);
-    if (!p) continue;
-    items.push(`- ${p.name} (Code: ${p.code}) x${qty} — ${moneyDT(p.price)}`);
-    totalLines++;
-  }
-
-  if (!items.length) return "Bonjour MAXI JDC MARKET, je veux passer une commande :";
-
-  return [
-    "Bonjour MAXI JDC MARKET, je veux passer une commande :",
-    "",
-    ...items,
-    "",
-    "Merci."
-  ].join("\n");
-}
-
-function openWhatsApp(){
-  const msg = buildWhatsAppMessage();
-  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-  window.open(url, "_blank");
-}
-
-/* =========================
-   INIT
-========================= */
-async function init(){
-  document.getElementById("btnWhatsApp").onclick = openWhatsApp;
-  document.getElementById("btnAll").onclick = () => { activeCategory="ALL"; page=1; render(); };
-
-  const qEl = document.getElementById("q");
-  qEl.addEventListener("input", () => {
-    query = qEl.value;
-    page = 1;
-    render();
-  });
-
-  document.getElementById("btnClear").onclick = () => {
-    qEl.value = "";
-    query = "";
-    page = 1;
-    render();
-  };
-
-  // Charge tous les CSV
-  const loaded = [];
-  for (const f of CSV_FILES){
-    try{
-      const arr = await loadOneCSV(f);
-      loaded.push(...arr);
-    }catch(e){
-      console.warn(e);
+    function money(dt){
+      const n = Number(dt || 0);
+      return n.toFixed(3) + ' dt';
     }
-  }
 
-  // Déduplication (au cas où)
-  const seen = new Set();
-  allProducts = loaded.filter(p => {
-    const k = `${p.categoryKey}__${p.code}`;
-    if (seen.has(k)) return false;
-    seen.add(k);
-    return true;
-  });
+    function normalize(s){
+      return (s ?? '').toString().trim().toLowerCase();
+    }
 
-  // Tri stable (anti clignotement : ordre constant)
-  allProducts.sort((a,b) => {
-    if (a.categoryLabel !== b.categoryLabel) return a.categoryLabel.localeCompare(b.categoryLabel);
-    return a.name.localeCompare(b.name);
-  });
+    function productKey(p){
+      // priorité au code article si existant, sinon id
+      return (p.code ?? p.id ?? p.name);
+    }
 
-  // Départ
-  render();
-}
+    function imgPath(p){
+      // si ton json met "images/products/4275.jpg" => ok
+      // si ton json met juste "4275.jpg" => on corrige
+      const img = (p.image ?? '').toString().trim();
+      if(!img) return 'images/products/placeholder.jpg';
+      if(img.startsWith('images/')) return img;
+      if(img.startsWith('img/')) return img; // au cas où
+      return 'images/products/' + img;
+    }
 
-init();
-</script>
+    // ========= LOAD =========
+    async function loadData(){
+      // cache busting pour GitHub pages
+      const url = JSON_URL + '?v=' + Date.now();
+      const res = await fetch(url);
+      if(!res.ok) throw new Error('Impossible de charger ' + JSON_URL);
+      const data = await res.json();
 
+      // sécurité : si pas de categories, on les déduit des products
+      if(!Array.isArray(data.categories)){
+        const set = new Set((data.products||[]).map(p => p.category).filter(Boolean));
+        data.categories = Array.from(set);
+      }
+      data.products = Array.isArray(data.products) ? data.products : [];
+
+      state.data = data;
+      buildCategories();
+      render();
+    }
+
+    // ========= UI: CATEGORIES =========
+    function buildCategories(){
+      const box = $('cats');
+      box.innerHTML = '';
+
+      const makeBtn = (label, value) => {
+        const b = document.createElement('div');
+        b.className = 'cat' + (state.selectedCategory === value ? ' active' : '');
+        b.textContent = label;
+        b.onclick = () => {
+          state.selectedCategory = value;
+          state.page = 1;
+          // refresh active style
+          [...box.children].forEach(x => x.classList.remove('active'));
+          b.classList.add('active');
+          render();
+        };
+        box.appendChild(b);
+      };
+
+      makeBtn('Toutes catégories', '__ALL__');
+      state.data.categories.forEach(cat => makeBtn(cat, cat));
+    }
+
+    // ========= FILTER =========
+    function getFiltered(){
+      const products = state.data.products;
+
+      let out = products;
+
+      // catégorie (égalité stricte => zéro mélange)
+      if(state.selectedCategory !== '__ALL__'){
+        out = out.filter(p => (p.category || '') === state.selectedCategory);
+      }
+
+      // recherche globale
+      const q = normalize(state.query);
+      if(q){
+        out = out.filter(p => {
+          const blob = [
+            p.name, p.designation, p.category,
+            p.code, p.id
+          ].map(x => normalize(x)).join(' | ');
+          return blob.includes(q);
+        });
+      }
+
+      return out;
+    }
+
+    // ========= CART =========
+    function cartTotal(){
+      let total = 0;
+      const byKey = new Map(state.data.products.map(p => [String(productKey(p)), p]));
+      for(const [k, qty] of state.cart.entries()){
+        const p = byKey.get(String(k));
+        if(p) total += (Number(p.price)||0) * qty;
+      }
+      return total;
+    }
+
+    function buildWhatsAppMessage(){
+      const byKey = new Map(state.data.products.map(p => [String(productKey(p)), p]));
+      const lines = [];
+      lines.push('Bonjour MAXI JDC MARKET, je veux commander:');
+      for(const [k, qty] of state.cart.entries()){
+        const p = byKey.get(String(k));
+        if(!p) continue;
+        const codeTxt = p.code ? ` (Code: ${p.code})` : '';
+        lines.push(`- ${qty} x ${p.name}${codeTxt} — ${money(p.price)}`);
+      }
+      lines.push('Total produits: ' + money(cartTotal()));
+      return lines.join('\n');
+    }
+
+    function openWhatsApp(){
+      const phone = '0021625600978';
+      const text = encodeURIComponent(buildWhatsAppMessage());
+      const url = `https://wa.me/${phone}?text=${text}`;
+      window.open(url, '_blank');
+    }
+
+    // ========= RENDER =========
+    function render(){
+      // rendu stable (pas de setInterval => pas de clignotement)
+      const all = getFiltered();
+      const total = all.length;
+
+      const totalPages = Math.max(1, Math.ceil(total / state.perPage));
+      state.page = Math.min(state.page, totalPages);
+
+      const start = (state.page - 1) * state.perPage;
+      const pageItems = all.slice(start, start + state.perPage);
+
+      $('counter').textContent = `${total} article(s)`;
+      $('pageInfo').textContent = `Page ${state.page}/${totalPages}`;
+      $('cartInfo').textContent = `Panier: ${money(cartTotal())}`;
+
+      $('prev').disabled = state.page <= 1;
+      $('next').disabled = state.page >= totalPages;
+
+      const grid = $('grid');
+      grid.innerHTML = '';
+
+      if(pageItems.length === 0){
+        const e = document.createElement('div');
+        e.className = 'empty';
+        e.textContent = 'Aucun produit trouvé (vérifie la catégorie ou la recherche).';
+        grid.appendChild(e);
+        return;
+      }
+
+      pageItems.forEach(p => {
+        const key = String(productKey(p));
+        const qty = state.cart.get(key) || 0;
+
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const thumb = document.createElement('div');
+        thumb.className = 'thumb';
+
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.src = imgPath(p);
+        img.alt = p.name || 'Produit';
+        img.onerror = () => { img.src = 'images/products/placeholder.jpg'; };
+        thumb.appendChild(img);
+
+        const name = document.createElement('div');
+        name.className = 'pname';
+        name.textContent = p.name || p.designation || 'Sans nom';
+
+        const meta = document.createElement('div');
+        meta.className = 'pmeta';
+        const codeTxt = p.code ? ` • Code: ${p.code}` : '';
+        meta.textContent = `${p.category || ''}${codeTxt}`;
+
+        const row = document.createElement('div');
+        row.className = 'row';
+
+        const price = document.createElement('div');
+        price.className = 'price';
+        price.textContent = money(p.price);
+
+        const qtyBox = document.createElement('div');
+        qtyBox.className = 'qty';
+
+        const minus = document.createElement('button');
+        minus.className = 'qbtn';
+        minus.textContent = '−';
+        minus.onclick = () => {
+          const cur = state.cart.get(key) || 0;
+          const n = Math.max(0, cur - 1);
+          if(n === 0) state.cart.delete(key);
+          else state.cart.set(key, n);
+          render();
+        };
+
+        const num = document.createElement('div');
+        num.className = 'qnum';
+        num.textContent = qty;
+
+        const plus = document.createElement('button');
+        plus.className = 'qbtn';
+        plus.textContent = '+';
+        plus.onclick = () => {
+          const cur = state.cart.get(key) || 0;
+          state.cart.set(key, cur + 1);
+          render();
+        };
+
+        qtyBox.appendChild(minus);
+        qtyBox.appendChild(num);
+        qtyBox.appendChild(plus);
+
+        const add = document.createElement('button');
+        add.className = 'add';
+        add.textContent = 'Ajouter';
+        add.onclick = () => {
+          const cur = state.cart.get(key) || 0;
+          state.cart.set(key, cur + 1);
+          render();
+        };
+
+        row.appendChild(price);
+        row.appendChild(qtyBox);
+        row.appendChild(add);
+
+        card.appendChild(thumb);
+        card.appendChild(name);
+        card.appendChild(meta);
+        card.appendChild(row);
+
+        grid.appendChild(card);
+      });
+    }
+
+    // ========= EVENTS =========
+    $('q').addEventListener('input', (e) => {
+      state.query = e.target.value || '';
+      state.page = 1;
+      render();
+    });
+
+    $('btnClear').onclick = () => {
+      $('q').value = '';
+      state.query = '';
+      state.page = 1;
+      render();
+    };
+
+    $('prev').onclick = () => { state.page = Math.max(1, state.page - 1); render(); };
+    $('next').onclick = () => { state.page = state.page + 1; render(); };
+
+    $('btnWhats').onclick = () => {
+      if(state.cart.size === 0){
+        alert('Panier vide. Ajoute des produits avant.');
+        return;
+      }
+      openWhatsApp();
+    };
+
+    // ========= START =========
+    loadData().catch(err => {
+      console.error(err);
+      document.body.innerHTML = '<div style="padding:20px;color:#fff;font-family:Arial">Erreur: ' + err.message + '<br>Vérifie que <b>products.json</b> est à la racine du dépôt.</div>';
+    });
+  </script>
 </body>
 </html>
