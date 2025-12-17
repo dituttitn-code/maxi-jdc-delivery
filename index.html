@@ -692,9 +692,117 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+<!-- ====== BOUTON PANIER (en haut à gauche) ====== -->
+<button id="cartFab" class="cart-fab" type="button" title="Ouvrir le panier">
+  🛒 Panier <span id="cartBadge" class="cart-badge">0</span>
+</button>
+
+<!-- ====== PANIER (drawer) ====== -->
+<aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+  <div class="cart-header">
+    <h3>🛒 Votre panier</h3>
+    <button id="cartClose" class="cart-close" type="button">Fermer ✖</button>
+  </div>
+
+  <div id="cartItems" class="cart-body"></div>
+
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">0 dt</span>
+    </div>
+
+    <div class="cart-actions">
+      <button id="cartClear" class="btn" type="button">Vider</button>
+      <button id="openCheckout" class="btn btn-gold" type="button">Valider commande</button>
+    </div>
+
+    <div class="cart-hint">Minimum livraison : <b>15 dt</b></div>
+  </div>
+</aside>
+
+<!-- ====== FICHE CLIENT (modal) ====== -->
+<div id="checkoutModal" class="modal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>🧾 Informations client</h3>
+      <button id="closeCheckout" class="cart-close" type="button">Fermer ✖</button>
+    </div>
+
+    <div class="modal-body">
+      <label class="field">
+        <span>Nom & Prénom *</span>
+        <input id="cName" type="text" placeholder="Ex: Lotfi Khelifi" />
+      </label>
+
+      <label class="field">
+        <span>Téléphone *</span>
+        <input id="cPhone" type="tel" placeholder="Ex: 25 600 978" />
+      </label>
+
+      <label class="field">
+        <span>Mode *</span>
+        <select id="cMode">
+          <option value="Livraison">Livraison</option>
+          <option value="Retrait magasin">Retrait magasin</option>
+        </select>
+      </label>
+
+      <label class="field" id="addressField">
+        <span>Adresse livraison *</span>
+        <input id="cAddress" type="text" placeholder="Ex: Jardins de Carthage, derrière mosquée Essalem" />
+      </label>
+
+      <label class="field">
+        <span>Note (optionnel)</span>
+        <textarea id="cNote" rows="3" placeholder="Ex: Interphone, étage, heure souhaitée..."></textarea>
+      </label>
+
+      <div class="modal-actions">
+        <button id="sendWhatsApp" class="btn btn-gold" type="button">Envoyer sur WhatsApp</button>
+      </div>
+
+      <div class="tiny">
+        * Champs obligatoires. (Aucun point fidélité ici.)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== ADMIN (caché) ====== -->
+<div id="adminPanel" class="modal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>🔒 Admin (caché)</h3>
+      <button id="closeAdmin" class="cart-close" type="button">Fermer ✖</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="tiny">Admin invisible pour les clients. Pour l’ouvrir : ajouter <b>#admin</b> à la fin du lien.</div>
+
+      <label class="field">
+        <span>Code article</span>
+        <input id="aCode" type="text" placeholder="Ex: 4124" />
+      </label>
+
+      <label class="field">
+        <span>Nouveau prix (dt)</span>
+        <input id="aPrice" type="number" step="0.001" placeholder="Ex: 6.5" />
+      </label>
+
+      <div class="modal-actions" style="gap:10px">
+        <button id="saveOverride" class="btn btn-gold" type="button">Enregistrer prix</button>
+        <button id="clearOverrides" class="btn" type="button">Effacer tous les prix admin</button>
+      </div>
+
+      <div class="tiny">Les prix admin sont enregistrés dans ce navigateur (localStorage).</div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
+
 
 
 
