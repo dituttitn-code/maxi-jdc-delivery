@@ -576,11 +576,25 @@
       <!-- items -->
     </div>
 
-    <div class="drawerFoot">
-      <div class="totalRow">
-        <div>Total</div>
-        <div id="cartTotal">0.00 dt</div>
-      </div>
+    <div class="totalRow">
+  <div>Sous-total</div>
+  <div id="cartSubTotal">0.00 dt</div>
+</div>
+
+<div class="totalRow" style="font-weight:900;color:var(--muted)">
+  <div>Frais livraison</div>
+  <div id="cartDeliveryFee">0.00 dt</div>
+</div>
+
+<div class="totalRow" style="font-size:16px">
+  <div>Total à payer</div>
+  <div id="cartTotalPay">0.00 dt</div>
+</div>
+
+<div class="sub" id="cartRuleMsg" style="opacity:.95;margin-top:2px">
+  Minimum commande: 15 dt · Livraison gratuite si total ≥ 30 dt · Sinon frais 5 dt
+</div>
+
 
       <div class="form">
         <input id="cName" type="text" placeholder="Nom & prénom" />
@@ -1130,3 +1144,4 @@
   </script>
 </body>
 </html>
+
