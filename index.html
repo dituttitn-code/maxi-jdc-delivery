@@ -3,816 +3,674 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MAXI JDC MARKET — Commande en ligne</title>
+  <title>MAXI JDC MARKET – Commande en ligne</title>
 
   <style>
     :root{
-      --bg:#0b0f14;
-      --panel:#111826;
-      --panel2:#0f1520;
-      --text:#e8eef7;
-      --muted:#9bb0c6;
-      --line:rgba(255,255,255,.08);
-      --btn:#1a2636;
-      --btn2:#142030;
-      --accent:#2bd576;
-      --accent2:#1aa85a;
-      --danger:#ff4d4d;
-      --shadow: 0 12px 30px rgba(0,0,0,.35);
-      --radius:14px;
-      --radius2:20px;
+      --bg:#0b0f14; --panel:#111826; --panel2:#0f1520;
+      --text:#e8eef7; --muted:#9bb0c6; --line:rgba(255,255,255,.10);
+      --accent:#2bd576; --danger:#ff4d4d; --shadow:0 16px 40px rgba(0,0,0,.35);
+      --r:14px; --r2:20px;
     }
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
-      background: radial-gradient(1200px 600px at 20% -10%, rgba(43,213,118,.15), transparent 60%),
-                  radial-gradient(900px 500px at 90% 0%, rgba(80,160,255,.10), transparent 55%),
-                  var(--bg);
-      color:var(--text);
-    }
-    header{
-      position:sticky; top:0; z-index:10;
-      background: rgba(11,15,20,.78);
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--line);
-    }
-    .wrap{max-width:1200px;margin:0 auto;padding:14px 16px}
-    .topbar{
-      display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;
-    }
-    .brand{
-      display:flex;align-items:center;gap:10px;min-width:280px;
-    }
-    .logo{
-      width:40px;height:40px;border-radius:12px;
-      background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.02));
-      border:1px solid var(--line);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:800;
-      box-shadow: var(--shadow);
-    }
-    .brand h1{font-size:15px;margin:0;line-height:1.1}
-    .brand .sub{font-size:12px;color:var(--muted);margin-top:2px}
-    .rightinfo{
-      display:flex;gap:14px;align-items:center;flex-wrap:wrap;
-      color:var(--muted);font-size:12px;justify-content:flex-end;
-    }
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 10px;border:1px solid var(--line);border-radius:999px;
-      background: rgba(17,24,38,.55);
-    }
-
-    .controls{
-      margin-top:12px;
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
-    }
-    .searchRow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;flex:1}
-    input[type="search"]{
-      width:min(620px, 100%);
-      padding:11px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(17,24,38,.45);
-      color:var(--text);
-      outline:none;
-    }
-    input[type="search"]::placeholder{color:rgba(155,176,198,.75)}
-    .btn{
-      padding:10px 12px;border-radius:999px;
-      border:1px solid var(--line);
-      background: var(--btn);
-      color:var(--text);
-      cursor:pointer;
-      transition:.15s;
-      user-select:none;
-    }
-    .btn:hover{transform:translateY(-1px);background:var(--btn2)}
-    .btn.primary{
-      border-color: rgba(43,213,118,.35);
-      background: rgba(43,213,118,.10);
-      box-shadow: 0 10px 22px rgba(43,213,118,.08);
-    }
-    .btn.primary:hover{background: rgba(43,213,118,.16)}
-    .stat{
-      display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;
-      color:var(--muted);font-size:12px;
-    }
-
-    .notice{
-      margin-top:10px;
-      color:var(--muted);
-      font-size:12px;
-      padding:10px 12px;
-      border:1px dashed rgba(255,255,255,.14);
-      border-radius: var(--radius);
-      background: rgba(17,24,38,.30);
-    }
-
-    main .wrap{padding-top:16px;padding-bottom:28px}
-
-    .grid{
-      display:grid;
-      grid-template-columns: 320px 1fr;
-      gap:14px;
-    }
-    @media (max-width: 980px){
-      .grid{grid-template-columns: 1fr}
-    }
-
-    .card{
-      background: rgba(17,24,38,.55);
-      border:1px solid var(--line);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .card h2{
-      font-size:13px;margin:0;
-      padding:14px 14px;
-      border-bottom:1px solid var(--line);
-      color:rgba(232,238,247,.92);
-      background: rgba(15,21,32,.55);
-      letter-spacing:.2px;
-    }
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    header{position:sticky;top:0;z-index:50;background:rgba(11,15,20,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .wrap{max-width:1200px;margin:0 auto;padding:18px}
+    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:12px 18px}
+    .brand{display:flex;gap:10px;align-items:center}
+    .logoMark{width:40px;height:40px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);display:grid;place-items:center;font-weight:900}
+    .title b{display:block;font-size:15px}
+    .title small{color:var(--muted);font-size:12px}
+    .chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .chip{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);padding:8px 10px;border-radius:999px;font-size:12px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:0 18px 14px 18px}
+    .input{flex:1;min-width:260px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:999px;padding:10px 14px;color:var(--text);outline:none}
+    .btn{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:var(--text);padding:10px 12px;border-radius:999px;cursor:pointer;font-weight:900}
+    .btn:hover{border-color:rgba(255,255,255,.22)}
+    .btn.green{background:rgba(43,213,118,.16);border-color:rgba(43,213,118,.35)}
+    .btn.gold{background:rgba(255,215,120,.12);border-color:rgba(255,215,120,.35)}
+    .notice{margin:10px 18px 0 18px;padding:10px 12px;border:1px dashed rgba(255,255,255,.14);border-radius:var(--r);color:var(--muted);font-size:12px;background:rgba(17,24,38,.30)}
+    main{padding:18px}
+    .grid{display:grid;grid-template-columns:320px 1fr;gap:14px;align-items:start}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+    .card{background:rgba(17,24,38,.70);border:1px solid rgba(255,255,255,.10);border-radius:var(--r2);box-shadow:var(--shadow)}
+    .cardHead{padding:14px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .cardHead h3{margin:0;font-size:14px}
+    .cardHead small{color:var(--muted)}
     .catList{padding:10px}
-    .catBtn{
-      width:100%;
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding:10px 12px;
-      border-radius: 14px;
-      border:1px solid transparent;
-      background: transparent;
-      color:var(--text);
-      cursor:pointer;
-      transition:.12s;
-      text-align:left;
-    }
-    .catBtn:hover{background: rgba(255,255,255,.04)}
-    .catBtn.active{
-      background: rgba(43,213,118,.10);
-      border-color: rgba(43,213,118,.25);
-    }
-    .catName{display:flex;flex-direction:column;gap:2px}
-    .catName b{font-size:13px}
-    .catName span{font-size:11px;color:var(--muted)}
-    .badge{
-      font-size:11px;color:var(--muted);
-      padding:6px 10px;border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(17,24,38,.45);
-      white-space:nowrap;
-    }
+    .catItem{width:100%;text-align:left;background:transparent;border:1px solid rgba(255,255,255,.08);color:var(--text);padding:12px;border-radius:14px;margin-bottom:10px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .catItem.active{border-color:rgba(43,213,118,.45);background:rgba(43,213,118,.08)}
+    .catItem .sub{color:var(--muted);font-size:12px;margin-top:3px}
+    .pill{min-width:72px;text-align:center;font-weight:1000;font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06)}
+    .productsTop{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 14px 0 14px}
+    .productsTop h2{margin:0;font-size:16px}
+    .pager{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:12px}
+    .iconBtn{width:34px;height:34px;border-radius:999px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);cursor:pointer}
+    .iconBtn:hover{border-color:rgba(255,255,255,.22)}
+    .productsMeta{color:var(--muted);font-size:12px;padding:0 14px 10px 14px}
+    .productGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:14px}
+    @media(max-width:1100px){.productGrid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:620px){.productGrid{grid-template-columns:1fr}}
+    .pCard{border:1px solid rgba(255,255,255,.10);background:rgba(15,21,32,.65);border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:10px;min-height:110px}
+    .pTop{display:flex;justify-content:space-between;gap:10px}
+    .pName{font-weight:1000;font-size:13px;line-height:1.2}
+    .pCode{color:var(--muted);font-size:11px;margin-top:4px}
+    .price{font-weight:1000;border:1px solid rgba(43,213,118,.35);background:rgba(43,213,118,.10);color:#d9ffe9;padding:6px 10px;border-radius:999px;height:max-content;min-width:70px;text-align:center}
+    .pActions{display:flex;gap:8px;margin-top:auto}
+    .qtyBtn{flex:1;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:var(--text);border-radius:12px;padding:9px 10px;font-weight:1000;cursor:pointer}
+    .qtyBtn.add{border-color:rgba(43,213,118,.35);background:rgba(43,213,118,.14)}
 
-    .productsCardHeader{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
-      padding:14px 14px;
-      border-bottom:1px solid var(--line);
-      background: rgba(15,21,32,.55);
+    /* ✅ PANIER bouton haut à droite */
+    .cart-fab{
+      position:fixed; right:16px; top:16px; left:auto; bottom:auto;
+      z-index:9999; padding:10px 14px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.15); background:rgba(17,24,38,.95);
+      color:#fff; cursor:pointer; font-weight:1000; box-shadow:var(--shadow);
+      display:flex;gap:8px;align-items:center;
     }
-    .productsCardHeader .title{
-      display:flex;flex-direction:column;gap:3px;
-    }
-    .productsCardHeader .title b{font-size:14px}
-    .productsCardHeader .title span{font-size:12px;color:var(--muted)}
-    .pager{display:flex;gap:8px;align-items:center}
-    .pager .btn{padding:8px 10px}
-    .pager .pageInfo{font-size:12px;color:var(--muted)}
+    .cart-badge{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(43,213,118,.18);font-weight:1000;font-size:12px}
 
-    .products{
-      padding:12px;
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap:10px;
+    /* ✅ PANIER drawer caché par défaut */
+    .cart-drawer{
+      position:fixed; top:0; right:0; height:100vh; width:min(420px,96vw);
+      background:rgba(17,24,38,.98); border-left:1px solid rgba(255,255,255,.10);
+      transform:translateX(110%); transition:.25s ease; z-index:9998;
+      display:flex;flex-direction:column; box-shadow:var(--shadow);
     }
-    @media (max-width: 1150px){ .products{grid-template-columns: repeat(2, minmax(0, 1fr));} }
-    @media (max-width: 620px){ .products{grid-template-columns: 1fr;} }
+    .cart-drawer.open{transform:translateX(0)}
+    .cart-header{display:flex;justify-content:space-between;align-items:center;padding:14px;border-bottom:1px solid rgba(255,255,255,.10)}
+    .cart-header h3{margin:0;font-size:15px}
+    .cart-close{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:var(--text);border-radius:999px;padding:8px 10px;cursor:pointer;font-weight:1000}
+    .cart-body{padding:12px;overflow:auto;flex:1;display:flex;flex-direction:column;gap:10px}
+    .cart-row{border:1px solid rgba(255,255,255,.10);background:rgba(15,21,32,.55);border-radius:16px;padding:10px;display:flex;gap:10px;align-items:center;justify-content:space-between}
+    .cart-row b{font-size:12px}
+    .cart-row small{color:var(--muted)}
+    .cart-qty{display:flex;gap:6px;align-items:center}
+    .miniBtn{width:30px;height:30px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:var(--text);font-weight:1000;cursor:pointer}
+    .miniBtn.danger{border-color:rgba(255,77,77,.35);background:rgba(255,77,77,.12)}
+    .cart-footer{border-top:1px solid rgba(255,255,255,.10);padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+    .cart-total{display:flex;justify-content:space-between;align-items:center}
+    .cart-actions{display:flex;gap:10px}
+    .cart-hint{color:var(--muted);font-size:12px}
 
-    .p{
-      border:1px solid var(--line);
-      background: rgba(17,24,38,.45);
-      border-radius: 18px;
-      padding:12px;
-      display:flex;flex-direction:column;gap:8px;
-      min-height:112px;
+    /* ✅ MODAL caché par défaut */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px}
+    .modal.open{display:flex}
+    .modalCard{width:min(760px,96vw);background:rgba(17,24,38,.98);border:1px solid rgba(255,255,255,.12);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+    .modalHead{padding:14px;border-bottom:1px solid rgba(255,255,255,.10);display:flex;justify-content:space-between;align-items:center}
+    .modalHead h3{margin:0;font-size:15px}
+    .modalBody{padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media(max-width:720px){.modalBody{grid-template-columns:1fr}}
+    .field label{display:block;font-size:12px;color:var(--muted);margin:0 0 6px 2px}
+    .field input,.field select,.field textarea{
+      width:100%; padding:10px 12px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06);
+      color:var(--text); outline:none;
     }
-    .p .row1{
-      display:flex;justify-content:space-between;gap:10px;align-items:flex-start;
-    }
-    .p .name{font-weight:700;font-size:14px;line-height:1.2}
-    .p .code{font-size:11px;color:var(--muted)}
-    .p .price{
-      font-weight:800;
-      padding:6px 10px;border-radius:999px;
-      border:1px solid rgba(43,213,118,.28);
-      background: rgba(43,213,118,.10);
-      white-space:nowrap;
-      align-self:flex-start;
-    }
-    .empty{
-      padding:18px;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .warn{
-      color: rgba(255,190,80,.95);
-      font-size:12px;
-      padding:10px 12px;
-      border:1px solid rgba(255,190,80,.25);
-      background: rgba(255,190,80,.08);
-      border-radius: 14px;
-      margin:12px;
-    }
-    footer{
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      font-size:12px;
-      padding:14px 16px;
-    }
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+    .field textarea{min-height:90px;resize:vertical}
+    .modalFoot{padding:14px;border-top:1px solid rgba(255,255,255,.10);display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+    .smallNote{color:var(--muted);font-size:12px;margin-top:-6px}
+
+    /* Admin (caché) */
+    .adminBox{display:none;margin-top:10px;padding:12px;border-top:1px solid rgba(255,255,255,.10)}
+    .adminBox.open{display:block}
+    .adminRow{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+    .adminRow .field{flex:1;min-width:180px}
   </style>
 </head>
 
 <body>
-<header>
-  <div class="wrap">
+  <header>
     <div class="topbar">
       <div class="brand">
-        <div class="logo">M</div>
-        <div>
-          <h1>MAXI JDC MARKET</h1>
-          <div class="sub">Des prix mini — Un MAXI choix</div>
+        <div class="logoMark" title="M/JDC/M">M</div>
+        <div class="title">
+          <b>MAXI JDC MARKET</b>
+          <small>Des prix mini — Un MAXI choix</small>
         </div>
       </div>
-
-      <div class="rightinfo">
-        <div class="pill">📍 Jardins de Carthage, derrière mosquée Essalem</div>
-        <div class="pill">🕒 7h – 1h</div>
-        <div class="pill">💬 WhatsApp: 00216 25 600 978</div>
+      <div class="chips">
+        <div class="chip">📍 Jardins de Carthage, derrière mosquée Essalem</div>
+        <div class="chip">🕘 7h – 1h</div>
+        <div class="chip">💬 WhatsApp: 00216 25 600 978</div>
       </div>
     </div>
 
     <div class="controls">
-      <div class="searchRow">
-        <input id="q" type="search" placeholder="Rechercher un produit (nom, catégorie, code)..." />
-        <button class="btn" id="clearBtn">Effacer</button>
-        <button class="btn primary" id="globalBtn">Recherche globale</button>
-      </div>
-      <div class="stat">
-        <span id="countTxt">0 article(s)</span>
-        <span class="pill">Conditions: minimum livraison 15 dt • Livraison gratuite si total ≥ 30 dt • Sinon frais 5 dt • Retrait magasin possible</span>
-      </div>
+      <input id="q" class="input" placeholder="Rechercher un produit (nom, catégorie, code)..." />
+      <button id="clearBtn" class="btn">Effacer</button>
+      <button id="globalBtn" class="btn green">Recherche globale</button>
     </div>
 
-    <div class="notice">
-      ✅ Données chargées depuis <span class="mono">/data/*.csv</span> — une catégorie = un fichier CSV (facile à mettre à jour).
-    </div>
-  </div>
-</header>
+    <div class="notice" id="statusLine">✅ Données chargées depuis /data/*.csv — une catégorie = un fichier CSV.</div>
+  </header>
 
-<main>
-  <div class="wrap">
+  <!-- ✅ BOUTON PANIER (visible tout de suite) -->
+  <button id="cartFab" class="cart-fab" type="button" title="Ouvrir le panier">
+    🛒 Panier <span id="cartBadge" class="cart-badge">0</span>
+  </button>
+
+  <!-- ✅ PANIER (drawer) -->
+  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-header">
+      <h3>🛒 Votre panier</h3>
+      <button id="cartClose" class="cart-close" type="button">Fermer ✖</button>
+    </div>
+
+    <div id="cartItems" class="cart-body"></div>
+
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total</span>
+        <b id="cartTotal">0 dt</b>
+      </div>
+      <div class="cart-actions">
+        <button id="cartClear" class="btn" type="button">Vider</button>
+        <button id="openCheckout" class="btn gold" type="button">Valider commande</button>
+      </div>
+      <div class="cart-hint">
+        Minimum livraison : <b>15 dt</b> • Livraison gratuite si total ≥ <b>30 dt</b> sinon frais <b>5 dt</b> • Retrait magasin possible
+      </div>
+    </div>
+  </aside>
+
+  <main class="wrap">
     <div class="grid">
+      <!-- Catégories -->
+      <div class="card">
+        <div class="cardHead">
+          <h3>Catégories</h3>
+          <small>Choisis une catégorie CSV</small>
+        </div>
+        <div id="catList" class="catList"></div>
+      </div>
 
-      <section class="card" aria-label="Catégories">
-        <h2>Catégories</h2>
-        <div class="catList" id="catList"></div>
-        <div class="warn" id="missingInfo" style="display:none"></div>
-      </section>
-
-      <section class="card" aria-label="Produits">
-        <div class="productsCardHeader">
-          <div class="title">
-            <b id="activeTitle">Chargement…</b>
-            <span id="activeSubtitle">Patiente un instant.</span>
-          </div>
+      <!-- Produits -->
+      <div class="card">
+        <div class="productsTop">
+          <h2 id="catTitle">Produits</h2>
           <div class="pager">
-            <button class="btn" id="prevPage">◀</button>
-            <div class="pageInfo" id="pageInfo">Page 1/1</div>
-            <button class="btn" id="nextPage">▶</button>
+            <button id="prevPage" class="iconBtn" title="Page précédente">◀</button>
+            <span id="pageInfo">Page 1/1</span>
+            <button id="nextPage" class="iconBtn" title="Page suivante">▶</button>
           </div>
         </div>
+        <div class="productsMeta" id="catMeta">—</div>
+        <div id="productGrid" class="productGrid"></div>
 
-        <div id="products" class="products"></div>
-        <div id="empty" class="empty" style="display:none">Aucun produit à afficher.</div>
-      </section>
+        <!-- Admin caché -->
+        <div id="adminBox" class="adminBox">
+          <div class="smallNote">🔒 Admin invisible pour les clients. Pour l’ouvrir : ajoute <b>#admin</b> à la fin du lien.</div>
+          <div class="adminRow">
+            <div class="field">
+              <label>Code article</label>
+              <input id="adminCode" placeholder="Ex: 4124">
+            </div>
+            <div class="field">
+              <label>Nouveau prix (dt)</label>
+              <input id="adminPrice" placeholder="Ex: 6.5">
+            </div>
+            <button id="saveAdminPrice" class="btn green" type="button">Enregistrer prix</button>
+            <button id="clearAdminPrices" class="btn" type="button">Effacer prix admin</button>
+          </div>
+          <div class="smallNote">Les prix admin sont enregistrés dans ce navigateur (localStorage).</div>
+        </div>
+      </div>
+    </div>
+  </main>
 
+  <!-- ✅ MODAL fiche client -->
+  <div id="checkoutModal" class="modal" aria-hidden="true">
+    <div class="modalCard">
+      <div class="modalHead">
+        <h3>👤 Informations client</h3>
+        <button id="closeCheckout" class="cart-close" type="button">Fermer ✖</button>
+      </div>
+
+      <div class="modalBody">
+        <div class="field">
+          <label>Nom & Prénom *</label>
+          <input id="cName" placeholder="Ex: Lotfi Khelifi">
+        </div>
+        <div class="field">
+          <label>Téléphone *</label>
+          <input id="cPhone" placeholder="Ex: 25 600 978">
+        </div>
+        <div class="field">
+          <label>Mode *</label>
+          <select id="cMode">
+            <option value="Livraison">Livraison</option>
+            <option value="Retrait magasin">Retrait magasin</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Adresse livraison *</label>
+          <input id="cAddr" placeholder="Ex: Jardins de Carthage, derrière mosquée Essalem">
+          <div class="smallNote">Si Retrait magasin : mets “Retrait”.</div>
+        </div>
+        <div class="field" style="grid-column:1/-1">
+          <label>Note (optionnel)</label>
+          <textarea id="cNote" placeholder="Ex: Interphone, étage, heure souhaitée..."></textarea>
+          <div class="smallNote">* Champs obligatoires. (Aucun point fidélité ici.)</div>
+        </div>
+      </div>
+
+      <div class="modalFoot">
+        <button id="sendWhatsApp" class="btn green" type="button">Envoyer sur WhatsApp</button>
+      </div>
     </div>
   </div>
-</main>
 
-<footer>
-  <div class="wrap">
-    MAXI JDC MARKET — gestion des prix via CSV (GitHub). Astuce: modifie un prix dans un CSV, commit, puis actualise le site.
-  </div>
-</footer>
+  <script>
+    // ===================== CONFIG =====================
+    const WHATSAPP_NUMBER = "0021625600978";
+    const MIN_DELIVERY = 15;
+    const FREE_DELIVERY_FROM = 30;
+    const DELIVERY_FEE = 5;
+    const PAGE_SIZE = 24;
 
-<script>
-/**
- * CONFIG: Catégories "professionnelles" + fichier CSV (dans /data)
- * - Mets ici toutes les catégories.
- * - Quand tu n’as pas encore la liste, laisse le CSV vide -> le site ne plante pas.
- */
-const CATEGORY_CONFIG = [
-  { name: "Fruits & Légumes", file: "fruits_legumes.csv", unitDefault: "kg" },
+    const CATEGORIES = [
+      { id:"fruits_legumes", name:"Fruits & Légumes", file:"data/fruits_legumes.csv" },
+      { id:"lait_oeufs_produits_frais", name:"Lait, Œufs & Produits frais", file:"data/lait_oeufs_produits_frais.csv" },
+      { id:"fromage_charcuterie", name:"Fromage & Charcuterie", file:"data/fromage_charcuterie.csv" },
+      { id:"boulangerie_patisserie", name:"Boulangerie & Pâtisserie", file:"data/boulangerie_patisserie.csv" },
+      { id:"epicerie_salee", name:"Épicerie Salée", file:"data/epicerie_salee.csv" },
+      { id:"epicerie_sucree", name:"Épicerie Sucrée", file:"data/epicerie_sucree.csv" },
+      { id:"pates", name:"Pâtes", file:"data/pates.csv" },
+      { id:"conserves", name:"Conserves", file:"data/conserves.csv" },
+    ];
 
-  { name: "Lait, Œufs & Produits frais", file: "lait_oeufs_produits_frais.csv", unitDefault: "pièce" },
-  { name: "Fromage & Charcuterie", file: "fromage_charcuterie.csv", unitDefault: "pièce" },
-  { name: "Boulangerie & Pâtisserie", file: "boulangerie_patisserie.csv", unitDefault: "pièce" },
+    // ===================== STATE =====================
+    let currentCat = CATEGORIES[0];
+    let products = [];
+    let filtered = [];
+    let currentPage = 1;
+    let globalSearch = false;
 
-  { name: "Épicerie Salée", file: "epicerie_salee.csv", unitDefault: "pièce" },
-  { name: "Épicerie Sucrée", file: "epicerie_sucree.csv", unitDefault: "pièce" },
-  { name: "Pâtes", file: "pates.csv", unitDefault: "pièce" },
-  { name: "Conserves", file: "conserves.csv", unitDefault: "pièce" }
-];
+    const cart = loadJSON("maxi_cart_v1", []);
+    const adminPrices = loadJSON("maxi_admin_prices_v1", {}); // {code: price}
 
-
-// Pagination
-const PAGE_SIZE = 24;
-
-// State
-let cacheByCategory = new Map(); // name -> products[]
-let activeCategory = CATEGORY_CONFIG[0].name;
-let globalMode = false;
-let currentPage = 1;
-
-// DOM
-const catListEl = document.getElementById('catList');
-const productsEl = document.getElementById('products');
-const emptyEl = document.getElementById('empty');
-const qEl = document.getElementById('q');
-const countTxt = document.getElementById('countTxt');
-const activeTitle = document.getElementById('activeTitle');
-const activeSubtitle = document.getElementById('activeSubtitle');
-const pageInfo = document.getElementById('pageInfo');
-const prevPageBtn = document.getElementById('prevPage');
-const nextPageBtn = document.getElementById('nextPage');
-const missingInfo = document.getElementById('missingInfo');
-const clearBtn = document.getElementById('clearBtn');
-const globalBtn = document.getElementById('globalBtn');
-
-function normalize(s){
-  return String(s || '')
-    .toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .trim();
-}
-
-function safeNumber(x){
-  const n = Number(String(x).replace(',', '.'));
-  return Number.isFinite(n) ? n : null;
-}
-
-/**
- * CSV parser simple :
- * - accepte virgule
- * - accepte guillemets "..."
- * - ignore lignes vides
- */
-function parseCSV(text){
-  // Nettoyage + lignes non vides
-  const rawLines = text.replace(/\r/g,'').split('\n').map(l => l.trim()).filter(Boolean);
-  if (!rawLines.length) return [];
-
-  // 1) Trouver la vraie ligne header (ignorer les lignes "titre/chemin")
-  const isHeader = (line) => {
-    const L = normalize(line).toLowerCase();
-    return (
-      L.includes('code') ||
-      L.includes('code_article') ||
-      L.includes('designation') ||
-      L.includes('nom') ||
-      L.includes('pv_ttc') ||
-      L.includes('price') ||
-      L.includes('prix')
-    );
-  };
-
-  let headerLineIndex = rawLines.findIndex(isHeader);
-  if (headerLineIndex === -1) headerLineIndex = 0;
-
-  const lines = rawLines.slice(headerLineIndex);
-  if (!lines.length) return [];
-
-  // 2) Détecter le séparateur (TAB / ; / ,)
-  const guessSep = (line) => {
-    const tab = (line.match(/\t/g) || []).length;
-    const semi = (line.match(/;/g) || []).length;
-    const comma = (line.match(/,/g) || []).length;
-    if (tab >= semi && tab >= comma && tab > 0) return '\t';
-    if (semi >= comma && semi > 0) return ';';
-    return ','; // défaut
-  };
-
-  const sep = guessSep(lines[0]);
-
-  const splitLine = (line) => {
-    if (sep === '\t') return line.split('\t').map(s => s.trim());
-    if (sep === ';') return line.split(';').map(s => s.trim());
-    // sep = ',' -> utiliser ton splitCSVLine (gère guillemets)
-    return splitCSVLine(line).map(s => s.trim());
-  };
-
-  // 3) Lire header + mapper plusieurs noms possibles
-  const header = splitLine(lines[0]).map(h => normalize(h).replace(/^\uFEFF/, '').trim().toLowerCase());
-
-  const idxCode =
-    header.indexOf('code') !== -1 ? header.indexOf('code') :
-    header.indexOf('code_article') !== -1 ? header.indexOf('code_article') :
-    header.indexOf('article') !== -1 ? header.indexOf('article') :
-    -1;
-
-  const idxDesignation =
-    header.indexOf('designation') !== -1 ? header.indexOf('designation') :
-    header.indexOf('name') !== -1 ? header.indexOf('name') :
-    header.indexOf('nom') !== -1 ? header.indexOf('nom') :
-    header.indexOf('libelle') !== -1 ? header.indexOf('libelle') :
-    -1;
-
-  const idxPrice =
-    header.indexOf('price') !== -1 ? header.indexOf('price') :
-    header.indexOf('pv_ttc') !== -1 ? header.indexOf('pv_ttc') :
-    header.indexOf('prix') !== -1 ? header.indexOf('prix') :
-    -1;
-
-  const out = [];
-
-  for (let i = 1; i < lines.length; i++){
-    const cols = splitLine(lines[i]);
-
-    const code = (idxCode !== -1 ? (cols[idxCode] ?? '') : '').trim();
-    const designation = (idxDesignation !== -1 ? (cols[idxDesignation] ?? '') : '').trim();
-
-    // prix accepte 6,5 ou 6.5
-    const priceRaw = (idxPrice !== -1 ? (cols[idxPrice] ?? '') : '').trim();
-    const price = safeNumber(priceRaw);
-
-    // ignorer seulement si code ET designation sont vides
-    if (!code && !designation) continue;
-
-    // IMPORTANT : garder designation ET name pour compatibilité affichage
-    out.push({
-      code,
-      designation,
-      name: designation,
-      price
-    });
-  }
-
-  return out;
-}
-
-function splitCSVLine(line){
-  const res = [];
-  let cur = '';
-  let inQ = false;
-  for (let i=0;i<line.length;i++){
-    const ch = line[i];
-    if (ch === '"'){
-      if (inQ && line[i+1] === '"'){ cur += '"'; i++; }
-      else inQ = !inQ;
-    } else if (ch === ',' && !inQ){
-      res.push(cur);
-      cur = '';
-    } else {
-      cur += ch;
+    // ===================== HELPERS =====================
+    function $(id){ return document.getElementById(id); }
+    function money(n){
+      const x = Math.round((Number(n)||0)*100)/100;
+      return (x % 1 === 0) ? String(x.toFixed(0)) : String(x.toFixed(2));
     }
-  }
-  res.push(cur);
-  return res;
-}
+    function loadJSON(key, fallback){
+      try{ return JSON.parse(localStorage.getItem(key) || "") ?? fallback; }catch(e){ return fallback; }
+    }
+    function saveJSON(key, value){
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+    function normalize(s){
+      return (s||"").toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+    }
+    function parseCSV(text){
+      const lines = text.replace(/\r/g,"").split("\n").filter(l => l.trim().length);
+      if(!lines.length) return [];
+      const header = lines[0].split(";").map(h => h.trim());
+      const idxCode = header.findIndex(h => normalize(h).includes("code"));
+      const idxName = header.findIndex(h => normalize(h).includes("design"));
+      const idxPrice= header.findIndex(h => normalize(h).includes("price"));
+      const out=[];
+      for(let i=1;i<lines.length;i++){
+        const cols = lines[i].split(";");
+        const code = (cols[idxCode]||"").trim();
+        const name = (cols[idxName]||"").trim();
+        let price = (cols[idxPrice]||"").trim().replace(",",".");
+        if(!code || !name) continue;
+        out.push({
+          code,
+          name,
+          price: Number(price||0),
+          cat: currentCat.name
+        });
+      }
+      return out;
+    }
 
-async function loadCategory(cat){
-  if (cacheByCategory.has(cat.name)) return cacheByCategory.get(cat.name);
+    // ===================== UI: Categories =====================
+    async function buildCategories(){
+      const box = $("catList");
+      box.innerHTML = "";
+      for(const c of CATEGORIES){
+        const btn = document.createElement("button");
+        btn.className = "catItem" + (c.id===currentCat.id ? " active" : "");
+        btn.innerHTML = `
+          <div>
+            <div style="font-weight:1000">${c.name}</div>
+            <div class="sub">CSV: ${c.file.replace("data/","")}</div>
+          </div>
+          <div class="pill" id="count_${c.id}">…</div>
+        `;
+        btn.onclick = () => { currentCat=c; globalSearch=false; currentPage=1; refreshAll(); };
+        box.appendChild(btn);
+      }
+    }
 
-  const url = `data/${cat.file}`;
-  try{
-    const r = await fetch(url, { cache: "no-store" });
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    const text = await r.text();
-    const rows = parseCSV(text);
+    function setActiveCategory(){
+      document.querySelectorAll(".catItem").forEach(el => el.classList.remove("active"));
+      const idx = CATEGORIES.findIndex(x=>x.id===currentCat.id);
+      if(idx>=0) document.querySelectorAll(".catItem")[idx].classList.add("active");
+    }
 
-    const products = rows.map((x) => ({
-      code: x.code,
-      name: x.designation,
-      price: x.price,
-      category: cat.name,
-      unit: cat.unitDefault || 'pièce'
-    }));
+    // ===================== DATA LOAD =====================
+    async function loadCategory(cat){
+      try{
+        const res = await fetch(cat.file, {cache:"no-store"});
+        if(!res.ok) throw new Error("CSV introuvable: "+cat.file);
+        const text = await res.text();
+        return parseCSV(text).map(p => ({...p, cat:cat.name}));
+      }catch(e){
+        return [];
+      }
+    }
 
-    cacheByCategory.set(cat.name, products);
-    return products;
-  }catch(e){
-    // Catégorie pas encore disponible -> liste vide (pas d’erreur bloquante)
-    cacheByCategory.set(cat.name, []);
-    return [];
-  }
-}
+    async function refreshAll(){
+      setActiveCategory();
+      $("catTitle").textContent = currentCat.name;
+      $("catMeta").textContent = `Chargement…`;
+      $("productGrid").innerHTML = "";
 
-function renderCategories(counts){
-  catListEl.innerHTML = '';
-  CATEGORY_CONFIG.forEach(cat => {
-    const btn = document.createElement('button');
-    btn.className = 'catBtn' + (cat.name === activeCategory && !globalMode ? ' active' : '');
-    btn.onclick = () => {
-      globalMode = false;
-      activeCategory = cat.name;
+      if(globalSearch){
+        // load all categories
+        let all=[];
+        for(const c of CATEGORIES){
+          const arr = await loadCategory(c);
+          all = all.concat(arr);
+          $("count_"+c.id).textContent = arr.length+" article(s)";
+        }
+        products = all;
+        $("catTitle").textContent = "Recherche globale";
+        $("catMeta").textContent = `Total: ${products.length} article(s) — toutes catégories`;
+      }else{
+        products = await loadCategory(currentCat);
+        $("catMeta").textContent = `Source: ${currentCat.file} • Mise à jour rapide (prix + nouveaux articles)`;
+        // update counts for current only (others unknown if not loaded)
+        $("count_"+currentCat.id).textContent = products.length+" article(s)";
+      }
+
+      applyFilter();
+      renderProducts();
+      renderCart();
+      updateAdminVisibility();
+    }
+
+    // ===================== SEARCH / FILTER =====================
+    function applyFilter(){
+      const q = normalize($("q").value.trim());
+      if(!q){
+        filtered = products.slice();
+      }else{
+        filtered = products.filter(p => {
+          const hay = normalize(p.name + " " + p.code + " " + p.cat);
+          return hay.includes(q);
+        });
+      }
       currentPage = 1;
-      document.querySelectorAll('.catBtn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      refresh();
-    };
-
-    const left = document.createElement('div');
-    left.className = 'catName';
-    const b = document.createElement('b');
-    b.textContent = cat.name;
-    const s = document.createElement('span');
-    s.textContent = cat.extraLabel ? cat.extraLabel : (cat.file ? `CSV: ${cat.file}` : 'CSV: —');
-    left.appendChild(b);
-    left.appendChild(s);
-
-    const badge = document.createElement('div');
-    badge.className = 'badge';
-    badge.textContent = (counts.get(cat.name) ?? 0) + ' article(s)';
-
-    btn.appendChild(left);
-    btn.appendChild(badge);
-    catListEl.appendChild(btn);
-  });
-}
-
-function renderProducts(list){
-  const q = normalize(qEl.value);
-  let filtered = list;
-
-  if (q){
-    filtered = list.filter(p => {
-      const hay = normalize(p.name) + ' ' + normalize(p.category) + ' ' + normalize(p.code);
-      return hay.includes(q);
-    });
-  }
-
-  // Pagination
-  const total = filtered.length;
-  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-  currentPage = Math.min(Math.max(1, currentPage), totalPages);
-
-  const start = (currentPage - 1) * PAGE_SIZE;
-  const pageItems = filtered.slice(start, start + PAGE_SIZE);
-
-  pageInfo.textContent = `Page ${currentPage}/${totalPages}`;
-  prevPageBtn.disabled = currentPage <= 1;
-  nextPageBtn.disabled = currentPage >= totalPages;
-
-  countTxt.textContent = `${total} article(s)`;
-
-  productsEl.innerHTML = '';
-  emptyEl.style.display = total ? 'none' : 'block';
-
-  for (const p of pageItems){
-    const card = document.createElement('div');
-    card.className = 'p';
-
-    const row1 = document.createElement('div');
-    row1.className = 'row1';
-
-    const left = document.createElement('div');
-    const name = document.createElement('div');
-    name.className = 'name';
-    name.textContent = (p.designation || p.name || '').trim();
-
-    const code = document.createElement('div');
-    code.className = 'code';
-    code.innerHTML = `Code: <span class="mono">${p.code}</span> • ${p.category}`;
-
-    left.appendChild(name);
-    left.appendChild(code);
-
-    const price = document.createElement('div');
-    price.className = 'price';
-    const pr = (p.price === null) ? '—' : (Number(p.price).toFixed(1).replace('.0',''));
-    price.textContent = `${pr} dt`;
-
-    row1.appendChild(left);
-    row1.appendChild(price);
-
-    card.appendChild(row1);
-    productsEl.appendChild(card);
-  }
-}
-
-async function refresh(){
-  // Charger tout (si recherche globale) sinon juste la catégorie active
-  const counts = new Map();
-
-  let list = [];
-  if (globalMode){
-    activeTitle.textContent = 'Recherche globale';
-    activeSubtitle.textContent = 'Tous les produits, toutes les catégories (CSV).';
-    missingInfo.style.display = 'none';
-
-    for (const cat of CATEGORY_CONFIG){
-      const arr = await loadCategory(cat);
-      counts.set(cat.name, arr.length);
-      list = list.concat(arr);
-    }
-  } else {
-    const cat = CATEGORY_CONFIG.find(c => c.name === activeCategory) || CATEGORY_CONFIG[0];
-    activeTitle.textContent = cat.name;
-    activeSubtitle.textContent = `Source: data/${cat.file} • Mise à jour rapide (prix + nouveaux articles)`;
-
-    // message “manque de CSV”
-    const arr = await loadCategory(cat);
-    counts.set(cat.name, arr.length);
-
-    // Pour afficher badges corrects même sans globale :
-    // (on évite de tout charger à chaque fois)
-    CATEGORY_CONFIG.forEach(c => {
-      if (!counts.has(c.name)) counts.set(c.name, cacheByCategory.get(c.name)?.length ?? 0);
-    });
-
-    if (arr.length === 0){
-      missingInfo.style.display = 'block';
-      missingInfo.innerHTML =
-        `ℹ️ Cette catégorie est vide pour l’instant (CSV manquant ou sans lignes).<br>
-         Crée le fichier <span class="mono">data/${cat.file}</span> avec l’en-tête <span class="mono">code,designation,price</span>.`;
-    } else {
-      missingInfo.style.display = 'none';
     }
 
-    list = arr;
-  }
+    // ===================== PRODUCTS RENDER =====================
+    function getPrice(p){
+      const ap = adminPrices[p.code];
+      return (ap!=null && ap!=="" && !Number.isNaN(Number(ap))) ? Number(ap) : Number(p.price||0);
+    }
 
-  renderCategories(counts);
-  renderProducts(list);
-}
+    function renderProducts(){
+      const total = filtered.length;
+      const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+      currentPage = Math.min(currentPage, pages);
 
-// Events
-qEl.addEventListener('input', () => { currentPage = 1; refresh(); });
+      $("pageInfo").textContent = `Page ${currentPage}/${pages}`;
 
-clearBtn.addEventListener('click', () => {
-  qEl.value = '';
-  currentPage = 1;
-  refresh();
-});
+      const start = (currentPage-1)*PAGE_SIZE;
+      const slice = filtered.slice(start, start+PAGE_SIZE);
 
-globalBtn.addEventListener('click', () => {
-  globalMode = !globalMode;
-  currentPage = 1;
+      const grid = $("productGrid");
+      grid.innerHTML = "";
 
-  // Mettre “active” sur aucune catégorie quand global
-  document.querySelectorAll('.catBtn').forEach(b => b.classList.remove('active'));
-  refresh();
-});
+      for(const p of slice){
+        const price = getPrice(p);
+        const card = document.createElement("div");
+        card.className = "pCard";
+        card.innerHTML = `
+          <div class="pTop">
+            <div>
+              <div class="pName">${escapeHtml(p.name)}</div>
+              <div class="pCode">Code: ${escapeHtml(p.code)} • ${escapeHtml(p.cat)}</div>
+            </div>
+            <div class="price">${money(price)} dt</div>
+          </div>
+          <div class="pActions">
+            <button class="qtyBtn add" type="button">Ajouter</button>
+          </div>
+        `;
+        card.querySelector(".add").onclick = () => addToCart(p.code, p.name, price);
+        grid.appendChild(card);
+      }
 
-prevPageBtn.addEventListener('click', () => {
-  currentPage--;
-  refresh();
-});
-nextPageBtn.addEventListener('click', () => {
-  currentPage++;
-  refresh();
-});
+      // pager buttons
+      $("prevPage").disabled = (currentPage<=1);
+      $("nextPage").disabled = (currentPage>=pages);
+      $("prevPage").onclick = () => { if(currentPage>1){ currentPage--; renderProducts(); } };
+      $("nextPage").onclick = () => { if(currentPage<pages){ currentPage++; renderProducts(); } };
+    }
 
-// Start
-refresh();
-</script>
-  <!-- ====== CATEGORIES (SUCRE / PATES / SALE / CONSERVES) ====== -->
+    function escapeHtml(s){
+      return (s??"").toString()
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
 
-<!-- ====== /CATEGORIES ====== -->
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("./service-worker.js")
-      .then(() => console.log("Service Worker enregistré ✅"))
-      .catch(err => console.error("Erreur Service Worker ❌", err));
-  });
-}
-</script>
-<!-- ====== BOUTON PANIER (en haut à gauche) ====== -->
-<button id="cartFab" class="cart-fab" type="button" title="Ouvrir le panier">
-  🛒 Panier <span id="cartBadge" class="cart-badge">0</span>
-</button>
+    // ===================== CART =====================
+    function addToCart(code, name, price){
+      const i = cart.findIndex(x => x.code===code);
+      if(i>=0) cart[i].qty += 1;
+      else cart.push({code, name, price, qty:1});
+      saveJSON("maxi_cart_v1", cart);
+      renderCart();
+      // open cart for feedback
+      openCart();
+    }
 
-<!-- ====== PANIER (drawer) ====== -->
-<aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
-  <div class="cart-header">
-    <h3>🛒 Votre panier</h3>
-    <button id="cartClose" class="cart-close" type="button">Fermer ✖</button>
-  </div>
+    function cartTotal(){
+      return cart.reduce((s,x)=> s + (Number(x.price||0)*Number(x.qty||0)), 0);
+    }
 
-  <div id="cartItems" class="cart-body"></div>
+    function renderCart(){
+      const badge = $("cartBadge");
+      const itemsBox = $("cartItems");
+      const totalBox = $("cartTotal");
 
-  <div class="cart-footer">
-    <div class="cart-total">
-      <span>Total</span>
-      <span id="cartTotal">0 dt</span>
-    </div>
+      const count = cart.reduce((s,x)=> s + (Number(x.qty||0)), 0);
+      badge.textContent = String(count);
 
-    <div class="cart-actions">
-      <button id="cartClear" class="btn" type="button">Vider</button>
-      <button id="openCheckout" class="btn btn-gold" type="button">Valider commande</button>
-    </div>
+      itemsBox.innerHTML = "";
+      if(!cart.length){
+        itemsBox.innerHTML = `<div style="color:var(--muted);font-size:13px;padding:10px">Panier vide.</div>`;
+      }else{
+        for(const it of cart){
+          const row = document.createElement("div");
+          row.className = "cart-row";
+          row.innerHTML = `
+            <div>
+              <b>${escapeHtml(it.name)}</b><br/>
+              <small>Code: ${escapeHtml(it.code)} • ${money(it.price)} dt</small>
+            </div>
+            <div class="cart-qty">
+              <button class="miniBtn" type="button">-</button>
+              <b style="min-width:18px;text-align:center">${it.qty}</b>
+              <button class="miniBtn" type="button">+</button>
+              <button class="miniBtn danger" title="Supprimer" type="button">✖</button>
+            </div>
+          `;
+          const [bMinus, , bPlus, bDel] = row.querySelectorAll("button");
+          bMinus.onclick = () => { it.qty = Math.max(1, it.qty-1); saveJSON("maxi_cart_v1", cart); renderCart(); };
+          bPlus.onclick  = () => { it.qty += 1; saveJSON("maxi_cart_v1", cart); renderCart(); };
+          bDel.onclick   = () => { const idx = cart.indexOf(it); if(idx>=0) cart.splice(idx,1); saveJSON("maxi_cart_v1", cart); renderCart(); };
+          itemsBox.appendChild(row);
+        }
+      }
 
-    <div class="cart-hint">Minimum livraison : <b>15 dt</b></div>
-  </div>
-</aside>
+      totalBox.textContent = money(cartTotal()) + " dt";
+    }
 
-<!-- ====== FICHE CLIENT (modal) ====== -->
-<div id="checkoutModal" class="modal" aria-hidden="true">
-  <div class="modal-card">
-    <div class="modal-head">
-      <h3>🧾 Informations client</h3>
-      <button id="closeCheckout" class="cart-close" type="button">Fermer ✖</button>
-    </div>
+    // ===================== CART OPEN/CLOSE =====================
+    function openCart(){
+      $("cartDrawer").classList.add("open");
+      $("cartDrawer").setAttribute("aria-hidden","false");
+    }
+    function closeCart(){
+      $("cartDrawer").classList.remove("open");
+      $("cartDrawer").setAttribute("aria-hidden","true");
+    }
 
-    <div class="modal-body">
-      <label class="field">
-        <span>Nom & Prénom *</span>
-        <input id="cName" type="text" placeholder="Ex: Lotfi Khelifi" />
-      </label>
+    // ===================== CHECKOUT MODAL =====================
+    function openCheckout(){
+      if(!cart.length){
+        alert("Votre panier est vide.");
+        return;
+      }
+      $("checkoutModal").classList.add("open");
+      $("checkoutModal").setAttribute("aria-hidden","false");
+    }
+    function closeCheckout(){
+      $("checkoutModal").classList.remove("open");
+      $("checkoutModal").setAttribute("aria-hidden","true");
+    }
 
-      <label class="field">
-        <span>Téléphone *</span>
-        <input id="cPhone" type="tel" placeholder="Ex: 25 600 978" />
-      </label>
+    function buildWhatsAppMessage(){
+      const name = $("cName").value.trim();
+      const phone= $("cPhone").value.trim();
+      const mode = $("cMode").value;
+      const addr = $("cAddr").value.trim();
+      const note = $("cNote").value.trim();
 
-      <label class="field">
-        <span>Mode *</span>
-        <select id="cMode">
-          <option value="Livraison">Livraison</option>
-          <option value="Retrait magasin">Retrait magasin</option>
-        </select>
-      </label>
+      if(!name || !phone || !mode || !addr){
+        alert("Merci de remplir les champs obligatoires (*).");
+        return null;
+      }
 
-      <label class="field" id="addressField">
-        <span>Adresse livraison *</span>
-        <input id="cAddress" type="text" placeholder="Ex: Jardins de Carthage, derrière mosquée Essalem" />
-      </label>
+      const total = cartTotal();
+      if(mode==="Livraison" && total < MIN_DELIVERY){
+        alert("Minimum livraison : " + MIN_DELIVERY + " dt");
+        return null;
+      }
 
-      <label class="field">
-        <span>Note (optionnel)</span>
-        <textarea id="cNote" rows="3" placeholder="Ex: Interphone, étage, heure souhaitée..."></textarea>
-      </label>
+      let frais = 0;
+      if(mode==="Livraison"){
+        frais = (total >= FREE_DELIVERY_FROM) ? 0 : DELIVERY_FEE;
+      }
 
-      <div class="modal-actions">
-        <button id="sendWhatsApp" class="btn btn-gold" type="button">Envoyer sur WhatsApp</button>
-      </div>
+      const lines = [];
+      lines.push("🛒 *Nouvelle commande – MAXI JDC MARKET*");
+      lines.push("");
+      lines.push("👤 Client: " + name);
+      lines.push("📞 Téléphone: " + phone);
+      lines.push("🚚 Mode: " + mode);
+      lines.push("📍 Adresse: " + addr);
+      if(note) lines.push("📝 Note: " + note);
+      lines.push("");
+      lines.push("📦 Articles:");
+      cart.forEach((it,i)=>{
+        lines.push(`${i+1}) ${it.name} (Code ${it.code}) ×${it.qty} = ${money(it.price*it.qty)} dt`);
+      });
+      lines.push("");
+      lines.push(`💰 Sous-total: ${money(total)} dt`);
+      if(mode==="Livraison"){
+        lines.push(`🚚 Frais livraison: ${money(frais)} dt`);
+      }
+      lines.push(`✅ Total à payer: ${money(total+frais)} dt`);
+      return lines.join("\n");
+    }
 
-      <div class="tiny">
-        * Champs obligatoires. (Aucun point fidélité ici.)
-      </div>
-    </div>
-  </div>
-</div>
+    function sendToWhatsApp(){
+      const msg = buildWhatsAppMessage();
+      if(!msg) return;
+      const url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg);
+      window.open(url, "_blank");
+    }
 
-<!-- ====== ADMIN (caché) ====== -->
-<div id="adminPanel" class="modal" aria-hidden="true">
-  <div class="modal-card">
-    <div class="modal-head">
-      <h3>🔒 Admin (caché)</h3>
-      <button id="closeAdmin" class="cart-close" type="button">Fermer ✖</button>
-    </div>
+    // ===================== ADMIN (HIDDEN) =====================
+    function updateAdminVisibility(){
+      const isAdmin = (location.hash || "").toLowerCase().includes("admin");
+      const box = $("adminBox");
+      if(!isAdmin){
+        box.classList.remove("open");
+        return;
+      }
+      const pin = prompt("PIN Admin:");
+      if(pin !== "2025"){
+        alert("PIN incorrect.");
+        location.hash = "";
+        box.classList.remove("open");
+        return;
+      }
+      box.classList.add("open");
+    }
 
-    <div class="modal-body">
-      <div class="tiny">Admin invisible pour les clients. Pour l’ouvrir : ajouter <b>#admin</b> à la fin du lien.</div>
+    function saveAdminPrice(){
+      const code = $("adminCode").value.trim();
+      const price = $("adminPrice").value.trim().replace(",",".");
+      if(!code || !price){
+        alert("Code et prix requis.");
+        return;
+      }
+      const p = Number(price);
+      if(Number.isNaN(p) || p<0){
+        alert("Prix invalide.");
+        return;
+      }
+      adminPrices[code] = p;
+      saveJSON("maxi_admin_prices_v1", adminPrices);
+      alert("Prix enregistré (local).");
+      renderProducts();
+    }
+    function clearAdmin(){
+      if(!confirm("Effacer tous les prix admin de ce navigateur ?")) return;
+      for(const k of Object.keys(adminPrices)) delete adminPrices[k];
+      saveJSON("maxi_admin_prices_v1", adminPrices);
+      renderProducts();
+    }
 
-      <label class="field">
-        <span>Code article</span>
-        <input id="aCode" type="text" placeholder="Ex: 4124" />
-      </label>
+    // ===================== EVENTS =====================
+    $("cartFab").addEventListener("click", openCart);
+    $("cartClose").addEventListener("click", closeCart);
+    $("cartClear").addEventListener("click", () => {
+      if(!confirm("Vider le panier ?")) return;
+      cart.length = 0;
+      saveJSON("maxi_cart_v1", cart);
+      renderCart();
+    });
+    $("openCheckout").addEventListener("click", openCheckout);
+    $("closeCheckout").addEventListener("click", closeCheckout);
+    $("sendWhatsApp").addEventListener("click", sendToWhatsApp);
 
-      <label class="field">
-        <span>Nouveau prix (dt)</span>
-        <input id="aPrice" type="number" step="0.001" placeholder="Ex: 6.5" />
-      </label>
+    $("q").addEventListener("input", () => { applyFilter(); renderProducts(); });
+    $("clearBtn").addEventListener("click", () => { $("q").value=""; applyFilter(); renderProducts(); });
+    $("globalBtn").addEventListener("click", async () => { globalSearch=true; currentPage=1; await refreshAll(); });
 
-      <div class="modal-actions" style="gap:10px">
-        <button id="saveOverride" class="btn btn-gold" type="button">Enregistrer prix</button>
-        <button id="clearOverrides" class="btn" type="button">Effacer tous les prix admin</button>
-      </div>
+    window.addEventListener("hashchange", () => updateAdminVisibility());
+    $("saveAdminPrice").addEventListener("click", saveAdminPrice);
+    $("clearAdminPrices").addEventListener("click", clearAdmin);
 
-      <div class="tiny">Les prix admin sont enregistrés dans ce navigateur (localStorage).</div>
-    </div>
-  </div>
-</div>
+    // ===================== START =====================
+    (async function start(){
+      await buildCategories();
+      await refreshAll();
 
+      // service worker (si tu l'as)
+      if("serviceWorker" in navigator){
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./service-worker.js")
+            .then(()=>console.log("Service Worker OK ✅"))
+            .catch(err=>console.log("Service Worker erreur ❌", err));
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
