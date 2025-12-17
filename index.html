@@ -371,53 +371,96 @@ function safeNumber(x){
  * - ignore lignes vides
  */
 function parseCSV(text){
-  const lines = text.replace(/\r/g,'').split('\n').filter(l => l.trim().length);
+  // Nettoyage + lignes non vides
+  const rawLines = text.replace(/\r/g,'').split('\n').map(l => l.trim()).filter(Boolean);
+  if (!rawLines.length) return [];
+
+  // 1) Trouver la vraie ligne header (ignorer les lignes "titre/chemin")
+  const isHeader = (line) => {
+    const L = normalize(line).toLowerCase();
+    return (
+      L.includes('code') ||
+      L.includes('code_article') ||
+      L.includes('designation') ||
+      L.includes('nom') ||
+      L.includes('pv_ttc') ||
+      L.includes('price') ||
+      L.includes('prix')
+    );
+  };
+
+  let headerLineIndex = rawLines.findIndex(isHeader);
+  if (headerLineIndex === -1) headerLineIndex = 0;
+
+  const lines = rawLines.slice(headerLineIndex);
   if (!lines.length) return [];
 
-// détecter le séparateur (virgule ou point-virgule)
-const sep = (lines[0].includes(';') && !lines[0].includes(',')) ? ';' : ',';
-const splitLine = (line) => sep === ';' ? line.split(';') : splitCSVLine(line);
+  // 2) Détecter le séparateur (TAB / ; / ,)
+  const guessSep = (line) => {
+    const tab = (line.match(/\t/g) || []).length;
+    const semi = (line.match(/;/g) || []).length;
+    const comma = (line.match(/,/g) || []).length;
+    if (tab >= semi && tab >= comma && tab > 0) return '\t';
+    if (semi >= comma && semi > 0) return ';';
+    return ','; // défaut
+  };
 
-const header = splitLine(lines[0]).map(h =>
-  normalize(h).replace(/^\uFEFF/, '').trim()
-);
-const idxCode = header.indexOf('code');
+  const sep = guessSep(lines[0]);
 
+  const splitLine = (line) => {
+    if (sep === '\t') return line.split('\t').map(s => s.trim());
+    if (sep === ';') return line.split(';').map(s => s.trim());
+    // sep = ',' -> utiliser ton splitCSVLine (gère guillemets)
+    return splitCSVLine(line).map(s => s.trim());
+  };
 
-// accepte designation OU name OU nom
-const idxDesignation =
-  header.indexOf('designation') !== -1 ? header.indexOf('designation') :
-  header.indexOf('name')        !== -1 ? header.indexOf('name') :
-  header.indexOf('nom')         !== -1 ? header.indexOf('nom') :
-  -1;
+  // 3) Lire header + mapper plusieurs noms possibles
+  const header = splitLine(lines[0]).map(h => normalize(h).replace(/^\uFEFF/, '').trim().toLowerCase());
 
-const idxPrice = header.indexOf('price');
+  const idxCode =
+    header.indexOf('code') !== -1 ? header.indexOf('code') :
+    header.indexOf('code_article') !== -1 ? header.indexOf('code_article') :
+    header.indexOf('article') !== -1 ? header.indexOf('article') :
+    -1;
 
-const out = [];
+  const idxDesignation =
+    header.indexOf('designation') !== -1 ? header.indexOf('designation') :
+    header.indexOf('name') !== -1 ? header.indexOf('name') :
+    header.indexOf('nom') !== -1 ? header.indexOf('nom') :
+    header.indexOf('libelle') !== -1 ? header.indexOf('libelle') :
+    -1;
 
-for (let i = 1; i < lines.length; i++) {
-  const cols = splitCSVLine(lines[i]);
+  const idxPrice =
+    header.indexOf('price') !== -1 ? header.indexOf('price') :
+    header.indexOf('pv_ttc') !== -1 ? header.indexOf('pv_ttc') :
+    header.indexOf('prix') !== -1 ? header.indexOf('prix') :
+    -1;
 
-  const code = (cols[idxCode] ?? '').trim();
-  const designation = (idxDesignation !== -1 ? (cols[idxDesignation] ?? '') : '').trim();
-  const price = cols[idxPrice] ?? '';
+  const out = [];
 
-  // ignorer seulement si les deux sont vides
-  if (!code && !designation) continue;
+  for (let i = 1; i < lines.length; i++){
+    const cols = splitLine(lines[i]);
 
-  const d = designation;
+    const code = (idxCode !== -1 ? (cols[idxCode] ?? '') : '').trim();
+    const designation = (idxDesignation !== -1 ? (cols[idxDesignation] ?? '') : '').trim();
 
-  out.push({
-    code,
-    designation: d,
-    name: d, // compatibilité affichage
-    price: safeNumber(price)
-  });
-}
+    // prix accepte 6,5 ou 6.5
+    const priceRaw = (idxPrice !== -1 ? (cols[idxPrice] ?? '') : '').trim();
+    const price = safeNumber(priceRaw);
 
-return out;
+    // ignorer seulement si code ET designation sont vides
+    if (!code && !designation) continue;
 
+    // IMPORTANT : garder designation ET name pour compatibilité affichage
+    out.push({
+      code,
+      designation,
+      name: designation,
+      price
+    });
+  }
 
+  return out;
 }
 
 function splitCSVLine(line){
@@ -642,6 +685,7 @@ refresh();
 
 </body>
 </html>
+
 
 
 
