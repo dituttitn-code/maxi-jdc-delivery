@@ -393,7 +393,8 @@ const idxDesignation =
 
 const idxPrice = header.indexOf('price');
 
- const out = [];
+const out = [];
+
 for (let i = 1; i < lines.length; i++) {
   const cols = splitCSVLine(lines[i]);
 
@@ -401,18 +402,21 @@ for (let i = 1; i < lines.length; i++) {
   const designation = (idxDesignation !== -1 ? (cols[idxDesignation] ?? '') : '').trim();
   const price = cols[idxPrice] ?? '';
 
-  // ✅ ignorer seulement si les deux sont vides
+  // ignorer seulement si les deux sont vides
   if (!code && !designation) continue;
 
   const d = designation;
+
   out.push({
     code,
     designation: d,
-    name: d,                 // compatibilité affichage
+    name: d, // compatibilité affichage
     price: safeNumber(price)
   });
 }
+
 return out;
+
 
 }
 
@@ -638,6 +642,7 @@ refresh();
 
 </body>
 </html>
+
 
 
 
