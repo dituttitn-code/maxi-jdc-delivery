@@ -202,10 +202,21 @@
       height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--line);
       background: rgba(255,255,255,.07);color: var(--text);
       cursor:pointer;font-weight:900;font-size:12.5px;
+      transition: all 0.2s ease;
     }
     .mini:hover{ background: rgba(255,255,255,.11); }
+    .mini:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: rgba(255,255,255,.04) !important;
+      border-color: rgba(255,255,255,.08) !important;
+    }
     .mini.green{background: rgba(34,197,94,.20);border-color: rgba(34,197,94,.35);}
     .mini.green:hover{ background: rgba(34,197,94,.28); }
+    .mini.green:disabled {
+      background: rgba(34,197,94,.10) !important;
+      border-color: rgba(34,197,94,.20) !important;
+    }
     .mini.danger{background: rgba(255,107,107,.16);border-color: rgba(255,107,107,.35);}
     .mini.danger:hover{ background: rgba(255,107,107,.24); }
     .pinRow{
@@ -252,6 +263,39 @@
     .drawerFooter{
       padding:12px 14px;border-top:1px solid var(--line);display:flex;gap:10px;align-items:center;
       justify-content:space-between;background: rgba(0,0,0,.25);
+    }
+
+    #sendBtn {
+      min-width: 120px;
+      height: 40px;
+      font-size: 13.5px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+    }
+
+    #sendBtn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(34, 197, 94, 0.35);
+    }
+
+    #sendBtn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    /* Animation de succès */
+    @keyframes pulseSuccess {
+      0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+
+    .sent-animation {
+      animation: pulseSuccess 1.5s ease;
     }
 
     .modalBack{position:fixed;inset:0;background: rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:30;padding:16px;}
@@ -348,7 +392,7 @@
 
           <div id="products"></div>
 
-          <div class="hintAdmin">Admin : Ctrl + Shift + A (ou ajoute #admin à l’URL)</div>
+          <div class="hintAdmin">Admin : Ctrl + Shift + A (ou ajoute #admin à l'URL)</div>
         </div>
       </div>
     </div>
@@ -428,7 +472,7 @@
 
     <div class="drawerFooter">
       <button class="mini danger" id="clearCartBtn">Vider panier</button>
-      <button class="mini green" id="sendBtn">Envoyer</button>
+      <button class="mini green" id="sendBtn">🚀 Envoyer</button>
     </div>
   </aside>
 
@@ -440,8 +484,9 @@
       </div>
       <div class="modalBody"><textarea id="orderText" readonly></textarea></div>
       <div class="modalFoot">
-        <button class="mini" id="copyBtn">Copier</button>
-        <button class="mini" id="downloadBtn">Télécharger (.txt)</button>
+        <button class="mini" id="copyBtn">📋 Copier</button>
+        <button class="mini" id="downloadBtn">💾 Télécharger (.txt)</button>
+        <button class="mini green" id="whatsappBtn">📱 Envoyer par WhatsApp</button>
       </div>
     </div>
   </div>
@@ -455,7 +500,7 @@
       <div class="adminBody">
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
           <button class="mini" id="exportBtn">Exporter JSON</button>
-          <button class="mini danger" id="clearAllBtn">Effacer tout l’historique</button>
+          <button class="mini danger" id="clearAllBtn">Effacer tout l'historique</button>
         </div>
         <pre id="adminDump">—</pre>
       </div>
@@ -470,6 +515,7 @@ const SHIPPING_FEE = 5;
 
 /* IMPORTANT ✅ chemins relatifs (sans /) */
 const CATEGORIES = [
+  { key:"hygiene_soins", label:"Hygiène & Soins", file:"data/hygiene_soins.csv" },
   { key:"fruits_legumes", label:"Fruits & Légumes", file:"data/fruits_legumes.csv" },
   { key:"lait_oeufs_produits_frais", label:"Lait, Œufs & Produits frais", file:"data/lait_oeufs_produits_frais.csv" },
   { key:"fromage_charcuterie", label:"Fromage & Charcuterie", file:"data/fromage_charcuterie.csv" },
@@ -804,6 +850,18 @@ function refreshCartUI(maybeOpen){
     rule.textContent = `ℹ️ Frais livraison: ${SHIPPING_FEE} dt (gratuite à partir de ${FREE_SHIPPING} dt).`;
   }
 
+  // Mise à jour de l'état du bouton Envoyer
+  const sendBtn = $("sendBtn");
+  const clientOK = ensureClientOK();
+  
+  if(g === null || !clientOK) {
+    sendBtn.disabled = true;
+    sendBtn.title = !clientOK ? "Enregistrez la fiche client d'abord" : "Minimum commande 15 dt";
+  } else {
+    sendBtn.disabled = false;
+    sendBtn.title = "Envoyer la commande";
+  }
+
   refreshClientHistoryTable();
   if(state.pinCart || maybeOpen) openDrawer();
 }
@@ -855,6 +913,32 @@ function buildOrderText(order){
   return txt;
 }
 
+function formatForWhatsApp(text) {
+  const lines = text.split('\n');
+  const emojiMap = {
+    'Date:': '📅',
+    'Commande ID:': '🆔',
+    'Client:': '👤',
+    'Nom:': '👨',
+    'Tel:': '📱',
+    'Adresse:': '📍',
+    'GPS:': '🗺️',
+    'Articles:': '🛍️',
+    'Sous-total:': '💰',
+    'Frais livraison:': '🚚',
+    'TOTAL:': '💵'
+  };
+  
+  return lines.map(line => {
+    for (const [key, emoji] of Object.entries(emojiMap)) {
+      if (line.startsWith(key)) {
+        return emoji + ' ' + line;
+      }
+    }
+    return line;
+  }).join('\n');
+}
+
 /* Admin */
 function openAdmin(){
   const pass = prompt("Mot de passe Admin ?");
@@ -888,7 +972,7 @@ $("saveClientBtn").onclick = ()=>{
   const c = readClientFromForm();
   if(!c.name || !c.tel){ alert("Veuillez remplir Nom + Téléphone."); return; }
   state.client = c; saveClient(); applyClientUI(); refreshClientHistoryTable();
-  alert("Fiche client enregistrée ✅");
+  alert("✅ Fiche client enregistrée");
 };
 $("editClientBtn").onclick = ()=>{
   if(!state.client) state.client = {name:"",tel:"",addr:"",lat:"",lng:"",locked:false};
@@ -908,52 +992,127 @@ $("clearCartBtn").onclick = ()=>{
   state.cart = {}; saveCart(); refreshCartUI(false);
 };
 
-$("sendBtn").onclick = ()=>{
+$("sendBtn").onclick = async ()=>{
+  const sendBtn = $("sendBtn");
+  const originalText = sendBtn.textContent;
+  
+  // Validation
   const g = grandTotal();
-  if(g === null){ alert("Minimum commande 15 dt."); return; }
-  if(!ensureClientOK()){ alert("Enregistre la fiche client avant d’envoyer."); openDrawer(); return; }
-
-  const items = Object.values(state.cart).map(it=>({
-    pid: it.pid, code: it.code, name: it.name, price: Number(it.price)||0, qty: it.qty||0, catLabel: it.catLabel
-  })).filter(x=>x.qty>0);
-
-  if(!items.length){ alert("Panier vide."); return; }
-
-  const order = {
-    id: "MJDC-" + Date.now(),
-    date: nowStr(),
-    client: { ...state.client },
-    items,
-    itemsCount: items.reduce((a,x)=>a+x.qty,0),
-    subtotal: cartTotal(),
-    fee: shippingFee() ?? 0,
-    total: g
-  };
-
-  const all = loadHistory(); all.push(order); saveHistory(all);
-
-  $("orderText").value = buildOrderText(order);
-  $("modalBack").classList.add("open");
-
-  state.cart = {}; saveCart(); refreshCartUI(false);
+  if (g === null) {
+    alert("❌ Minimum commande 15 dt.");
+    return;
+  }
+  
+  if (!ensureClientOK()) {
+    alert("📝 Veuillez enregistrer la fiche client avant d'envoyer.");
+    openDrawer();
+    return;
+  }
+  
+  const items = Object.values(state.cart).filter(x => x.qty > 0);
+  if (!items.length) {
+    alert("🧺 Panier vide.");
+    return;
+  }
+  
+  // Confirmation
+  const totalItems = items.reduce((a, x) => a + x.qty, 0);
+  const confirmMsg = `CONFIRMER L'ENVOI\n\n` +
+    `📦 ${totalItems} article(s)\n` +
+    `💰 Total: ${fmtDT(g)}\n` +
+    `👤 ${state.client.name}\n` +
+    `📱 ${state.client.tel}\n\n` +
+    `La commande sera enregistrée.`;
+  
+  if (!confirm(confirmMsg)) return;
+  
+  // Animation d'envoi
+  sendBtn.disabled = true;
+  sendBtn.innerHTML = "⏳ Traitement...";
+  sendBtn.classList.add("sent-animation");
+  
+  try {
+    // Attente pour l'UX
+    await new Promise(resolve => setTimeout(resolve, 600));
+    
+    // Création de la commande
+    const order = {
+      id: "MJDC-" + Date.now().toString().slice(-8),
+      date: nowStr(),
+      client: { ...state.client },
+      items: items.map(it => ({
+        pid: it.pid,
+        code: it.code,
+        name: it.name,
+        price: Number(it.price) || 0,
+        qty: it.qty || 0,
+        catLabel: it.catLabel
+      })),
+      itemsCount: totalItems,
+      subtotal: cartTotal(),
+      fee: shippingFee() ?? 0,
+      total: g
+    };
+    
+    // Sauvegarde
+    const all = loadHistory();
+    all.push(order);
+    saveHistory(all);
+    
+    // Affichage du résumé
+    $("orderText").value = buildOrderText(order);
+    $("modalBack").classList.add("open");
+    
+    // Vidage du panier
+    state.cart = {};
+    saveCart();
+    refreshCartUI(false);
+    
+    // Restauration du bouton
+    setTimeout(() => {
+      sendBtn.innerHTML = "✅ Envoyé";
+      setTimeout(() => {
+        sendBtn.innerHTML = originalText;
+        sendBtn.disabled = false;
+        sendBtn.classList.remove("sent-animation");
+      }, 1500);
+    }, 300);
+    
+  } catch (error) {
+    console.error("Erreur envoi:", error);
+    sendBtn.innerHTML = "❌ Erreur";
+    setTimeout(() => {
+      sendBtn.innerHTML = originalText;
+      sendBtn.disabled = false;
+      sendBtn.classList.remove("sent-animation");
+    }, 2000);
+    alert("Une erreur est survenue lors de l'envoi.");
+  }
 };
 
 $("closeModal").onclick = ()=> $("modalBack").classList.remove("open");
 $("copyBtn").onclick = async ()=>{
-  try{ await navigator.clipboard.writeText($("orderText").value); alert("Copié ✅"); }
+  try{ await navigator.clipboard.writeText($("orderText").value); alert("✅ Copié dans le presse-papier"); }
   catch(e){ alert("Copie impossible. Copie manuellement."); }
 };
 $("downloadBtn").onclick = ()=> dlText("commande-maxi-jdc.txt", $("orderText").value);
+$("whatsappBtn").onclick = () => {
+  const text = $("orderText").value;
+  const formattedText = formatForWhatsApp(text);
+  const whatsappNumber = "21625600978"; // Votre numéro
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(formattedText)}`;
+  window.open(url, '_blank');
+};
 
 $("histToggleBtn").onclick = ()=> $("histBox").classList.toggle("open");
 $("clearMyHistoryBtn").onclick = ()=>{
   const tel = getClientTel();
   if(!tel){ alert("Saisis le téléphone."); return; }
-  if(!confirm("Effacer l’historique pour ce téléphone ?")) return;
+  if(!confirm("Effacer l'historique pour ce téléphone ?")) return;
   const all = loadHistory();
   saveHistory(all.filter(o => String(o.client?.tel||"") !== String(tel)));
   refreshClientHistoryTable();
-  alert("Historique effacé ✅");
+  alert("✅ Historique effacé");
 };
 
 document.addEventListener("keydown", (e)=>{
@@ -964,9 +1123,9 @@ if(location.hash.includes("admin")) setTimeout(()=>openAdmin(), 300);
 $("closeAdmin").onclick = ()=> $("admin").classList.remove("open");
 $("exportBtn").onclick = ()=> dlText("maxi_jdc_orders.json", JSON.stringify(loadHistory(), null, 2));
 $("clearAllBtn").onclick = ()=>{
-  if(!confirm("Effacer tout l’historique ?")) return;
+  if(!confirm("Effacer tout l'historique ?")) return;
   saveHistory([]); $("adminDump").textContent = "[]"; refreshClientHistoryTable();
-  alert("Historique global effacé ✅");
+  alert("✅ Historique global effacé");
 };
 
 /* LOAD DATA */
