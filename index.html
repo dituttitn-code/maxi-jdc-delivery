@@ -981,11 +981,10 @@ if (fee === null) {
   totalBox.textContent = "Minimum commande 15 dt";
   totalBox.style.color = "#ff6b6b";
 } else {
-  const gTotal = grandTotal();
+  const gTotal = grandTotal(); // total + livraison
   totalBox.textContent = gTotal.toFixed(2).replace('.', ',') + " dt";
   totalBox.style.color = "";
 }
-
 
       const list = $("cartList");
       list.innerHTML = "";
@@ -1175,6 +1174,7 @@ if (fee === null) {
   </script>
 </body>
 </html>
+
 
 
 
