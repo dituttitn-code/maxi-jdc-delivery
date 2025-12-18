@@ -2,173 +2,164 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>MAXI JDC MARKET — Commande</title>
 
   <style>
     :root{
-      --bg0:#061014;
-      --bg1:#071b20;
-      --card:#0c1f25;
-      --card2:#0f262d;
-      --line:#163941;
-      --text:#e8f1f6;
-      --muted:#9db8c2;
-      --accent:#26d6c8;
+      --bg0:#061217;
+      --bg1:#071a21;
+
+      /* + lisible */
+      --card:#0f2a33;
+      --card2:#12313b;
+
+      --line:rgba(255,255,255,.14);
+      --text:rgba(255,255,255,.94);
+      --muted:rgba(255,255,255,.72);
+
+      --accent:#2fbd9a;
       --accent2:#22c55e;
       --danger:#ff6b6b;
       --warn:#fbbf24;
+      --pill:rgba(255,255,255,.07);
       --shadow: 0 18px 50px rgba(0,0,0,.45);
-      --radius: 18px;
+      --radius:18px;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(900px 500px at 20% 10%, rgba(38,214,200,.15), transparent 60%),
-        radial-gradient(900px 500px at 80% 15%, rgba(34,197,94,.10), transparent 60%),
-        radial-gradient(900px 700px at 50% 85%, rgba(38,214,200,.10), transparent 60%),
+        radial-gradient(1200px 800px at 20% 10%, rgba(47,189,154,.12), transparent 55%),
+        radial-gradient(900px 700px at 80% 20%, rgba(34,197,94,.10), transparent 55%),
+        radial-gradient(1000px 900px at 50% 100%, rgba(47,189,154,.06), transparent 60%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
+      min-height:100vh;
     }
 
     .wrap{
-      max-width: 1240px;
+      max-width: 1280px;
       margin: 24px auto 70px;
-      padding: 0 16px;
+      padding: 0 18px;
     }
 
-    .topbar{
+    .top{
       background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.08);
+      border:1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px 18px 14px;
       box-shadow: var(--shadow);
-      border-radius: 24px;
-      padding: 16px;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
     }
 
-    .toprow{
+    .topRow{
       display:flex;
-      gap:14px;
       align-items:center;
-      flex-wrap:wrap;
+      gap:14px;
+      flex-wrap: wrap;
     }
 
     .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
+      display:flex; align-items:center; gap:12px;
       min-width: 260px;
     }
-
     .logo{
-      width: 54px;
-      height: 54px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
+      width:54px; height:54px; border-radius:14px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
       overflow:hidden;
-      flex: 0 0 auto;
-      display:grid;
-      place-items:center;
+      display:flex; align-items:center; justify-content:center;
     }
-    .logo img{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      display:block;
-      transform: scale(1.05);
-    }
-
-    .brandTitle{
+    .logo img{width:100%; height:100%; object-fit:cover}
+    .titleBlock .t1{
+      font-weight: 900;
+      letter-spacing:.4px;
+      font-size: 20px;
       line-height: 1.05;
     }
-    .brandTitle .t{
-      font-weight: 900;
-      letter-spacing: .4px;
-      font-size: 22px; /* plus grand */
-    }
-    .brandTitle .s{
+    .titleBlock .t2{
+      margin-top:2px;
       color: var(--muted);
-      font-size: 12px;
-      margin-top: 4px;
+      font-size: 12.5px;
     }
 
-    .searchBox{
-      flex: 1 1 380px;
+    .search{
+      flex:1;
+      min-width: 320px;
       display:flex;
       gap:10px;
       align-items:center;
-      min-width: 280px;
     }
-
-    .searchBox input{
-      width:100%;
-      border-radius: 999px;
+    .search input{
+      flex:1;
+      min-width: 260px;
       padding: 12px 14px;
-      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      outline:none;
+    }
+    .search input::placeholder{color: rgba(255,255,255,.55)}
+    .btn{
+      padding: 10px 14px;
+      border-radius: 999px;
+      border:1px solid var(--line);
       background: rgba(255,255,255,.05);
       color: var(--text);
-      outline: none;
-    }
-    .searchBox input::placeholder{color: rgba(232,241,246,.55)}
-
-    .btn{
-      border-radius: 999px;
-      padding: 10px 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
       cursor:pointer;
-      font-weight: 700;
+      font-weight:800;
+      transition:.15s;
+      user-select:none;
       white-space: nowrap;
     }
-    .btn:hover{ background: rgba(255,255,255,.10) }
+    .btn:hover{ background: rgba(255,255,255,.08); }
     .btn.green{
-      border-color: rgba(34,197,94,.35);
-      background: rgba(34,197,94,.16);
+      background: rgba(34,197,94,.18);
+      border-color: rgba(34,197,94,.40);
     }
-    .btn.green:hover{ background: rgba(34,197,94,.22) }
+    .btn.green:hover{ background: rgba(34,197,94,.25); }
 
     .pills{
       display:flex;
       gap:10px;
+      flex-wrap: wrap;
       align-items:center;
-      flex-wrap:wrap;
-      margin-top: 12px;
+      justify-content:flex-end;
+      margin-top: 10px;
     }
     .pill{
+      padding: 8px 12px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: var(--pill);
+      color: var(--text);
+      font-size: 12.5px;
       display:flex;
       gap:8px;
       align-items:center;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      color: rgba(232,241,246,.92);
-      font-size: 12px;
+      user-select:none;
     }
 
-    /* panier pilule */
+    /* panier pill */
     .cartPill{
       cursor:pointer;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      margin-left:auto; /* pousse à droite */
-      user-select:none;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.07);
+      font-weight:900;
     }
     .cartPill:hover{ background:rgba(255,255,255,.10); }
     #cartTopCount{
       margin-left:8px;
       display:inline-block;
-      min-width:24px;
-      padding:2px 8px;
+      min-width:26px;
+      padding:2px 9px;
       border-radius:999px;
       background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.14);
       font-weight:900;
       text-align:center;
     }
@@ -177,16 +168,19 @@
       margin-top: 12px;
       padding: 10px 12px;
       border-radius: 14px;
-      border: 1px dashed rgba(255,255,255,.14);
-      color: rgba(232,241,246,.85);
-      background: rgba(0,0,0,.20);
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      font-size: 12.5px;
       display:flex;
       align-items:center;
       gap:10px;
-      flex-wrap:wrap;
-      font-size: 12px;
+      flex-wrap: wrap;
     }
-    .noteBar .sub{ color: rgba(232,241,246,.75) }
+    .noteBar .ok{
+      color: rgba(34,197,94,.95);
+      font-weight: 900;
+    }
 
     .grid{
       margin-top: 14px;
@@ -197,307 +191,307 @@
 
     .panel{
       background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.08);
+      border:1px solid var(--line);
       border-radius: var(--radius);
-      padding: 12px;
+      padding: 14px;
       box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
     }
+
     .panelHeader{
       display:flex;
+      align-items:flex-end;
       justify-content:space-between;
-      align-items:center;
-      margin-bottom: 8px;
+      gap:10px;
+      margin-bottom: 10px;
     }
     .panelHeader h3{
       margin:0;
       font-size: 14px;
-      letter-spacing: .2px;
+      letter-spacing:.2px;
     }
     .sub{
       color: var(--muted);
       font-size: 12px;
     }
 
-    .cats{ display:flex; flex-direction:column; gap:10px; }
-    .catBtn{
-      text-align:left;
-      border-radius: 14px;
-      padding: 10px 10px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      color: var(--text);
-      cursor:pointer;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:center;
-    }
-    .catBtn:hover{ background: rgba(255,255,255,.06) }
-    .catBtn.active{
-      border-color: rgba(38,214,200,.40);
-      box-shadow: 0 0 0 2px rgba(38,214,200,.10) inset;
-      background: rgba(38,214,200,.06);
-    }
-    .catMeta{
+    .cats{
       display:flex;
       flex-direction:column;
-      gap:4px;
-      min-width: 0;
+      gap:10px;
+      margin-top: 8px;
     }
-    .catMeta .name{ font-weight: 900; font-size: 13px; }
-    .catMeta .file{ font-size: 11px; color: rgba(232,241,246,.55); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width: 210px; }
-    .countPill{
-      font-weight:900;
-      font-size: 11px;
-      padding: 6px 10px;
+    .catBtn{
+      text-align:left;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      cursor:pointer;
+      transition: .15s;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .catBtn:hover{ background: rgba(255,255,255,.07) }
+    .catBtn.active{
+      background: rgba(47,189,154,.12);
+      border-color: rgba(47,189,154,.45);
+    }
+    .catName{ font-weight: 900; }
+    .catMeta{ color: var(--muted); font-size: 12px; margin-top:2px; }
+    .badge{
+      padding: 5px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.30);
-      color: rgba(232,241,246,.92);
-      flex:0 0 auto;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.20);
+      font-weight: 900;
+      font-size: 12px;
+      white-space: nowrap;
     }
 
-    .productsHeader{
+    .contentHeader{
       display:flex;
+      align-items:flex-start;
       justify-content:space-between;
-      align-items:center;
-      gap: 10px;
-      flex-wrap:wrap;
+      gap:10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
     }
-    .productsHeader h3{
-      margin:0;
-      font-size: 14px;
+    .contentHeader .leftInfo{
+      min-width: 260px;
+    }
+    .contentHeader .h1{
       font-weight: 900;
+      font-size: 14px;
+      margin: 0;
+    }
+    .contentHeader .h2{
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
     }
     .pager{
       display:flex;
-      gap:8px;
       align-items:center;
+      gap:10px;
+      color: var(--muted);
+      font-size: 12px;
     }
-    .pager .pillBtn{
-      width: 34px; height: 34px;
+    .circleBtn{
+      width: 32px; height: 32px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      display:flex; align-items:center; justify-content:center;
       cursor:pointer;
-      display:grid;
-      place-items:center;
       font-weight: 900;
     }
-    .pager .pillBtn:hover{ background: rgba(255,255,255,.08) }
-    .pager .pageTxt{ color: rgba(232,241,246,.75); font-size: 12px; min-width: 62px; text-align:center; }
+    .circleBtn:hover{ background: rgba(255,255,255,.08) }
 
     .cards{
-      margin-top: 12px;
       display:grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
     }
-    @media (max-width: 1060px){
+    @media(max-width: 1100px){
       .grid{ grid-template-columns: 1fr; }
-      .cards{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .brand{ min-width: 200px; }
+      .cards{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .pills{ justify-content:flex-start; }
+      .brand{ min-width: 220px; }
     }
-    @media (max-width: 720px){
+    @media(max-width: 650px){
       .cards{ grid-template-columns: 1fr; }
     }
 
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.09);
       border-radius: 18px;
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.10));
       padding: 12px;
-      box-shadow: 0 18px 40px rgba(0,0,0,.35);
-      position: relative;
+      position:relative;
       overflow:hidden;
-      min-height: 134px;
-    }
-    .card:before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:
-        radial-gradient(300px 120px at 20% 0%, rgba(38,214,200,.12), transparent 60%),
-        radial-gradient(240px 140px at 85% 40%, rgba(34,197,94,.10), transparent 65%);
-      pointer-events:none;
-      opacity:.9;
-    }
-    .card > *{ position:relative; z-index:1; }
-
-    .rowTop{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:flex-start;
     }
     .pname{
       font-weight: 950;
-      font-size: 13px;
-      line-height: 1.2;
-      text-transform: uppercase;
+      letter-spacing:.2px;
+      font-size: 13.5px;
+      line-height: 1.15;
+      margin:0 0 6px 0;
+      color: rgba(255,255,255,.96);
     }
-    .price{
-      font-weight: 950;
+    .metaLine{
+      color: rgba(255,255,255,.78);
+      font-size: 12px;
+      margin: 2px 0;
+      word-break: break-word;
+    }
+
+    .pricePill{
+      position:absolute;
+      top: 10px;
+      right: 10px;
       padding: 6px 10px;
       border-radius: 999px;
-      background: rgba(38,214,200,.10);
-      border: 1px solid rgba(38,214,200,.25);
-      white-space:nowrap;
+      background: rgba(47,189,154,.16);
+      border: 1px solid rgba(47,189,154,.35);
+      font-weight: 950;
+      font-size: 12px;
+      color: rgba(255,255,255,.96);
     }
 
-    .metaLine{
-      margin-top: 6px;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      color: rgba(232,241,246,.74);
-      font-size: 11px;
-      flex-wrap:wrap;
-    }
-
-    /* petit rond couleur article */
-    .dot{
-      width:10px;height:10px;border-radius:99px;
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(38,214,200,.55);
-      box-shadow: 0 0 0 2px rgba(0,0,0,.25);
-    }
-
-    .qtyRow{
+    .actions{
       margin-top: 10px;
       display:flex;
-      justify-content:space-between;
       align-items:center;
-      gap:10px;
+      justify-content:space-between;
+      gap: 10px;
+      flex-wrap: wrap;
     }
     .qtyBox{
       display:flex;
       align-items:center;
       gap:8px;
-      background: rgba(0,0,0,.22);
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      padding: 6px 10px;
       border-radius: 999px;
-      padding: 6px 8px;
     }
-    .qbtn{
+    .miniBtn{
       width: 30px; height: 30px;
       border-radius: 999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
       color: var(--text);
       cursor:pointer;
-      display:grid;
-      place-items:center;
-      font-weight: 900;
+      font-weight: 950;
     }
-    .qbtn:hover{ background: rgba(255,255,255,.10) }
-    .qnum{
-      min-width: 22px;
-      text-align:center;
-      font-weight: 900;
-    }
-    .addBtn{
-      border-radius: 999px;
-      padding: 10px 12px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      cursor:pointer;
-      font-weight: 900;
-      display:flex;
-      gap:8px;
-      align-items:center;
-      white-space:nowrap;
-    }
-    .addBtn:hover{ background: rgba(255,255,255,.10) }
+    .miniBtn:hover{ background: rgba(255,255,255,.10); }
+    .qtyNum{ min-width: 26px; text-align:center; font-weight: 950; }
 
-    /* DRAWER / MODAL */
-    .overlay{
+    /* drawer */
+    .drawerOverlay{
       position: fixed;
       inset:0;
       background: rgba(0,0,0,.55);
-      backdrop-filter: blur(8px);
       display:none;
-      z-index: 1000;
+      z-index: 50;
     }
-    .overlay.show{ display:block; }
-
     .drawer{
       position: fixed;
-      top: 0;
-      right: 0;
-      width: min(520px, 96vw);
-      height: 100%;
-      background: rgba(6,16,20,.95);
-      border-left: 1px solid rgba(255,255,255,.10);
-      box-shadow: -18px 0 50px rgba(0,0,0,.55);
-      transform: translateX(105%);
-      transition: transform .25s ease;
-      z-index: 1001;
+      top:0; right:0;
+      width: min(520px, 92vw);
+      height: 100vh;
+      background: rgba(10,20,26,.92);
+      border-left: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      transform: translateX(110%);
+      transition: .18s ease;
+      z-index: 60;
       display:flex;
       flex-direction:column;
+      backdrop-filter: blur(10px);
     }
-    .drawer.show{ transform: translateX(0); }
+    .drawer.open{ transform: translateX(0); }
+    .drawerOverlay.open{ display:block; }
 
     .drawerHead{
-      padding: 14px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
       display:flex;
-      justify-content:space-between;
       align-items:center;
-      gap:12px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      justify-content:space-between;
+      gap:10px;
     }
     .drawerHead .h{
       font-weight: 950;
       letter-spacing:.2px;
     }
-    .xbtn{
-      width: 38px; height: 38px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      color: var(--text);
-      cursor:pointer;
-      font-weight: 950;
-    }
-    .xbtn:hover{ background: rgba(255,255,255,.10) }
-
     .drawerBody{
-      padding: 14px;
+      padding: 14px 16px;
       overflow:auto;
       flex:1;
     }
 
-    .cartList{ display:flex; flex-direction:column; gap:10px; }
-    .cartItem{
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      border-radius: 16px;
-      padding: 10px;
-    }
-    .cartItemTop{
-      display:flex;
-      justify-content:space-between;
+    .formGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
       gap:10px;
-      align-items:flex-start;
     }
-    .cartItemTop .n{ font-weight: 900; font-size: 13px; }
-    .cartItemTop .p{ font-weight: 950; color: rgba(232,241,246,.92); white-space:nowrap; }
-    .cartItemSub{
-      margin-top: 6px;
+    .field{
       display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      color: rgba(232,241,246,.72);
+      flex-direction:column;
+      gap:6px;
+    }
+    .field label{
       font-size: 12px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .field input, .field textarea{
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      padding: 10px 12px;
+      outline:none;
+      resize: vertical;
+      min-height: 40px;
+    }
+    .field textarea{ min-height: 64px; grid-column: 1 / -1; }
+
+    .rowBtns{
+      margin-top: 10px;
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
     }
 
-    .summary{
-      margin-top: 12px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      padding-top: 12px;
+    .hr{
+      border-top:1px solid var(--line);
+      margin: 14px 0;
+    }
+
+    .cartList{ display:flex; flex-direction:column; gap:10px; }
+    .cartItem{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 10px;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:space-between;
+    }
+    .cartItem .l{
+      flex:1;
+      min-width: 220px;
+    }
+    .cartItem .nm{
+      font-weight: 950;
+      font-size: 13px;
+      margin:0 0 4px 0;
+    }
+    .cartItem .sm{
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .cartItem .r{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:8px;
+    }
+    .cartItem .lineTotal{
+      font-weight: 950;
+    }
+
+    .summaryBox{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      border-radius: 16px;
+      padding: 12px;
       display:flex;
       flex-direction:column;
       gap:8px;
@@ -505,143 +499,105 @@
     .sumRow{
       display:flex;
       justify-content:space-between;
-      gap:10px;
-      align-items:center;
-      font-size: 13px;
+      color: var(--muted);
+      font-size: 12.5px;
     }
-    .sumRow .k{ color: rgba(232,241,246,.75) }
-    .sumRow .v{ font-weight: 950 }
-    .minMsg{
-      margin-top: 8px;
-      padding: 10px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,107,107,.12);
-      color: rgba(255,230,230,.96);
-      display:none;
-      font-weight: 900;
-    }
-    .minMsg.show{ display:block; }
-
-    .form{
-      margin-top: 12px;
-      display:grid;
-      gap:10px;
-    }
-    .form label{
-      font-size: 12px;
-      color: rgba(232,241,246,.75);
-    }
-    .form input, .form textarea{
-      width:100%;
-      border-radius: 14px;
-      padding: 10px 12px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      outline:none;
-    }
-    .form textarea{ min-height: 76px; resize: vertical; }
+    .sumRow b{ color: var(--text); }
 
     .drawerFoot{
-      padding: 14px;
-      border-top: 1px solid rgba(255,255,255,.08);
+      padding: 14px 16px;
+      border-top:1px solid var(--line);
       display:flex;
       gap:10px;
+      flex-wrap: wrap;
       align-items:center;
-      flex-wrap:wrap;
+      justify-content:space-between;
     }
 
-    .btnDanger{
-      border-color: rgba(255,107,107,.35);
-      background: rgba(255,107,107,.16);
-    }
-    .btnDanger:hover{ background: rgba(255,107,107,.22) }
-
-    /* ADMIN */
-    .adminBar{
-      margin-top: 14px;
-      display:none;
-    }
-    .adminBar.show{ display:block; }
-    .adminGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 10px;
-    }
-    @media (max-width: 980px){
-      .adminGrid{ grid-template-columns: 1fr; }
-    }
     .table{
       width:100%;
       border-collapse: collapse;
       font-size: 12px;
     }
-    .table th,.table td{
-      border-bottom: 1px solid rgba(255,255,255,.08);
+    .table th, .table td{
+      border-bottom: 1px solid rgba(255,255,255,.10);
       padding: 8px 6px;
       text-align:left;
-      vertical-align:top;
-      color: rgba(232,241,246,.86);
+      color: var(--muted);
+      vertical-align: top;
     }
-    .table th{
-      color: rgba(232,241,246,.65);
-      font-weight: 900;
-    }
+    .table th{ color: rgba(255,255,255,.85); font-weight: 950; }
     .tag{
       display:inline-block;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
+      padding: 3px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.88);
       font-weight: 900;
       font-size: 11px;
+      margin-left: 6px;
     }
-    .hint{
-      margin-top: 10px;
-      color: rgba(232,241,246,.55);
-      font-size: 11px;
-      text-align:center;
+
+    .adminBar{
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,255,255,.20);
+      color: var(--muted);
+      font-size: 12px;
+      display:none;
     }
+    .adminBar.show{ display:block; }
+
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="topbar">
-      <div class="toprow">
+
+    <div class="top">
+      <div class="topRow">
         <div class="brand">
           <div class="logo">
-            <!-- mets ton logo dans le repo (ex: logo-maxi-jdc-market.jpg) -->
-            <img src="logo-maxi-jdc-market.jpg" alt="MAXI JDC" onerror="this.style.display='none'">
+            <img src="logo-maxi-jdc-market.jpg" alt="MAXI JDC MARKET"/>
           </div>
-          <div class="brandTitle">
-            <div class="t">MAXI JDC MARKET</div>
-            <div class="s">Des prix mini — Un MAXI choix</div>
+          <div class="titleBlock">
+            <div class="t1">MAXI JDC MARKET</div>
+            <div class="t2">Des prix mini — Un MAXI choix</div>
           </div>
         </div>
 
-        <div class="searchBox">
+        <div class="search" id="searchBox">
           <input id="q" type="text" placeholder="Rechercher un produit (nom, catégorie, code)..." />
           <button class="btn" id="clearBtn">Effacer</button>
           <button class="btn green" id="globalBtn">Recherche globale</button>
         </div>
-      </div>
 
-      <div class="pills">
-        <div class="pill">📍 Jardins de Carthage , derrière mosquée Essalem</div>
-        <div class="pill">🕒 7h – 1h</div>
-        <div class="pill">💬 WhatsApp: <b id="waTxt">00216 25 600 978</b></div>
+        <div class="pills" style="margin-left:auto">
+          <div class="pill">📍 Jardins de Carthage, derrière mosquée Essalem</div>
+          <div class="pill">🕘 7h – 1h</div>
+          <div class="pill">💬 WhatsApp: <b>00216 25 600 978</b></div>
 
-        <div class="pill cartPill" id="cartTopBtn" title="Ouvrir le panier">
-          🛒 Panier <span id="cartTopCount">0</span>
+          <!-- Panier -->
+          <div class="pill cartPill" id="cartTopBtn" title="Ouvrir le panier">
+            🛒 Panier <span id="cartTopCount">0</span>
+          </div>
         </div>
       </div>
 
       <div class="noteBar">
-        ✅ Données chargées depuis <b>data/*.csv</b> — une catégorie = un fichier CSV.
-        <span class="sub">Conditions : minimum livraison <b>15 dt</b> · Livraison gratuite si total ≥ <b>30 dt</b> · Sinon frais <b>5 dt</b> · Retrait magasin possible</span>
+        <span class="ok">✅</span>
+        <span id="loadStatus">Chargement…</span>
+        <span style="margin-left:auto" class="sub">
+          Conditions : minimum livraison <b>15 dt</b> · Livraison gratuite si total ≥ <b>30 dt</b> · Sinon frais <b>5 dt</b> · Retrait magasin possible
+        </span>
+      </div>
+
+      <div class="adminBar" id="adminHint">
+        Admin: <b>Ctrl + Shift + A</b> (ou ajoute <span class="mono">?admin=1</span> dans l’URL)
       </div>
     </div>
 
@@ -650,137 +606,146 @@
       <div class="panel">
         <div class="panelHeader">
           <h3>Catégories</h3>
-          <div class="sub" id="status">Chargement…</div>
+          <div class="sub" id="catStatus">OK</div>
         </div>
         <div class="cats" id="cats"></div>
       </div>
 
       <!-- RIGHT -->
       <div class="panel">
-        <div class="productsHeader">
-          <div>
-            <h3 id="activeLabel">Produits</h3>
-            <div class="sub" id="activeFile">Sélectionne une catégorie.</div>
+        <div class="contentHeader">
+          <div class="leftInfo">
+            <div class="h1" id="activeLabel">Produits</div>
+            <div class="h2" id="activeSub">Sélectionne une catégorie.</div>
           </div>
-
           <div class="pager">
-            <button class="pillBtn" id="prevBtn">‹</button>
-            <div class="pageTxt" id="pageTxt">Page 1/1</div>
-            <button class="pillBtn" id="nextBtn">›</button>
+            <div class="circleBtn" id="prevPage">‹</div>
+            <div id="pageInfo">Page 1/1</div>
+            <div class="circleBtn" id="nextPage">›</div>
+            <span class="tag" id="countInfo">0 article(s)</span>
           </div>
-
-          <div class="sub" id="countTxt">0 article(s)</div>
         </div>
 
         <div class="cards" id="cards"></div>
 
-        <div class="hint">Admin : Ctrl + Shift + A (ou ajoute <b>?admin=1</b> dans l’URL)</div>
-
         <!-- ADMIN PANEL -->
-        <div class="adminBar" id="adminBar">
+        <div class="hr"></div>
+        <div id="adminPanel" style="display:none">
           <div class="panelHeader">
-            <h3>Admin · Historique commandes & clients</h3>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button class="btn" id="exportBtn">Exporter JSON</button>
-              <button class="btn btnDanger" id="clearOrdersBtn">Vider historique</button>
-            </div>
+            <h3>🔧 Admin</h3>
+            <div class="sub">Commandes enregistrées (localStorage)</div>
           </div>
 
-          <div class="adminGrid">
-            <div class="panel" style="box-shadow:none;background:rgba(255,255,255,.02)">
-              <div class="panelHeader">
-                <h3>Commandes</h3>
-                <div class="sub"><span class="tag" id="ordersCount">0</span></div>
-              </div>
-              <table class="table" id="ordersTable"></table>
-            </div>
-
-            <div class="panel" style="box-shadow:none;background:rgba(255,255,255,.02)">
-              <div class="panelHeader">
-                <h3>Clients</h3>
-                <div class="sub"><span class="tag" id="clientsCount">0</span></div>
-              </div>
-              <table class="table" id="clientsTable"></table>
-
-              <div style="margin-top:12px">
-                <div class="panelHeader" style="margin-bottom:6px">
-                  <h3>Admin · Modifier un prix (override)</h3>
-                  <div class="sub">par code produit</div>
-                </div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap">
-                  <input id="ovCode" placeholder="Code" style="flex:1;min-width:120px;border-radius:14px;padding:10px 12px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);color:var(--text)">
-                  <input id="ovPrice" placeholder="Prix (dt)" style="width:140px;border-radius:14px;padding:10px 12px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);color:var(--text)">
-                  <button class="btn green" id="ovSave">Enregistrer</button>
-                  <button class="btn" id="ovClear">Effacer override</button>
-                </div>
-                <div class="sub" style="margin-top:8px">Astuce : après override, recharge la catégorie (clic catégorie) pour voir le prix.</div>
-              </div>
-
-            </div>
+          <div class="rowBtns">
+            <button class="btn" id="exportOrders">Exporter JSON</button>
+            <button class="btn" id="clearOrders" style="border-color: rgba(255,107,107,.45); background: rgba(255,107,107,.12)">Vider commandes</button>
+            <button class="btn" id="closeAdmin">Fermer admin</button>
           </div>
+
+          <div class="hr"></div>
+
+          <table class="table" id="ordersTable"></table>
         </div>
-        <!-- /ADMIN PANEL -->
+
       </div>
     </div>
+
   </div>
 
   <!-- CART DRAWER -->
-  <div class="overlay" id="overlay"></div>
+  <div class="drawerOverlay" id="overlay"></div>
   <div class="drawer" id="drawer">
     <div class="drawerHead">
-      <div class="h">🛒 Panier</div>
-      <button class="xbtn" id="closeDrawer">✕</button>
+      <div class="h">🛒 Panier & Fiche client</div>
+      <button class="btn" id="closeDrawer">Fermer</button>
     </div>
 
     <div class="drawerBody">
-      <div class="cartList" id="cartList"></div>
+      <!-- CLIENT FORM -->
+      <div class="panel" style="box-shadow:none; background: rgba(255,255,255,.02)">
+        <div class="panelHeader" style="margin-bottom:6px">
+          <h3 style="margin:0;font-size:13px">👤 Fiche client (1 seule fois)</h3>
+          <div class="sub" id="clientLockHint">—</div>
+        </div>
 
-      <div class="summary">
-        <div class="sumRow"><div class="k">Sous-total</div><div class="v" id="subTotal">0,00 dt</div></div>
-        <div class="sumRow"><div class="k">Frais livraison</div><div class="v" id="shipFee">—</div></div>
-        <div class="sumRow"><div class="k">Total</div><div class="v" id="cartTotal">0,00 dt</div></div>
-        <div class="minMsg" id="minMsg">Minimum commande 15 dt</div>
+        <div class="formGrid">
+          <div class="field">
+            <label>Nom</label>
+            <input id="cName" placeholder="Nom et prénom" />
+          </div>
+          <div class="field">
+            <label>Téléphone</label>
+            <input id="cTel" placeholder="Ex: 25xxxxxx" />
+          </div>
+
+          <div class="field" style="grid-column:1/-1">
+            <label>Adresse</label>
+            <textarea id="cAddr" placeholder="Adresse + repère…"></textarea>
+          </div>
+
+          <div class="field">
+            <label>GPS (lat)</label>
+            <input id="cLat" placeholder="36.xxxxx" />
+          </div>
+          <div class="field">
+            <label>GPS (lng)</label>
+            <input id="cLng" placeholder="10.xxxxx" />
+          </div>
+        </div>
+
+        <div class="rowBtns">
+          <button class="btn" id="gpsBtn">📍 Utiliser ma position</button>
+          <button class="btn green" id="saveClientBtn">Enregistrer fiche</button>
+          <button class="btn" id="editClientBtn" style="display:none">Modifier</button>
+        </div>
+
+        <div class="sub" style="margin-top:8px">
+          Astuce: après enregistrement, la fiche est verrouillée (tu peux cliquer “Modifier” si besoin).
+        </div>
       </div>
 
-      <div class="form">
-        <div>
-          <label>Nom</label>
-          <input id="cName" placeholder="Nom du client" />
+      <div class="hr"></div>
+
+      <!-- HISTORIQUE CLIENT (DANS PANIER) -->
+      <div class="panel" style="box-shadow:none;background:rgba(255,255,255,.02); margin-bottom:12px">
+        <div class="panelHeader" style="margin-bottom:6px">
+          <h3 style="margin:0;font-size:13px">🧾 Historique client</h3>
+          <div class="sub" id="histHint">Tape le téléphone pour voir l’historique</div>
         </div>
-        <div>
-          <label>Téléphone</label>
-          <input id="cTel" placeholder="Ex: 25 600 978" />
-        </div>
-        <div>
-          <label>Adresse</label>
-          <input id="cAddr" placeholder="Adresse de livraison" />
-        </div>
-        <div>
-          <label>Note (facultatif)</label>
-          <textarea id="cNote" placeholder="Ex: interphone, étage, repère…"></textarea>
+        <table class="table" id="clientHistoryTable"></table>
+      </div>
+
+      <!-- CART LIST -->
+      <div class="cartList" id="cartList"></div>
+
+      <div class="hr"></div>
+
+      <!-- SUMMARY -->
+      <div class="summaryBox">
+        <div class="sumRow"><span>Sous-total</span><b id="subTotal">0,00 dt</b></div>
+        <div class="sumRow"><span>Frais livraison</span><b id="shipFee">—</b></div>
+        <div class="sumRow"><span>Total</span><b id="cartTotal">0,00 dt</b></div>
+        <div class="sub" id="minHint" style="margin-top:6px">
+          Minimum commande: 15 dt — Livraison gratuite à partir de 30 dt.
         </div>
       </div>
     </div>
 
     <div class="drawerFoot">
-      <button class="btn btnDanger" id="clearCartBtn">Vider panier</button>
-      <button class="btn green" id="sendWaBtn">Envoyer WhatsApp</button>
+      <button class="btn" id="clearCartBtn">Vider panier</button>
+      <button class="btn green" id="sendBtn">Envoyer</button>
     </div>
   </div>
 
   <script>
-    /**********************
+    /***********************
      * CONFIG
-     **********************/
-    const WHATSAPP_NUMBER = "0021625600978"; // sans espaces
+     ***********************/
+    const WHATSAPP_NUMBER = "0021625600978"; // gardé si un jour tu veux
     const MIN_ORDER = 15;
     const FREE_SHIPPING = 30;
     const SHIPPING_FEE = 5;
-    const PAGE_SIZE = 9;
 
-    /**********************
-     * CATEGORIES (IMPORTANT: data/... sans / au début)
-     **********************/
     const CATEGORIES = [
       { key:"fruits_legumes", label:"Fruits & Légumes", file:"data/fruits_legumes.csv" },
       { key:"lait_oeufs_produits_frais", label:"Lait, Œufs & Produits frais", file:"data/lait_oeufs_produits_frais.csv" },
@@ -792,684 +757,674 @@
       { key:"conserves", label:"Conserves", file:"data/conserves.csv" },
     ];
 
-    /**********************
-     * STATE
-     **********************/
+    /***********************
+     * STATE + STORAGE
+     ***********************/
     const state = {
       activeCat: CATEGORIES[0].key,
       global: false,
-      q: "",
       page: 1,
+      pageSize: 9,
       dataByCat: new Map(),
-      cart: {}, // key -> {code,name,price,cat,qty}
-      priceOverrides: loadJSON("maxi_price_overrides_v1", {}),
+      cart: loadJSON("maxi_cart_v2", {}),
       admin: false
     };
 
-    /**********************
-     * HELPERS
-     **********************/
-    const $ = (id)=>document.getElementById(id);
+    function $(id){ return document.getElementById(id); }
+    function loadJSON(k, def){
+      try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; }catch(e){ return def; }
+    }
+    function saveJSON(k, obj){ localStorage.setItem(k, JSON.stringify(obj)); }
 
     function fmtDT(n){
       const x = Number(n||0);
-      return x.toFixed(2).replace(".", ",") + " dt";
+      return x.toFixed(2).replace('.', ',') + " dt";
     }
 
-    function hashHue(str){
-      let h=0;
-      for(let i=0;i<str.length;i++) h = (h*31 + str.charCodeAt(i)) >>> 0;
-      return h % 360;
-    }
-
-    function dotColor(catKey, code){
-      const hue = (hashHue(catKey + ":" + code) + 140) % 360;
-      return `hsl(${hue} 70% 55% / .9)`;
-    }
-
-    function loadJSON(k, fallback){
-      try{ return JSON.parse(localStorage.getItem(k) || ""); }catch(e){ return fallback; }
-    }
-    function saveJSON(k, v){ localStorage.setItem(k, JSON.stringify(v)); }
-
-    function saveCart(){
-      saveJSON("maxi_cart_v1", state.cart);
-    }
-    function loadCart(){
-      state.cart = loadJSON("maxi_cart_v1", {});
-    }
-
-    /**********************
-     * SHIPPING + TOTALS
-     **********************/
-    function cartCount(){
-      return Object.values(state.cart).reduce((a,it)=>a+(it.qty||0),0);
-    }
-    function cartSubTotal(){
-      return Object.values(state.cart).reduce((a,it)=> a + (Number(it.price)||0) * (it.qty||0), 0);
-    }
-    function shippingFee(){
-      const total = cartSubTotal();
-      if (total >= FREE_SHIPPING) return 0;
-      if (total >= MIN_ORDER) return SHIPPING_FEE;
-      return null; // non valide
-    }
-    function grandTotal(){
-      const fee = shippingFee();
-      if (fee === null) return null;
-      return cartSubTotal() + fee;
-    }
-
-    /**********************
-     * CSV PARSER (simple)
-     * format attendu: code \t ou ; ou , puis nom puis prix (dt)
-     **********************/
+    /***********************
+     * CSV PARSER
+     ***********************/
     function parseCSV(text){
+      // accepte séparateur ; ou , ou tab
       const lines = text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
       const items = [];
       for(const line of lines){
-        // detect separator
-        const sep = line.includes("\t") ? "\t" : (line.includes(";") ? ";" : ",");
-        const parts = line.split(sep).map(s=>s.trim());
+        const parts = line.split(/\t|;|,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(s=>s.trim().replace(/^"|"$/g,''));
+        // formats possibles:
+        // code, name, price
+        // ou code \t name \t price
         if(parts.length < 2) continue;
-
-        // si format "CODE  NOM  PRIX"
-        let code = parts[0];
-        let name = parts[1] || "";
-        let price = parts[2] ?? "";
-
-        // si price vide, essayer fin de ligne
-        if(price === "" && parts.length >= 3) price = parts[parts.length-1];
-
-        // normaliser prix
-        price = String(price).replace("dt","").replace(",",".").trim();
+        const code = parts[0];
+        const name = parts[1] || "";
+        let price = parts[2] ?? parts[parts.length-1];
+        price = String(price??"").replace(",",".");
         const p = Number(price);
-        const priceNum = Number.isFinite(p) ? p : 0;
-
         items.push({
-          code: String(code||"").trim(),
-          name: String(name||"").trim(),
-          price: priceNum
+          code,
+          name,
+          price: isFinite(p) ? p : 0
         });
       }
       return items;
     }
 
-    /**********************
-     * LOAD ALL CATEGORIES
-     **********************/
     async function loadAll(){
-      $("status").textContent = "Chargement…";
+      $("loadStatus").textContent = "Chargement des CSV…";
+      let okCount = 0;
+
       for(const c of CATEGORIES){
         try{
           const r = await fetch(c.file, { cache:"no-store" });
           if(!r.ok) throw new Error("HTTP " + r.status);
-          const text = await r.text();
-          const items = parseCSV(text).map(it=>{
-            // appliquer override prix si exist
-            const ov = state.priceOverrides[it.code];
-            if(ov !== undefined && ov !== null && ov !== ""){
-              const p = Number(String(ov).replace(",","."));
-              if(Number.isFinite(p)) it.price = p;
-            }
-            return {...it, catKey:c.key, catLabel:c.label};
-          });
+          const t = await r.text();
+          const items = parseCSV(t).map(x => ({...x, catKey:c.key, catLabel:c.label}));
           state.dataByCat.set(c.key, items);
+          okCount++;
         }catch(e){
-          console.warn("Erreur CSV", c.file, e);
           state.dataByCat.set(c.key, []);
+          console.warn("Erreur CSV", c.file, e);
         }
       }
-      $("status").textContent = "OK";
+
+      $("loadStatus").innerHTML = `✅ Données chargées depuis <b>/data/*.csv</b> — une catégorie = un fichier CSV.`;
+      $("catStatus").textContent = (okCount === CATEGORIES.length) ? "OK" : ("Partiel");
       buildCats();
       render();
     }
 
-    /**********************
+    /***********************
+     * CART LOGIC
+     ***********************/
+    function saveCart(){ saveJSON("maxi_cart_v2", state.cart); }
+    function cartCount(){
+      return Object.values(state.cart).reduce((a,b)=>a + (b.qty||0), 0);
+    }
+    function cartSubTotal(){
+      return Object.values(state.cart).reduce((a,it)=>a + (Number(it.price)||0)*(it.qty||0), 0);
+    }
+    function shippingFee(){
+      const total = cartSubTotal();
+      if(total < MIN_ORDER) return null;
+      if(total >= FREE_SHIPPING) return 0;
+      return SHIPPING_FEE;
+    }
+    function grandTotal(){
+      const fee = shippingFee();
+      if(fee === null) return null;
+      return cartSubTotal() + fee;
+    }
+
+    function addToCart(prod, delta){
+      const key = prod.code || (prod.catKey + ":" + prod.name);
+      const cur = state.cart[key] || { code: prod.code, name: prod.name, price: prod.price, cat: prod.catLabel, qty:0 };
+      cur.price = Number(prod.price)||0;
+      cur.name = prod.name;
+      cur.code = prod.code;
+      cur.cat = prod.catLabel;
+
+      cur.qty = Math.max(0, (cur.qty||0) + delta);
+      if(cur.qty === 0) delete state.cart[key];
+      else state.cart[key] = cur;
+
+      saveCart();
+      refreshCartUI();
+      renderTopCart();
+      render(); // pour mettre à jour les quantités sur les cartes
+    }
+
+    function renderTopCart(){
+      $("cartTopCount").textContent = cartCount();
+    }
+
+    /***********************
+     * CLIENT (1ere fois)
+     ***********************/
+    function loadClient(){
+      return loadJSON("maxi_client_v1", null);
+    }
+    function saveClient(obj){
+      saveJSON("maxi_client_v1", obj);
+    }
+    function setClientLock(locked){
+      const ids = ["cName","cTel","cAddr","cLat","cLng"];
+      ids.forEach(id => $(id).disabled = locked);
+      $("saveClientBtn").style.display = locked ? "none" : "";
+      $("editClientBtn").style.display = locked ? "" : "none";
+      $("clientLockHint").textContent = locked ? "Fiche enregistrée (verrouillée)" : "Remplis puis Enregistrer";
+    }
+    function fillClientForm(obj){
+      $("cName").value = obj?.name || "";
+      $("cTel").value = obj?.tel || "";
+      $("cAddr").value = obj?.addr || "";
+      $("cLat").value = obj?.gps?.lat || "";
+      $("cLng").value = obj?.gps?.lng || "";
+    }
+    function readClientForm(){
+      return {
+        name: $("cName").value.trim(),
+        tel: $("cTel").value.trim(),
+        addr: $("cAddr").value.trim(),
+        gps: { lat: $("cLat").value.trim(), lng: $("cLng").value.trim() }
+      };
+    }
+
+    /***********************
+     * ORDERS + HISTORIQUE
+     ***********************/
+    function loadOrders(){ return loadJSON("maxi_orders_v1", []); }
+    function saveOrders(arr){ saveJSON("maxi_orders_v1", arr); }
+
+    function buildOrderMessage(order){
+      const c = order.customer || {};
+      const lines = [];
+      lines.push("🛒 *Commande MAXI JDC MARKET*");
+      lines.push(`👤 Nom: ${c.name || "-"}`);
+      lines.push(`📞 Tel: ${c.tel || "-"}`);
+      lines.push(`📍 Adresse: ${c.addr || "-"}`);
+      if(c.gps?.lat || c.gps?.lng) lines.push(`🧭 GPS: ${c.gps.lat || ""} , ${c.gps.lng || ""}`);
+      lines.push("");
+      lines.push("*Articles:*");
+      for(const it of order.items){
+        const lt = (Number(it.price)||0) * (it.qty||0);
+        lines.push(`• ${it.qty} × ${it.name} (${it.code || "-"}) — ${fmtDT(lt)}`);
+      }
+      lines.push("");
+      lines.push(`Sous-total: ${fmtDT(order.subTotal)}`);
+      lines.push(`Frais: ${order.fee === null ? "—" : fmtDT(order.fee)}`);
+      lines.push(`✅ Total: *${fmtDT(order.total)}*`);
+      lines.push(`🕒 ${new Date(order.id).toLocaleString()}`);
+      return lines.join("\n");
+    }
+
+    function saveOrder(){
+      const fee = shippingFee();
+      if(fee === null) return null;
+
+      // client: si pas encore enregistré -> on force
+      let client = loadClient();
+      if(!client){
+        client = readClientForm();
+        saveClient(client);
+        setClientLock(true);
+      }
+
+      const items = Object.values(state.cart).map(it => ({
+        code: it.code || "",
+        name: it.name || "",
+        price: Number(it.price)||0,
+        qty: it.qty||0,
+        cat: it.cat || ""
+      }));
+
+      const subTotal = cartSubTotal();
+      const total = subTotal + fee;
+
+      const order = {
+        id: new Date().toISOString(),
+        customer: client,
+        items,
+        subTotal,
+        fee,
+        total
+      };
+
+      const orders = loadOrders();
+      orders.unshift(order);
+      saveOrders(orders);
+      return order;
+    }
+
+    function ordersOfPhone(tel){
+      const t = (tel||"").replace(/\s+/g,"").trim();
+      if(!t) return [];
+      const orders = loadOrders();
+      return orders.filter(o => ((o.customer?.tel||"").replace(/\s+/g,"").trim()) === t);
+    }
+
+    function renderClientHistory(){
+      const tel = $("cTel").value.trim();
+      const rows = ordersOfPhone(tel);
+      const table = $("clientHistoryTable");
+
+      if(!tel){
+        $("histHint").textContent = "Tape le téléphone pour voir l’historique";
+        table.innerHTML =
+          `<tr><th>Date</th><th>Total</th><th>Articles</th></tr>
+           <tr><td colspan="3" style="color:rgba(255,255,255,.55)">—</td></tr>`;
+        return;
+      }
+
+      $("histHint").textContent = rows.length ? `Trouvé: ${rows.length} commande(s)` : "Aucune commande trouvée";
+
+      table.innerHTML = `<tr><th>Date</th><th>Total</th><th>Articles</th></tr>`;
+      for(const o of rows.slice(0, 12)){
+        const dt = new Date(o.id).toLocaleString();
+        const itemsCount = (o.items||[]).reduce((a,x)=>a+(x.qty||0),0);
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${dt}</td><td><b style="color:rgba(255,255,255,.92)">${fmtDT(o.total)}</b></td><td>${itemsCount}</td>`;
+        table.appendChild(tr);
+      }
+    }
+
+    /***********************
      * UI BUILD
-     **********************/
+     ***********************/
     function buildCats(){
       const box = $("cats");
       box.innerHTML = "";
       for(const c of CATEGORIES){
-        const items = state.dataByCat.get(c.key) || [];
-        const btn = document.createElement("button");
+        const btn = document.createElement("div");
         btn.className = "catBtn" + (state.activeCat===c.key ? " active":"");
+        const count = (state.dataByCat.get(c.key)||[]).length;
+        btn.innerHTML = `
+          <div>
+            <div class="catName">${c.label}</div>
+            <div class="catMeta">CSV: ${c.file.replace("data/","")}</div>
+          </div>
+          <div class="badge">${count} article(s)</div>
+        `;
         btn.onclick = ()=>{
           state.activeCat = c.key;
           state.global = false;
           state.page = 1;
-          render();
           buildCats();
+          render();
         };
-
-        const meta = document.createElement("div");
-        meta.className = "catMeta";
-        const n = document.createElement("div");
-        n.className = "name";
-        n.textContent = c.label;
-        const f = document.createElement("div");
-        f.className = "file";
-        f.textContent = "CSV: " + c.file.replace("data/","");
-        meta.appendChild(n);
-        meta.appendChild(f);
-
-        const count = document.createElement("div");
-        count.className = "countPill";
-        count.textContent = items.length + " article(s)";
-
-        btn.appendChild(meta);
-        btn.appendChild(count);
         box.appendChild(btn);
       }
     }
 
-    function getActiveItems(){
-      let items = [];
+    function getFilteredItems(){
+      const q = $("q").value.trim().toLowerCase();
+      const all = [];
+
       if(state.global){
         for(const c of CATEGORIES){
-          items = items.concat(state.dataByCat.get(c.key) || []);
+          all.push(...(state.dataByCat.get(c.key)||[]));
         }
       }else{
-        items = (state.dataByCat.get(state.activeCat) || []);
+        all.push(...(state.dataByCat.get(state.activeCat)||[]));
       }
 
-      const q = (state.q||"").trim().toLowerCase();
+      let items = all;
+
       if(q){
-        items = items.filter(it=>{
-          const hay = (it.name+" "+it.code+" "+it.catLabel).toLowerCase();
-          return hay.includes(q);
-        });
+        items = items.filter(it =>
+          (it.name||"").toLowerCase().includes(q) ||
+          (it.code||"").toLowerCase().includes(q) ||
+          (it.catLabel||"").toLowerCase().includes(q)
+        );
       }
 
       return items;
     }
 
     function render(){
-      $("waTxt").textContent = "00216 25 600 978";
+      // header
+      const active = CATEGORIES.find(x=>x.key===state.activeCat);
+      $("activeLabel").textContent = state.global ? "Recherche globale" : (active?.label || "Produits");
+      $("activeSub").textContent = state.global
+        ? "Recherche sur toutes les catégories"
+        : `Source: /${active?.file || ""} · Mise à jour rapide (prix + nouveaux articles)`;
 
-      const activeCatObj = CATEGORIES.find(x=>x.key===state.activeCat) || CATEGORIES[0];
-      $("activeLabel").textContent = state.global ? "Recherche globale" : activeCatObj.label;
-      $("activeFile").textContent = state.global ? "Toutes les catégories" : ("Source: " + activeCatObj.file);
+      const items = getFilteredItems();
 
-      const items = getActiveItems();
-      $("countTxt").textContent = items.length + " article(s)";
-
-      const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
+      const totalPages = Math.max(1, Math.ceil(items.length / state.pageSize));
       state.page = Math.min(state.page, totalPages);
-      $("pageTxt").textContent = `Page ${state.page}/${totalPages}`;
 
-      const start = (state.page-1)*PAGE_SIZE;
-      const pageItems = items.slice(start, start+PAGE_SIZE);
+      $("pageInfo").textContent = `Page ${state.page}/${totalPages}`;
+      $("countInfo").textContent = `${items.length} article(s)`;
 
-      const box = $("cards");
-      box.innerHTML = "";
+      const start = (state.page-1)*state.pageSize;
+      const pageItems = items.slice(start, start + state.pageSize);
 
-      for(const it of pageItems){
+      const cards = $("cards");
+      cards.innerHTML = "";
+
+      for(const p of pageItems){
+        const key = p.code || (p.catKey + ":" + p.name);
+        const inCartQty = state.cart[key]?.qty || 0;
+
         const card = document.createElement("div");
         card.className = "card";
 
-        const top = document.createElement("div");
-        top.className = "rowTop";
+        const priceTxt = fmtDT(p.price);
 
-        const left = document.createElement("div");
-        const pn = document.createElement("div");
-        pn.className = "pname";
-        pn.textContent = it.name || "—";
+        card.innerHTML = `
+          <div class="pricePill">${priceTxt}</div>
+          <p class="pname">${escapeHtml(p.name || "")}</p>
+          <div class="metaLine">Code: <b>${escapeHtml(p.code || "-")}</b> · ${escapeHtml(p.catLabel || "")}</div>
 
-        const meta = document.createElement("div");
-        meta.className = "metaLine";
+          <div class="actions">
+            <div class="qtyBox" title="Quantité dans le panier">
+              <button class="miniBtn" data-act="minus">−</button>
+              <div class="qtyNum" id="qty_${cssSafe(key)}">${inCartQty}</div>
+              <button class="miniBtn" data-act="plus">+</button>
+            </div>
+            <button class="btn" data-act="add">Ajouter</button>
+          </div>
+        `;
 
-        const dot = document.createElement("span");
-        dot.className = "dot";
-        dot.style.background = dotColor(it.catKey, it.code);
+        card.querySelector('[data-act="minus"]').onclick = ()=> addToCart(p, -1);
+        card.querySelector('[data-act="plus"]').onclick = ()=> addToCart(p, +1);
+        card.querySelector('[data-act="add"]').onclick = ()=> addToCart(p, +1);
 
-        const code = document.createElement("span");
-        code.textContent = `Code: ${it.code || "—"}`;
+        cards.appendChild(card);
+      }
 
-        const cat = document.createElement("span");
-        cat.textContent = `· ${it.catLabel}`;
-
-        meta.appendChild(dot);
-        meta.appendChild(code);
-        meta.appendChild(cat);
-
-        left.appendChild(pn);
-        left.appendChild(meta);
-
-        const price = document.createElement("div");
-        price.className = "price";
-        price.textContent = fmtDT(it.price);
-
-        top.appendChild(left);
-        top.appendChild(price);
-
-        const qtyRow = document.createElement("div");
-        qtyRow.className = "qtyRow";
-
-        const qtyBox = document.createElement("div");
-        qtyBox.className = "qtyBox";
-
-        const key = it.code || (it.catKey + ":" + it.name);
-        const currentQty = (state.cart[key]?.qty)||0;
-
-        const minus = document.createElement("button");
-        minus.className = "qbtn";
-        minus.textContent = "−";
-        minus.onclick = ()=> changeQty(it, -1);
-
-        const qnum = document.createElement("div");
-        qnum.className = "qnum";
-        qnum.textContent = currentQty;
-
-        const plus = document.createElement("button");
-        plus.className = "qbtn";
-        plus.textContent = "+";
-        plus.onclick = ()=> changeQty(it, +1);
-
-        qtyBox.appendChild(minus);
-        qtyBox.appendChild(qnum);
-        qtyBox.appendChild(plus);
-
-        const add = document.createElement("button");
-        add.className = "addBtn";
-        add.innerHTML = "🛒 <span>Ajouter</span>";
-        add.onclick = ()=> changeQty(it, +1);
-
-        qtyRow.appendChild(qtyBox);
-        qtyRow.appendChild(add);
-
-        card.appendChild(top);
-        card.appendChild(qtyRow);
-        box.appendChild(card);
+      if(!pageItems.length){
+        cards.innerHTML = `<div class="sub">Aucun article trouvé.</div>`;
       }
 
       refreshCartUI();
-    }
-
-    function changeQty(it, delta){
-      const key = it.code || (it.catKey + ":" + it.name);
-      const cur = state.cart[key]?.qty || 0;
-      const next = Math.max(0, cur + delta);
-
-      if(next === 0){
-        delete state.cart[key];
-      }else{
-        state.cart[key] = {
-          key,
-          code: it.code,
-          name: it.name,
-          price: it.price,
-          cat: it.catLabel,
-          qty: next
-        };
-      }
-      saveCart();
-      render(); // pour mettre à jour les quantités sur les cartes
-    }
-
-    /**********************
-     * CART UI
-     **********************/
-    function openCart(){
-      $("overlay").classList.add("show");
-      $("drawer").classList.add("show");
-      refreshCartUI();
-    }
-    function closeCart(){
-      $("overlay").classList.remove("show");
-      $("drawer").classList.remove("show");
+      renderTopCart();
     }
 
     function refreshCartUI(){
+      // counts
       $("cartTopCount").textContent = cartCount();
 
+      // list
       const list = $("cartList");
       list.innerHTML = "";
 
       const keys = Object.keys(state.cart);
+
       if(!keys.length){
         const e = document.createElement("div");
         e.className = "sub";
-        e.style.padding = "8px";
         e.textContent = "Panier vide. Ajoute des articles 🙂";
         list.appendChild(e);
-      }else{
+      } else {
         for(const k of keys){
           const it = state.cart[k];
+          const lineTotal = (Number(it.price)||0) * (it.qty||0);
+
           const row = document.createElement("div");
           row.className = "cartItem";
-
-          const top = document.createElement("div");
-          top.className = "cartItemTop";
-
-          const n = document.createElement("div");
-          n.className = "n";
-          n.textContent = it.name;
-
-          const p = document.createElement("div");
-          p.className = "p";
-          p.textContent = fmtDT(it.price);
-
-          top.appendChild(n);
-          top.appendChild(p);
-
-          const sub = document.createElement("div");
-          sub.className = "cartItemSub";
-
-          const left = document.createElement("div");
-          left.textContent = `x${it.qty} · ${it.code || ""} · ${it.cat || ""}`;
-
-          const qtyBox = document.createElement("div");
-          qtyBox.className = "qtyBox";
-          qtyBox.style.padding = "4px 6px";
-
-          const minus = document.createElement("button");
-          minus.className = "qbtn";
-          minus.textContent = "−";
-          minus.onclick = ()=> changeQty({code:it.key, name:it.name, price:it.price, catLabel:it.cat, catKey:""}, -1);
-
-          const qnum = document.createElement("div");
-          qnum.className = "qnum";
-          qnum.textContent = it.qty;
-
-          const plus = document.createElement("button");
-          plus.className = "qbtn";
-          plus.textContent = "+";
-          plus.onclick = ()=> changeQty({code:it.key, name:it.name, price:it.price, catLabel:it.cat, catKey:""}, +1);
-
-          qtyBox.appendChild(minus);
-          qtyBox.appendChild(qnum);
-          qtyBox.appendChild(plus);
-
-          sub.appendChild(left);
-          sub.appendChild(qtyBox);
-
-          row.appendChild(top);
-          row.appendChild(sub);
+          row.innerHTML = `
+            <div class="l">
+              <div class="nm">${escapeHtml(it.name || "")}</div>
+              <div class="sm">Code: ${escapeHtml(it.code || "-")} · ${escapeHtml(it.cat || "")}</div>
+              <div class="sm">Prix: <b>${fmtDT(it.price)}</b></div>
+            </div>
+            <div class="r">
+              <div class="qtyBox">
+                <button class="miniBtn" data-a="-">−</button>
+                <div class="qtyNum">${it.qty || 0}</div>
+                <button class="miniBtn" data-a="+">+</button>
+              </div>
+              <div class="lineTotal">${fmtDT(lineTotal)}</div>
+            </div>
+          `;
+          row.querySelector('[data-a="-"]').onclick = ()=> addToCart({code:it.code,name:it.name,price:it.price,catLabel:it.cat,catKey:""}, -1);
+          row.querySelector('[data-a="+"]').onclick = ()=> addToCart({code:it.code,name:it.name,price:it.price,catLabel:it.cat,catKey:""}, +1);
           list.appendChild(row);
         }
       }
 
-      // totals
-      $("subTotal").textContent = fmtDT(cartSubTotal());
+      const sub = cartSubTotal();
+      $("subTotal").textContent = fmtDT(sub);
 
       const fee = shippingFee();
       if(fee === null){
         $("shipFee").textContent = "—";
         $("cartTotal").textContent = "Minimum commande 15 dt";
         $("cartTotal").style.color = "var(--danger)";
-        $("minMsg").classList.add("show");
       }else{
-        $("shipFee").textContent = fmtDT(fee);
-        $("cartTotal").textContent = fmtDT(grandTotal());
+        $("shipFee").textContent = (fee === 0 ? "0,00 dt (gratuit)" : fmtDT(fee));
+        $("cartTotal").textContent = fmtDT(sub + fee);
         $("cartTotal").style.color = "";
-        $("minMsg").classList.remove("show");
       }
 
-      // admin tables
-      if(state.admin) renderAdmin();
+      renderClientHistory();
     }
 
-    /**********************
-     * WHATSAPP + SAVE ORDER
-     **********************/
-    function buildWhatsAppMessage(){
-      const keys = Object.keys(state.cart);
-      const name = $("cName").value.trim();
-      const tel = $("cTel").value.trim();
-      const addr = $("cAddr").value.trim();
-      const note = $("cNote").value.trim();
-
-      let msg = "🛒 *Commande MAXI JDC MARKET*\\n\\n";
-      msg += `👤 Nom: ${name || "—"}\\n`;
-      msg += `📞 Tel: ${tel || "—"}\\n`;
-      msg += `📍 Adresse: ${addr || "—"}\\n`;
-      if(note) msg += `📝 Note: ${note}\\n`;
-      msg += "\\n*Articles:*\\n";
-
-      for(const k of keys){
-        const it = state.cart[k];
-        const lineTotal = (Number(it.price)||0) * (it.qty||0);
-        msg += `• x${it.qty} ${it.name}`;
-        if(it.code) msg += ` (Code: ${it.code})`;
-        msg += ` — ${fmtDT(lineTotal)}\\n`;
-      }
-
-      const sub = cartSubTotal();
-      const fee = shippingFee();
-      const total = grandTotal();
-
-      msg += `\\n🧾 Sous-total: ${fmtDT(sub)}\\n`;
-      if(fee === null){
-        msg += `⚠️ Minimum commande ${MIN_ORDER} dt\\n`;
-      }else{
-        msg += `🚚 Frais livraison: ${fmtDT(fee)}\\n`;
-        msg += `✅ *Total: ${fmtDT(total)}*\\n`;
-      }
-
-      return msg;
-    }
-
-    function saveOrder(){
-      const fee = shippingFee();
-      if(fee === null) return false;
-
-      const order = {
-        id: Date.now(),
-        ts: new Date().toISOString(),
-        customer: {
-          name: $("cName").value.trim(),
-          tel: $("cTel").value.trim(),
-          addr: $("cAddr").value.trim(),
-          note: $("cNote").value.trim(),
-        },
-        items: Object.values(state.cart).map(it=>({
-          code: it.code || "",
-          name: it.name || "",
-          qty: it.qty || 0,
-          price: Number(it.price)||0,
-          cat: it.cat || ""
-        })),
-        subTotal: cartSubTotal(),
-        shipFee: fee,
-        total: grandTotal()
-      };
-
-      const orders = loadJSON("maxi_orders_v1", []);
-      orders.unshift(order);
-      saveJSON("maxi_orders_v1", orders);
-      return true;
-    }
-
-    /**********************
+    /***********************
      * ADMIN
-     **********************/
-    function enableAdmin(){
+     ***********************/
+    function openAdmin(){
       state.admin = true;
-      $("adminBar").classList.add("show");
+      $("adminPanel").style.display = "";
+      $("adminHint").classList.add("show");
       renderAdmin();
     }
-
+    function closeAdmin(){
+      state.admin = false;
+      $("adminPanel").style.display = "none";
+      $("adminHint").classList.remove("show");
+    }
     function renderAdmin(){
-      const orders = loadJSON("maxi_orders_v1", []);
-      $("ordersCount").textContent = orders.length;
+      const orders = loadOrders();
+      const t = $("ordersTable");
+      t.innerHTML = `<tr><th>Date</th><th>Tél</th><th>Total</th><th>Articles</th></tr>`;
 
-      // Orders table
-      const ot = $("ordersTable");
-      ot.innerHTML = `
-        <tr>
-          <th>Date</th><th>Client</th><th>Total</th><th>Articles</th>
-        </tr>
-      `;
+      if(!orders.length){
+        t.innerHTML += `<tr><td colspan="4" style="color:rgba(255,255,255,.55)">Aucune commande enregistrée.</td></tr>`;
+        return;
+      }
 
-      for(const o of orders.slice(0, 30)){
+      for(const o of orders.slice(0, 50)){
         const dt = new Date(o.id).toLocaleString();
-        const client = (o.customer?.name || "—") + "<br><span style='color:rgba(232,241,246,.65)'>" + (o.customer?.tel || "—") + "</span>";
-        const itemsCount = (o.items||[]).reduce((a,x)=>a+(x.qty||0),0);
+        const tel = (o.customer?.tel || "-");
+        const cnt = (o.items||[]).reduce((a,x)=>a+(x.qty||0),0);
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${dt}</td>
-          <td>${client}</td>
-          <td><b>${fmtDT(o.total)}</b></td>
-          <td>${itemsCount}</td>
+          <td><b style="color:rgba(255,255,255,.9)">${escapeHtml(tel)}</b></td>
+          <td><b style="color:rgba(255,255,255,.9)">${fmtDT(o.total)}</b></td>
+          <td>${cnt}</td>
         `;
-        ot.appendChild(tr);
-      }
-
-      // Clients table (aggregate)
-      const byTel = new Map();
-      for(const o of orders){
-        const tel = (o.customer?.tel || "").trim() || "—";
-        const name = (o.customer?.name || "").trim() || "—";
-        const key = tel + "||" + name;
-        if(!byTel.has(key)) byTel.set(key, {tel, name, orders:0, total:0});
-        const c = byTel.get(key);
-        c.orders += 1;
-        c.total += Number(o.total)||0;
-      }
-      const clients = Array.from(byTel.values()).sort((a,b)=>b.total-a.total);
-      $("clientsCount").textContent = clients.length;
-
-      const ct = $("clientsTable");
-      ct.innerHTML = `
-        <tr>
-          <th>Client</th><th>Commandes</th><th>Total</th>
-        </tr>
-      `;
-      for(const c of clients.slice(0, 30)){
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><b>${c.name}</b><br><span style="color:rgba(232,241,246,.65)">${c.tel}</span></td>
-          <td>${c.orders}</td>
-          <td><b>${fmtDT(c.total)}</b></td>
-        `;
-        ct.appendChild(tr);
+        t.appendChild(tr);
       }
     }
 
-    /**********************
-     * EVENTS
-     **********************/
-    $("prevBtn").onclick = ()=>{
-      state.page = Math.max(1, state.page-1);
-      render();
-    };
-    $("nextBtn").onclick = ()=>{
-      const items = getActiveItems();
-      const totalPages = Math.max(1, Math.ceil(items.length / PAGE_SIZE));
-      state.page = Math.min(totalPages, state.page+1);
-      render();
-    };
-
-    $("q").addEventListener("input", (e)=>{
-      state.q = e.target.value;
-      state.page = 1;
-      render();
-    });
-
-    $("clearBtn").onclick = ()=>{
-      $("q").value = "";
-      state.q = "";
-      state.page = 1;
-      render();
-    };
-
-    $("globalBtn").onclick = ()=>{
-      state.global = !state.global;
-      state.page = 1;
-      render();
-    };
-
-    $("cartTopBtn").onclick = openCart;
-    $("overlay").onclick = closeCart;
-    $("closeDrawer").onclick = closeCart;
-
-    $("clearCartBtn").onclick = ()=>{
-      state.cart = {};
-      saveCart();
+    /***********************
+     * DRAWER
+     ***********************/
+    function openDrawer(){
+      $("overlay").classList.add("open");
+      $("drawer").classList.add("open");
       refreshCartUI();
-      render();
-    };
+    }
+    function closeDrawer(){
+      $("overlay").classList.remove("open");
+      $("drawer").classList.remove("open");
+    }
 
-    $("sendWaBtn").onclick = ()=>{
-      if(!Object.keys(state.cart).length){
-        alert("Panier vide");
-        return;
+    /***********************
+     * HELPERS
+     ***********************/
+    function escapeHtml(s){
+      return String(s||"")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+    function cssSafe(s){
+      return String(s).replace(/[^a-zA-Z0-9_-]/g, "_");
+    }
+
+    /***********************
+     * INIT EVENTS
+     ***********************/
+    function init(){
+      renderTopCart();
+
+      // restore client (1ere fois)
+      const client = loadClient();
+      if(client){
+        fillClientForm(client);
+        setClientLock(true);
+      }else{
+        setClientLock(false);
       }
-      const fee = shippingFee();
-      if(fee === null){
-        alert("Minimum commande 15 dt");
-        return;
-      }
 
-      // enregistrer commande
-      saveOrder();
+      $("cTel").addEventListener("input", renderClientHistory);
 
-      const msg = buildWhatsAppMessage();
-      const url = `https://wa.me/${WHATSAPP_NUMBER.replace(/\\D/g,"")}?text=${encodeURIComponent(msg)}`;
-      window.open(url, "_blank");
-    };
+      $("gpsBtn").onclick = ()=>{
+        if(!navigator.geolocation){
+          alert("GPS non disponible sur ce navigateur.");
+          return;
+        }
+        navigator.geolocation.getCurrentPosition(
+          (pos)=>{
+            $("cLat").value = String(pos.coords.latitude.toFixed(6));
+            $("cLng").value = String(pos.coords.longitude.toFixed(6));
+          },
+          ()=> alert("Impossible d’obtenir la position (autorisation refusée ?)"),
+          { enableHighAccuracy:true, timeout:8000 }
+        );
+      };
 
-    // Admin shortcuts
-    document.addEventListener("keydown", (e)=>{
-      if(e.ctrlKey && e.shiftKey && (e.key==="A" || e.key==="a")){
-        enableAdmin();
-      }
-    });
+      $("saveClientBtn").onclick = ()=>{
+        const obj = readClientForm();
+        if(!obj.tel){
+          alert("Téléphone obligatoire.");
+          return;
+        }
+        saveClient(obj);
+        setClientLock(true);
+        renderClientHistory();
+        alert("✅ Fiche client enregistrée.");
+      };
 
-    $("exportBtn").onclick = ()=>{
-      const orders = loadJSON("maxi_orders_v1", []);
-      const blob = new Blob([JSON.stringify(orders, null, 2)], {type:"application/json"});
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "maxi_orders.json";
-      a.click();
-      URL.revokeObjectURL(a.href);
-    };
+      $("editClientBtn").onclick = ()=>{
+        setClientLock(false);
+      };
 
-    $("clearOrdersBtn").onclick = ()=>{
-      if(confirm("Vider l'historique des commandes ?")){
-        saveJSON("maxi_orders_v1", []);
-        renderAdmin();
-      }
-    };
+      // search
+      $("q").addEventListener("input", ()=>{ state.page=1; render(); });
 
-    $("ovSave").onclick = ()=>{
-      const code = $("ovCode").value.trim();
-      const price = $("ovPrice").value.trim().replace(",",".");
-      if(!code){ alert("Code manquant"); return; }
-      const p = Number(price);
-      if(!Number.isFinite(p)){ alert("Prix invalide"); return; }
-      state.priceOverrides[code] = p;
-      saveJSON("maxi_price_overrides_v1", state.priceOverrides);
-      alert("Override enregistré ✅");
-    };
+      $("clearBtn").onclick = ()=>{
+        $("q").value = "";
+        state.page=1;
+        state.global=false;
+        buildCats();
+        render();
+      };
 
-    $("ovClear").onclick = ()=>{
-      const code = $("ovCode").value.trim();
-      if(!code){ alert("Code manquant"); return; }
-      delete state.priceOverrides[code];
-      saveJSON("maxi_price_overrides_v1", state.priceOverrides);
-      alert("Override supprimé ✅");
-    };
+      $("globalBtn").onclick = ()=>{
+        state.global = !state.global;
+        state.page = 1;
+        $("globalBtn").textContent = state.global ? "Recherche globale ✓" : "Recherche globale";
+        render();
+      };
 
-    /**********************
-     * INIT
-     **********************/
-    (function init(){
-      loadCart();
+      // pager
+      $("prevPage").onclick = ()=>{
+        state.page = Math.max(1, state.page-1);
+        render();
+      };
+      $("nextPage").onclick = ()=>{
+        const items = getFilteredItems();
+        const totalPages = Math.max(1, Math.ceil(items.length/state.pageSize));
+        state.page = Math.min(totalPages, state.page+1);
+        render();
+      };
 
-      // admin via URL
-      const params = new URLSearchParams(location.search);
-      if(params.get("admin")==="1") enableAdmin();
+      // drawer events
+      $("cartTopBtn").onclick = openDrawer;
+      $("overlay").onclick = closeDrawer;
+      $("closeDrawer").onclick = closeDrawer;
 
-      // init cart badge
-      $("cartTopCount").textContent = cartCount();
+      $("clearCartBtn").onclick = ()=>{
+        state.cart = {};
+        saveCart();
+        refreshCartUI();
+        renderTopCart();
+        render();
+      };
 
-      // init
-      loadAll();
-    })();
+      // SEND (sans WhatsApp)
+      $("sendBtn").onclick = async ()=>{
+        if(!Object.keys(state.cart).length){
+          alert("Panier vide.");
+          return;
+        }
+        const fee = shippingFee();
+        if(fee === null){
+          alert("Minimum commande 15 dt.");
+          return;
+        }
+
+        // si fiche pas enregistrée -> on force enregistrer
+        if(!loadClient()){
+          const obj = readClientForm();
+          if(!obj.tel){
+            alert("Téléphone obligatoire (fiche client).");
+            return;
+          }
+          saveClient(obj);
+          setClientLock(true);
+        }
+
+        const order = saveOrder();
+        if(!order){
+          alert("Minimum commande 15 dt.");
+          return;
+        }
+
+        const msg = buildOrderMessage(order);
+
+        try{
+          await navigator.clipboard.writeText(msg);
+          alert("✅ Commande enregistrée + résumé COPIÉ. Colle-le où tu veux.");
+        }catch(e){
+          alert("✅ Commande enregistrée. (Copie manuelle possible)");
+          console.log(msg);
+        }
+
+        // vider panier après envoi
+        state.cart = {};
+        saveCart();
+        refreshCartUI();
+        renderTopCart();
+        render();
+
+        // admin refresh
+        if(state.admin) renderAdmin();
+      };
+
+      // ADMIN shortcuts
+      const url = new URL(location.href);
+      if(url.searchParams.get("admin") === "1") openAdmin();
+
+      document.addEventListener("keydown", (e)=>{
+        if(e.ctrlKey && e.shiftKey && (e.key==="A" || e.key==="a")){
+          e.preventDefault();
+          state.admin ? closeAdmin() : openAdmin();
+        }
+      });
+
+      $("exportOrders").onclick = ()=>{
+        const orders = loadOrders();
+        const blob = new Blob([JSON.stringify(orders,null,2)], {type:"application/json"});
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "maxi_orders.json";
+        a.click();
+        URL.revokeObjectURL(a.href);
+      };
+
+      $("clearOrders").onclick = ()=>{
+        if(confirm("Vider toutes les commandes enregistrées ?")){
+          saveOrders([]);
+          renderAdmin();
+          renderClientHistory();
+        }
+      };
+
+      $("closeAdmin").onclick = closeAdmin;
+    }
+
+    /***********************
+     * START
+     ***********************/
+    init();
+    loadAll();
   </script>
 </body>
 </html>
