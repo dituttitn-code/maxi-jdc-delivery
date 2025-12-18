@@ -1485,21 +1485,46 @@ function filterProducts() {
         });
 
         function initApp() {
-            // Générer les catégories
-            generateCategories();
-            
-            // Afficher les produits
-            filterProducts();
-            
-            // Mettre à jour le panier
-            updateCartDisplay();
-            
-            // Configurer les événements
-            setupEventListeners();
-            
-            // Charger les données utilisateur sauvegardées
-            loadUserData();
+    // VÉRIFICATION AJOUTÉE : Vérifier si les données sont chargées
+    if (allProductsData.length === 0) {
+        console.log('❌ Données non chargées, attente...');
+        
+        // Afficher un message d'erreur dans la grille des produits
+        const productsGrid = document.getElementById('productsGrid');
+        if (productsGrid) {
+            productsGrid.innerHTML = `
+                <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                    <i class="fas fa-exclamation-circle" style="font-size: 3rem; color: var(--warning); margin-bottom: 20px;"></i>
+                    <h3>Aucun produit disponible</h3>
+                    <p>Les données n'ont pas pu être chargées.</p>
+                    <button class="btn btn-primary mt-3" onclick="loadProductsFromGitHub()">
+                        <i class="fas fa-redo"></i> Réessayer le chargement
+                    </button>
+                </div>
+            `;
         }
+        
+        return; // Arrêter l'initialisation
+    }
+    
+    console.log('✅ Initialisation avec', allProductsData.length, 'produits');
+    
+    // LE RESTE DU CODE RESTE IDENTIQUE
+    // Générer les catégories
+    generateCategories();
+    
+    // Afficher les produits
+    filterProducts();
+    
+    // Mettre à jour le panier
+    updateCartDisplay();
+    
+    // Configurer les événements
+    setupEventListeners();
+    
+    // Charger les données utilisateur sauvegardées
+    loadUserData();
+}
 
         function generateCategories() {
             const container = document.getElementById('categoryList');
@@ -2039,4 +2064,5 @@ function filterProducts() {
     </script>
 </body>
 </html>
+
 
