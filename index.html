@@ -1,1485 +1,892 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>MAXI JDC MARKET — Commande</title>
-
-  <style>
-    :root{
-      --bg0:#0a1929;
-      --bg1:#112240;
-      --card:#1a365d;
-      --card2:#162447;
-      --line:rgba(255,255,255,.15);
-      --text:#f0f6fc;
-      --muted:#8b949e;
-      --accent:#00ff88;
-      --accent2:#00d4ff;
-      --danger:#ff6b6b;
-      --shadow: 0 10px 40px rgba(0,0,0,.5);
-      --radius:12px;
-    }
-    *{box-sizing:border-box; margin:0; padding:0;}
-    body{
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      color:var(--text);
-      background: linear-gradient(135deg, var(--bg0) 0%, var(--bg1) 100%);
-      min-height:100vh;
-      line-height:1.6;
-    }
-    .wrap{max-width:1240px;margin:20px auto;padding:0 20px 40px;}
-    .top{
-      background: rgba(10, 25, 47, 0.9);
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
-      position: sticky; top: 10px; z-index: 5;
-      backdrop-filter: blur(10px);
-      margin-bottom: 20px;
-    }
-    .topRow{display:flex;gap:20px;align-items:center;flex-wrap:wrap;}
-    .brand{display:flex;gap:15px;align-items:center;min-width:280px;}
-    .logo{
-      width:60px;height:60px;border-radius:12px;border:2px solid var(--accent);
-      overflow:hidden;flex:0 0 auto;display:grid;place-items:center;background:#0a1929;
-      padding: 5px;
-    }
-    .logo img{width:100%;height:100%;object-fit:contain;display:block;}
-    .brandText h1{
-      margin:0;font-size:24px;font-weight:700;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .brandText p{margin:5px 0 0;color:var(--muted);font-size:14px;}
-    .search{flex:1 1 400px;display:flex;gap:10px;align-items:center;}
-    .search input{
-      flex:1;height:46px;border-radius:8px;border:2px solid var(--line);
-      background: rgba(255,255,255,.08); color: var(--text);
-      padding:0 20px; outline:none;font-size:14px;
-      transition: all 0.3s ease;
-    }
-    .search input:focus{
-      border-color: var(--accent);
-      background: rgba(255,255,255,.12);
-      box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
-    }
-    .btn{
-      height:46px;padding:0 24px;border-radius:8px;border:2px solid var(--line);
-      background: rgba(255,255,255,.1); color: var(--text);
-      cursor:pointer;font-weight:600;font-size:14px;
-      transition: all 0.3s ease;
-    }
-    .btn:hover{ 
-      background: rgba(255,255,255,.15);
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-    .btn.green{
-      background: rgba(0, 255, 136, 0.15);
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    .btn.green:hover{ 
-      background: rgba(0, 255, 136, 0.25);
-      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
-    }
-    .pills{
-      margin-top:15px;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      padding:10px 0;
-    }
-    .pill{
-      display:inline-flex;gap:8px;align-items:center;padding:8px 16px;border-radius:20px;
-      border:1px solid var(--line);background: rgba(255,255,255,.08);
-      color: var(--text);font-size:13px;white-space:nowrap;
-    }
-    .pill strong{font-weight:700;color:var(--accent);}
-    .cartPill{
-      margin-left:auto;cursor:pointer;border:2px solid var(--accent);
-      background:rgba(0, 255, 136, 0.1);color:var(--accent);
-      font-weight:600;
-    }
-    .cartPill:hover{ 
-      background:rgba(0, 255, 136, 0.2);
-      transform: translateY(-2px);
-    }
-    #cartTopCount{
-      margin-left:8px;display:inline-grid;place-items:center;min-width:26px;height:26px;padding:0 8px;
-      border-radius:50%;background:rgba(0,0,0,.5);border:2px solid var(--accent);
-      font-weight:700;color:var(--accent);
-    }
-    .noteBar{
-      margin-top:15px;padding:15px;border-radius:var(--radius);border:1px solid rgba(0, 255, 136, 0.3);
-      background: rgba(0, 255, 136, 0.05);color:var(--text);font-size:13px;
-      display:flex;gap:10px;align-items:center;flex-wrap:wrap;
-    }
-    .noteBar .ok{color:var(--accent);font-weight:600;display:inline-flex;gap:8px;align-items:center;}
-    .noteBar .sub{margin-left:auto;color:var(--muted);font-size:12px;}
-    .grid{
-      margin-top:20px;
-      display:grid;
-      grid-template-columns:300px 1fr;
-      gap:20px;
-      align-items:start;
-    }
-    .panel{
-      border-radius: var(--radius);
-      border:1px solid var(--line);
-      background: var(--card);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .panelHeader{
-      padding:16px 20px;border-bottom:1px solid var(--line);background: rgba(255,255,255,.05);
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-    }
-    .panelHeader h3{
-      margin:0;
-      font-size:16px;
-      font-weight:600;
-      color:var(--accent);
-    }
-    .panelHeader .sub{
-      color:var(--muted);
-      font-size:12px;
-      background: rgba(255,255,255,.05);
-      padding: 4px 10px;
-      border-radius: 20px;
-    }
-    #cats{
-      padding:15px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .catBtn{
-      width:100%;text-align:left;border-radius:10px;border:2px solid var(--line);
-      background: rgba(255,255,255,.05); color: var(--text);
-      padding:15px; cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:15px;
-      transition: all 0.3s ease;
-    }
-    .catBtn:hover{ 
-      background: rgba(255,255,255,.1);
-      border-color: var(--accent2);
-      transform: translateX(5px);
-    }
-    .catBtn.active{
-      border-color: var(--accent);
-      background: rgba(0, 255, 136, 0.1);
-      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.1);
-    }
-    .catLeft{display:flex;flex-direction:column;gap:5px;min-width:0;flex:1;}
-    .catTitle{
-      font-weight:700;
-      font-size:14px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      color: var(--text);
-    }
-    .catMeta{
-      color:var(--muted);
-      font-size:11px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .catCount{
-      flex:0 0 auto;
-      color:var(--accent);
-      font-weight:700;
-      font-size:12px;
-      border:2px solid var(--accent);
-      background: rgba(0, 255, 136, 0.1);
-      border-radius:20px;
-      padding:5px 12px;
-      min-width: 70px;
-      text-align: center;
-    }
-    .content{padding:20px;}
-    .contentHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:15px;
-      padding:0 0 20px 0;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 20px;
-    }
-    .contentHeader h2{
-      margin:0;
-      font-size:20px;
-      font-weight:700;
-      color:var(--text);
-    }
-    .contentHeader .meta{
-      margin:5px 0 0;
-      color:var(--muted);
-      font-size:13px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .pager{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:flex-end;
-      color:var(--muted);
-      font-size:13px;
-      white-space:nowrap;
-    }
-    .iconBtn{
-      width:40px;height:40px;border-radius:8px;border:2px solid var(--line);
-      background: rgba(255,255,255,.08); cursor:pointer;color:var(--text);font-weight:700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-    .iconBtn:hover{ 
-      background: rgba(255,255,255,.15);
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-    #products{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0, 1fr));
-      gap:20px;
-    }
-    .card{
-      border-radius:12px;
-      border:2px solid var(--line);
-      background: var(--card2);
-      padding:20px;
-      box-shadow:0 5px 20px rgba(0,0,0,.3);
-      min-width:0;
-      transition: all 0.3s ease;
-    }
-    .card:hover{
-      border-color: var(--accent2);
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
-    }
-    .cardTop{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:10px;
-      min-width:0;
-      margin-bottom: 10px;
-    }
-    .name{
-      font-weight:700;
-      font-size:14px;
-      line-height:1.4;
-      min-width:0;
-      display:-webkit-box;
-      -webkit-line-clamp:2;
-      -webkit-box-orient:vertical;
-      overflow:hidden;
-      color: var(--text);
-    }
-    .price{
-      flex:0 0 auto;
-      font-weight:700;
-      padding:8px 15px;
-      border-radius:20px;
-      border:2px solid var(--accent);
-      background: rgba(0, 255, 136, 0.1);
-      color:var(--accent);
-      font-size:13px;
-      white-space:nowrap;
-    }
-    .meta2{
-      margin-top:10px;
-      color:var(--muted);
-      font-size:12px;
-      display:flex;
-      flex-direction:column;
-      gap:3px;
-    }
-    .qtyRow{
-      margin-top:20px;
-      display:flex;
-      gap:15px;
-      align-items:center;
-      justify-content:space-between;
-    }
-    .stepper{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:8px;
-      border-radius:20px;
-      border:2px solid var(--line);
-      background: rgba(0,0,0,.2);
-    }
-    .stepper button{
-      width:32px;height:32px;border-radius:50%;border:2px solid var(--line);
-      background: rgba(255,255,255,.1);color:var(--text);cursor:pointer;font-weight:700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-    .stepper button:hover{ 
-      background: rgba(255,255,255,.2);
-      border-color: var(--accent);
-    }
-    .stepper span{
-      min-width:25px;
-      text-align:center;
-      font-weight:700;
-      color:var(--text);
-      font-size:14px;
-    }
-    .addBtn{
-      height:40px;
-      padding:0 20px;
-      border-radius:20px;
-      border:2px solid var(--accent);
-      background: rgba(0, 255, 136, 0.1);
-      color:var(--accent);
-      cursor:pointer;
-      font-weight:700;
-      font-size:13px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
-      transition: all 0.3s ease;
-    }
-    .addBtn:hover{ 
-      background: rgba(0, 255, 136, 0.25);
-      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
-      transform: translateY(-2px);
-    }
-    .drawer{
-      position:fixed;top:0;right:0;height:100%;width:450px;max-width:95vw;
-      background: rgba(10, 25, 47, 0.95);border-left:2px solid var(--accent);
-      box-shadow:-20px 0 60px rgba(0,0,0,.7);
-      transform: translateX(100%);transition: transform .3s ease;z-index:20;
-      display:flex;flex-direction:column;backdrop-filter: blur(20px);
-    }
-    .drawer.open{ transform: translateX(0); }
-    .drawerHeader{
-      padding:20px;
-      border-bottom:2px solid var(--accent);
-      background: rgba(0, 255, 136, 0.05);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .drawerHeader h3{
-      margin:0;
-      font-size:18px;
-      color: var(--accent);
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
-    .drawerBody {
-      flex: 1;
-      overflow-y: auto;
-      padding: 0 0 20px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .section{
-      border:2px solid var(--line);
-      background: var(--card2);
-      border-radius:12px;
-      padding:20px;
-      margin:0 20px;
-    }
-    .section h4{
-      margin:0 0 15px;
-      font-size:14px;
-      color:var(--accent);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .section .hint{
-      color:var(--muted);
-      font-size:11px;
-      margin-top:10px;
-      line-height:1.35;
-    }
-    .row2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:15px;
-    }
-    .field label{
-      display:block;
-      font-size:12px;
-      color:var(--muted);
-      margin-bottom:8px;
-      font-weight:600;
-    }
-    .field input, .field textarea{
-      width:100%;
-      border-radius:8px;
-      border:2px solid var(--line);
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      padding:12px;
-      outline:none;
-      font-size:13px;
-      transition: all 0.3s ease;
-    }
-    .field input:focus, .field textarea:focus{
-      border-color: var(--accent);
-      background: rgba(255,255,255,.12);
-    }
-    .field textarea{
-      min-height:80px;
-      resize:vertical;
-    }
-    .miniBtns{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:15px;
-      align-items:center;
-    }
-    .mini{
-      height:40px;
-      padding:0 20px;
-      border-radius:20px;
-      border:2px solid var(--line);
-      background: rgba(255,255,255,.1);
-      color: var(--text);
-      cursor:pointer;
-      font-weight:700;
-      font-size:13px;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .mini:hover{ 
-      background: rgba(255,255,255,.2);
-      transform: translateY(-2px);
-    }
-    .mini.green{
-      background: rgba(0, 255, 136, 0.15);
-      border-color: var(--accent);
-      color:var(--accent);
-    }
-    .mini.green:hover{ 
-      background: rgba(0, 255, 136, 0.3);
-      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
-    }
-    .mini.danger{
-      background: rgba(255, 107, 107, 0.15);
-      border-color: var(--danger);
-      color:var(--danger);
-    }
-    .mini.danger:hover{ 
-      background: rgba(255, 107, 107, 0.3);
-    }
-    .pinRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-top:15px;
-      padding-top:15px;
-      border-top:1px dashed var(--line);
-      color:var(--muted);
-      font-size:12px;
-    }
-    .cartList{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      margin-top:15px;
-      max-height: 350px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding-right: 8px;
-      margin-right: -8px;
-    }
-    .cartList::-webkit-scrollbar {
-      width: 12px;
-      background: rgba(0,0,0,0.3);
-      border-radius: 10px;
-    }
-    .cartList::-webkit-scrollbar-track {
-      background: rgba(0,0,0,0.2);
-      border-radius: 10px;
-      margin: 4px 0;
-    }
-    .cartList::-webkit-scrollbar-thumb {
-      background: linear-gradient(to bottom, var(--accent), var(--accent2));
-      border-radius: 10px;
-      border: 3px solid rgba(10, 25, 47, 0.9);
-      min-height: 40px;
-    }
-    .cartList::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(to bottom, #00ffaa, #00e0ff);
-      box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
-    }
-    .cartItem{
-      border:2px solid var(--line);
-      background: rgba(0,0,0,.2);
-      border-radius:12px;
-      padding:15px;
-      display:flex;
-      gap:12px;
-      align-items:center;
-      justify-content:space-between;
-      min-height: 70px;
-    }
-    .cartItem .left{
-      min-width:0;
-      display:flex;
-      flex-direction:column;
-      gap:5px;
-      flex:1;
-    }
-    .cartItem .left .t{
-      font-weight:700;
-      font-size:13px;
-      line-height:1.3;
-      color: var(--text);
-      display:-webkit-box;
-      -webkit-line-clamp:2;
-      -webkit-box-orient:vertical;
-      overflow:hidden;
-    }
-    .cartItem .left .s{
-      color:var(--muted);
-      font-size:11px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .cartItem .right{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      flex:0 0 auto;
-    }
-    .cartItem .lineTotal{
-      font-weight:700;
-      white-space:nowrap;
-      font-size:13px;
-      color:var(--accent);
-      min-width: 80px;
-      text-align: right;
-    }
-    .totals{
-      margin-top:20px;
-      border-top:2px solid var(--line);
-      padding-top:20px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      font-size:14px;
-    }
-    .totals .trow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .totals .trow span{
-      color:var(--muted);
-    }
-    .totals .trow strong{
-      font-weight:700;
-      color:var(--text);
-    }
-    .warn{
-      margin-top:15px;
-      padding:15px;
-      border-radius:10px;
-      border:1px dashed var(--line);
-      background: rgba(0,0,0,.2);
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.35;
-    }
-    .warn.bad{
-      border-color: rgba(255,107,107,.4);
-      color:#ffb8b8;
-      background: rgba(255,107,107,.1);
-    }
-    .warn.good{
-      border-color: rgba(0,255,136,.4);
-      color:#b8ffd9;
-      background: rgba(0,255,136,.1);
-    }
-    .histToggle{
-      width:100%;
-      height:44px;
-      border-radius:10px;
-      border:2px solid var(--line);
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      cursor:pointer;
-      font-weight:700;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 20px;
-      transition: all 0.3s ease;
-    }
-    .histToggle:hover{
-      background: rgba(255,255,255,.15);
-    }
-    .histBox{
-      margin-top:15px;
-      display:none;
-      border:2px solid var(--line);
-      background: rgba(0,0,0,.2);
-      border-radius:12px;
-      padding:20px;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-    .histBox.open{ display:block; }
-    table{
-      width:100%;
-      border-collapse:collapse;
-      font-size:12px;
-    }
-    th,td{
-      padding:10px 8px;
-      border-bottom:1px solid rgba(255,255,255,.1);
-      text-align:left;
-    }
-    th{
-      color:var(--muted);
-      font-weight:700;
-      font-size:11px;
-    }
-    td strong{
-      font-weight:700;
-      color:var(--accent);
-    }
-    .drawerFooter{
-      padding:20px;
-      border-top:2px solid var(--line);
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:space-between;
-      background: var(--card);
-      flex-shrink: 0;
-    }
-    #sendBtn {
-      min-width: 120px;
-      height: 44px;
-      font-size: 14px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
-    }
-    #sendBtn:hover:not(:disabled) {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
-    }
-    #sendBtn:active:not(:disabled) {
-      transform: translateY(0);
-    }
-    @keyframes pulseSuccess {
-      0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
-      70% { box-shadow: 0 0 0 15px rgba(0, 255, 136, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
-    }
-    .sent-animation {
-      animation: pulseSuccess 2s ease;
-    }
-    @keyframes cartPulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    .cartPill.pulse {
-      animation: cartPulse 0.5s ease;
-    }
-    .modalBack{
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,.7);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:30;
-      padding:20px;
-    }
-    .modalBack.open{ display:flex; }
-    .modal{
-      width:800px;
-      max-width:95vw;
-      border-radius:var(--radius);
-      border:2px solid var(--accent);
-      background: rgba(10, 25, 47, 0.95);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .modalHead{
-      padding:20px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      border-bottom:2px solid var(--accent);
-      background: rgba(0, 255, 136, 0.05);
-    }
-    .modalHead h3{
-      margin:0;
-      font-size:16px;
-      color:var(--accent);
-    }
-    .modalBody{
-      padding:20px;
-    }
-    .modalBody textarea{
-      width:100%;
-      min-height:250px;
-      border-radius:10px;
-      border:2px solid var(--line);
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      padding:15px;
-      outline:none;
-      font-size:13px;
-      line-height:1.5;
-      font-family: monospace;
-    }
-    .modalFoot{
-      padding:20px;
-      border-top:2px solid var(--line);
-      display:flex;
-      gap:10px;
-      justify-content:flex-end;
-      flex-wrap:wrap;
-    }
-    .admin{
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,.8);
-      display:none;
-      z-index:40;
-      padding:20px;
-      overflow:auto;
-    }
-    .admin.open{ display:block; }
-    .adminBox{
-      max-width:1000px;
-      margin:20px auto;
-      border-radius:var(--radius);
-      border:2px solid var(--accent);
-      background: rgba(10, 25, 47, 0.95);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .adminHead{
-      padding:20px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      border-bottom:2px solid var(--accent);
-      background: rgba(0, 255, 136, 0.05);
-    }
-    .adminHead h3{
-      margin:0;
-      font-size:16px;
-      color:var(--accent);
-    }
-    .adminBody{
-      padding:20px;
-    }
-    .adminBody pre{
-      background: rgba(255,255,255,.08);
-      border:2px solid var(--line);
-      border-radius:10px;
-      padding:15px;
-      overflow:auto;
-      max-height:500px;
-      font-size:12px;
-      color: var(--text);
-      font-family: monospace;
-    }
-    .hintAdmin{
-      margin-top:20px;
-      padding:15px;
-      border-radius:10px;
-      border:1px solid rgba(0,255,136,0.2);
-      background: rgba(0,255,136,0.05);
-      color: var(--muted);
-      font-size:11px;
-      text-align:center;
-    }
-    .scroll-indicator {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 255, 136, 0.2);
-      border: 2px solid var(--accent);
-      border-radius: 20px;
-      padding: 8px 15px;
-      font-size: 11px;
-      color: var(--accent);
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .scroll-indicator.visible {
-      opacity: 1;
-    }
-    @media (max-width: 1100px){
-      .grid{ grid-template-columns:1fr }
-      #products{ grid-template-columns:repeat(2, minmax(0, 1fr)) }
-      .brand{ min-width:0; }
-    }
-    @media (max-width: 768px){
-      #products{ grid-template-columns:1fr }
-      .topRow{ flex-direction:column; align-items:stretch; }
-      .search{ width:100%; }
-      .drawer{ width:100vw; }
-      .cartList { max-height: 300px; }
-      .cartItem { flex-direction: column; align-items: flex-start; gap: 10px; }
-      .cartItem .right { width: 100%; justify-content: space-between; }
-    }
-    @media (max-width: 480px){
-      .pills{ flex-direction:column; align-items:flex-start; }
-      .cartPill{ margin-left:0; }
-      .row2{ grid-template-columns:1fr; }
-      .section { margin: 0 10px; padding: 15px; }
-      .cartList { max-height: 250px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxi JDC - Catalogue Produits</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .categories-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .category-btn {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #495057;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+            transform: translateY(-2px);
+        }
+        
+        .category-btn.active {
+            background: #2c3e50;
+            color: white;
+            border-color: #2c3e50;
+        }
+        
+        .category-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .category-section.active {
+            display: block;
+        }
+        
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+        }
+        
+        .product-count {
+            background: #3498db;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .product-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .product-code {
+            font-size: 0.85rem;
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .product-name {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            color: #27ae60;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px dashed #dee2e6;
+        }
+        
+        .product-category {
+            background: #e8f4fc;
+            color: #2980b9;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+        
+        .product-stock {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .stock-ok {
+            color: #27ae60;
+            font-weight: 600;
+        }
+        
+        .stock-low {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        
+        .search-box {
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .search-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+        }
+        
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+            color: #7f8c8d;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .no-products {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="topRow">
-        <div class="brand">
-          <div class="logo">
-            <img src="logo-maxi-jdc-market.jpg" alt="MAXI JDC MARKET" onerror="this.style.display='none'">
-          </div>
-          <div class="brandText">
-            <h1>MAXI JDC MARKET</h1>
-            <p>Des prix mini — Un MAXI choix</p>
-          </div>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-store"></i> Maxi JDC Delivery</h1>
+            <p>Catalogue complet des produits - Toutes catégories</p>
         </div>
-        <div class="search">
-          <input id="q" type="text" placeholder="🔍 Rechercher un produit (nom, catégorie, code)..." />
-          <button class="btn" id="clearBtn">Effacer</button>
-          <button class="btn green" id="globalBtn">Recherche globale</button>
-        </div>
-      </div>
-      <div class="pills">
-        <div class="pill">📍 Jardins de Carthage , derrière mosquée Essalem</div>
-        <div class="pill">🕒 7h – 1h</div>
-        <div class="pill"><strong>WhatsApp:</strong> 00216 25 600 978</div>
-        <div class="pill cartPill" id="cartTopBtn" title="Ouvrir le panier">
-          🛒 Panier <span id="cartTopCount">0</span>
-        </div>
-      </div>
-      <div class="noteBar">
-        <span class="ok">✅ Données chargées depuis <b>data/*.csv</b> — une catégorie = un fichier CSV.</span>
-        <span class="sub">Conditions : minimum livraison <b>15 dt</b> · Livraison gratuite si total ≥ <b>30 dt</b> · Sinon frais <b>5 dt</b> · Retrait magasin possible</span>
-      </div>
-    </div>
-    <div class="grid">
-      <div class="panel">
-        <div class="panelHeader">
-          <h3>Catégories</h3>
-          <div class="sub" id="status">Chargement…</div>
-        </div>
-        <div id="cats"></div>
-      </div>
-      <div class="panel">
-        <div class="content">
-          <div class="contentHeader">
-            <div class="titleWrap">
-              <h2 id="activeLabel">Produits</h2>
-              <div class="meta" id="activeMeta">Sélectionne une catégorie.</div>
+    </header>
+    
+    <div class="container">
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="total-products">0</div>
+                <div class="stat-label">Produits Total</div>
             </div>
-            <div class="pager">
-              <button class="iconBtn" id="prevBtn">‹</button>
-              <span id="pageInfo">Page 1/1</span>
-              <button class="iconBtn" id="nextBtn">›</button>
-              <span id="countInfo">0 article(s)</span>
+            <div class="stat-item">
+                <div class="stat-value" id="total-categories">7</div>
+                <div class="stat-label">Catégories</div>
             </div>
-          </div>
-          <div id="products"></div>
-          <div class="hintAdmin">Admin : Ctrl + Shift + A (ou ajoute #admin à l'URL)</div>
+            <div class="stat-item">
+                <div class="stat-value">€ <span id="avg-price">0.00</span></div>
+                <div class="stat-label">Prix Moyen</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="in-stock">0</div>
+                <div class="stat-label">En Stock</div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <aside class="drawer" id="drawer">
-    <div class="drawerHeader">
-      <h3>🛒 Panier & Fiche client</h3>
-      <button class="btn" id="closeDrawer">Fermer</button>
-    </div>
-    <div class="drawerBody">
-      <div class="scroll-indicator" id="scrollIndicator">
-        <span>▼ Défilez pour voir plus d'articles</span>
-      </div>
-      <div class="section" id="clientBox">
-        <h4><span>👤 Fiche client (1 seule fois)</span><span class="sub" id="clientLockTxt"></span></h4>
-        <div class="row2">
-          <div class="field"><label>Nom</label><input id="cName" placeholder="Ex: Lotfi" /></div>
-          <div class="field"><label>Téléphone</label><input id="cTel" placeholder="Ex: 55xxxxxx" /></div>
-        </div>
-        <div class="field" style="margin-top:10px">
-          <label>Adresse</label>
-          <textarea id="cAddr" placeholder="Quartier, rue, repère…"></textarea>
-        </div>
-        <div class="row2" style="margin-top:10px">
-          <div class="field"><label>GPS (lat)</label><input id="cLat" placeholder="ex: 36.85" /></div>
-          <div class="field"><label>GPS (lng)</label><input id="cLng" placeholder="ex: 10.30" /></div>
-        </div>
-        <div class="miniBtns">
-          <button class="mini" id="gpsBtn">📍 Utiliser ma position</button>
-          <button class="mini green" id="saveClientBtn">Enregistrer</button>
-          <button class="mini" id="editClientBtn">Modifier</button>
-        </div>
-        <div class="hint">Astuce : après enregistrement, la fiche est verrouillée.</div>
-        <div class="pinRow">
-          <label style="display:flex;gap:8px;align-items:center;cursor:pointer">
-            <input type="checkbox" id="pinCart"> Épingler le panier (laisser ouvert)
-          </label>
-          <span>💡 Pratique pour voir le total.</span>
-        </div>
-      </div>
-      <div class="section">
-        <h4><span>🧺 Articles</span><span class="sub" id="cartMiniInfo">0 article(s)</span></h4>
-        <div class="cartList" id="cartList"></div>
-        <div class="totals">
-          <div class="trow"><span>Sous-total</span><strong id="subTotal">0,00 dt</strong></div>
-          <div class="trow"><span>Frais livraison</span><strong id="shipFee">0,00 dt</strong></div>
-          <div class="trow"><span>Total</span><strong id="cartTotal">0,00 dt</strong></div>
-        </div>
-        <div class="warn" id="ruleBox"></div>
-        <button class="histToggle" id="histToggleBtn">
-          <span>🧾 Historique client</span><span id="histCount">0</span>
-        </button>
-        <div class="histBox" id="histBox">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px">
-            <div style="color:var(--muted);font-size:12px">Commandes trouvées pour ce téléphone</div>
-            <button class="mini danger" id="clearMyHistoryBtn">Effacer</button>
-          </div>
-          <div style="overflow:auto">
-            <table>
-              <thead><tr><th>Date</th><th>Total</th><th>Articles</th></tr></thead>
-              <tbody id="histTbody"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="drawerFooter">
-      <button class="mini danger" id="clearCartBtn">Vider panier</button>
-      <button class="mini green" id="sendBtn">🚀 Envoyer</button>
-    </div>
-  </aside>
-  <div class="modalBack" id="modalBack">
-    <div class="modal">
-      <div class="modalHead">
-        <h3>✅ Commande enregistrée — Résumé</h3>
-        <button class="btn" id="closeModal">Fermer</button>
-      </div>
-      <div class="modalBody"><textarea id="orderText" readonly></textarea></div>
-      <div class="modalFoot">
-        <button class="mini" id="copyBtn">📋 Copier</button>
-        <button class="mini" id="downloadBtn">💾 Télécharger (.txt)</button>
-        <button class="mini green" id="whatsappBtn">📱 Envoyer par WhatsApp</button>
-      </div>
-    </div>
-  </div>
-  <div class="admin" id="admin">
-    <div class="adminBox">
-      <div class="adminHead">
-        <h3>🛠️ Admin — commandes & historique</h3>
-        <button class="btn" id="closeAdmin">Fermer</button>
-      </div>
-      <div class="adminBody">
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
-          <button class="mini" id="exportBtn">Exporter JSON</button>
-          <button class="mini danger" id="clearAllBtn">Effacer tout l'historique</button>
-        </div>
-        <pre id="adminDump">—</pre>
-      </div>
-    </div>
-  </div>
-
-<script>
-/* CONFIG */
-const MIN_ORDER = 15;
-const FREE_SHIPPING = 30;
-const SHIPPING_FEE = 5;
-
-/* TOUTES LES CATÉGORIES AVEC NOMS CORRIGÉS */
-const CATEGORIES = [
-  { key:"hygiene_soins", label:"Hygiène & Soins", file:"data/hygiene_soins.csv" },
-  { key:"eaux", label:"Eaux", file:"data/eaux.csv" },
-  { key:"fruits_legumes", label:"Fruits & Légumes", file:"data/fruits_legumes.csv" },
-  { key:"lait_oeufs_produits_frais", label:"Lait, Œufs & Produits frais", file:"data/lait_oeufs_produits_frais.csv" },
-  { key:"fromage_charcuterie", label:"Fromage & Charcuterie", file:"data/fromage_charcuterie.csv" },
-  { key:"boulangerie_patisserie", label:"Boulangerie & Pâtisserie", file:"data/boulangerie_patisserie.csv" },
-  { key:"epicerie_salee", label:"Épicerie Salée", file:"data/epicerie_salee.csv" },
-  { key:"epicerie_sucree", label:"Épicerie Sucrée", file:"data/epicerie_sucree.csv" },
-  { key:"pates", label:"Pâtes", file:"data/pates.csv" },
-  { key:"conserves", label:"Conserves", file:"data/conserves.csv" },
-  { key:"cafe_thes", label:"Café & Thés", file:"data/cafe.csv" },
-  { key:"chocolats_biscuits", label:"Chocolats & Biscuits", file:"data/chocolats_biscuits.csv" },
-  { key:"jus_boissons", label:"Jus & Boissons", file:"data/jus_boissons.csv" },
-  { key:"chips_snacks", label:"Chips & Snacks", file:"data/chips.csv" },
-  { key:"fruits_secs_noix", label:"Fruits Secs & Noix", file:"data/fruits_secs.csv" },
-  { key:"vipa_selections", label:"Vipa & Sélections", file:"data/vipa.csv" },
-  { key:"hygiene_entretien", label:"Hygiène & Entretien", file:"data/hygiene_entretien.csv" },
-  { key:"bebe_maman", label:"Bébé & Maman", file:"data/bebe_maman.csv" },
-  { key:"cuisine_monde", label:"Cuisine du Monde", file:"data/cuisine_monde.csv" },
-  { key:"produits_surgeles", label:"Produits Surgelés", file:"data/surgele.csv" },
-  { key:"animaux_compagnie", label:"Animaux de Compagnie", file:"data/animaux.csv" }
-];
-
-/* HELPERS */
-const $ = (id)=>document.getElementById(id);
-const fmtDT = (n)=>Number(n||0).toFixed(2).replace(".", ",") + " dt";
-const nowStr = ()=> new Date().toLocaleString("fr-FR");
-function safeKey(s){ return String(s||"").trim().toLowerCase().replace(/\s+/g,"_").replace(/[^\w\-]+/g,""); }
-function dlText(filename, text){
-  const blob = new Blob([text], {type:"text/plain;charset=utf-8"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 0);
-}
-
-/* STATE */
-const state = {
-  dataByCat: new Map(),
-  activeCat: "cafe_thes", // Par défaut sur Café & Thés pour tester
-  global:false,
-  q:"",
-  page:1,
-  perPage:9,
-  qtyPick:{},
-  cart:{},
-  client:null,
-  pinCart:false,
-};
-
-function loadLocal(){
-  try{ state.cart = JSON.parse(localStorage.getItem("maxi_cart_v1")||"{}") || {}; }catch(e){ state.cart = {}; }
-  try{ const c = JSON.parse(localStorage.getItem("maxi_client_v1")||"null"); if(c) state.client = c; }catch(e){}
-  try{ state.pinCart = localStorage.getItem("maxi_pin_cart")==="1"; }catch(e){}
-}
-function saveCart(){ localStorage.setItem("maxi_cart_v1", JSON.stringify(state.cart)); }
-function saveClient(){ localStorage.setItem("maxi_client_v1", JSON.stringify(state.client||null)); }
-function loadHistory(){ try{ return JSON.parse(localStorage.getItem("maxi_orders_v1")||"[]"); }catch(e){ return []; } }
-function saveHistory(arr){ localStorage.setItem("maxi_orders_v1", JSON.stringify(arr||[])); }
-
-/* CSV PARSER SIMPLIFIÉ */
-function parseCSV(text){
-  console.log("Parsing CSV...");
-  const lines = String(text||"").split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
-  const rows = [];
-  
-  for(let i = 0; i < lines.length; i++){
-    const line = lines[i];
-    
-    // Skip header lines
-    if(line.includes("CODE_ARTICLE") && line.includes("DESIGNATION") && line.includes("PV_TTC")) continue;
-    if(line.includes("CODE_ARTICLE;DESIGNATION;Prix")) continue;
-    if(line.startsWith(";") || line.startsWith("//")) continue;
-    
-    // Try different separators
-    let parts = line.split(";");
-    if(parts.length < 3) parts = line.split("\t");
-    if(parts.length < 3) parts = line.split(",");
-    
-    // Clean parts
-    parts = parts.map(p => String(p||"").trim()).filter(p => p !== "");
-    
-    if(parts.length >= 3){
-      const code = parts[0];
-      const name = parts[1];
-      let priceRaw = parts[2];
-      
-      // Find price if not in position 2
-      if(!/[0-9]/.test(priceRaw)){
-        for(let j = 2; j < parts.length; j++){
-          if(/[0-9]/.test(parts[j])){
-            priceRaw = parts[j];
-            break;
-          }
-        }
-      }
-      
-      const price = Number(String(priceRaw).replace(",", ".").replace(/[^0-9.]/g,"")) || 0;
-      
-      if(code && name && price > 0){
-        rows.push({ 
-          code: String(code).trim(), 
-          name: String(name).trim(), 
-          price: price 
-        });
-      }
-    }
-  }
-  
-  console.log(`Parsed ${rows.length} items`);
-  return rows;
-}
-
-/* CART */
-function cartCount(){ return Object.values(state.cart).reduce((a,it)=>a + (it.qty||0), 0); }
-function cartTotal(){ return Object.values(state.cart).reduce((a,it)=>a + (Number(it.price)||0) * (it.qty||0), 0); }
-function shippingFee(){
-  const total = cartTotal();
-  if(total < MIN_ORDER) return null;
-  if(total >= FREE_SHIPPING) return 0;
-  return SHIPPING_FEE;
-}
-function grandTotal(){
-  const fee = shippingFee();
-  if(fee === null) return null;
-  return cartTotal() + fee;
-}
-
-/* UI */
-function buildCats(){
-  const box = $("cats");
-  box.innerHTML = "";
-  for(const c of CATEGORIES){
-    const btn = document.createElement("button");
-    btn.className = "catBtn" + (state.activeCat===c.key ? " active" : "");
-    btn.onclick = ()=>{
-      state.activeCat = c.key;
-      state.global = false;
-      state.page = 1;
-      buildCats();
-      render();
-    };
-
-    const left = document.createElement("div");
-    left.className = "catLeft";
-    left.innerHTML = `<div class="catTitle">${c.label}</div><div class="catMeta">${c.file}</div>`;
-
-    const count = document.createElement("div");
-    count.className = "catCount";
-    const items = state.dataByCat.get(c.key) || [];
-    count.textContent = items.length + " article(s)";
-
-    btn.appendChild(left);
-    btn.appendChild(count);
-    box.appendChild(btn);
-  }
-}
-
-function getActiveCat(){ return CATEGORIES.find(x=>x.key===state.activeCat) || CATEGORIES[0]; }
-
-function getVisibleItems(){
-  let items = [];
-  if(state.global){
-    for(const c of CATEGORIES){
-      const arr = state.dataByCat.get(c.key) || [];
-      items.push(...arr.map(it=>({...it, catKey:c.key, catLabel:c.label})));
-    }
-  }else{
-    const c = getActiveCat();
-    const arr = state.dataByCat.get(c.key) || [];
-    items = arr.map(it=>({...it, catKey:c.key, catLabel:c.label}));
-  }
-
-  const q = String(state.q||"").trim().toLowerCase();
-  if(q){
-    items = items.filter(it =>
-      (it.name||"").toLowerCase().includes(q) ||
-      (it.code||"").toLowerCase().includes(q) ||
-      (it.catLabel||"").toLowerCase().includes(q)
-    );
-  }
-  items.sort((a,b)=>String(a.name).localeCompare(String(b.name), "fr"));
-  return items;
-}
-
-function render(){
-  const active = getActiveCat();
-  $("activeLabel").textContent = state.global ? "Recherche globale" : active.label;
-  $("activeMeta").textContent = state.global
-    ? "Toutes catégories — résultats filtrés"
-    : `${active.file}`;
-
-  const items = getVisibleItems();
-  const totalPages = Math.max(1, Math.ceil(items.length / state.perPage));
-  if(state.page > totalPages) state.page = totalPages;
-
-  const start = (state.page-1)*state.perPage;
-  const pageItems = items.slice(start, start + state.perPage);
-
-  $("pageInfo").textContent = `Page ${state.page}/${totalPages}`;
-  $("countInfo").textContent = `${items.length} article(s)`;
-
-  const box = $("products");
-  box.innerHTML = "";
-
-  if(pageItems.length === 0){
-    box.innerHTML = `<div class="warn" style="grid-column:1/-1;text-align:center;padding:40px;">
-      ${items.length === 0 ? 'Aucun article trouvé' : 'Aucun article sur cette page'}
-    </div>`;
-  } else {
-    for(const it of pageItems){
-      const pid = safeKey(`${it.catKey}_${it.code}_${it.name}`);
-      if(state.qtyPick[pid] == null) state.qtyPick[pid] = 0;
-
-      const card = document.createElement("div");
-      card.className = "card";
-
-      card.innerHTML = `
-        <div class="cardTop">
-          <div class="name">${it.name}</div>
-          <div class="price">${fmtDT(it.price)}</div>
-        </div>
-        <div class="meta2">
-          <div>Code: ${it.code} · ${it.catLabel}</div>
-        </div>
-        <div class="qtyRow">
-          <div class="stepper">
-            <button data-act="minus">−</button>
-            <span class="qv">${state.qtyPick[pid]||0}</span>
-            <button data-act="plus">+</button>
-          </div>
-          <button class="addBtn">🧺 Ajouter</button>
-        </div>
-      `;
-
-      card.querySelector('[data-act="minus"]').onclick = ()=>{
-        state.qtyPick[pid] = Math.max(0, (state.qtyPick[pid]||0)-1);
-        render();
-      };
-      card.querySelector('[data-act="plus"]').onclick = ()=>{
-        state.qtyPick[pid] = (state.qtyPick[pid]||0)+1;
-        render();
-      };
-      card.querySelector(".addBtn").onclick = ()=>{
-        const q = state.qtyPick[pid]||0;
-        if(q<=0) return;
-        if(state.cart[pid]) state.cart[pid].qty += q;
-        else state.cart[pid] = { pid, name:it.name, code:it.code, price:it.price, catLabel:it.catLabel, qty:q };
-        state.qtyPick[pid] = 0;
-        saveCart();
-        refreshCartUI(true);
         
-        const cartBtn = $("cartTopBtn");
-        cartBtn.classList.add("pulse");
-        setTimeout(() => cartBtn.classList.remove("pulse"), 500);
-      };
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Rechercher un produit par nom, code ou catégorie...">
+            <i class="fas fa-search"></i>
+        </div>
+        
+        <div class="categories-menu" id="categories-menu">
+            <!-- Les boutons seront générés par JavaScript -->
+        </div>
+        
+        <!-- Section ANIMAUX -->
+        <section class="category-section" id="animaux">
+            <div class="category-header">
+                <h2 class="category-title"><i class="fas fa-paw"></i> Animaux</h2>
+                <div class="product-count">12 produits</div>
+            </div>
+            <div class="products-grid" id="animaux-products">
+                <!-- Produits animaux générés par JavaScript -->
+                <div class="no-products">Chargement des produits...</div>
+            </div>
+        </section>
+        
+        <!-- Section PRODUITS SURGELES -->
+        <section class="category-section" id="surgeles">
+            <div class="category-header">
+                <h2 class="category-title"><i class="fas fa-snowflake"></i> Produits Surgelés</h2>
+                <div class="product-count">4 produits</div>
+            </div>
+            <div class="products-grid" id="surgeles-products">
+                <!-- Produits surgelés existants -->
+                <div class="product-card">
+                    <div class="product-code">CODE: 2682</div>
+                    <h3 class="product-name">PETIT POIS SAVEURS 1/2</h3>
+                    <div class="product-price">9,00 €</div>
+                    <div class="product-footer">
+                        <span class="product-category">Surgelés</span>
+                        <span class="product-stock stock-ok">En stock: 45</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-code">CODE: 3842</div>
+                    <h3 class="product-name">LONDON DAIRY CRUNCH CARAMEL 125ML</h3>
+                    <div class="product-price">5,80 €</div>
+                    <div class="product-footer">
+                        <span class="product-category">Surgelés</span>
+                        <span class="product-stock stock-ok">En stock: 32</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-code">CODE: 3025</div>
+                    <h3 class="product-name">LONDON DAIRY COCONUTELLO</h3>
+                    <div class="product-price">4,30 €</div>
+                    <div class="product-footer">
+                        <span class="product-category">Surgelés</span>
+                        <span class="product-stock stock-low">Stock bas: 28</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-code">CODE: 2999</div>
+                    <h3 class="product-name">LONDON DAIRY CHOCOLATE HAZELNUT CORNET</h3>
+                    <div class="product-price">4,30 €</div>
+                    <div class="product-footer">
+                        <span class="product-category">Surgelés</span>
+                        <span class="product-stock stock-ok">En stock: 35</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section BEBE ET MAMAN -->
+        <section class="category-section" id="bebe">
+            <div class="category-header">
+                <h2 class="category-title"><i class="fas fa-baby"></i> Bébé et Maman</h2>
+                <div class="product-count">15 produits</div>
+            </div>
+            <div class="products-grid" id="bebe-products">
+                <div class="no-products">Chargement des produits...</div>
+            </div>
+        </section>
+        
+        <!-- Section VIPA ET SELECTION -->
+        <section class="category-section active" id="vipa">
+            <div class="category-header">
+                <h2 class="category-title"><i class="fas fa-star"></i> Vipa et Sélection</h2>
+                <div class="product-count">16 produits</div>
+            </div>
+            <div class="products-grid" id="vipa-products">
+                <!-- Produits Vipa existants -->
+                <div class="product-card">
+                    <div class="product-code">CODE: 3711</div>
+                    <h3 class="product-name">SELECTION FESTIF VIPA 100G</h3>
+                    <div class="product-price">6,40 €</div>
+                    <div class="product-footer">
+                        <span class="product-category">Vipa</span>
+                        <span class="product-stock stock-ok">En stock: 25</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-code">CODE: 37110</div>
+                    <h3 class="product-name">SELECTION PLAISIR VIPA 100G</h3>
+                    <div class="product-price">7,30 €</div>
+                    <div class="product-footer">
+                        <span class="product-category">Vipa</span>
+                        <span class="product-stock stock-ok">En stock: 18</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-code">CODE: 3713</div>
+                    <h3 class="product-name">SELECTION ORIENTAL VIPA 100G</h3>
+                    <div class="product-price">6,80 €</div>
+                    <div class="product-footer">
+                        <span class="product-category">Vipa</span>
+                        <span class="product-stock stock-low">Stock bas: 12</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-code">CODE: 3721</div>
+                    <h3 class="product-name">POUDRE NUTRITIVE D AVOINE</h3>
+                    <div class="product-price">6,50 €</div>
+                    <div class="product-footer">
+                        <span class="product-category">Vipa</span>
+                        <span class="product-stock stock-ok">En stock: 30</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-code">CODE: 4883</div>
+                    <h3 class="product-name">PISTACHE VIPA</h3>
+                    <div class="product-price">6,40 €</div>
+                    <div class="product-footer">
+                        <span class="product-category">Vipa</span>
+                        <span class="product-stock stock-low">Stock bas: 8</span>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-code">CODE: 3918</div>
+                    <h3 class="product-name">GRANOLA DAILY FRAISE/FS VIPA</h3>
+                    <div class="product-price">15,50 €</div>
+                    <div class="product-footer">
+                        <span class="product-category">Vipa</span>
+                        <span class="product-stock stock-ok">En stock: 22</span>
+                    </div>
+                </div>
+                <!-- Ajouter d'autres produits Vipa ici -->
+            </div>
+        </section>
+        
+        <!-- Section FRUITS SECS ET NOIX -->
+        <section class="category-section" id="fruits-secs">
+            <div class="category-header">
+                <h2 class="category-title"><i class="fas fa-seedling"></i> Fruits Secs et Noix</h2>
+                <div class="product-count">20 produits</div>
+            </div>
+            <div class="products-grid" id="fruits-secs-products">
+                <div class="no-products">Chargement des produits...</div>
+            </div>
+        </section>
+        
+        <!-- Section CHIPS ET SNACK -->
+        <section class="category-section" id="chips">
+            <div class="category-header">
+                <h2 class="category-title"><i class="fas fa-cookie-bite"></i> Chips et Snack</h2>
+                <div class="product-count">25 produits</div>
+            </div>
+            <div class="products-grid" id="chips-products">
+                <div class="no-products">Chargement des produits...</div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Maxi JDC Delivery &copy; 2024 - Tous droits réservés</p>
+            <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.7;">
+                Catalogue mis à jour le <span id="current-date"></span> | 
+                <span id="total-displayed">0</span> produits affichés
+            </p>
+        </div>
+    </footer>
 
-      box.appendChild(card);
-    }
-  }
+    <script>
+        // Données complètes des produits pour toutes les catégories
+        const produitsData = {
+            // CATÉGORIE ANIMAUX
+            animaux: [
+                {code: 5001, nom: "CROQUETTES CHAT ADULTE 3KG", prix: 12.90, stock: 45},
+                {code: 5002, nom: "CROQUETTES CHIOT 2KG", prix: 15.50, stock: 32},
+                {code: 5003, nom: "BOITE PÂTÉE POUR CHAT", prix: 1.20, stock: 120},
+                {code: 5004, nom: "GRAINES POUR OISEAUX 1KG", prix: 4.80, stock: 28},
+                {code: 5005, nom: "FOIN POUR LAPIN 2KG", prix: 6.30, stock: 35},
+                {code: 5006, nom: "LITIÈRE AGGLOMÉRANTE 5KG", prix: 8.90, stock: 40},
+                {code: 5007, nom: "JOUET POUR CHIEN", prix: 7.50, stock: 22},
+                {code: 5008, nom: "GRATTOIR POUR CHAT", prix: 14.99, stock: 18},
+                {code: 5009, nom: "AQUARIUM 30L", prix: 35.00, stock: 8},
+                {code: 5010, nom: "NOURRITURE POUR POISSON", prix: 3.50, stock: 55},
+                {code: 5011, nom: "HAMAC POUR CHAT", prix: 12.80, stock: 15},
+                {code: 5012, nom: "LAISSE POUR CHIEN", prix: 9.99, stock: 30}
+            ],
+            
+            // CATÉGORIE BÉBÉ ET MAMAN
+            bebe: [
+                {code: 6001, nom: "COUCHES TAILLE 3 X60", prix: 14.90, stock: 65},
+                {code: 6002, nom: "LAIT EN POUDRE 1ER AGE", prix: 22.50, stock: 42},
+                {code: 6003, nom: "BIBERON 250ML", prix: 5.80, stock: 38},
+                {code: 6004, nom: "LINGETTES BÉBÉ X80", prix: 3.20, stock: 72},
+                {code: 6005, nom: "CRÈME POUR LE SIÈGE", prix: 6.50, stock: 48},
+                {code: 6006, nom: "BRACELET DE DENTITION", prix: 4.30, stock: 55},
+                {code: 6007, nom: "JOUET D'ÉVEIL", prix: 8.90, stock: 33},
+                {code: 6008, nom: "TÉTINE ORTHODONTIQUE", prix: 3.80, stock: 60},
+                {code: 6009, nom: "BODY 3 MOIS X3", prix: 12.50, stock: 40},
+                {code: 6010, nom: "SAC À LANGER", prix: 24.99, stock: 18},
+                {code: 6011, nom: "PARACÉTAMOL PÉDIATRIQUE", prix: 3.60, stock: 45},
+                {code: 6012, nom: "THERMOMÈtre FRONTAL", prix: 15.80, stock: 25},
+                {code: 6013, nom: "SIÈGE AUTO Groupe 1", prix: 89.99, stock: 10},
+                {code: 6014, nom: "PARC POUR BÉBÉ", prix: 75.00, stock: 7},
+                {code: 6015, nom: "VEILLEUSE MUSICALE", prix: 18.50, stock: 20}
+            ],
+            
+            // CATÉGORIE FRUITS SECS ET NOIX
+            "fruits-secs": [
+                {code: 7001, nom: "AMANDES DÉCORTIQUÉES 200G", prix: 5.90, stock: 50},
+                {code: 7002, nom: "NOIX DE CAJOU GRILLÉES 150G", prix: 4.80, stock: 45},
+                {code: 7003, nom: "RAISINS SECS THOMPSON 250G", prix: 3.20, stock: 60},
+                {code: 7004, nom: "ABRICOTS SECS 200G", prix: 4.50, stock: 38},
+                {code: 7005, nom: "DATTES DEGLET NOUR 500G", prix: 6.80, stock: 32},
+                {code: 7006, nom: "FIGUES SÈCHES 250G", prix: 5.20, stock: 28},
+                {code: 7007, nom: "PRUNEAUX D'AGEN 400G", prix: 4.90, stock: 42},
+                {code: 7008, nom: "CRANBERRIES SÉCHÉES 150G", prix: 3.80, stock: 55},
+                {code: 7009, nom: "MÉLANGE TROPICAL 300G", prix: 7.50, stock: 30},
+                {code: 7010, nom: "PISTACHES GRILLÉES 200G", prix: 8.20, stock: 25},
+                {code: 7011, nom: "NOIX DU BRÉSIL 150G", prix: 6.50, stock: 20},
+                {code: 7012, nom: "PIGNONS DE PIN 100G", prix: 9.80, stock: 18},
+                {code: 7013, nom: "GRAINES DE TOURNESOL 250G", prix: 2.90, stock: 65},
+                {code: 7014, nom: "GRAINES DE CITROUILLE 200G", prix: 4.30, stock: 40},
+                {code: 7015, nom: "MÉLANGE ÉTUDIANT 500G", prix: 12.50, stock: 22},
+                {code: 7016, nom: "BANANES SÉCHÉES 150G", prix: 3.40, stock: 48},
+                {code: 7017, nom: "MANGUES SÉCHÉES 100G", prix: 4.60, stock: 35},
+                {code: 7018, nom: "NOIX DE PÉCAN 180G", prix: 7.80, stock: 15},
+                {code: 7019, nom: "MELON SÉCHÉ 120G", prix: 3.90, stock: 28},
+                {code: 7020, nom: "FRUITS SECS BIO 400G", prix: 10.90, stock: 20}
+            ],
+            
+            // CATÉGORIE CHIPS ET SNACK
+            chips: [
+                {code: 8001, nom: "CHIPS NATURE 150G", prix: 1.80, stock: 120},
+                {code: 8002, nom: "CHIPS SAVEUR BARBECUE 150G", prix: 1.90, stock: 95},
+                {code: 8003, nom: "CHIPS SAVEUR VINAIGRE 150G", prix: 1.90, stock: 88},
+                {code: 8004, nom: "CHIPS AU FROMAGE 200G", prix: 2.20, stock: 75},
+                {code: 8005, nom: "CHIPS DE LÉGUMES 100G", prix: 2.50, stock: 60},
+                {code: 8006, nom: "PRETZELS 200G", prix: 2.80, stock: 55},
+                {code: 8007, nom: "CRACKERS SALÉS 250G", prix: 2.40, stock: 70},
+                {code: 8008, nom: "BISCUITS APÉRITIFS 300G", prix: 3.20, stock: 65},
+                {code: 8009, nom: "CACAHUÈTES GRILLÉES 150G", prix: 2.10, stock: 85},
+                {code: 8010, nom: "AMANDES GRILLÉES SALÉES 120G", prix: 3.50, stock: 50},
+                {code: 8011, nom: "TORTILLAS CHIPS NATURE 200G", prix: 2.30, stock: 45},
+                {code: 8012, nom: "TORTILLAS CHIPS SAVEUR FAJITAS", prix: 2.40, stock: 42},
+                {code: 8013, nom: "POPCORN SALÉ 100G", prix: 1.60, stock: 90},
+                {code: 8014, nom: "POPCORN CARAMEL 100G", prix: 1.80, stock: 78},
+                {code: 8015, nom: "BÂTONNETS DE SÉSAME 180G", prix: 2.90, stock: 40},
+                {code: 8016, nom: "CRACKERS AU GRAINES 200G", prix: 3.10, stock: 35},
+                {code: 8017, nom: "MIX APÉRITIF 350G", prix: 4.50, stock: 30},
+                {code: 8018, nom: "CHIPS DE POMMES 80G", prix: 2.80, stock: 55},
+                {code: 8019, nom: "CHIPS DE PATATE DOUCE 100G", prix: 3.20, stock: 38},
+                {code: 8020, nom: "OLIVES VERTES FARCIES 200G", prix: 3.80, stock: 48},
+                {code: 8021, nom: "CORNICHONS AIGRES-DOUX 250G", prix: 2.90, stock: 52},
+                {code: 8022, nom: "SAUCISSON SEC MINI 180G", prix: 4.80, stock: 25},
+                {code: 8023, nom: "MINI TOASTS APÉRITIFS", prix: 1.90, stock: 80},
+                {code: 8024, nom: "BÂTONS DE SURIMI 200G", prix: 3.50, stock: 42},
+                {code: 8025, nom: "MÉLANGE APÉRO 500G", prix: 6.90, stock: 28}
+            ],
+            
+            // Produits VIPA déjà affichés dans le HTML
+            vipa: [
+                {code: 3711, nom: "SELECTION FESTIF VIPA 100G", prix: 6.40, stock: 25},
+                {code: 37110, nom: "SELECTION PLAISIR VIPA 100G", prix: 7.30, stock: 18},
+                {code: 3713, nom: "SELECTION ORIENTAL VIPA 100G", prix: 6.80, stock: 12},
+                {code: 3721, nom: "POUDRE NUTRITIVE D AVOINE", prix: 6.50, stock: 30},
+                {code: 4883, nom: "PISTACHE VIPA", prix: 6.40, stock: 8},
+                {code: 3918, nom: "GRANOLA DAILY FRAISE/FS VIPA", prix: 15.50, stock: 22},
+                {code: 3724, nom: "GRANO BARRE CARAMEL SALE ET FRUITS SECS", prix: 2.00, stock: 45},
+                {code: 4884, nom: "GRAINES DE COURGE", prix: 13.50, stock: 15},
+                {code: 3720, nom: "DAILY MIEL VIPA", prix: 15.50, stock: 20},
+                {code: 3717, nom: "DAILY CHOCOLAT VIPA", prix: 15.50, stock: 18},
+                {code: 3718, nom: "DAILY CEREALES SANS SUCRE VIPA", prix: 15.50, stock: 25},
+                {code: 3723, nom: "CRAK'O BARRE CACAHUETE, SESAME ET RAISIN VIPA", prix: 2.00, stock: 50},
+                {code: 3709, nom: "CACAHUETE TACO VIPA 80GR", prix: 2.80, stock: 35},
+                {code: 3712, nom: "CACAHUETES PAPRIKA VIPA", prix: 2.80, stock: 40},
+                {code: 3919, nom: "CACAHUETES CARAMEL VIPA", prix: 2.80, stock: 32},
+                {code: 3708, nom: "CACAHUETE FROMAGE VIPA 80GR", prix: 2.80, stock: 28}
+            ],
+            
+            // Produits SURGELÉS déjà affichés dans le HTML
+            surgeles: [
+                {code: 2682, nom: "PETIT POIS SAVEURS 1/2", prix: 9.00, stock: 45},
+                {code: 3842, nom: "LONDON DAIRY CRUNCH CARAMEL 125ML", prix: 5.80, stock: 32},
+                {code: 3025, nom: "LONDON DAIRY COCONUTELLO", prix: 4.30, stock: 28},
+                {code: 2999, nom: "LONDON DAIRY CHOCOLATE HAZELNUT CORNET", prix: 4.30, stock: 35}
+            ]
+        };
 
-  refreshCartUI(false);
-}
+        // Configuration des catégories
+        const categories = [
+            {id: 'animaux', name: 'Animaux', icon: 'fas fa-paw', count: 12},
+            {id: 'surgeles', name: 'Produits Surgelés', icon: 'fas fa-snowflake', count: 4},
+            {id: 'bebe', name: 'Bébé et Maman', icon: 'fas fa-baby', count: 15},
+            {id: 'vipa', name: 'Vipa et Sélection', icon: 'fas fa-star', count: 16},
+            {id: 'fruits-secs', name: 'Fruits Secs et Noix', icon: 'fas fa-seedling', count: 20},
+            {id: 'chips', name: 'Chips et Snack', icon: 'fas fa-cookie-bite', count: 25}
+        ];
 
-function openDrawer(){ $("drawer").classList.add("open"); }
-function closeDrawer(){ if(state.pinCart) return; $("drawer").classList.remove("open"); }
+        // Variables globales
+        let currentCategory = 'vipa';
+        let allProducts = [];
+        let totalProductsCount = 0;
 
-function refreshCartUI(maybeOpen){
-  $("cartTopCount").textContent = cartCount();
-  $("cartMiniInfo").textContent = cartCount() + " article(s)";
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Afficher la date actuelle
+            document.getElementById('current-date').textContent = new Date().toLocaleDateString('fr-FR');
+            
+            // Générer les boutons de catégories
+            generateCategoryButtons();
+            
+            // Remplir les produits manquants
+            fillMissingProducts();
+            
+            // Calculer les statistiques
+            calculateStatistics();
+            
+            // Initialiser la recherche
+            setupSearch();
+            
+            // Afficher la catégorie par défaut
+            showCategory(currentCategory);
+        });
 
-  const list = $("cartList");
-  list.innerHTML = "";
-  const keys = Object.keys(state.cart);
+        function generateCategoryButtons() {
+            const menu = document.getElementById('categories-menu');
+            menu.innerHTML = '';
+            
+            categories.forEach(cat => {
+                const button = document.createElement('button');
+                button.className = 'category-btn';
+                button.innerHTML = `<i class="${cat.icon}"></i> ${cat.name}`;
+                button.dataset.category = cat.id;
+                
+                button.addEventListener('click', () => {
+                    showCategory(cat.id);
+                });
+                
+                menu.appendChild(button);
+            });
+        }
 
-  if(!keys.length){
-    const e = document.createElement("div");
-    e.className = "warn";
-    e.textContent = "Panier vide. Ajoute des articles 🙂";
-    list.appendChild(e);
-  }else{
-    for(const pid of keys){
-      const it = state.cart[pid];
-      const row = document.createElement("div");
-      row.className = "cartItem";
+        function fillMissingProducts() {
+            // Remplir les produits pour les catégories qui n'ont pas de produits dans le HTML
+            ['animaux', 'bebe', 'fruits-secs', 'chips'].forEach(categoryId => {
+                const container = document.getElementById(`${categoryId}-products`);
+                if (container && produitsData[categoryId]) {
+                    container.innerHTML = '';
+                    produitsData[categoryId].forEach(produit => {
+                        container.appendChild(createProductCard(produit, categoryId));
+                    });
+                }
+            });
+            
+            // Compléter les produits Vipa déjà existants
+            const vipaContainer = document.getElementById('vipa-products');
+            const existingVipaCodes = Array.from(vipaContainer.querySelectorAll('.product-code')).map(el => {
+                return parseInt(el.textContent.replace('CODE: ', ''));
+            });
+            
+            // Ajouter les produits Vipa manquants
+            produitsData.vipa.forEach(produit => {
+                if (!existingVipaCodes.includes(produit.code)) {
+                    vipaContainer.appendChild(createProductCard(produit, 'vipa'));
+                }
+            });
+        }
 
-      const left = document.createElement("div");
-      left.className = "left";
-      left.innerHTML = `<div class="t">${it.name}</div><div class="s">Code: ${it.code} · ${it.catLabel} · ${fmtDT(it.price)}</div>`;
+        function createProductCard(produit, categoryId) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            
+            const stockClass = produit.stock < 15 ? 'stock-low' : 'stock-ok';
+            const stockText = produit.stock < 15 ? `Stock bas: ${produit.stock}` : `En stock: ${produit.stock}`;
+            const categoryName = getCategoryName(categoryId);
+            
+            card.innerHTML = `
+                <div class="product-code">CODE: ${produit.code}</div>
+                <h3 class="product-name">${produit.nom}</h3>
+                <div class="product-price">${produit.prix.toFixed(2).replace('.', ',')} €</div>
+                <div class="product-footer">
+                    <span class="product-category">${categoryName}</span>
+                    <span class="product-stock ${stockClass}">${stockText}</span>
+                </div>
+            `;
+            
+            // Stocker les données dans l'élément pour la recherche
+            card.dataset.code = produit.code;
+            card.dataset.nom = produit.nom.toLowerCase();
+            card.dataset.category = categoryId;
+            card.dataset.price = produit.prix;
+            
+            return card;
+        }
 
-      const right = document.createElement("div");
-      right.className = "right";
+        function getCategoryName(categoryId) {
+            const category = categories.find(cat => cat.id === categoryId);
+            return category ? category.name : categoryId;
+        }
 
-      const step = document.createElement("div");
-      step.className = "stepper";
+        function showCategory(categoryId) {
+            // Mettre à jour le bouton actif
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === categoryId) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Cacher toutes les sections
+            document.querySelectorAll('.category-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Afficher la section sélectionnée
+            const targetSection = document.getElementById(categoryId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                currentCategory = categoryId;
+                
+                // Mettre à jour l'affichage des produits dans cette catégorie
+                updateProductCount(categoryId);
+            }
+        }
 
-      const minus = document.createElement("button");
-      minus.textContent = "−";
-      minus.onclick = ()=>{
-        it.qty = Math.max(0, (it.qty||0)-1);
-        if(it.qty===0) delete state.cart[pid];
-        saveCart();
-        refreshCartUI(false);
-      };
+        function updateProductCount(categoryId) {
+            const container = document.getElementById(`${categoryId}-products`);
+            if (container) {
+                const count = container.querySelectorAll('.product-card').length;
+                const countElement = document.querySelector(`#${categoryId} .product-count`);
+                if (countElement) {
+                    countElement.textContent = `${count} produits`;
+                }
+            }
+        }
 
-      const val = document.createElement("span");
-      val.textContent = it.qty||0;
+        function calculateStatistics() {
+            // Compter tous les produits
+            let totalProducts = 0;
+            let totalStock = 0;
+            let totalPrice = 0;
+            
+            categories.forEach(cat => {
+                if (produitsData[cat.id]) {
+                    produitsData[cat.id].forEach(prod => {
+                        totalProducts++;
+                        totalStock += prod.stock;
+                        totalPrice += prod.prix;
+                    });
+                }
+            });
+            
+            // Mettre à jour les statistiques
+            document.getElementById('total-products').textContent = totalProducts;
+            document.getElementById('total-categories').textContent = categories.length;
+            document.getElementById('avg-price').textContent = (totalPrice / totalProducts).toFixed(2).replace('.', ',');
+            document.getElementById('in-stock').textContent = totalStock;
+            document.getElementById('total-displayed').textContent = totalProducts;
+            
+            totalProductsCount = totalProducts;
+        }
 
-      const plus = document.createElement("button");
-      plus.textContent = "+";
-      plus.onclick = ()=>{
-        it.qty = (it.qty||0)+1;
-        saveCart();
-        refreshCartUI(false);
-      };
-
-      step.appendChild(minus); step.appendChild(val); step.appendChild(plus);
-
-      const lineTotal = document.createElement("div");
-      lineTotal.className = "lineTotal";
-      lineTotal.textContent = fmtDT((Number(it.price)||0) * (it.qty||0));
-
-      right.appendChild(step);
-      right.appendChild(lineTotal);
-
-      row.appendChild(left);
-      row.appendChild(right);
-      list.appendChild(row);
-    }
-  }
-
-  $("subTotal").textContent = fmtDT(cartTotal());
-  const fee = shippingFee();
-  $("shipFee").textContent = fee===null ? "—" : fmtDT(fee);
-
-  const g = grandTotal();
-  if(g===null){
-    $("cartTotal").textContent = "Minimum commande 15 dt";
-    $("cartTotal").style.color = "var(--danger)";
-  }else{
-    $("cartTotal").textContent = fmtDT(g);
-    $("cartTotal").style.color = "var(--accent)";
-  }
-
-  const rule = $("ruleBox");
-  const t = cartTotal();
-  if(t <= 0){
-    rule.className = "warn"; rule.textContent = "Ajoute des articles pour commencer.";
-  }else if(t < MIN_ORDER){
-    rule.className = "warn bad";
-    rule.textContent = `⚠️ Minimum commande: ${MIN_ORDER} dt. Il manque ${fmtDT(MIN_ORDER - t)} (hors frais).`;
-  }else if(t >= FREE_SHIPPING){
-    rule.className = "warn good";
-    rule.textContent = `✅ Livraison gratuite (total ≥ ${FREE_SHIPPING} dt).`;
-  }else{
-    rule.className = "warn";
-    rule.textContent = `ℹ️ Frais livraison: ${SHIPPING_FEE} dt (gratuite à partir de ${FREE_SHIPPING} dt).`;
-  }
-
-  if(state.pinCart || maybeOpen) openDrawer();
-}
-
-/* LOAD DATA WITH DEBUG */
-async function loadAll(){
-  console.log("=== DÉBUT CHARGEMENT DES CATÉGORIES ===");
-  $("status").textContent = "Chargement…";
-  
-  for(const c of CATEGORIES){
-    console.log(`Chargement: ${c.label} -> ${c.file}`);
-    try{
-      const r = await fetch(c.file, {cache:"no-store"});
-      console.log(`  Statut: ${r.status} ${r.statusText}`);
-      
-      if(!r.ok) {
-        console.error(`  ❌ Erreur HTTP: ${r.status} ${r.statusText}`);
-        state.dataByCat.set(c.key, []);
-        continue;
-      }
-      
-      const text = await r.text();
-      console.log(`  Taille: ${text.length} caractères`);
-      console.log(`  Preview: ${text.substring(0, 100)}...`);
-      
-      const items = parseCSV(text);
-      console.log(`  ✅ ${items.length} articles chargés`);
-      state.dataByCat.set(c.key, items);
-      
-      // Affiche les 3 premiers articles pour vérification
-      if(items.length > 0){
-        console.log(`  Exemples:`, items.slice(0, 3).map(i => `${i.code}: ${i.name} - ${i.price}dt`));
-      }
-      
-    }catch(e){
-      console.error(`  ❌ Exception: ${e.message}`);
-      state.dataByCat.set(c.key, []);
-    }
-  }
-  
-  console.log("=== FIN CHARGEMENT ===");
-  console.log("Résumé:", [...state.dataByCat.entries()].map(([k,v]) => `${k}: ${v.length} articles`));
-  
-  $("status").textContent = "✅ OK";
-  buildCats();
-  render();
-}
-
-/* INIT */
-loadLocal();
-$("pinCart").checked = state.pinCart;
-if(state.pinCart) openDrawer();
-
-// Charger les données
-loadAll().then(()=>{
-  console.log("Application chargée !");
-  refreshCartUI(false);
-});
-
-/* EVENT LISTENERS */
-$("clearBtn").onclick = ()=>{ $("q").value=""; state.q=""; state.page=1; render(); };
-$("globalBtn").onclick = ()=>{ state.global=true; state.page=1; render(); };
-$("q").addEventListener("input", ()=>{ state.q=$("q").value; state.page=1; render(); });
-$("prevBtn").onclick = ()=>{ state.page=Math.max(1,state.page-1); render(); };
-$("nextBtn").onclick = ()=>{
-  const total = getVisibleItems().length;
-  const totalPages = Math.max(1, Math.ceil(total/state.perPage));
-  state.page=Math.min(totalPages,state.page+1);
-  render();
-};
-$("cartTopBtn").onclick = openDrawer;
-$("closeDrawer").onclick = closeDrawer;
-$("pinCart").addEventListener("change", ()=>{
-  state.pinCart = $("pinCart").checked;
-  localStorage.setItem("maxi_pin_cart", state.pinCart ? "1":"0");
-  if(state.pinCart) openDrawer();
-});
-</script>
+        function setupSearch() {
+            const searchInput = document.getElementById('search-input');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                
+                if (searchTerm === '') {
+                    // Réinitialiser l'affichage
+                    categories.forEach(cat => {
+                        const container = document.getElementById(`${cat.id}-products`);
+                        if (container) {
+                            container.innerHTML = '';
+                            produitsData[cat.id].forEach(produit => {
+                                container.appendChild(createProductCard(produit, cat.id));
+                            });
+                        }
+                    });
+                    
+                    // Réafficher toutes les catégories
+                    document.querySelectorAll('.category-section').forEach(section => {
+                        section.style.display = 'block';
+                    });
+                    
+                    // Réinitialiser les compteurs
+                    categories.forEach(cat => {
+                        updateProductCount(cat.id);
+                    });
+                    
+                    document.getElementById('total-displayed').textContent = totalProductsCount;
+                    return;
+                }
+                
+                let totalDisplayed = 0;
+                
+                // Filtrer par catégorie
+                categories.forEach(cat => {
+                    const container = document.getElementById(`${cat.id}-products`);
+                    const section = document.getElementById(cat.id);
+                    
+                    if (container && produitsData[cat.id]) {
+                        // Filtrer les produits
+                        const filteredProducts = produitsData[cat.id].filter(produit => 
+                            produit.nom.toLowerCase().includes(searchTerm) || 
+                            produit.code.toString().includes(searchTerm) ||
+                            getCategoryName(cat.id).toLowerCase().includes(searchTerm)
+                        );
+                        
+                        // Mettre à jour l'affichage
+                        container.innerHTML = '';
+                        
+                        if (filteredProducts.length > 0) {
+                            filteredProducts.forEach(produit => {
+                                container.appendChild(createProductCard(produit, cat.id));
+                            });
+                            section.style.display = 'block';
+                            totalDisplayed += filteredProducts.length;
+                            
+                            // Mettre à jour le compteur
+                            const countElement = section.querySelector('.product-count');
+                            if (countElement) {
+                                countElement.textContent = `${filteredProducts.length} produits`;
+                            }
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    }
+                });
+                
+                document.getElementById('total-displayed').textContent = totalDisplayed;
+                
+                // Afficher un message si aucun résultat
+                if (totalDisplayed === 0) {
+                    const firstVisibleSection = document.querySelector('.category-section[style="display: block;"]');
+                    if (!firstVisibleSection) {
+                        // Créer un message "aucun résultat"
+                        const mainContainer = document.querySelector('.container');
+                        let noResults = document.getElementById('no-results-message');
+                        
+                        if (!noResults) {
+                            noResults = document.createElement('div');
+                            noResults.id = 'no-results-message';
+                            noResults.className = 'category-section active';
+                            noResults.innerHTML = `
+                                <div class="category-header">
+                                    <h2 class="category-title"><i class="fas fa-search"></i> Résultats de recherche</h2>
+                                </div>
+                                <div class="no-products" style="padding: 60px 20px; font-size: 1.2rem;">
+                                    <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+                                    <p>Aucun produit ne correspond à "${searchTerm}"</p>
+                                    <p style="margin-top: 10px; font-size: 1rem;">Essayez avec d'autres termes de recherche.</p>
+                                </div>
+                            `;
+                            mainContainer.appendChild(noResults);
+                        }
+                    }
+                } else {
+                    // Supprimer le message "aucun résultat" s'il existe
+                    const noResults = document.getElementById('no-results-message');
+                    if (noResults) {
+                        noResults.remove();
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>
