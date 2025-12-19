@@ -1276,6 +1276,10 @@ function render(){
 
       card.innerHTML = `
         <div class="cardTop">
+        <img src="images/products/${it.code}.jpg"
+     class="product-img"
+     onerror="this.style.display='none'">
+
           <div class="name">${it.name}</div>
           <div class="price">${fmtDT(it.price)}</div>
         </div>
@@ -1646,3 +1650,4 @@ $("clearMyHistoryBtn").onclick = function(){
 </script>
 </body>
 </html>
+
