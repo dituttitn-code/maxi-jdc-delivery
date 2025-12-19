@@ -1,42 +1,42 @@
-code,name,price,unit,image
-4830,Thon La Galite à l’huile végétale 400 g,13.9,pièce,images/products/placeholder.jpg
-4257,Thon entier Amiral 130 g (HV),3.8,pièce,images/products/placeholder.jpg
-4302,Thon en miettes El Manar à l’huile d’olive 85 g,4.3,pièce,images/products/placeholder.jpg
-3799,Thon El Manar HV 162 g,7.6,pièce,images/products/placeholder.jpg
-4026,Thon El Badr HV 400 g,14.8,pièce,images/products/placeholder.jpg
-1019,Thon Sidi Maâwya à l’huile végétale 140 g,3.3,pièce,images/products/placeholder.jpg
-1017,Thon Sidi Ali à l’huile végétale 140 g,3.8,pièce,images/products/placeholder.jpg
-2014,Thon Rayes Labhar à l’huile végétale 130 g,3.5,pièce,images/products/placeholder.jpg
-1024,Thon La Goulette 400 g (HO),15.8,pièce,images/products/placeholder.jpg
-2011,Thon La Goulette 160 g (HO),8.5,pièce,images/products/placeholder.jpg
-4017,Thon entier La Goulette à l’huile végétale 400 g,14.8,pièce,images/products/placeholder.jpg
-4500,Sardine Noor tomate,2.5,pièce,images/products/placeholder.jpg
-4256,Sardine Noor,2.8,pièce,images/products/placeholder.jpg
-1027,Sardine Le Grand Bleu HV 110 g,2.2,pièce,images/products/placeholder.jpg
-4715,Sardine El Habib 110 g,2.8,pièce,images/products/placeholder.jpg
-4484,Salade Mechouia piquante Sannefa 340 g,4.7,pièce,images/products/placeholder.jpg
-4485,Salade Mechouia douce Sannefa 340 g,4.7,pièce,images/products/placeholder.jpg
-4482,Hrouss Sannefa 340 g,4.9,pièce,images/products/placeholder.jpg
-4161,Harissa traditionnelle 180 g,4.5,pièce,images/products/placeholder.jpg
-4669,Harissa traditionnelle Sannefa 450 g,5.5,pièce,images/products/placeholder.jpg
-4483,Harissa Sannefa 340 g,5.9,pièce,images/products/placeholder.jpg
-4584,Harissa Jouda 1/6,1.7,pièce,images/products/placeholder.jpg
-4163,Harissa fumée 180 g,4.5,pièce,images/products/placeholder.jpg
-4379,Harissa du Cap Vert 380 g,3.5,pièce,images/products/placeholder.jpg
-4380,Harissa du Cap Vert 135 g,1.5,pièce,images/products/placeholder.jpg
-4025,Harissa du Cap Bon 135 g,1.5,pièce,images/products/placeholder.jpg
-3630,Pois chiches Mami Garden 400 g,5.3,pièce,images/products/placeholder.jpg
-4658,Petits pois extra fins d’Aucy 400 g,9.8,pièce,images/products/placeholder.jpg
-4662,Macédoine d’Aucy 400 g,9.3,pièce,images/products/placeholder.jpg
-4352,Maïs doux Saveurs 150 g,5.4,pièce,images/products/placeholder.jpg
-4665,Maïs d’Aucy 340 g,7.3,pièce,images/products/placeholder.jpg
-2013,Maïs Bonduelle 140 g,4.2,pièce,images/products/placeholder.jpg
-2683,Haricots verts Saveurs 1/2,7.4,pièce,images/products/placeholder.jpg
-4659,Haricots rouges d’Aucy 400 g,8.9,pièce,images/products/placeholder.jpg
-4660,Haricots blancs d’Aucy 400 g,8.7,pièce,images/products/placeholder.jpg
-2685,Haricots blancs Saveurs 400 g,8.9,pièce,images/products/placeholder.jpg
-1055,Haricots rouges Mami 380 g,5.8,pièce,images/products/placeholder.jpg
-1060,Haricots blancs Mami Garden 400 g,5.8,pièce,images/products/placeholder.jpg
-3629,Champignons Hanibal pieds et morceaux 390 g,6.2,pièce,images/products/placeholder.jpg
-4663,Champignons Tanit Le Jardin 1/4,5.8,pièce,images/products/placeholder.jpg
-4664,Champignons Tanit Le Jardin 1/2,8.5,pièce,images/products/placeholder.jpg
+CODE_ARTICLE;ARTICLES;PRIX
+4830;Thon La Galite à l’huile végétale 400 g;13.9
+4257;Thon entier Amiral 130 g (HV);3.8
+4302;Thon en miettes El Manar à l’huile d’olive 85 g;4.3
+3799;Thon El Manar HV 162 g;7.6
+4026;Thon El Badr HV 400 g;14.8
+1019;Thon Sidi Maâwya à l’huile végétale 140 g;3.3
+1017;Thon Sidi Ali à l’huile végétale 140 g;3.8
+2014;Thon Rayes Labhar à l’huile végétale 130 g;3.5
+1024;Thon La Goulette 400 g (HO);15.8
+2011;Thon La Goulette 160 g (HO);8.5
+4017;Thon entier La Goulette à l’huile végétale 400 g;14.8
+4500;Sardine Noor tomate;2.5
+4256;Sardine Noor;2.8
+1027;Sardine Le Grand Bleu HV 110 g;2.2
+4715;Sardine El Habib 110 g;2.8
+4484;Salade Mechouia piquante Sannefa 340 g;4.7
+4485;Salade Mechouia douce Sannefa 340 g;4.7
+4482;Hrouss Sannefa 340 g;4.9
+4161;Harissa traditionnelle 180 g;4.5
+4669;Harissa traditionnelle Sannefa 450 g;5.5
+4483;Harissa Sannefa 340 g;5.9
+4584;Harissa Jouda 1/6;1.7
+4163;Harissa fumée 180 g;4.5
+4379;Harissa du Cap Vert 380 g;3.5
+4380;Harissa du Cap Vert 135 g;1.5
+4025;Harissa du Cap Bon 135 g;1.5
+3630;Pois chiches Mami Garden 400 g;5.3
+4658;Petits pois extra fins d’Aucy 400 g;9.8
+4662;Macédoine d’Aucy 400 g;9.3
+4352;Maïs doux Saveurs 150 g;5.4
+4665;Maïs d’Aucy 340 g;7.3
+2013;Maïs Bonduelle 140 g;4.2
+2683;Haricots verts Saveurs 1/2;7.4
+4659;Haricots rouges d’Aucy 400 g;8.9
+4660;Haricots blancs d’Aucy 400 g;8.7
+2685;Haricots blancs Saveurs 400 g;8.9
+1055;Haricots rouges Mami 380 g;5.8
+1060;Haricots blancs Mami Garden 400 g;5.8
+3629;Champignons Hanibal pieds et morceaux 390 g;6.2
+4663;Champignons Tanit Le Jardin 1/4;5.8
+4664;Champignons Tanit Le Jardin 1/2;8.5
