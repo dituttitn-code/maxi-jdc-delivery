@@ -106,25 +106,6 @@
       font-weight:900;color:var(--accent);
     }
 
-    /* ✅ QR CODE PILL */
-    .qrPill{
-      gap:10px;
-      padding:6px 12px;
-    }
-    .qrPill img{
-      width:34px;height:34px;
-      object-fit:contain;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(0,0,0,.25);
-      padding:4px;
-    }
-    .qrPill .qrTxt{
-      display:flex;flex-direction:column;line-height:1.15;
-    }
-    .qrPill .qrTxt b{font-size:13px}
-    .qrPill .qrTxt small{font-size:11px;color:var(--muted)}
-
     .noteBar{
       margin-top:15px;padding:15px;border-radius:var(--radius);border:1px solid rgba(0, 255, 136, 0.3);
       background: rgba(0, 255, 136, 0.05);color:var(--text);font-size:13px;
@@ -160,9 +141,7 @@
       border-radius: 999px;
     }
 
-    /* (ancien bloc cats sidebar) */
     #cats{ padding:15px; display:flex; flex-direction:column; gap:10px; }
-
     .catBtn{
       width:100%;text-align:left;border-radius:10px;border:2px solid var(--line);
       background: rgba(255,255,255,.05); color: var(--text);
@@ -181,28 +160,6 @@
     }
 
     .content{padding:20px;}
-
-    /* ✅ CATEGORIES HORIZONTALES AU DESSUS DES ARTICLES */
-    #catsTopWrap{
-      padding: 0 0 16px 0;
-      margin-bottom: 16px;
-      border-bottom: 1px solid var(--line);
-    }
-    #catsTop{
-      display:flex;
-      flex-wrap:wrap;       /* ✅ 2 lignes ou plus */
-      gap:10px;
-      align-items:center;
-    }
-    /* bouton en horizontal: largeur auto */
-    #catsTop .catBtn{
-      width:auto;
-      min-width: 220px;     /* pour lisibilité */
-      max-width: 320px;
-      padding:12px 14px;
-    }
-    #catsTop .catBtn:hover{ transform: translateY(-2px); } /* plus logique en horizontal */
-
     .contentHeader{
       display:flex; align-items:flex-end; justify-content:space-between; gap:15px;
       padding:0 0 20px 0; border-bottom: 1px solid var(--line); margin-bottom: 20px;
@@ -241,7 +198,7 @@
     }
     .card:hover{ border-color: var(--accent2); transform: translateY(-3px); }
 
-    /* PHOTO BIEN AJUSTÉE (déjà OK) */
+    /* PHOTO BIEN AJUSTÉE */
     .imgWrap{
       width:100%;
       height:150px;
@@ -256,7 +213,7 @@
     .product-img{
       width:100%;
       height:100%;
-      object-fit:contain; /* ✅ ne coupe pas */
+      object-fit:contain;
       display:block;
       background:#ffffff;
     }
@@ -307,6 +264,7 @@
       gap:3px;
     }
 
+    /* ACTIONS: ne déborde jamais */
     .actions{
       margin-top:auto;
       display:grid;
@@ -355,7 +313,7 @@
     }
     .addBtn:hover{ background: rgba(0, 255, 136, 0.22); transform: translateY(-1px); }
 
-    /* BOUTON STOCK */
+    /* BOUTON STOCK sous Ajouter */
     .stockBtn{
       height:40px;
       border-radius:10px;
@@ -385,15 +343,11 @@
     .stockTag.ok{ border-color: rgba(0,255,136,.5); color: var(--accent); }
     .stockTag.no{ border-color: rgba(255,107,107,.6); color: var(--danger); }
 
-    /* ✅ CLIENT: stock non cliquable */
-    body:not(.admin) .stockBtn{
-      cursor: default;
-    }
-
     .hintAdmin{ margin-top:14px; padding:12px; border-radius:10px; border:1px solid rgba(0,255,136,0.2);
       background: rgba(0,255,136,0.05); color: var(--muted); font-size:11px; text-align:center;
     }
 
+    /* DRAWER + BACKDROP (ne cache pas l’interface: il pousse sur desktop) */
     .backdrop{
       position:fixed; inset:0;
       background: rgba(0,0,0,.55);
@@ -521,6 +475,7 @@
       flex-shrink:0;
     }
 
+    /* Historique (simple) */
     .histToggle{
       width:100%;
       height:44px;
@@ -554,6 +509,7 @@
     th{ color:var(--muted); font-weight:900; font-size:11px; }
     td strong{ font-weight:900; color:var(--accent); }
 
+    /* Modal */
     .modalBack{
       position:fixed; inset:0; background: rgba(0,0,0,.7);
       display:none; align-items:center; justify-content:center;
@@ -591,12 +547,12 @@
     }
     .modalFoot{ padding:16px; border-top:2px solid var(--line); display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap; }
 
+    /* Responsive */
     @media (max-width: 1100px){
       .grid{ grid-template-columns:1fr }
       #products{ grid-template-columns:repeat(2, minmax(0, 1fr)) }
       .brand{ min-width:0; }
-      body.drawer-open .wrap{ padding-right: 20px; }
-      /* sur écran moyen, l’ancien panneau catégories peut rester, mais tu peux le masquer si tu veux */
+      body.drawer-open .wrap{ padding-right: 20px; } /* sur petits écrans, pas de push */
     }
     @media (max-width: 768px){
       #products{ grid-template-columns:1fr }
@@ -607,7 +563,6 @@
       .actions{ grid-template-columns:1fr; }
       .addBtn{ width:100%; }
       .stepper{ justify-content:center; }
-      #catsTop .catBtn{ min-width: 100%; max-width: 100%; } /* sur mobile, 1 bouton par ligne */
     }
   </style>
 </head>
@@ -638,15 +593,6 @@
         <div class="pill">🕒 7h – 1h</div>
         <div class="pill"><strong>WhatsApp:</strong> 00216 25 600 978</div>
 
-        <!-- ✅ QR CODE AJOUTÉ -->
-        <div class="pill qrPill" title="Scannez pour ouvrir le site">
-          <img src="qr-code.png" alt="QR Code" onerror="this.style.opacity='.35'">
-          <div class="qrTxt">
-            <b>Scannez</b>
-            <small>ouvrir le site</small>
-          </div>
-        </div>
-
         <div class="pill cartPill" id="cartTopBtn" title="Ouvrir le panier">
           🛒 Panier <span id="cartTopCount">0</span>
         </div>
@@ -659,7 +605,6 @@
     </div>
 
     <div class="grid">
-      <!-- (On garde le panneau à gauche comme avant, mais il est maintenant moins important) -->
       <div class="panel">
         <div class="panelHeader">
           <h3>Catégories</h3>
@@ -670,16 +615,6 @@
 
       <div class="panel">
         <div class="content">
-
-          <!-- ✅ NOUVEAU: CATEGORIES HORIZONTALES EN HAUT, JUSTE AU DESSUS DES ARTICLES -->
-          <div id="catsTopWrap">
-            <div class="panelHeader" style="border-radius:12px;margin-bottom:12px;">
-              <h3 style="color:var(--accent);">Catégories</h3>
-              <div class="sub">Choisissez une catégorie</div>
-            </div>
-            <div id="catsTop"></div>
-          </div>
-
           <div class="contentHeader">
             <div class="titleWrap">
               <h2 id="activeLabel">Produits</h2>
@@ -824,10 +759,6 @@ const FREE_SHIPPING = 30;
 const SHIPPING_FEE = 5;
 const WHATSAPP_NUMBER = "21625600978";
 
-/* ✅ Admin mode: ouvrir avec ?admin=1 */
-const IS_ADMIN = new URLSearchParams(location.search).get("admin") === "1";
-if(IS_ADMIN) document.body.classList.add("admin");
-
 /* Catégories */
 const CATEGORIES = [
   { key:"animaux_compagnie", label:"Animaux de Compagnie", file:"data/animaux_compagnie.csv" },
@@ -866,8 +797,12 @@ function dlText(filename, text){
   a.click();
   setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 0);
 }
-function encodeB64(str){ return btoa(unescape(encodeURIComponent(str))); }
-function decodeB64(b64){ return decodeURIComponent(escape(atob(b64))); }
+function encodeB64(str){
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function decodeB64(b64){
+  return decodeURIComponent(escape(atob(b64)));
+}
 
 /* ===================== STATE ===================== */
 const state = {
@@ -882,6 +817,7 @@ const state = {
   client:null,
   pinCart:false,
   stockByCode:{}, // { "2999": true/false }
+  // IMPORTANT: panier auto-open uniquement quand on ajoute un produit
   autoOpenOnAdd: true,
 };
 
@@ -896,6 +832,7 @@ function saveCart(){ localStorage.setItem("maxi_cart_v2", JSON.stringify(state.c
 function saveClient(){ localStorage.setItem("maxi_client_v2", JSON.stringify(state.client||null)); }
 function savePin(){ localStorage.setItem("maxi_pin_cart_v2", state.pinCart ? "1":"0"); }
 function saveStock(){ localStorage.setItem("maxi_stock_v2", JSON.stringify(state.stockByCode||{})); }
+
 function loadHistory(){ try{ return JSON.parse(localStorage.getItem("maxi_orders_v2")||"[]"); }catch(e){ return []; } }
 function saveHistory(arr){ localStorage.setItem("maxi_orders_v2", JSON.stringify(arr||[])); }
 
@@ -944,6 +881,11 @@ function grandTotal(){
 }
 
 /* ===================== DRAWER BEHAVIOR ===================== */
+/* Ouvre seulement:
+   - si pinCart activé
+   - ou si user clique Panier
+   - ou si on vient d’ajouter un article (autoOpenOnAdd)
+*/
 function openDrawer(){
   $("drawer").classList.add("open");
   $("backdrop").classList.add("open");
@@ -958,37 +900,28 @@ function closeDrawer(force=false){
 
 /* ===================== UI BUILD ===================== */
 function buildCats(){
-  // sidebar (ancien) + top (nouveau)
-  const boxSide = $("cats");
-  const boxTop = $("catsTop");
-  boxSide.innerHTML = "";
-  boxTop.innerHTML = "";
-
+  const box = $("cats");
+  box.innerHTML = "";
   for(const c of CATEGORIES){
-    const makeBtn = (kind)=> {
-      const btn = document.createElement("button");
-      btn.className = "catBtn" + (state.activeCat===c.key ? " active" : "");
-      btn.onclick = ()=>{
-        state.activeCat = c.key;
-        state.global = false;
-        state.page = 1;
-        buildCats();
-        render();
-      };
-      const left = document.createElement("div");
-      left.className = "catLeft";
-      left.innerHTML = `<div class="catTitle">${c.label}</div><div class="catMeta">${c.file}</div>`;
-      const count = document.createElement("div");
-      count.className = "catCount";
-      const items = state.dataByCat.get(c.key) || [];
-      count.textContent = items.length + " article(s)";
-      btn.appendChild(left);
-      btn.appendChild(count);
-      return btn;
+    const btn = document.createElement("button");
+    btn.className = "catBtn" + (state.activeCat===c.key ? " active" : "");
+    btn.onclick = ()=>{
+      state.activeCat = c.key;
+      state.global = false;
+      state.page = 1;
+      buildCats();
+      render();
     };
-
-    boxSide.appendChild(makeBtn("side"));
-    boxTop.appendChild(makeBtn("top"));
+    const left = document.createElement("div");
+    left.className = "catLeft";
+    left.innerHTML = `<div class="catTitle">${c.label}</div><div class="catMeta">${c.file}</div>`;
+    const count = document.createElement("div");
+    count.className = "catCount";
+    const items = state.dataByCat.get(c.key) || [];
+    count.textContent = items.length + " article(s)";
+    btn.appendChild(left);
+    btn.appendChild(count);
+    box.appendChild(btn);
   }
 }
 function getActiveCat(){ return CATEGORIES.find(x=>x.key===state.activeCat) || CATEGORIES[0]; }
@@ -1021,12 +954,14 @@ function getVisibleItems(){
 
 /* ===================== STOCK ===================== */
 function isInStock(code){
+  // par défaut: en stock (true)
   if(state.stockByCode[code] === undefined) return true;
   return !!state.stockByCode[code];
 }
 function toggleStock(code){
   state.stockByCode[code] = !isInStock(code);
   saveStock();
+  render();
 }
 
 /* ===================== RENDER ===================== */
@@ -1061,6 +996,8 @@ function render(){
       card.className = "card";
 
       const stockOk = isInStock(it.code);
+
+      // Image: on affiche un placeholder si pas de photo
       const imgSrc = `images/products/${it.code}.jpg`;
 
       card.innerHTML = `
@@ -1092,14 +1029,16 @@ function render(){
           </button>
         </div>
 
-        <button class="stockBtn" data-stock="1" title="${IS_ADMIN ? "Admin: changer le stock" : "Stock géré par admin"}">
+        <button class="stockBtn" data-stock="1">
           📦 Stock:
           <span class="stockTag ${stockOk ? "ok" : "no"}">${stockOk ? "En stock" : "Rupture"}</span>
         </button>
       `;
 
+      // si image n'existe pas, montrer placeholder
       const ph = card.querySelector(".noPhoto");
-      ph.style.display = "none";
+      ph.style.display = "none"; // sera mis à grid si erreur
+      // Ajuste: si l'image a été cachée via cache, afficher placeholder
       setTimeout(()=>{
         const img = card.querySelector(".product-img");
         if(img && (img.style.display==="none" || !img.complete || img.naturalWidth===0)){
@@ -1107,16 +1046,14 @@ function render(){
         }
       }, 0);
 
-      // ✅ Anti-clignotement: plus de render() sur +/- juste update du chiffre
-      const qv = card.querySelector(".qv");
-
       card.querySelector('[data-act="minus"]').onclick = ()=>{
         state.qtyPick[pid] = Math.max(0, (state.qtyPick[pid]||0)-1);
-        qv.textContent = state.qtyPick[pid] || 0;
+        // mise à jour locale sans rerender complet: simple
+        render();
       };
       card.querySelector('[data-act="plus"]').onclick = ()=>{
         state.qtyPick[pid] = (state.qtyPick[pid]||0)+1;
-        qv.textContent = state.qtyPick[pid] || 0;
+        render();
       };
 
       card.querySelector(".addBtn").onclick = ()=>{
@@ -1127,23 +1064,15 @@ function render(){
         else state.cart[pid] = { pid, name:it.name, code:it.code, price:it.price, catLabel:it.catLabel, qty:q };
 
         state.qtyPick[pid] = 0;
-        qv.textContent = "0";
         saveCart();
         refreshCartUI({ openAfterAdd: true });
         pulseCart();
       };
 
-      // ✅ Stock: SEULEMENT ADMIN
-      const stockBtn = card.querySelector(".stockBtn");
-      if(IS_ADMIN){
-        stockBtn.onclick = ()=>{
-          toggleStock(it.code);
-          // mini update: juste re-render la page pour rafraîchir les tags
-          render();
-        };
-      } else {
-        stockBtn.onclick = (e)=>{ e.preventDefault(); };
-      }
+      card.querySelector(".stockBtn").onclick = ()=>{
+        // Toggle stock simple (si tu veux: tu peux enlever le toggle plus tard)
+        toggleStock(it.code);
+      };
 
       box.appendChild(card);
     }
@@ -1255,13 +1184,12 @@ function refreshCartUI({ openAfterAdd }){
     rule.textContent = `ℹ️ Frais livraison: ${SHIPPING_FEE} dt (gratuite à partir de ${FREE_SHIPPING} dt).`;
   }
 
+  // Règle d’ouverture: seulement si pinCart, clic, ou ajout
   if(state.pinCart) openDrawer();
   else if(openAfterAdd && state.autoOpenOnAdd) openDrawer();
 }
 
-/* ===================== CLIENT / HISTORY / LOAD / EVENTS ===================== */
-/* (Tout ton code inchangé en dessous, sauf buildCats / render déjà modifiés) */
-
+/* ===================== CLIENT ===================== */
 function lockClientUI(locked){
   const fields = ["cName","cTel","cAddr","cLat","cLng"];
   fields.forEach(id => $(id).disabled = !!locked);
@@ -1291,16 +1219,34 @@ function fillClientUI(){
   lockClientUI(true);
 }
 
+/* Génère un code client à copier/coller sur un autre appareil */
 function buildClientCodeFromClient(client){
-  const payload = { v:1, name: client.name||"", tel: client.tel||"", addr: client.addr||"", lat: client.lat||"", lng: client.lng||"" };
+  const payload = {
+    v:1,
+    name: client.name||"",
+    tel: client.tel||"",
+    addr: client.addr||"",
+    lat: client.lat||"",
+    lng: client.lng||""
+  };
   return encodeB64(JSON.stringify(payload));
 }
+
+/* Import code client */
 function importClientCode(code){
   try{
     const txt = decodeB64(code.trim());
     const obj = JSON.parse(txt);
     if(!obj || !obj.tel) throw new Error("Code invalide");
-    state.client = { name: obj.name||"", tel: obj.tel||"", addr: obj.addr||"", lat: obj.lat||"", lng: obj.lng||"", savedAt: new Date().toISOString(), clientCode: code.trim() };
+    state.client = {
+      name: obj.name||"",
+      tel: obj.tel||"",
+      addr: obj.addr||"",
+      lat: obj.lat||"",
+      lng: obj.lng||"",
+      savedAt: new Date().toISOString(),
+      clientCode: code.trim()
+    };
     saveClient();
     fillClientUI();
     alert("✅ Client importé !");
@@ -1309,15 +1255,19 @@ function importClientCode(code){
   }
 }
 
+/* ===================== HISTORY ===================== */
 function renderHistory(){
   const history = loadHistory();
   $("histCount").textContent = history.length;
+
   const tbody = $("histTbody");
   tbody.innerHTML = "";
+
   if(history.length === 0){
     tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:16px;">Aucune commande</td></tr>`;
     return;
   }
+
   history.slice(0, 12).forEach(order=>{
     const tr = document.createElement("tr");
     const d = new Date(order.date).toLocaleString("fr-FR");
@@ -1327,6 +1277,7 @@ function renderHistory(){
   });
 }
 
+/* ===================== LOAD DATA ===================== */
 async function loadAll(){
   $("status").textContent = "Chargement…";
   let totalProducts = 0;
@@ -1349,7 +1300,7 @@ async function loadAll(){
   render();
 }
 
-/* EVENTS */
+/* ===================== EVENTS ===================== */
 $("clearBtn").onclick = ()=>{ $("q").value=""; state.q=""; state.page=1; render(); };
 $("globalBtn").onclick = ()=>{ state.global=true; state.page=1; render(); };
 $("q").addEventListener("input", ()=>{ state.q=$("q").value; state.page=1; render(); });
@@ -1362,16 +1313,19 @@ $("nextBtn").onclick = ()=>{
   render();
 };
 
+/* Panier: ouverture manuelle */
 $("cartTopBtn").onclick = ()=> openDrawer();
 $("closeDrawer").onclick = ()=> closeDrawer(false);
 $("backdrop").onclick = ()=> closeDrawer(false);
 
+/* Pin cart */
 $("pinCart").addEventListener("change", ()=>{
   state.pinCart = $("pinCart").checked;
   savePin();
   if(state.pinCart) openDrawer();
 });
 
+/* GPS */
 $("gpsBtn").onclick = ()=>{
   if(!navigator.geolocation){
     alert("GPS non supporté sur cet appareil.");
@@ -1384,11 +1338,14 @@ $("gpsBtn").onclick = ()=>{
       $("cLat").value = lat.toFixed(6);
       $("cLng").value = lng.toFixed(6);
     },
-    ()=>{ alert("Impossible d'obtenir la position (autorisation refusée ou GPS désactivé)."); },
+    (err)=>{
+      alert("Impossible d'obtenir la position (autorisation refusée ou GPS désactivé).");
+    },
     { enableHighAccuracy:true, timeout:12000, maximumAge:0 }
   );
 };
 
+/* Save client: une seule fois (verrouillage) */
 $("saveClientBtn").onclick = ()=>{
   const name = $("cName").value.trim();
   const tel  = $("cTel").value.trim();
@@ -1404,21 +1361,34 @@ $("saveClientBtn").onclick = ()=>{
   const tmp = { name, tel, addr, lat, lng };
   const clientCode = buildClientCodeFromClient(tmp);
 
-  state.client = { ...tmp, savedAt: new Date().toISOString(), clientCode };
+  state.client = {
+    ...tmp,
+    savedAt: new Date().toISOString(),
+    clientCode
+  };
   saveClient();
   fillClientUI();
   alert("✅ Fiche client enregistrée !");
 };
 
+/* Edit client (déverrouiller) */
 $("editClientBtn").onclick = ()=>{
-  if(!state.client){ alert("Aucun client enregistré."); return; }
+  if(!state.client){
+    alert("Aucun client enregistré.");
+    return;
+  }
   const ok = confirm("Modifier la fiche client ? (Vous pourrez ré-enregistrer)");
   if(!ok) return;
   lockClientUI(false);
 };
 
+/* Générer code client */
 $("genCodeBtn").onclick = ()=>{
-  if(!state.client){ alert("Enregistre d'abord la fiche client."); return; }
+  if(!state.client){
+    alert("Enregistre d'abord la fiche client.");
+    return;
+  }
+  // régénère au cas où
   const code = buildClientCodeFromClient(state.client);
   state.client.clientCode = code;
   saveClient();
@@ -1428,12 +1398,14 @@ $("genCodeBtn").onclick = ()=>{
   alert("✅ Code client copié ! (Colle-le sur l’autre appareil via Importer)");
 };
 
+/* Importer code client */
 $("importCodeBtn").onclick = ()=>{
   const code = prompt("Colle ici le Code client :");
   if(!code) return;
   importClientCode(code);
 };
 
+/* Panier */
 $("clearCartBtn").onclick = ()=>{
   if(confirm("Vider tout le panier ?")){
     state.cart = {};
@@ -1442,6 +1414,7 @@ $("clearCartBtn").onclick = ()=>{
   }
 };
 
+/* Envoyer */
 $("sendBtn").onclick = ()=>{
   if(cartCount() === 0){ alert("Panier vide !"); return; }
   if(!state.client){ alert("Veuillez d'abord enregistrer la fiche client."); return; }
@@ -1468,6 +1441,7 @@ $("sendBtn").onclick = ()=>{
   summary += `Livraison: ${fee === 0 ? 'GRATUITE' : fmtDT(fee)}\n`;
   summary += `TOTAL: ${fmtDT(g)}\n`;
 
+  // Save history (local)
   const history = loadHistory();
   history.unshift({
     date: new Date().toISOString(),
@@ -1499,6 +1473,7 @@ $("whatsappBtn").onclick = ()=>{
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
 };
 
+/* Historique */
 $("histToggleBtn").onclick = ()=>{
   $("histBox").classList.toggle("open");
   if($("histBox").classList.contains("open")) renderHistory();
@@ -1510,7 +1485,7 @@ $("clearMyHistoryBtn").onclick = ()=>{
   }
 };
 
-/* INIT */
+/* ===================== INIT ===================== */
 loadLocal();
 $("pinCart").checked = state.pinCart;
 
