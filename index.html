@@ -105,6 +105,10 @@
       border-radius:999px;background:rgba(0,0,0,.5);border:2px solid var(--accent);
       font-weight:900;color:var(--accent);
     }
+    .qrPill{
+      margin-left:10px;border:2px solid var(--accent2);background:rgba(0, 212, 255, 0.1);color:var(--accent2);
+      font-weight:800;display:flex;align-items:center;gap:8px;
+    }
 
     .noteBar{
       margin-top:15px;padding:15px;border-radius:var(--radius);border:1px solid rgba(0, 255, 136, 0.3);
@@ -114,10 +118,62 @@
     .noteBar .ok{color:var(--accent);font-weight:700;display:inline-flex;gap:8px;align-items:center;}
     .noteBar .sub{margin-left:auto;color:var(--muted);font-size:12px;}
 
+    /* CATÉGORIES HORIZONTALES */
+    .catsHorizontal {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+      display: flex;
+      gap: 12px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) var(--card2);
+    }
+    .catsHorizontal::-webkit-scrollbar { height: 6px; }
+    .catsHorizontal::-webkit-scrollbar-track { background: var(--card2); border-radius: 3px; }
+    .catsHorizontal::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+    
+    .catBtnHoriz {
+      flex: 0 0 auto;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 2px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .catBtnHoriz:hover {
+      background: rgba(255,255,255,.1);
+      border-color: var(--accent2);
+      transform: translateY(-1px);
+    }
+    .catBtnHoriz.active {
+      border-color: var(--accent);
+      background: rgba(0, 255, 136, 0.15);
+      color: var(--accent);
+    }
+    .catCountHoriz {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.3);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
     .grid{
       margin-top:20px;
       display:grid;
-      grid-template-columns:300px 1fr;
+      grid-template-columns:1fr;
       gap:20px;
       align-items:start;
     }
@@ -141,23 +197,7 @@
       border-radius: 999px;
     }
 
-    #cats{ padding:15px; display:flex; flex-direction:column; gap:10px; }
-    .catBtn{
-      width:100%;text-align:left;border-radius:10px;border:2px solid var(--line);
-      background: rgba(255,255,255,.05); color: var(--text);
-      padding:14px; cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:15px;
-      transition: all 0.2s ease;
-    }
-    .catBtn:hover{ background: rgba(255,255,255,.1); border-color: var(--accent2); transform: translateX(3px); }
-    .catBtn.active{ border-color: var(--accent); background: rgba(0, 255, 136, 0.1); }
-    .catLeft{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1;}
-    .catTitle{ font-weight:900; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .catMeta{ color:var(--muted); font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .catCount{
-      flex:0 0 auto; color:var(--accent); font-weight:900; font-size:12px;
-      border:2px solid var(--accent); background: rgba(0, 255, 136, 0.1);
-      border-radius:999px; padding:5px 12px; min-width: 80px; text-align:center;
-    }
+    #cats{ display:none; } /* Caché car on utilise la version horizontale */
 
     .content{padding:20px;}
     .contentHeader{
@@ -547,6 +587,44 @@
     }
     .modalFoot{ padding:16px; border-top:2px solid var(--line); display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap; }
 
+    /* QR Code Modal */
+    .qrModal{
+      position:fixed; inset:0; background: rgba(0,0,0,.7);
+      display:none; align-items:center; justify-content:center;
+      z-index:30; padding:20px;
+    }
+    .qrModal.open{ display:flex; }
+    .qrBox{
+      background: var(--card);
+      border-radius:var(--radius);
+      border:2px solid var(--accent);
+      padding:25px;
+      max-width:500px;
+      width:90vw;
+      text-align:center;
+      box-shadow: var(--shadow);
+    }
+    .qrBox h3{
+      margin:0 0 15px;
+      color:var(--accent);
+      font-size:20px;
+      font-weight:900;
+    }
+    .qrImage{
+      width:100%;
+      max-width:300px;
+      border-radius:12px;
+      border:2px solid var(--accent2);
+      margin:0 auto 15px;
+      display:block;
+    }
+    .qrInfo{
+      color:var(--muted);
+      font-size:14px;
+      margin:15px 0;
+      line-height:1.5;
+    }
+
     /* Responsive */
     @media (max-width: 1100px){
       .grid{ grid-template-columns:1fr }
@@ -563,6 +641,8 @@
       .actions{ grid-template-columns:1fr; }
       .addBtn{ width:100%; }
       .stepper{ justify-content:center; }
+      .catsHorizontal{ padding:12px; gap:8px; }
+      .catBtnHoriz{ padding:8px 14px; font-size:12px; }
     }
   </style>
 </head>
@@ -592,11 +672,19 @@
         <div class="pill">📍 Jardins de Carthage , derrière mosquée Essalem</div>
         <div class="pill">🕒 7h – 1h</div>
         <div class="pill"><strong>WhatsApp:</strong> 00216 25 600 978</div>
-
+        
+        <!-- QR Code Button -->
+        <div class="pill qrPill" id="qrBtn" title="Scanner le QR Code du site">
+          📱 QR Code
+        </div>
+        
         <div class="pill cartPill" id="cartTopBtn" title="Ouvrir le panier">
           🛒 Panier <span id="cartTopCount">0</span>
         </div>
       </div>
+
+      <!-- CATÉGORIES HORIZONTALES -->
+      <div class="catsHorizontal" id="catsHorizontal"></div>
 
       <div class="noteBar">
         <span class="ok">✅ Données chargées depuis <b>data/*.csv</b> — une catégorie = un fichier CSV.</span>
@@ -605,14 +693,6 @@
     </div>
 
     <div class="grid">
-      <div class="panel">
-        <div class="panelHeader">
-          <h3>Catégories</h3>
-          <div class="sub" id="status">Chargement…</div>
-        </div>
-        <div id="cats"></div>
-      </div>
-
       <div class="panel">
         <div class="content">
           <div class="contentHeader">
@@ -630,7 +710,7 @@
           </div>
 
           <div id="products"></div>
-          <div class="hintAdmin">Astuce : le panier s’ouvre automatiquement seulement après “Ajouter”. Vous pouvez aussi l’ouvrir avec le bouton 🛒.</div>
+          <div class="hintAdmin">Astuce : le panier s'ouvre automatiquement seulement après "Ajouter". Vous pouvez aussi l'ouvrir avec le bouton 🛒.</div>
         </div>
       </div>
     </div>
@@ -677,7 +757,7 @@
 
         <div class="warn" style="margin-top:12px">
           ✅ La fiche est enregistrée sur <b>cet appareil</b>. <br/>
-          🔁 Pour l’utiliser sur un autre appareil, utilisez “Code client” (copier/coller).
+          🔁 Pour l'utiliser sur un autre appareil, utilisez "Code client" (copier/coller).
         </div>
 
         <div class="field" style="margin-top:10px">
@@ -736,7 +816,7 @@
     </div>
   </aside>
 
-  <!-- Modal -->
+  <!-- Modal Résumé Commande -->
   <div class="modalBack" id="modalBack">
     <div class="modal">
       <div class="modalHead">
@@ -749,6 +829,19 @@
         <button class="mini" id="downloadBtn">💾 Télécharger (.txt)</button>
         <button class="mini green" id="whatsappBtn">📱 WhatsApp</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Modal QR Code -->
+  <div class="qrModal" id="qrModal">
+    <div class="qrBox">
+      <h3>📱 QR Code du Site</h3>
+      <img src="qr-maxi-jdc-site.jpg" alt="QR Code MAXI JDC MARKET" class="qrImage" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x300/0a1929/00ff88?text=QR+Code+Non+Trouvé'">
+      <div class="qrInfo">
+        Scannez ce QR Code pour accéder au site MAXI JDC MARKET sur votre téléphone.<br>
+        Partagez-le avec vos clients pour faciliter les commandes !
+      </div>
+      <button class="btn green" id="closeQrBtn">Fermer</button>
     </div>
   </div>
 
@@ -817,7 +910,6 @@ const state = {
   client:null,
   pinCart:false,
   stockByCode:{}, // { "2999": true/false }
-  // IMPORTANT: panier auto-open uniquement quand on ajoute un produit
   autoOpenOnAdd: true,
 };
 
@@ -881,11 +973,6 @@ function grandTotal(){
 }
 
 /* ===================== DRAWER BEHAVIOR ===================== */
-/* Ouvre seulement:
-   - si pinCart activé
-   - ou si user clique Panier
-   - ou si on vient d’ajouter un article (autoOpenOnAdd)
-*/
 function openDrawer(){
   $("drawer").classList.add("open");
   $("backdrop").classList.add("open");
@@ -898,32 +985,40 @@ function closeDrawer(force=false){
   document.body.classList.remove("drawer-open");
 }
 
-/* ===================== UI BUILD ===================== */
-function buildCats(){
-  const box = $("cats");
+/* ===================== CATÉGORIES HORIZONTALES ===================== */
+function buildCatsHorizontal(){
+  const box = $("catsHorizontal");
   box.innerHTML = "";
+  
+  // Bouton "Tous"
+  const allBtn = document.createElement("button");
+  allBtn.className = "catBtnHoriz" + (state.global ? " active" : "");
+  allBtn.onclick = ()=>{
+    state.global = true;
+    state.activeCat = null;
+    state.page = 1;
+    render();
+  };
+  const allCount = CATEGORIES.reduce((sum, c)=>sum + (state.dataByCat.get(c.key)||[]).length, 0);
+  allBtn.innerHTML = `🌐 Tous <span class="catCountHoriz">${allCount}</span>`;
+  box.appendChild(allBtn);
+  
+  // Catégories
   for(const c of CATEGORIES){
     const btn = document.createElement("button");
-    btn.className = "catBtn" + (state.activeCat===c.key ? " active" : "");
+    btn.className = "catBtnHoriz" + (!state.global && state.activeCat===c.key ? " active" : "");
     btn.onclick = ()=>{
       state.activeCat = c.key;
       state.global = false;
       state.page = 1;
-      buildCats();
       render();
     };
-    const left = document.createElement("div");
-    left.className = "catLeft";
-    left.innerHTML = `<div class="catTitle">${c.label}</div><div class="catMeta">${c.file}</div>`;
-    const count = document.createElement("div");
-    count.className = "catCount";
     const items = state.dataByCat.get(c.key) || [];
-    count.textContent = items.length + " article(s)";
-    btn.appendChild(left);
-    btn.appendChild(count);
+    btn.innerHTML = `${c.label} <span class="catCountHoriz">${items.length}</span>`;
     box.appendChild(btn);
   }
 }
+
 function getActiveCat(){ return CATEGORIES.find(x=>x.key===state.activeCat) || CATEGORIES[0]; }
 
 function getVisibleItems(){
@@ -954,7 +1049,6 @@ function getVisibleItems(){
 
 /* ===================== STOCK ===================== */
 function isInStock(code){
-  // par défaut: en stock (true)
   if(state.stockByCode[code] === undefined) return true;
   return !!state.stockByCode[code];
 }
@@ -967,8 +1061,8 @@ function toggleStock(code){
 /* ===================== RENDER ===================== */
 function render(){
   const active = getActiveCat();
-  $("activeLabel").textContent = state.global ? "Recherche globale" : active.label;
-  $("activeMeta").textContent = state.global ? "Toutes catégories — résultats filtrés" : `${active.file}`;
+  $("activeLabel").textContent = state.global ? "Tous les produits" : active.label;
+  $("activeMeta").textContent = state.global ? "Toutes catégories" : `${active.file}`;
 
   const items = getVisibleItems();
   const totalPages = Math.max(1, Math.ceil(items.length / state.perPage));
@@ -996,8 +1090,6 @@ function render(){
       card.className = "card";
 
       const stockOk = isInStock(it.code);
-
-      // Image: on affiche un placeholder si pas de photo
       const imgSrc = `images/products/${it.code}.jpg`;
 
       card.innerHTML = `
@@ -1035,10 +1127,8 @@ function render(){
         </button>
       `;
 
-      // si image n'existe pas, montrer placeholder
       const ph = card.querySelector(".noPhoto");
-      ph.style.display = "none"; // sera mis à grid si erreur
-      // Ajuste: si l'image a été cachée via cache, afficher placeholder
+      ph.style.display = "none";
       setTimeout(()=>{
         const img = card.querySelector(".product-img");
         if(img && (img.style.display==="none" || !img.complete || img.naturalWidth===0)){
@@ -1048,7 +1138,6 @@ function render(){
 
       card.querySelector('[data-act="minus"]').onclick = ()=>{
         state.qtyPick[pid] = Math.max(0, (state.qtyPick[pid]||0)-1);
-        // mise à jour locale sans rerender complet: simple
         render();
       };
       card.querySelector('[data-act="plus"]').onclick = ()=>{
@@ -1070,7 +1159,6 @@ function render(){
       };
 
       card.querySelector(".stockBtn").onclick = ()=>{
-        // Toggle stock simple (si tu veux: tu peux enlever le toggle plus tard)
         toggleStock(it.code);
       };
 
@@ -1078,6 +1166,7 @@ function render(){
     }
   }
 
+  buildCatsHorizontal();
   refreshCartUI({ openAfterAdd: false });
 }
 
@@ -1184,7 +1273,6 @@ function refreshCartUI({ openAfterAdd }){
     rule.textContent = `ℹ️ Frais livraison: ${SHIPPING_FEE} dt (gratuite à partir de ${FREE_SHIPPING} dt).`;
   }
 
-  // Règle d’ouverture: seulement si pinCart, clic, ou ajout
   if(state.pinCart) openDrawer();
   else if(openAfterAdd && state.autoOpenOnAdd) openDrawer();
 }
@@ -1219,7 +1307,6 @@ function fillClientUI(){
   lockClientUI(true);
 }
 
-/* Génère un code client à copier/coller sur un autre appareil */
 function buildClientCodeFromClient(client){
   const payload = {
     v:1,
@@ -1232,7 +1319,6 @@ function buildClientCodeFromClient(client){
   return encodeB64(JSON.stringify(payload));
 }
 
-/* Import code client */
 function importClientCode(code){
   try{
     const txt = decodeB64(code.trim());
@@ -1279,7 +1365,6 @@ function renderHistory(){
 
 /* ===================== LOAD DATA ===================== */
 async function loadAll(){
-  $("status").textContent = "Chargement…";
   let totalProducts = 0;
 
   for(const c of CATEGORIES){
@@ -1295,14 +1380,20 @@ async function loadAll(){
     }
   }
 
-  $("status").textContent = `✅ ${totalProducts} articles`;
-  buildCats();
+  buildCatsHorizontal();
   render();
+}
+
+/* ===================== VIDER PANIER APRÈS ENVOI ===================== */
+function clearCartAfterSend(){
+  state.cart = {};
+  saveCart();
+  refreshCartUI({ openAfterAdd: false });
 }
 
 /* ===================== EVENTS ===================== */
 $("clearBtn").onclick = ()=>{ $("q").value=""; state.q=""; state.page=1; render(); };
-$("globalBtn").onclick = ()=>{ state.global=true; state.page=1; render(); };
+$("globalBtn").onclick = ()=>{ state.global=true; state.activeCat=null; state.page=1; render(); };
 $("q").addEventListener("input", ()=>{ state.q=$("q").value; state.page=1; render(); });
 
 $("prevBtn").onclick = ()=>{ state.page=Math.max(1,state.page-1); render(); };
@@ -1317,6 +1408,13 @@ $("nextBtn").onclick = ()=>{
 $("cartTopBtn").onclick = ()=> openDrawer();
 $("closeDrawer").onclick = ()=> closeDrawer(false);
 $("backdrop").onclick = ()=> closeDrawer(false);
+
+/* QR Code */
+$("qrBtn").onclick = ()=> $("qrModal").classList.add("open");
+$("closeQrBtn").onclick = ()=> $("qrModal").classList.remove("open");
+$("qrModal").onclick = (e)=> {
+  if(e.target.classList.contains("qrModal")) $("qrModal").classList.remove("open");
+};
 
 /* Pin cart */
 $("pinCart").addEventListener("change", ()=>{
@@ -1345,7 +1443,7 @@ $("gpsBtn").onclick = ()=>{
   );
 };
 
-/* Save client: une seule fois (verrouillage) */
+/* Save client */
 $("saveClientBtn").onclick = ()=>{
   const name = $("cName").value.trim();
   const tel  = $("cTel").value.trim();
@@ -1371,7 +1469,7 @@ $("saveClientBtn").onclick = ()=>{
   alert("✅ Fiche client enregistrée !");
 };
 
-/* Edit client (déverrouiller) */
+/* Edit client */
 $("editClientBtn").onclick = ()=>{
   if(!state.client){
     alert("Aucun client enregistré.");
@@ -1388,14 +1486,13 @@ $("genCodeBtn").onclick = ()=>{
     alert("Enregistre d'abord la fiche client.");
     return;
   }
-  // régénère au cas où
   const code = buildClientCodeFromClient(state.client);
   state.client.clientCode = code;
   saveClient();
   $("clientCode").value = code;
   $("clientCode").select();
   document.execCommand("copy");
-  alert("✅ Code client copié ! (Colle-le sur l’autre appareil via Importer)");
+  alert("✅ Code client copié ! (Colle-le sur l'autre appareil via Importer)");
 };
 
 /* Importer code client */
@@ -1414,7 +1511,7 @@ $("clearCartBtn").onclick = ()=>{
   }
 };
 
-/* Envoyer */
+/* Envoyer (AVEC VIDAGE AUTOMATIQUE DU PANIER) */
 $("sendBtn").onclick = ()=>{
   if(cartCount() === 0){ alert("Panier vide !"); return; }
   if(!state.client){ alert("Veuillez d'abord enregistrer la fiche client."); return; }
@@ -1454,6 +1551,9 @@ $("sendBtn").onclick = ()=>{
   $("orderText").value = summary;
   $("modalBack").classList.add("open");
   renderHistory();
+  
+  // VIDER LE PANIER APRÈS ENVOI
+  setTimeout(clearCartAfterSend, 100);
 };
 
 $("closeModal").onclick = ()=> $("modalBack").classList.remove("open");
