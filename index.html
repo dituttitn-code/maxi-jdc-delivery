@@ -422,13 +422,13 @@
     }
     .card:hover{ border-color: var(--accent2); transform: translateY(-2px); }
 
-    /* PHOTO AJUSTÉE - TAILLE RÉDUITE POUR MIEUX S'ADAPTER */
+    /* PHOTO AJUSTÉE - MEILLEUR AFFICHAGE */
     .imgWrap{
       width:100%;
-      height:120px; /* Réduit de 140px à 120px */
+      height:120px;
       border-radius:8px;
       border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
+      background: #f5f5f5; /* Fond plus clair pour mieux voir les produits */
       display:grid;
       place-items:center;
       overflow:hidden;
@@ -437,20 +437,22 @@
     .product-img{
       width:100%;
       height:100%;
-      object-fit:contain;
+      object-fit:cover; /* CHANGÉ: de contain à cover pour remplir l'espace */
       display:block;
-      background:#f8f8f8;
-      padding: 2px;
+      transition: transform 0.3s ease;
+    }
+    .product-img:hover {
+      transform: scale(1.05); /* Effet de zoom au survol */
     }
     .noPhoto{
       position:absolute;
       inset:0;
       display:grid;
       place-items:center;
-      color:rgba(255,255,255,.55);
+      color:rgba(0,0,0,0.55); /* Texte plus foncé sur fond clair */
       font-weight:800;
       font-size:9px;
-      background: linear-gradient(135deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      background: linear-gradient(135deg, rgba(255,255,255,.7), rgba(255,255,255,.5));
       text-align:center;
       padding:5px;
     }
