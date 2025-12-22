@@ -400,7 +400,7 @@
       text-align: center;
     }
 
-    /* ==== MODIFICATIONS IMPORTANTES ==== */
+    /* ==== MODIFICATIONS POUR LES PHOTOS ==== */
     /* PRODUITS - 2 COLONNES SUR MOBILE, 3 SUR TABLETTE, 4 SUR DESKTOP */
     #products{
       display:grid;
@@ -412,38 +412,43 @@
       border-radius:8px;
       border:1px solid var(--line);
       background: var(--card2);
-      padding:6px; /* Réduit de 8px */
+      padding:6px;
       box-shadow:0 3px 10px rgba(0,0,0,.25);
       transition: all 0.2s ease;
       display:flex;
       flex-direction:column;
-      gap:5px; /* Réduit de 6px */
+      gap:5px;
       height: 100%;
     }
     .card:hover{ border-color: var(--accent2); transform: translateY(-2px); }
 
-    /* PHOTO PLUS PETITE POUR OPTIMISER L'ESPACE */
+    /* PHOTO OPTIMISÉE - REMPLIT TOUT L'ESPACE SANS BLANC */
     .imgWrap{
       width:100%;
-      height:70px; /* Réduit de 90px à 70px */
+      height:70px; 
       border-radius:6px;
       border:1px solid rgba(255,255,255,.12);
       background: #ffffff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
       overflow:hidden;
       position:relative;
-      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+
     .product-img{
-      max-width:95%;
-      max-height:95%;
-      width:auto;
-      height:auto;
-      object-fit:contain;
+      width:100%;
+      height:100%;
+      object-fit:cover; /* Remplit tout l'espace, élimine le blanc */
       display:block;
+      background: white;
+      transition: transform 0.3s ease;
     }
+
+    .product-img:hover{
+      transform: scale(1.05);
+    }
+
     .noPhoto{
       position:absolute;
       inset:0;
@@ -452,10 +457,11 @@
       justify-content:center;
       color:#666666;
       font-weight:800;
-      font-size:7px; /* Réduit */
+      font-size:7px;
       background: #f8f8f8;
       text-align:center;
       padding:2px;
+      z-index: 1;
     }
 
     /* CONTENU DE LA CARTE OPTIMISÉ */
@@ -488,7 +494,7 @@
     }
     .name{
       font-weight:900;
-      font-size:10px; /* Réduit de 11px */
+      font-size:10px;
       line-height:1.2;
       min-width:0;
       display:-webkit-box;
@@ -500,17 +506,17 @@
     .price{
       flex:0 0 auto;
       font-weight:900;
-      padding:2px 4px; /* Réduit */
+      padding:2px 4px;
       border-radius:999px;
       border:1px solid var(--accent);
       background: rgba(0, 255, 136, 0.1);
       color:var(--accent);
-      font-size:8px; /* Réduit de 9px */
+      font-size:8px;
       white-space:nowrap;
     }
     .meta2{
       color:var(--muted);
-      font-size:7px; /* Réduit de 8px */
+      font-size:7px;
       display:flex;
       flex-direction:column;
       gap:1px;
@@ -518,12 +524,12 @@
 
     /* ACTIONS: DISPOSITION COMPACTE */
     .actions{
-      margin-top:2px; /* Réduit */
+      margin-top:2px;
       display:flex;
       align-items:center;
-      gap:3px; /* Réduit de 4px */
+      gap:3px;
       width:100%;
-      min-height: 22px; /* Réduit de 26px */
+      min-height: 22px;
     }
     
     /* STEPPER PLUS PETIT */
@@ -532,12 +538,12 @@
       align-items:center;
       justify-content:space-between;
       gap:2px;
-      padding:1px 2px; /* Réduit */
+      padding:1px 2px;
       border-radius:999px;
       border:1px solid var(--line);
       background: rgba(0,0,0,.2);
       min-width: 0;
-      width: 60px; /* Réduit de 65px */
+      width: 60px;
       flex-shrink: 0;
     }
     .stepper button{
@@ -567,23 +573,23 @@
 
     /* BOUTON STOCK PLUS PETIT */
     .stockBtn{
-      height:20px; /* Réduit de 22px */
+      height:20px;
       border-radius:4px;
       border:1px solid var(--line);
       background: rgba(255,255,255,.03);
       color: var(--text);
       cursor:pointer;
       font-weight:700;
-      font-size:6px; /* Réduit de 7px */
+      font-size:6px;
       display:flex;
       align-items:center;
       justify-content:center;
       gap:2px;
       transition: all .15s ease;
-      padding: 0 4px; /* Réduit */
+      padding: 0 4px;
       flex: 1;
       min-width: 0;
-      max-width: 65px; /* Réduit de 75px */
+      max-width: 65px;
     }
     .stockBtn:hover{ border-color: var(--accent2); background: rgba(255,255,255,.05); }
     .stockTag{
@@ -594,7 +600,7 @@
       background: rgba(0,0,0,.15);
       color: rgba(255,255,255,.9);
       font-weight:700;
-      min-width: 30px; /* Réduit de 32px */
+      min-width: 30px;
       text-align: center;
     }
     .stockTag.ok{ border-color: rgba(0,255,136,.3); color: var(--accent); background: rgba(0,255,136,.08); }
@@ -602,19 +608,19 @@
 
     /* BOUTON AJOUTER PLUS PETIT */
     .addBtn{
-      height:20px; /* Réduit de 22px */
-      padding:0 6px; /* Réduit de 7px */
+      height:20px;
+      padding:0 6px;
       border-radius:999px;
       border:1px solid var(--accent);
       background: rgba(0, 255, 136, 0.1);
       color:var(--accent);
       cursor:pointer;
       font-weight:900;
-      font-size:7px; /* Réduit de 8px */
+      font-size:7px;
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:2px; /* Réduit */
+      gap:2px;
       white-space:nowrap;
       transition: all 0.15s ease;
       min-width: 0;
@@ -1371,7 +1377,7 @@ const state = {
   global:false,
   q:"",
   page:1,
-  perPage:24, // Augmenté car plus de produits visibles avec 2 colonnes
+  perPage:24,
   qtyPick:{},
   cart:{},
   client:null,
@@ -1611,6 +1617,37 @@ function renderPagination(totalItems) {
   }
 }
 
+/* ===================== FONCTION POUR AJUSTER LES IMAGES ===================== */
+function adjustImage(img) {
+  // Marquer l'image comme chargée
+  img.classList.add('loaded');
+  
+  // Supprimer le message "Aucune photo" si présent
+  const noPhoto = img.parentElement.querySelector('.noPhoto');
+  if (noPhoto) {
+    noPhoto.remove();
+  }
+  
+  // Ajuster dynamiquement l'image pour qu'elle remplisse bien l'espace
+  if (img.complete && img.naturalWidth && img.naturalHeight) {
+    const ratio = img.naturalWidth / img.naturalHeight;
+    const container = img.parentElement;
+    
+    // Si l'image est très portrait (haute et étroite)
+    if (ratio < 0.7) {
+      img.style.objectPosition = 'center 25%'; // Ajuster la position verticale
+    }
+    // Si l'image est très paysage (large et basse)
+    else if (ratio > 1.5) {
+      img.style.objectPosition = 'center 40%'; // Ajuster la position verticale
+    }
+    // Pour les images carrées ou presque
+    else {
+      img.style.objectPosition = 'center';
+    }
+  }
+}
+
 /* ===================== RENDER ===================== */
 function render(){
   const active = getActiveCat();
@@ -1651,7 +1688,7 @@ function render(){
       card.innerHTML = `
         <div class="imgWrap">
           <img src="${imgSrc}" class="product-img" alt="${it.name}"
-               onload="this.parentElement.querySelector('.noPhoto')?.remove()"
+               onload="adjustImage(this)"
                onerror="this.style.display='none'; this.parentElement.querySelector('.noPhoto').style.display='flex';" />
           <div class="noPhoto" style="display:none;">Aucune photo</div>
         </div>
@@ -1687,8 +1724,11 @@ function render(){
         </div>
       `;
 
+      // Masquer le message "Aucune photo" initialement
       const ph = card.querySelector(".noPhoto");
       ph.style.display = "none";
+      
+      // Vérifier si l'image est déjà chargée
       setTimeout(()=>{
         const img = card.querySelector(".product-img");
         if(img && (img.style.display==="none" || !img.complete || img.naturalWidth===0)){
