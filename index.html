@@ -104,6 +104,7 @@
       display:flex;
       gap:3px;
       align-items:center;
+      min-width: 0;
     }
     .search input{
       flex:1;
@@ -116,6 +117,7 @@
       outline:none;
       font-size:12px;
       min-width: 0;
+      width: 100%;
     }
     .search input:focus{ border-color: var(--accent); background: rgba(255,255,255,.12); }
     .btn{
@@ -138,6 +140,25 @@
     .btn:hover{ background: rgba(255,255,255,.15); border-color: var(--accent); }
     .btn.green{ background: rgba(0, 255, 136, 0.15); border-color: var(--accent); color: var(--accent); }
     .btn.green:hover{ background: rgba(0, 255, 136, 0.25); }
+
+    /* Bouton panier dans la section recherche */
+    #cartTopBtnCompact {
+      min-width: 50px;
+      height: 32px;
+      padding: 0 6px;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+    
+    #cartTopCountCompact {
+      font-weight: 900;
+      color: var(--accent);
+      font-size: 9px;
+      margin-left: 1px;
+    }
 
     .pills{
       margin-top:6px;
@@ -198,8 +219,8 @@
       flex-shrink: 0;
     }
 
-    /* NOTE BAR SIMPLIFIÉE */
-    .noteBar{
+    /* NOTE BAR SIMPLIFIÉE - SUPPRIMÉE */
+    /* .noteBar{
       margin-top:6px;
       padding:6px;
       border-radius:var(--radius);
@@ -221,7 +242,7 @@
     .noteBar .sub{
       color:var(--muted);
       font-size:8px;
-    }
+    } */
 
     /* CATÉGORIES HORIZONTALES */
     .catsHorizontal {
@@ -429,7 +450,7 @@
     /* PHOTO AUGMENTÉE */
     .imgWrap{
       width:100%;
-      height:150px; /* Augmenté pour mieux voir les photos */
+      height:140px; /* Légèrement réduit pour uniformité */
       border-radius:8px;
       border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.06);
@@ -441,9 +462,10 @@
     .product-img{
       width:100%;
       height:100%;
-      object-fit:contain;
+      object-fit:contain; /* Garde contain pour voir tout le produit */
       display:block;
-      background:#ffffff;
+      background:#f8f8f8; /* Fond plus clair pour mieux voir les produits */
+      padding: 2px;
     }
     .noPhoto{
       position:absolute;
@@ -1027,40 +1049,7 @@
 
     /* BOUTONS FLOATING POUR MOBILE */
     .mobile-fab {
-      position: fixed;
-      bottom: 12px;
-      right: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      z-index: 100;
-    }
-    
-    .fab-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--card);
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
-    }
-    
-    .fab-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
-    }
-    
-    .fab-btn.secondary {
-      background: var(--card2);
-      border-color: var(--accent2);
-      color: var(--accent2);
+      display: none; /* Cacher sur tous les appareils */
     }
 
     /* RESPONSIVE */
@@ -1091,7 +1080,6 @@
       #products{grid-template-columns:repeat(3, 1fr);}
       .drawer{width: var(--drawerW);}
       .drawer.open{transform: translateX(0);}
-      .mobile-fab{display: none;}
     }
 
     /* Pour iOS: éviter le zoom sur les inputs */
@@ -1119,6 +1107,10 @@
           <input id="q" type="text" placeholder="🔍 Rechercher..." />
           <button class="btn" id="clearBtn">Effacer</button>
           <button class="btn green" id="globalBtn">Tous</button>
+          <!-- Bouton panier ajouté ici -->
+          <button class="btn" id="cartTopBtnCompact" title="Panier">
+            🛒 <span id="cartTopCountCompact">0</span>
+          </button>
         </div>
       </div>
 
@@ -1139,10 +1131,10 @@
       <!-- CATÉGORIES HORIZONTALES -->
       <div class="catsHorizontal" id="catsHorizontal"></div>
 
-      <!-- NOTE BAR SIMPLIFIÉE - Mise à jour des frais -->
-      <div class="noteBar">
+      <!-- NOTE BAR SIMPLIFIÉE - SUPPRIMÉE -->
+      <!-- <div class="noteBar">
         <span class="sub">Livraison gratuite à partir de <b>30 dt</b> • Minimum commande: <b>15 dt</b> • Frais de livraison: <b>3 dt</b></span>
-      </div>
+      </div> -->
     </div>
 
     <div class="grid">
@@ -1175,13 +1167,13 @@
             </div>
           </div>
 
-          <div class="hintAdmin">Astuce : le panier s'ouvre automatiquement après "Ajouter".</div>
+          <div class="hintAdmin">Astuce : cliquez sur le panier pour l'ouvrir.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- BOUTONS FLOATING POUR MOBILE -->
+  <!-- BOUTONS FLOATING POUR MOBILE - CACHÉS -->
   <div class="mobile-fab">
     <button class="fab-btn secondary" id="fabSearch" title="Recherche">
       🔍
@@ -1393,7 +1385,7 @@ const state = {
   client:null,
   pinCart:false,
   stockByCode:{},
-  autoOpenOnAdd: true,
+  autoOpenOnAdd: false, // Désactivé - panier s'ouvre uniquement au clic
 };
 
 /* ===================== STORAGE ===================== */
@@ -1726,7 +1718,7 @@ function render(){
 
         state.qtyPick[pid] = 0;
         saveCart();
-        refreshCartUI({ openAfterAdd: true });
+        refreshCartUI({ openAfterAdd: false }); // Ne pas ouvrir automatiquement
         pulseCart();
       };
 
@@ -1752,8 +1744,10 @@ function pulseCart(){
 }
 
 function refreshCartUI({ openAfterAdd }){
-  $("cartTopCount").textContent = cartCount();
-  $("cartMiniInfo").textContent = cartCount() + " article(s)";
+  const cartCountValue = cartCount();
+  $("cartTopCount").textContent = cartCountValue;
+  $("cartTopCountCompact").textContent = cartCountValue;
+  $("cartMiniInfo").textContent = cartCountValue + " article(s)";
 
   const list = $("cartList");
   list.innerHTML = "";
@@ -1867,7 +1861,7 @@ function refreshCartUI({ openAfterAdd }){
   }
 
   if(state.pinCart) openDrawer();
-  else if(openAfterAdd && state.autoOpenOnAdd) openDrawer();
+  // Ne pas ouvrir automatiquement après ajout
 }
 
 /* ===================== CLIENT ===================== */
@@ -2041,11 +2035,7 @@ $("nextBottomBtn").onclick = ()=>{
 
 /* Panier: ouverture manuelle */
 $("cartTopBtn").onclick = ()=> openDrawer();
-$("fabCart").onclick = ()=> openDrawer();
-$("fabSearch").onclick = ()=> {
-  $("q").focus();
-  $("q").scrollIntoView({ behavior: 'smooth', block: 'center' });
-};
+$("cartTopBtnCompact").onclick = ()=> openDrawer();
 $("closeDrawer").onclick = ()=> closeDrawer(false);
 $("backdrop").onclick = ()=> closeDrawer(false);
 
