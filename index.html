@@ -205,8 +205,6 @@
     }
     .pill strong{font-weight:800; color:var(--accent);}
     
-    /* SUPPRIMÉ: .cartPill - car maintenant intégré dans search-row */
-    
     .qrPill{
       margin-left:auto;
       border:1px solid var(--accent2);
@@ -402,10 +400,11 @@
       text-align: center;
     }
 
-    /* PRODUITS - 1 COLONNE SUR MOBILE */
+    /* ==== MODIFICATIONS IMPORTANTES ==== */
+    /* PRODUITS - 2 COLONNES SUR MOBILE, 3 SUR TABLETTE, 4 SUR DESKTOP */
     #products{
       display:grid;
-      grid-template-columns:1fr;
+      grid-template-columns:repeat(2, 1fr); /* 2 colonnes sur mobile */
       gap:8px;
     }
 
@@ -413,20 +412,21 @@
       border-radius:8px;
       border:1px solid var(--line);
       background: var(--card2);
-      padding:8px;
+      padding:6px; /* Réduit de 8px */
       box-shadow:0 3px 10px rgba(0,0,0,.25);
       transition: all 0.2s ease;
       display:flex;
       flex-direction:column;
-      gap:6px;
+      gap:5px; /* Réduit de 6px */
+      height: 100%;
     }
     .card:hover{ border-color: var(--accent2); transform: translateY(-2px); }
 
-    /* PHOTO DIVISÉE EN 2 PARTIES - ESPACE OPTIMISÉ */
+    /* PHOTO PLUS PETITE POUR OPTIMISER L'ESPACE */
     .imgWrap{
       width:100%;
-      height:90px; /* Réduit considérablement */
-      border-radius:8px;
+      height:70px; /* Réduit de 90px à 70px */
+      border-radius:6px;
       border:1px solid rgba(255,255,255,.12);
       background: #ffffff;
       display:flex;
@@ -434,11 +434,11 @@
       justify-content:center;
       overflow:hidden;
       position:relative;
-      padding: 3px; /* Padding réduit */
+      padding: 2px;
     }
     .product-img{
-      max-width:90%;
-      max-height:90%;
+      max-width:95%;
+      max-height:95%;
       width:auto;
       height:auto;
       object-fit:contain;
@@ -452,25 +452,27 @@
       justify-content:center;
       color:#666666;
       font-weight:800;
-      font-size:8px; /* Réduit */
+      font-size:7px; /* Réduit */
       background: #f8f8f8;
       text-align:center;
-      padding:3px; /* Réduit */
+      padding:2px;
     }
 
-    /* DIVISION DU CONTENU DE LA CARTE EN 2 PARTIES */
+    /* CONTENU DE LA CARTE OPTIMISÉ */
     .card-content {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
       flex: 1;
+      min-height: 0;
     }
     
     .card-top {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
+      min-height: 0;
     }
     
     .card-bottom {
@@ -481,13 +483,13 @@
       display:flex;
       align-items:flex-start;
       justify-content:space-between;
-      gap:4px;
+      gap:3px;
       min-width:0;
     }
     .name{
       font-weight:900;
-      font-size:11px;
-      line-height:1.3;
+      font-size:10px; /* Réduit de 11px */
+      line-height:1.2;
       min-width:0;
       display:-webkit-box;
       -webkit-line-clamp:2;
@@ -498,30 +500,30 @@
     .price{
       flex:0 0 auto;
       font-weight:900;
-      padding:3px 5px;
+      padding:2px 4px; /* Réduit */
       border-radius:999px;
       border:1px solid var(--accent);
       background: rgba(0, 255, 136, 0.1);
       color:var(--accent);
-      font-size:9px;
+      font-size:8px; /* Réduit de 9px */
       white-space:nowrap;
     }
     .meta2{
       color:var(--muted);
-      font-size:8px;
+      font-size:7px; /* Réduit de 8px */
       display:flex;
       flex-direction:column;
       gap:1px;
     }
 
-    /* ACTIONS: DISPOSITION PLUS COMPACTE */
+    /* ACTIONS: DISPOSITION COMPACTE */
     .actions{
-      margin-top:4px;
+      margin-top:2px; /* Réduit */
       display:flex;
       align-items:center;
-      gap:4px;
+      gap:3px; /* Réduit de 4px */
       width:100%;
-      min-height: 26px;
+      min-height: 22px; /* Réduit de 26px */
     }
     
     /* STEPPER PLUS PETIT */
@@ -530,24 +532,24 @@
       align-items:center;
       justify-content:space-between;
       gap:2px;
-      padding:2px 3px;
+      padding:1px 2px; /* Réduit */
       border-radius:999px;
       border:1px solid var(--line);
       background: rgba(0,0,0,.2);
       min-width: 0;
-      width: 65px; /* Réduit */
+      width: 60px; /* Réduit de 65px */
       flex-shrink: 0;
     }
     .stepper button{
-      width:16px; /* Réduit */
-      height:16px; /* Réduit */
+      width:16px;
+      height:16px;
       border-radius:999px;
       border:1px solid var(--line);
       background: rgba(255,255,255,.1);
       color:var(--text);
       cursor:pointer;
       font-weight:900;
-      font-size:8px; /* Réduit */
+      font-size:8px;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -560,39 +562,39 @@
       text-align:center; 
       font-weight:900; 
       color:var(--text); 
-      font-size:9px; /* Réduit */
+      font-size:9px;
     }
 
     /* BOUTON STOCK PLUS PETIT */
     .stockBtn{
-      height:22px; /* Réduit */
+      height:20px; /* Réduit de 22px */
       border-radius:4px;
       border:1px solid var(--line);
       background: rgba(255,255,255,.03);
       color: var(--text);
       cursor:pointer;
       font-weight:700;
-      font-size:7px; /* Réduit */
+      font-size:6px; /* Réduit de 7px */
       display:flex;
       align-items:center;
       justify-content:center;
       gap:2px;
       transition: all .15s ease;
-      padding: 0 5px; /* Réduit */
+      padding: 0 4px; /* Réduit */
       flex: 1;
       min-width: 0;
-      max-width: 75px; /* Réduit */
+      max-width: 65px; /* Réduit de 75px */
     }
     .stockBtn:hover{ border-color: var(--accent2); background: rgba(255,255,255,.05); }
     .stockTag{
       padding:1px 3px;
       border-radius:999px;
-      font-size:6px; /* Réduit */
+      font-size:6px;
       border:1px solid rgba(255,255,255,.1);
       background: rgba(0,0,0,.15);
       color: rgba(255,255,255,.9);
       font-weight:700;
-      min-width: 32px; /* Réduit */
+      min-width: 30px; /* Réduit de 32px */
       text-align: center;
     }
     .stockTag.ok{ border-color: rgba(0,255,136,.3); color: var(--accent); background: rgba(0,255,136,.08); }
@@ -600,19 +602,19 @@
 
     /* BOUTON AJOUTER PLUS PETIT */
     .addBtn{
-      height:22px; /* Réduit */
-      padding:0 7px; /* Réduit */
+      height:20px; /* Réduit de 22px */
+      padding:0 6px; /* Réduit de 7px */
       border-radius:999px;
       border:1px solid var(--accent);
       background: rgba(0, 255, 136, 0.1);
       color:var(--accent);
       cursor:pointer;
       font-weight:900;
-      font-size:8px; /* Réduit */
+      font-size:7px; /* Réduit de 8px */
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:3px;
+      gap:2px; /* Réduit */
       white-space:nowrap;
       transition: all 0.15s ease;
       min-width: 0;
@@ -1045,19 +1047,14 @@
       line-height:1.5;
     }
 
-    /* BOUTONS FLOATING POUR MOBILE */
-    .mobile-fab {
-      display: none;
-    }
-
-    /* RESPONSIVE - Images légèrement plus grandes sur desktop */
+    /* ==== RESPONSIVE - Plus de colonnes sur écrans plus grands ==== */
     @media (min-width: 480px){
       .wrap{padding:8px 8px 70px;}
       .top{padding: 10px;}
       .topRow{flex-direction: row; align-items: center;}
       .search-row{flex: 1;}
-      #products{grid-template-columns:repeat(2, 1fr);}
-      .imgWrap{height: 100px;} /* Légèrement plus grand sur tablette */
+      #products{grid-template-columns:repeat(3, 1fr);} /* 3 colonnes sur tablette */
+      .imgWrap{height: 75px;} /* Légèrement plus grand */
       .row2{grid-template-columns:1fr 1fr;}
       .drawer{width: 90vw;}
       body.drawer-open .wrap{transform: translateX(-10vw);}
@@ -1079,10 +1076,18 @@
       .search input{min-width: 200px;}
       .pills{flex-wrap: nowrap;}
       .pill{font-size: 10px;}
-      #products{grid-template-columns:repeat(3, 1fr);}
-      .imgWrap{height: 110px;} /* Légèrement plus grand sur desktop */
+      #products{grid-template-columns:repeat(4, 1fr);} /* 4 colonnes sur desktop */
+      .imgWrap{height: 85px;}
+      .card{padding:8px;} /* Un peu plus d'espace sur desktop */
+      .name{font-size:11px;} /* Texte légèrement plus grand */
+      .price{font-size:9px;}
       .drawer{width: var(--drawerW);}
       .drawer.open{transform: translateX(0);}
+    }
+
+    @media (min-width: 1024px){
+      #products{grid-template-columns:repeat(5, 1fr);} /* 5 colonnes sur grand écran */
+      .imgWrap{height: 90px;}
     }
 
     /* Pour iOS: éviter le zoom sur les inputs */
@@ -1128,7 +1133,6 @@
         <div class="pill qrPill" id="qrBtn" title="Scanner le QR Code">
           📱 QR Code
         </div>
-        <!-- SUPPRIMÉ: Le panier redondant dans les pills -->
       </div>
 
       <!-- CATÉGORIES HORIZONTALES -->
@@ -1367,7 +1371,7 @@ const state = {
   global:false,
   q:"",
   page:1,
-  perPage:12,
+  perPage:24, // Augmenté car plus de produits visibles avec 2 colonnes
   qtyPick:{},
   cart:{},
   client:null,
@@ -1659,7 +1663,7 @@ function render(){
               <div class="price">${fmtDT(it.price)}</div>
             </div>
             <div class="meta2">
-              <div>Code: ${it.code} • ${it.catLabel}</div>
+              <div>Code: ${it.code}</div>
             </div>
           </div>
           
@@ -1672,12 +1676,11 @@ function render(){
               </div>
 
               <button class="stockBtn" data-stock="1">
-                📦 Stock:
-                <span class="stockTag ${stockOk ? "ok" : "no"}">${stockOk ? "En stock" : "Rupture"}</span>
+                📦 <span class="stockTag ${stockOk ? "ok" : "no"}">${stockOk ? "En stock" : "Rupture"}</span>
               </button>
 
               <button class="addBtn" ${stockOk ? "" : "disabled"} title="${stockOk ? "Ajouter au panier" : "Rupture de stock"}">
-                🧺 Ajouter
+                🧺
               </button>
             </div>
           </div>
