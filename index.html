@@ -419,8 +419,29 @@
       flex-direction:column;
       gap:5px; /* Réduit de 6px */
       height: 100%;
+      cursor: pointer; /* Indique que c'est cliquable */
+      position: relative;
     }
     .card:hover{ border-color: var(--accent2); transform: translateY(-2px); }
+
+    /* Indicateur visuel que la carte est cliquable */
+    .card::after {
+      content: '👁️';
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-size: 8px;
+      padding: 2px 4px;
+      border-radius: 4px;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+      z-index: 2;
+    }
+    .card:hover::after {
+      opacity: 1;
+    }
 
     /* PHOTO PLUS PETITE POUR OPTIMISER L'ESPACE */
     .imgWrap{
@@ -934,7 +955,7 @@
     th{ color:var(--muted); font-weight:900; font-size:7px; }
     td strong{ font-weight:900; color:var(--accent); }
 
-    /* Modal */
+    /* Modal Commande */
     .modalBack{
       position:fixed;
       inset:0;
@@ -1012,39 +1033,236 @@
       display:none;
       align-items:center;
       justify-content:center;
-      z-index:30;
+      z-index:40;
       padding:10px;
+      backdrop-filter: blur(10px);
     }
     .qrModal.open{ display:flex; }
     .qrBox{
       background: var(--card);
       border-radius:var(--radius);
-      border:1px solid var(--accent);
-      padding:12px;
-      max-width:300px;
+      border:2px solid var(--accent);
+      padding:15px;
+      max-width:320px;
       width:90vw;
       text-align:center;
       box-shadow: var(--shadow);
     }
     .qrBox h3{
-      margin:0 0 6px;
+      margin:0 0 10px;
       color:var(--accent);
-      font-size:14px;
+      font-size:18px;
       font-weight:900;
     }
     .qrImage{
       width:100%;
-      max-width:180px;
-      border-radius:8px;
-      border:1px solid var(--accent2);
-      margin:0 auto 6px;
+      max-width:220px;
+      height:220px;
+      border-radius:10px;
+      border:2px solid var(--accent2);
+      margin:0 auto 10px;
       display:block;
+      object-fit: cover;
+      background: white;
     }
     .qrInfo{
       color:var(--muted);
-      font-size:10px;
-      margin:6px 0;
+      font-size:12px;
+      margin:10px 0;
       line-height:1.5;
+    }
+    .qrInfo b{
+      color:var(--accent);
+    }
+
+    /* MODAL ARTICLE AGRANDI */
+    .product-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: 10px;
+      backdrop-filter: blur(10px);
+    }
+
+    .product-modal.open {
+      display: flex;
+    }
+
+    .product-modal-content {
+      width: 100%;
+      max-width: 500px;
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 2px solid var(--accent);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      max-height: 90vh;
+    }
+
+    .product-modal-img {
+      width: 100%;
+      height: 250px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .product-modal-img img {
+      max-width: 90%;
+      max-height: 90%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .product-modal-img .noPhoto {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666666;
+      font-weight: 900;
+      font-size: 16px;
+      background: #f8f8f8;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .product-modal-info {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .product-modal-name {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .product-modal-price {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--accent);
+      background: rgba(0, 255, 136, 0.1);
+      border: 2px solid var(--accent);
+      border-radius: 999px;
+      padding: 10px 20px;
+      align-self: flex-start;
+    }
+
+    .product-modal-meta {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      background: rgba(255,255,255,0.05);
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+
+    .product-modal-meta div {
+      margin: 5px 0;
+    }
+
+    .product-modal-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .product-modal-close {
+      margin-left: auto;
+      height: 40px;
+      padding: 0 20px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .product-modal-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: var(--accent);
+    }
+
+    /* Pour le stepper et boutons dans le modal */
+    .product-modal-actions .stepper {
+      width: 120px;
+      padding: 5px 8px;
+    }
+
+    .product-modal-actions .stepper button {
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+    }
+
+    .product-modal-actions .stepper span {
+      font-size: 16px;
+      min-width: 20px;
+    }
+
+    .product-modal-actions .addBtn {
+      height: 40px;
+      padding: 0 20px;
+      font-size: 14px;
+      border-radius: 8px;
+    }
+
+    /* Responsive pour le modal */
+    @media (max-width: 600px) {
+      .product-modal-img {
+        height: 200px;
+      }
+      
+      .product-modal-name {
+        font-size: 16px;
+      }
+      
+      .product-modal-price {
+        font-size: 18px;
+        padding: 8px 16px;
+      }
+      
+      .product-modal-meta {
+        font-size: 12px;
+      }
+      
+      .product-modal-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .product-modal-actions .stepper {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .product-modal-close {
+        margin-left: 0;
+        width: 100%;
+      }
     }
 
     /* ==== RESPONSIVE - Plus de colonnes sur écrans plus grands ==== */
@@ -1083,6 +1301,12 @@
       .price{font-size:9px;}
       .drawer{width: var(--drawerW);}
       .drawer.open{transform: translateX(0);}
+      .product-modal-content {
+        max-width: 600px;
+      }
+      .product-modal-img {
+        height: 300px;
+      }
     }
 
     @media (min-width: 1024px){
@@ -1303,12 +1527,47 @@
   <div class="qrModal" id="qrModal">
     <div class="qrBox">
       <h3>📱 QR Code du Site</h3>
-      <img src="qr-maxi-jdc-site.jpg" alt="QR Code MAXI JDC MARKET" class="qrImage" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x300/0a1929/00ff88?text=QR+Code+Non+Trouvé'">
+      <img src="qr-maxi-jdc-site.jpg" alt="QR Code MAXI JDC MARKET" class="qrImage" 
+           onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(window.location.href)+'&format=jpg&margin=10&color=0A1929&bgcolor=00FF88';">
       <div class="qrInfo">
-        Scannez ce QR Code pour accéder au site MAXI JDC MARKET sur votre téléphone.<br>
+        <b>MAXI JDC MARKET</b><br>
+        Scannez ce QR Code pour accéder au site sur votre téléphone.<br>
         Partagez-le avec vos clients pour faciliter les commandes !
       </div>
       <button class="btn green" id="closeQrBtn">Fermer</button>
+    </div>
+  </div>
+
+  <!-- Modal Article Agrandi -->
+  <div class="product-modal" id="productModal">
+    <div class="product-modal-content">
+      <div class="product-modal-img" id="modalImg">
+        <div class="noPhoto" style="display:none;">Aucune photo disponible</div>
+      </div>
+      
+      <div class="product-modal-info">
+        <h2 class="product-modal-name" id="modalName"></h2>
+        <div class="product-modal-price" id="modalPrice"></div>
+        
+        <div class="product-modal-meta">
+          <div id="modalCode"></div>
+          <div id="modalCategory"></div>
+        </div>
+        
+        <div class="product-modal-actions">
+          <div class="stepper" id="modalStepper">
+            <button data-act="minus" title="Moins">−</button>
+            <span class="qv" id="modalQty">0</span>
+            <button data-act="plus" title="Plus">+</button>
+          </div>
+          
+          <button class="addBtn" id="modalAddBtn" style="height: 40px; padding: 0 20px; font-size: 14px;">
+            🛒 Ajouter au panier
+          </button>
+          
+          <button class="product-modal-close" id="closeProductModal">Fermer</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1371,7 +1630,7 @@ const state = {
   global:false,
   q:"",
   page:1,
-  perPage:24, // Augmenté car plus de produits visibles avec 2 colonnes
+  perPage:24,
   qtyPick:{},
   cart:{},
   client:null,
@@ -1611,6 +1870,76 @@ function renderPagination(totalItems) {
   }
 }
 
+/* ===================== VARIABLES POUR LE MODAL D'ARTICLE ===================== */
+let currentModalProduct = null;
+let currentModalPid = null;
+
+/* ===================== FONCTIONS POUR LE MODAL D'ARTICLE ===================== */
+function openProductModal(product, pid) {
+  currentModalProduct = product;
+  currentModalPid = pid;
+  
+  const modal = $("productModal");
+  const modalImg = $("modalImg");
+  const imgSrc = `images/products/${product.code}.jpg`;
+  
+  // Image
+  modalImg.innerHTML = '';
+  const img = document.createElement('img');
+  img.src = imgSrc;
+  img.alt = product.name;
+  img.onload = () => {
+    const noPhoto = modalImg.querySelector('.noPhoto');
+    if (noPhoto) noPhoto.style.display = 'none';
+  };
+  img.onerror = () => {
+    img.style.display = 'none';
+    const noPhoto = modalImg.querySelector('.noPhoto');
+    if (noPhoto) noPhoto.style.display = 'flex';
+  };
+  modalImg.appendChild(img);
+  
+  const noPhoto = document.createElement('div');
+  noPhoto.className = 'noPhoto';
+  noPhoto.textContent = 'Aucune photo disponible';
+  noPhoto.style.display = 'none';
+  modalImg.appendChild(noPhoto);
+  
+  // Vérifier l'image après un court délai
+  setTimeout(() => {
+    if (!img.complete || img.naturalWidth === 0) {
+      noPhoto.style.display = 'flex';
+      img.style.display = 'none';
+    }
+  }, 100);
+  
+  // Informations
+  $("modalName").textContent = product.name;
+  $("modalPrice").textContent = fmtDT(product.price);
+  $("modalCode").textContent = `Code: ${product.code}`;
+  $("modalCategory").textContent = `Catégorie: ${product.catLabel || 'Non spécifiée'}`;
+  
+  // Quantité
+  const currentQty = state.qtyPick[pid] || 0;
+  $("modalQty").textContent = currentQty;
+  
+  // Bouton ajouter (actif/désactivé selon stock)
+  const stockOk = isInStock(product.code);
+  const addBtn = $("modalAddBtn");
+  addBtn.disabled = !stockOk || currentQty === 0;
+  addBtn.textContent = stockOk ? '🛒 Ajouter au panier' : '📦 Rupture de stock';
+  addBtn.style.opacity = stockOk ? '1' : '0.6';
+  
+  // Ouvrir le modal
+  modal.classList.add('open');
+}
+
+function closeProductModal() {
+  $("productModal").classList.remove('open');
+  currentModalProduct = null;
+  currentModalPid = null;
+}
+
 /* ===================== RENDER ===================== */
 function render(){
   const active = getActiveCat();
@@ -1696,16 +2025,31 @@ function render(){
         }
       }, 0);
 
-      card.querySelector('[data-act="minus"]').onclick = ()=>{
+      // Gestionnaire pour clic sur la carte (ouvrir modal d'agrandissement)
+      card.addEventListener('click', (e) => {
+        // Empêcher l'ouverture si on clique sur un bouton ou le stepper
+        if (e.target.closest('button') || e.target.closest('.stepper') || e.target.closest('.addBtn') || e.target.closest('.stockBtn')) {
+          return;
+        }
+        
+        // Ouvrir le modal d'agrandissement
+        openProductModal(it, pid);
+      });
+
+      // Gestionnaires pour les boutons dans la carte
+      card.querySelector('[data-act="minus"]').onclick = (e)=>{
+        e.stopPropagation();
         state.qtyPick[pid] = Math.max(0, (state.qtyPick[pid]||0)-1);
         render();
       };
-      card.querySelector('[data-act="plus"]').onclick = ()=>{
+      card.querySelector('[data-act="plus"]').onclick = (e)=>{
+        e.stopPropagation();
         state.qtyPick[pid] = (state.qtyPick[pid]||0)+1;
         render();
       };
 
-      card.querySelector(".addBtn").onclick = ()=>{
+      card.querySelector(".addBtn").onclick = (e)=>{
+        e.stopPropagation();
         const q = state.qtyPick[pid]||0;
         if(q<=0) return;
 
@@ -1716,9 +2060,11 @@ function render(){
         saveCart();
         refreshCartUI({ openAfterAdd: false });
         pulseCart();
+        render();
       };
 
-      card.querySelector(".stockBtn").onclick = ()=>{
+      card.querySelector(".stockBtn").onclick = (e)=>{
+        e.stopPropagation();
         toggleStock(it.code);
       };
 
@@ -2032,7 +2378,7 @@ $("cartTopBtn").onclick = ()=> openDrawer();
 $("closeDrawer").onclick = ()=> closeDrawer(false);
 $("backdrop").onclick = ()=> closeDrawer(false);
 
-/* QR Code */
+/* QR Code - CORRECTION */
 $("qrBtn").onclick = ()=> $("qrModal").classList.add("open");
 $("closeQrBtn").onclick = ()=> $("qrModal").classList.remove("open");
 $("qrModal").onclick = (e)=> {
@@ -2233,6 +2579,97 @@ $("clearMyHistoryBtn").onclick = ()=>{
     renderHistory();
   }
 };
+
+/* Modal d'article - Gestionnaires d'événements */
+$("closeProductModal").onclick = closeProductModal;
+$("productModal").onclick = (e) => {
+  if (e.target.classList.contains("product-modal")) {
+    closeProductModal();
+  }
+};
+
+// Gestionnaires pour le stepper dans le modal
+$("modalStepper").querySelector('[data-act="minus"]').onclick = () => {
+  if (!currentModalPid) return;
+  state.qtyPick[currentModalPid] = Math.max(0, (state.qtyPick[currentModalPid] || 0) - 1);
+  $("modalQty").textContent = state.qtyPick[currentModalPid] || 0;
+  
+  // Mettre à jour l'état du bouton d'ajout
+  const stockOk = isInStock(currentModalProduct.code);
+  const addBtn = $("modalAddBtn");
+  addBtn.disabled = !stockOk || state.qtyPick[currentModalPid] === 0;
+  addBtn.textContent = stockOk ? '🛒 Ajouter au panier' : '📦 Rupture de stock';
+  addBtn.style.opacity = stockOk ? '1' : '0.6';
+};
+
+$("modalStepper").querySelector('[data-act="plus"]').onclick = () => {
+  if (!currentModalPid) return;
+  state.qtyPick[currentModalPid] = (state.qtyPick[currentModalPid] || 0) + 1;
+  $("modalQty").textContent = state.qtyPick[currentModalPid];
+  
+  // Mettre à jour l'état du bouton d'ajout
+  const stockOk = isInStock(currentModalProduct.code);
+  const addBtn = $("modalAddBtn");
+  addBtn.disabled = !stockOk;
+  addBtn.textContent = stockOk ? '🛒 Ajouter au panier' : '📦 Rupture de stock';
+  addBtn.style.opacity = stockOk ? '1' : '0.6';
+};
+
+// Gestionnaire pour le bouton d'ajout dans le modal
+$("modalAddBtn").onclick = () => {
+  if (!currentModalProduct || !currentModalPid) return;
+  
+  const q = state.qtyPick[currentModalPid] || 0;
+  if (q <= 0) return;
+  
+  const pid = currentModalPid;
+  const it = currentModalProduct;
+  
+  if (state.cart[pid]) {
+    state.cart[pid].qty += q;
+  } else {
+    state.cart[pid] = {
+      pid,
+      name: it.name,
+      code: it.code,
+      price: it.price,
+      catLabel: it.catLabel,
+      qty: q
+    };
+  }
+  
+  state.qtyPick[pid] = 0;
+  saveCart();
+  refreshCartUI({ openAfterAdd: false });
+  pulseCart();
+  
+  // Mettre à jour l'affichage dans le modal
+  $("modalQty").textContent = 0;
+  $("modalAddBtn").disabled = true;
+  
+  // Mettre à jour l'affichage dans la grille principale
+  render();
+  
+  // Optionnel : fermer automatiquement le modal après ajout
+  setTimeout(() => {
+    closeProductModal();
+  }, 800);
+};
+
+// Ajouter une touche Échap pour fermer le modal
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if ($("productModal").classList.contains('open')) {
+      closeProductModal();
+    }
+    if ($("qrModal").classList.contains('open')) {
+      $("qrModal").classList.remove('open');
+    }
+    if ($("modalBack").classList.contains('open')) {
+      $("modalBack").classList.remove('open');
+    }
+  }
+});
 
 /* ===================== INIT ===================== */
 loadLocal();
