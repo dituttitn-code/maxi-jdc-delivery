@@ -215,10 +215,6 @@
       align-items:center;
       gap:3px;
       flex-shrink: 0;
-      cursor: pointer;
-    }
-    .qrPill:hover {
-      background: rgba(0, 212, 255, 0.2);
     }
 
     /* CATÉGORIES HORIZONTALES */
@@ -671,7 +667,7 @@
       opacity:0;
       pointer-events:none;
       transition: opacity .3s ease;
-      z-index:1000;
+      z-index:19;
     }
     .backdrop.open{ opacity:1; pointer-events:auto; }
 
@@ -687,7 +683,7 @@
       box-shadow:-20px 0 60px rgba(0,0,0,.7);
       transform: translateX(100%);
       transition: transform .3s ease;
-      z-index:1001;
+      z-index:20;
       display:flex;
       flex-direction:column;
       backdrop-filter: blur(18px);
@@ -967,7 +963,7 @@
       display:none;
       align-items:center;
       justify-content:center;
-      z-index:2000;
+      z-index:30;
       padding:10px;
     }
     .modalBack.open{ display:flex; }
@@ -1037,7 +1033,7 @@
       display:none;
       align-items:center;
       justify-content:center;
-      z-index:2001;
+      z-index:40;
       padding:10px;
       backdrop-filter: blur(10px);
     }
@@ -1066,7 +1062,7 @@
       border:2px solid var(--accent2);
       margin:0 auto 10px;
       display:block;
-      object-fit: contain;
+      object-fit: cover;
       background: white;
     }
     .qrInfo{
@@ -1078,17 +1074,8 @@
     .qrInfo b{
       color:var(--accent);
     }
-    .qrInfo .url-display {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      padding: 8px;
-      margin: 10px 0;
-      font-size: 10px;
-      word-break: break-all;
-    }
 
-    /* MODAL ARTICLE AGRANDI - Z-INDEX CORRIGÉ */
+    /* MODAL ARTICLE AGRANDI */
     .product-modal {
       position: fixed;
       inset: 0;
@@ -1096,7 +1083,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 2002; /* Augmenté pour être au-dessus des catégories */
+      z-index: 50;
       padding: 10px;
       backdrop-filter: blur(10px);
     }
@@ -1116,7 +1103,6 @@
       display: flex;
       flex-direction: column;
       max-height: 90vh;
-      position: relative;
     }
 
     .product-modal-img {
@@ -1220,67 +1206,6 @@
       border-color: var(--accent);
     }
 
-    /* FLÈCHES DE NAVIGATION DANS LE MODAL */
-    .modal-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.7);
-      border: 2px solid var(--accent);
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 900;
-      cursor: pointer;
-      z-index: 10;
-      transition: all 0.2s ease;
-    }
-    
-    .modal-nav:hover {
-      background: rgba(0, 255, 136, 0.2);
-      transform: translateY(-50%) scale(1.1);
-    }
-    
-    .modal-nav.prev {
-      left: 10px;
-    }
-    
-    .modal-nav.next {
-      right: 10px;
-    }
-    
-    .modal-nav:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-      border-color: var(--muted);
-      color: var(--muted);
-    }
-    
-    .modal-nav:disabled:hover {
-      background: rgba(0, 0, 0, 0.7);
-      transform: translateY(-50%);
-    }
-
-    /* Indicateur de position (ex: 1/20) */
-    .modal-position {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: rgba(0, 0, 0, 0.8);
-      color: var(--accent);
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 900;
-      border: 1px solid var(--accent);
-      z-index: 10;
-    }
-
     /* Pour le stepper et boutons dans le modal */
     .product-modal-actions .stepper {
       width: 120px;
@@ -1338,21 +1263,6 @@
         margin-left: 0;
         width: 100%;
       }
-      
-      .modal-nav {
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-      }
-    }
-
-    @media (min-width: 768px) {
-      .product-modal-content {
-        max-width: 600px;
-      }
-      .product-modal-img {
-        height: 300px;
-      }
     }
 
     /* ==== RESPONSIVE - Plus de colonnes sur écrans plus grands ==== */
@@ -1391,6 +1301,12 @@
       .price{font-size:9px;}
       .drawer{width: var(--drawerW);}
       .drawer.open{transform: translateX(0);}
+      .product-modal-content {
+        max-width: 600px;
+      }
+      .product-modal-img {
+        height: 300px;
+      }
     }
 
     @media (min-width: 1024px){
@@ -1611,14 +1527,13 @@
   <div class="qrModal" id="qrModal">
     <div class="qrBox">
       <h3>📱 QR Code du Site</h3>
-      <canvas id="qrCanvas" class="qrImage" style="display: none;"></canvas>
-      <div id="qrImageContainer" class="qrImage"></div>
+      <img src="qr-maxi-jdc-site.jpg" alt="QR Code MAXI JDC MARKET" class="qrImage" 
+           onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(window.location.href)+'&format=jpg&margin=10&color=0A1929&bgcolor=00FF88';">
       <div class="qrInfo">
         <b>MAXI JDC MARKET</b><br>
         Scannez ce QR Code pour accéder au site sur votre téléphone.<br>
         Partagez-le avec vos clients pour faciliter les commandes !
       </div>
-      <div class="qrInfo url-display" id="qrUrlDisplay"></div>
       <button class="btn green" id="closeQrBtn">Fermer</button>
     </div>
   </div>
@@ -1626,13 +1541,6 @@
   <!-- Modal Article Agrandi -->
   <div class="product-modal" id="productModal">
     <div class="product-modal-content">
-      <!-- Flèches de navigation -->
-      <button class="modal-nav prev" id="modalPrevBtn" title="Article précédent">‹</button>
-      <button class="modal-nav next" id="modalNextBtn" title="Article suivant">›</button>
-      
-      <!-- Indicateur de position -->
-      <div class="modal-position" id="modalPosition">1/1</div>
-      
       <div class="product-modal-img" id="modalImg">
         <div class="noPhoto" style="display:none;">Aucune photo disponible</div>
       </div>
@@ -1729,9 +1637,6 @@ const state = {
   pinCart:false,
   stockByCode:{},
   autoOpenOnAdd: false,
-  // Pour la navigation dans le modal
-  currentModalIndex: -1,
-  visibleItems: []
 };
 
 /* ===================== STORAGE ===================== */
@@ -1965,99 +1870,16 @@ function renderPagination(totalItems) {
   }
 }
 
-/* ===================== QR CODE GÉNÉRATION LOCALE ===================== */
-function generateQRCode(url, containerId) {
-  const container = $(containerId);
-  container.innerHTML = '';
-  
-  // Créer un QR Code simple avec des divs (sans bibliothèque externe)
-  const qrSize = 220;
-  const qrDiv = document.createElement('div');
-  qrDiv.style.width = qrSize + 'px';
-  qrDiv.style.height = qrSize + 'px';
-  qrDiv.style.margin = '0 auto';
-  qrDiv.style.backgroundColor = '#FFFFFF';
-  qrDiv.style.position = 'relative';
-  qrDiv.style.border = '2px solid var(--accent2)';
-  qrDiv.style.borderRadius = '10px';
-  qrDiv.style.overflow = 'hidden';
-  
-  // URL à afficher
-  $("qrUrlDisplay").textContent = url;
-  
-  // Créer un QR Code simple (version de base)
-  // Pour un vrai QR Code, il faudrait une bibliothèque comme qrcode.js
-  // Ici on crée un placeholder stylisé
-  const innerDiv = document.createElement('div');
-  innerDiv.style.width = '100%';
-  innerDiv.style.height = '100%';
-  innerDiv.style.display = 'flex';
-  innerDiv.style.flexDirection = 'column';
-  innerDiv.style.alignItems = 'center';
-  innerDiv.style.justifyContent = 'center';
-  innerDiv.style.padding = '20px';
-  innerDiv.style.textAlign = 'center';
-  
-  const logoText = document.createElement('div');
-  logoText.style.fontSize = '24px';
-  logoText.style.fontWeight = '900';
-  logoText.style.color = 'var(--bg0)';
-  logoText.style.marginBottom = '10px';
-  logoText.textContent = 'MAXI JDC';
-  
-  const marketText = document.createElement('div');
-  marketText.style.fontSize = '18px';
-  marketText.style.fontWeight = '700';
-  marketText.style.color = 'var(--accent)';
-  marketText.style.marginBottom = '15px';
-  marketText.textContent = 'MARKET';
-  
-  const urlText = document.createElement('div');
-  urlText.style.fontSize = '10px';
-  urlText.style.color = '#666666';
-  urlText.style.wordBreak = 'break-all';
-  urlText.style.maxWidth = '100%';
-  urlText.textContent = 'Scannez pour visiter';
-  
-  innerDiv.appendChild(logoText);
-  innerDiv.appendChild(marketText);
-  innerDiv.appendChild(urlText);
-  qrDiv.appendChild(innerDiv);
-  container.appendChild(qrDiv);
-  
-  // Note: Pour un vrai QR Code, vous devriez inclure une bibliothèque comme:
-  // <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-  // Et utiliser: QRCode.toCanvas(document.getElementById('qrCanvas'), url, ...)
-}
+/* ===================== VARIABLES POUR LE MODAL D'ARTICLE ===================== */
+let currentModalProduct = null;
+let currentModalPid = null;
 
-/* ===================== MODAL ARTICLE - NAVIGATION ===================== */
+/* ===================== FONCTIONS POUR LE MODAL D'ARTICLE ===================== */
 function openProductModal(product, pid) {
-  // Récupérer tous les articles visibles
-  state.visibleItems = getVisibleItems();
+  currentModalProduct = product;
+  currentModalPid = pid;
   
-  // Trouver l'index de l'article actuel
-  state.currentModalIndex = state.visibleItems.findIndex(item => 
-    safeKey(`${item.catKey}_${item.code}_${item.name}`) === pid
-  );
-  
-  if (state.currentModalIndex === -1) {
-    state.currentModalIndex = 0;
-  }
-  
-  // Afficher l'article
-  showModalProduct(state.currentModalIndex);
-  
-  // Ouvrir le modal
-  $("productModal").classList.add('open');
-}
-
-function showModalProduct(index) {
-  if (index < 0 || index >= state.visibleItems.length) return;
-  
-  state.currentModalIndex = index;
-  const product = state.visibleItems[index];
-  const pid = safeKey(`${product.catKey}_${product.code}_${product.name}`);
-  
+  const modal = $("productModal");
   const modalImg = $("modalImg");
   const imgSrc = `images/products/${product.code}.jpg`;
   
@@ -2097,9 +1919,6 @@ function showModalProduct(index) {
   $("modalCode").textContent = `Code: ${product.code}`;
   $("modalCategory").textContent = `Catégorie: ${product.catLabel || 'Non spécifiée'}`;
   
-  // Mettre à jour l'indicateur de position
-  $("modalPosition").textContent = `${index + 1}/${state.visibleItems.length}`;
-  
   // Quantité
   const currentQty = state.qtyPick[pid] || 0;
   $("modalQty").textContent = currentQty;
@@ -2111,27 +1930,14 @@ function showModalProduct(index) {
   addBtn.textContent = stockOk ? '🛒 Ajouter au panier' : '📦 Rupture de stock';
   addBtn.style.opacity = stockOk ? '1' : '0.6';
   
-  // Mettre à jour les flèches de navigation
-  $("modalPrevBtn").disabled = index === 0;
-  $("modalNextBtn").disabled = index === state.visibleItems.length - 1;
+  // Ouvrir le modal
+  modal.classList.add('open');
 }
 
 function closeProductModal() {
   $("productModal").classList.remove('open');
-  state.currentModalIndex = -1;
-  state.visibleItems = [];
-}
-
-function navigateModal(direction) {
-  if (state.visibleItems.length === 0) return;
-  
-  let newIndex = state.currentModalIndex + direction;
-  
-  // Boucler si on dépasse les limites
-  if (newIndex < 0) newIndex = state.visibleItems.length - 1;
-  if (newIndex >= state.visibleItems.length) newIndex = 0;
-  
-  showModalProduct(newIndex);
+  currentModalProduct = null;
+  currentModalPid = null;
 }
 
 /* ===================== RENDER ===================== */
@@ -2388,7 +2194,7 @@ function refreshCartUI({ openAfterAdd }){
     rule.innerHTML = `<div style="display:flex; flex-direction:column; gap:3px;">
       <div><strong>📦 Conditions de livraison</strong></div>
       <div>• Total: <strong>${fmtDT(t)}</strong></div>
-      <div>• Frais de livraison: <strong>3 dt</strong></div>
+      <div>• Frais livraison: <strong>3 dt</strong></div>
       <div>• Gratuit à partir de <strong>30 dt</strong></div>
       <div>• Il manque: <strong>${fmtDT(FREE_SHIPPING - t)}</strong> pour la gratuité</div>
     </div>`;
@@ -2572,11 +2378,8 @@ $("cartTopBtn").onclick = ()=> openDrawer();
 $("closeDrawer").onclick = ()=> closeDrawer(false);
 $("backdrop").onclick = ()=> closeDrawer(false);
 
-/* QR Code - GÉNÉRATION LOCALE */
-$("qrBtn").onclick = ()=> {
-  generateQRCode(window.location.href, "qrImageContainer");
-  $("qrModal").classList.add("open");
-};
+/* QR Code - CORRECTION */
+$("qrBtn").onclick = ()=> $("qrModal").classList.add("open");
 $("closeQrBtn").onclick = ()=> $("qrModal").classList.remove("open");
 $("qrModal").onclick = (e)=> {
   if(e.target.classList.contains("qrModal")) $("qrModal").classList.remove("open");
@@ -2785,37 +2588,27 @@ $("productModal").onclick = (e) => {
   }
 };
 
-// Navigation dans le modal
-$("modalPrevBtn").onclick = () => navigateModal(-1);
-$("modalNextBtn").onclick = () => navigateModal(1);
-
 // Gestionnaires pour le stepper dans le modal
 $("modalStepper").querySelector('[data-act="minus"]').onclick = () => {
-  if (state.currentModalIndex === -1) return;
-  const product = state.visibleItems[state.currentModalIndex];
-  const pid = safeKey(`${product.catKey}_${product.code}_${product.name}`);
-  
-  state.qtyPick[pid] = Math.max(0, (state.qtyPick[pid] || 0) - 1);
-  $("modalQty").textContent = state.qtyPick[pid] || 0;
+  if (!currentModalPid) return;
+  state.qtyPick[currentModalPid] = Math.max(0, (state.qtyPick[currentModalPid] || 0) - 1);
+  $("modalQty").textContent = state.qtyPick[currentModalPid] || 0;
   
   // Mettre à jour l'état du bouton d'ajout
-  const stockOk = isInStock(product.code);
+  const stockOk = isInStock(currentModalProduct.code);
   const addBtn = $("modalAddBtn");
-  addBtn.disabled = !stockOk || state.qtyPick[pid] === 0;
+  addBtn.disabled = !stockOk || state.qtyPick[currentModalPid] === 0;
   addBtn.textContent = stockOk ? '🛒 Ajouter au panier' : '📦 Rupture de stock';
   addBtn.style.opacity = stockOk ? '1' : '0.6';
 };
 
 $("modalStepper").querySelector('[data-act="plus"]').onclick = () => {
-  if (state.currentModalIndex === -1) return;
-  const product = state.visibleItems[state.currentModalIndex];
-  const pid = safeKey(`${product.catKey}_${product.code}_${product.name}`);
-  
-  state.qtyPick[pid] = (state.qtyPick[pid] || 0) + 1;
-  $("modalQty").textContent = state.qtyPick[pid];
+  if (!currentModalPid) return;
+  state.qtyPick[currentModalPid] = (state.qtyPick[currentModalPid] || 0) + 1;
+  $("modalQty").textContent = state.qtyPick[currentModalPid];
   
   // Mettre à jour l'état du bouton d'ajout
-  const stockOk = isInStock(product.code);
+  const stockOk = isInStock(currentModalProduct.code);
   const addBtn = $("modalAddBtn");
   addBtn.disabled = !stockOk;
   addBtn.textContent = stockOk ? '🛒 Ajouter au panier' : '📦 Rupture de stock';
@@ -2824,23 +2617,23 @@ $("modalStepper").querySelector('[data-act="plus"]').onclick = () => {
 
 // Gestionnaire pour le bouton d'ajout dans le modal
 $("modalAddBtn").onclick = () => {
-  if (state.currentModalIndex === -1) return;
+  if (!currentModalProduct || !currentModalPid) return;
   
-  const product = state.visibleItems[state.currentModalIndex];
-  const pid = safeKey(`${product.catKey}_${product.code}_${product.name}`);
-  
-  const q = state.qtyPick[pid] || 0;
+  const q = state.qtyPick[currentModalPid] || 0;
   if (q <= 0) return;
+  
+  const pid = currentModalPid;
+  const it = currentModalProduct;
   
   if (state.cart[pid]) {
     state.cart[pid].qty += q;
   } else {
     state.cart[pid] = {
       pid,
-      name: product.name,
-      code: product.code,
-      price: product.price,
-      catLabel: product.catLabel,
+      name: it.name,
+      code: it.code,
+      price: it.price,
+      catLabel: it.catLabel,
       qty: q
     };
   }
@@ -2863,7 +2656,7 @@ $("modalAddBtn").onclick = () => {
   }, 800);
 };
 
-// Navigation clavier dans le modal
+// Ajouter une touche Échap pour fermer le modal
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     if ($("productModal").classList.contains('open')) {
@@ -2874,17 +2667,6 @@ document.addEventListener('keydown', (e) => {
     }
     if ($("modalBack").classList.contains('open')) {
       $("modalBack").classList.remove('open');
-    }
-  }
-  
-  // Navigation avec les flèches dans le modal d'article
-  if ($("productModal").classList.contains('open')) {
-    if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-      navigateModal(-1);
-    } else if (e.key === 'ArrowRight') {
-      e.preventDefault();
-      navigateModal(1);
     }
   }
 });
