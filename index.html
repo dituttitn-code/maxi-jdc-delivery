@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes"/>
   <title>MAXI JDC MARKET — Commande</title>
-
+  
+  <!-- Bibliothèque pour générer les QR Codes -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  
   <style>
     :root{
       --bg0:#0a1929;
@@ -215,6 +218,10 @@
       align-items:center;
       gap:3px;
       flex-shrink: 0;
+      cursor: pointer;
+    }
+    .qrPill:hover {
+      background: rgba(0, 212, 255, 0.2);
     }
 
     /* CATÉGORIES HORIZONTALES */
@@ -230,6 +237,7 @@
       gap: 4px;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
+      z-index: 99; /* Réduit pour que le modal soit au-dessus */
     }
     .catsHorizontal::-webkit-scrollbar { display: none; }
     
@@ -667,7 +675,7 @@
       opacity:0;
       pointer-events:none;
       transition: opacity .3s ease;
-      z-index:19;
+      z-index:1000;
     }
     .backdrop.open{ opacity:1; pointer-events:auto; }
 
@@ -683,7 +691,7 @@
       box-shadow:-20px 0 60px rgba(0,0,0,.7);
       transform: translateX(100%);
       transition: transform .3s ease;
-      z-index:20;
+      z-index:1001;
       display:flex;
       flex-direction:column;
       backdrop-filter: blur(18px);
@@ -963,7 +971,7 @@
       display:none;
       align-items:center;
       justify-content:center;
-      z-index:30;
+      z-index:2000;
       padding:10px;
     }
     .modalBack.open{ display:flex; }
@@ -1033,7 +1041,7 @@
       display:none;
       align-items:center;
       justify-content:center;
-      z-index:40;
+      z-index:2001;
       padding:10px;
       backdrop-filter: blur(10px);
     }
@@ -1062,7 +1070,7 @@
       border:2px solid var(--accent2);
       margin:0 auto 10px;
       display:block;
-      object-fit: cover;
+      object-fit: contain;
       background: white;
     }
     .qrInfo{
@@ -1074,8 +1082,17 @@
     .qrInfo b{
       color:var(--accent);
     }
+    .qrInfo .url-display {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px;
+      margin: 10px 0;
+      font-size: 10px;
+      word-break: break-all;
+    }
 
-    /* MODAL ARTICLE AGRANDI */
+    /* MODAL ARTICLE AGRANDI - Z-INDEX CORRIGÉ ET NAVIGATION AJOUTÉE */
     .product-modal {
       position: fixed;
       inset: 0;
@@ -1083,7 +1100,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 50;
+      z-index: 2002; /* Augmenté pour être au-dessus des catégories */
       padding: 10px;
       backdrop-filter: blur(10px);
     }
@@ -1103,6 +1120,7 @@
       display: flex;
       flex-direction: column;
       max-height: 90vh;
+      position: relative;
     }
 
     .product-modal-img {
@@ -1206,6 +1224,67 @@
       border-color: var(--accent);
     }
 
+    /* FLÈCHES DE NAVIGATION DANS LE MODAL */
+    .modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 900;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.2s ease;
+    }
+    
+    .modal-nav:hover {
+      background: rgba(0, 255, 136, 0.2);
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    .modal-nav.prev {
+      left: 15px;
+    }
+    
+    .modal-nav.next {
+      right: 15px;
+    }
+    
+    .modal-nav:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      border-color: var(--muted);
+      color: var(--muted);
+    }
+    
+    .modal-nav:disabled:hover {
+      background: rgba(0, 0, 0, 0.7);
+      transform: translateY(-50%);
+    }
+
+    /* Indicateur de position (ex: 1/20) */
+    .modal-position {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.8);
+      color: var(--accent);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 900;
+      border: 1px solid var(--accent);
+      z-index: 10;
+    }
+
     /* Pour le stepper et boutons dans le modal */
     .product-modal-actions .stepper {
       width: 120px;
@@ -1263,6 +1342,29 @@
         margin-left: 0;
         width: 100%;
       }
+      
+      .modal-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+      
+      .modal-nav.prev {
+        left: 10px;
+      }
+      
+      .modal-nav.next {
+        right: 10px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .product-modal-content {
+        max-width: 600px;
+      }
+      .product-modal-img {
+        height: 300px;
+      }
     }
 
     /* ==== RESPONSIVE - Plus de colonnes sur écrans plus grands ==== */
@@ -1301,12 +1403,6 @@
       .price{font-size:9px;}
       .drawer{width: var(--drawerW);}
       .drawer.open{transform: translateX(0);}
-      .product-modal-content {
-        max-width: 600px;
-      }
-      .product-modal-img {
-        height: 300px;
-      }
     }
 
     @media (min-width: 1024px){
@@ -1527,13 +1623,13 @@
   <div class="qrModal" id="qrModal">
     <div class="qrBox">
       <h3>📱 QR Code du Site</h3>
-      <img src="qr-maxi-jdc-site.jpg" alt="QR Code MAXI JDC MARKET" class="qrImage" 
-           onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=220x220&data='+encodeURIComponent(window.location.href)+'&format=jpg&margin=10&color=0A1929&bgcolor=00FF88';">
+      <canvas id="qrCanvas" class="qrImage"></canvas>
       <div class="qrInfo">
         <b>MAXI JDC MARKET</b><br>
         Scannez ce QR Code pour accéder au site sur votre téléphone.<br>
         Partagez-le avec vos clients pour faciliter les commandes !
       </div>
+      <div class="qrInfo url-display" id="qrUrlDisplay"></div>
       <button class="btn green" id="closeQrBtn">Fermer</button>
     </div>
   </div>
@@ -1541,6 +1637,13 @@
   <!-- Modal Article Agrandi -->
   <div class="product-modal" id="productModal">
     <div class="product-modal-content">
+      <!-- Flèches de navigation -->
+      <button class="modal-nav prev" id="modalPrevBtn" title="Article précédent">‹</button>
+      <button class="modal-nav next" id="modalNextBtn" title="Article suivant">›</button>
+      
+      <!-- Indicateur de position -->
+      <div class="modal-position" id="modalPosition">1/1</div>
+      
       <div class="product-modal-img" id="modalImg">
         <div class="noPhoto" style="display:none;">Aucune photo disponible</div>
       </div>
@@ -1637,6 +1740,9 @@ const state = {
   pinCart:false,
   stockByCode:{},
   autoOpenOnAdd: false,
+  // Pour la navigation dans le modal
+  currentModalIndex: -1,
+  visibleItems: []
 };
 
 /* ===================== STORAGE ===================== */
@@ -1870,16 +1976,73 @@ function renderPagination(totalItems) {
   }
 }
 
-/* ===================== VARIABLES POUR LE MODAL D'ARTICLE ===================== */
-let currentModalProduct = null;
-let currentModalPid = null;
-
-/* ===================== FONCTIONS POUR LE MODAL D'ARTICLE ===================== */
-function openProductModal(product, pid) {
-  currentModalProduct = product;
-  currentModalPid = pid;
+/* ===================== QR CODE GÉNÉRATION ===================== */
+function generateQRCode() {
+  const canvas = document.getElementById('qrCanvas');
+  const currentUrl = window.location.href;
   
-  const modal = $("productModal");
+  // Afficher l'URL
+  $("qrUrlDisplay").textContent = currentUrl;
+  
+  // Générer le QR Code
+  QRCode.toCanvas(canvas, currentUrl, {
+    width: 220,
+    height: 220,
+    margin: 2,
+    color: {
+      dark: '#0A1929',
+      light: '#00FF88'
+    }
+  }, function (error) {
+    if (error) {
+      console.error('Erreur génération QR Code:', error);
+      // Fallback simple
+      canvas.style.display = 'none';
+      const fallbackDiv = document.createElement('div');
+      fallbackDiv.className = 'qrImage';
+      fallbackDiv.style.display = 'flex';
+      fallbackDiv.style.alignItems = 'center';
+      fallbackDiv.style.justifyContent = 'center';
+      fallbackDiv.style.flexDirection = 'column';
+      fallbackDiv.style.padding = '20px';
+      fallbackDiv.innerHTML = `
+        <div style="font-size: 24px; font-weight: bold; color: #0A1929; margin-bottom: 10px;">MAXI JDC</div>
+        <div style="font-size: 18px; font-weight: bold; color: #00FF88; margin-bottom: 15px;">MARKET</div>
+        <div style="font-size: 10px; color: #666; text-align: center;">${currentUrl}</div>
+      `;
+      canvas.parentNode.insertBefore(fallbackDiv, canvas.nextSibling);
+    }
+  });
+}
+
+/* ===================== MODAL ARTICLE - NAVIGATION ===================== */
+function openProductModal(product, pid) {
+  // Récupérer tous les articles visibles
+  state.visibleItems = getVisibleItems();
+  
+  // Trouver l'index de l'article actuel
+  state.currentModalIndex = state.visibleItems.findIndex(item => 
+    safeKey(`${item.catKey}_${item.code}_${item.name}`) === pid
+  );
+  
+  if (state.currentModalIndex === -1) {
+    state.currentModalIndex = 0;
+  }
+  
+  // Afficher l'article
+  showModalProduct(state.currentModalIndex);
+  
+  // Ouvrir le modal
+  $("productModal").classList.add('open');
+}
+
+function showModalProduct(index) {
+  if (index < 0 || index >= state.visibleItems.length) return;
+  
+  state.currentModalIndex = index;
+  const product = state.visibleItems[index];
+  const pid = safeKey(`${product.catKey}_${product.code}_${product.name}`);
+  
   const modalImg = $("modalImg");
   const imgSrc = `images/products/${product.code}.jpg`;
   
@@ -1919,6 +2082,9 @@ function openProductModal(product, pid) {
   $("modalCode").textContent = `Code: ${product.code}`;
   $("modalCategory").textContent = `Catégorie: ${product.catLabel || 'Non spécifiée'}`;
   
+  // Mettre à jour l'indicateur de position
+  $("modalPosition").textContent = `${index + 1}/${state.visibleItems.length}`;
+  
   // Quantité
   const currentQty = state.qtyPick[pid] || 0;
   $("modalQty").textContent = currentQty;
@@ -1930,14 +2096,27 @@ function openProductModal(product, pid) {
   addBtn.textContent = stockOk ? '🛒 Ajouter au panier' : '📦 Rupture de stock';
   addBtn.style.opacity = stockOk ? '1' : '0.6';
   
-  // Ouvrir le modal
-  modal.classList.add('open');
+  // Mettre à jour les flèches de navigation
+  $("modalPrevBtn").disabled = index === 0;
+  $("modalNextBtn").disabled = index === state.visibleItems.length - 1;
 }
 
 function closeProductModal() {
   $("productModal").classList.remove('open');
-  currentModalProduct = null;
-  currentModalPid = null;
+  state.currentModalIndex = -1;
+  state.visibleItems = [];
+}
+
+function navigateModal(direction) {
+  if (state.visibleItems.length === 0) return;
+  
+  let newIndex = state.currentModalIndex + direction;
+  
+  // Boucler si on dépasse les limites
+  if (newIndex < 0) newIndex = state.visibleItems.length - 1;
+  if (newIndex >= state.visibleItems.length) newIndex = 0;
+  
+  showModalProduct(newIndex);
 }
 
 /* ===================== RENDER ===================== */
@@ -2194,7 +2373,7 @@ function refreshCartUI({ openAfterAdd }){
     rule.innerHTML = `<div style="display:flex; flex-direction:column; gap:3px;">
       <div><strong>📦 Conditions de livraison</strong></div>
       <div>• Total: <strong>${fmtDT(t)}</strong></div>
-      <div>• Frais livraison: <strong>3 dt</strong></div>
+      <div>• Frais de livraison: <strong>3 dt</strong></div>
       <div>• Gratuit à partir de <strong>30 dt</strong></div>
       <div>• Il manque: <strong>${fmtDT(FREE_SHIPPING - t)}</strong> pour la gratuité</div>
     </div>`;
@@ -2378,8 +2557,11 @@ $("cartTopBtn").onclick = ()=> openDrawer();
 $("closeDrawer").onclick = ()=> closeDrawer(false);
 $("backdrop").onclick = ()=> closeDrawer(false);
 
-/* QR Code - CORRECTION */
-$("qrBtn").onclick = ()=> $("qrModal").classList.add("open");
+/* QR Code - GÉNÉRATION */
+$("qrBtn").onclick = ()=> {
+  generateQRCode();
+  $("qrModal").classList.add("open");
+};
 $("closeQrBtn").onclick = ()=> $("qrModal").classList.remove("open");
 $("qrModal").onclick = (e)=> {
   if(e.target.classList.contains("qrModal")) $("qrModal").classList.remove("open");
@@ -2588,27 +2770,37 @@ $("productModal").onclick = (e) => {
   }
 };
 
+// Navigation dans le modal
+$("modalPrevBtn").onclick = () => navigateModal(-1);
+$("modalNextBtn").onclick = () => navigateModal(1);
+
 // Gestionnaires pour le stepper dans le modal
 $("modalStepper").querySelector('[data-act="minus"]').onclick = () => {
-  if (!currentModalPid) return;
-  state.qtyPick[currentModalPid] = Math.max(0, (state.qtyPick[currentModalPid] || 0) - 1);
-  $("modalQty").textContent = state.qtyPick[currentModalPid] || 0;
+  if (state.currentModalIndex === -1) return;
+  const product = state.visibleItems[state.currentModalIndex];
+  const pid = safeKey(`${product.catKey}_${product.code}_${product.name}`);
+  
+  state.qtyPick[pid] = Math.max(0, (state.qtyPick[pid] || 0) - 1);
+  $("modalQty").textContent = state.qtyPick[pid] || 0;
   
   // Mettre à jour l'état du bouton d'ajout
-  const stockOk = isInStock(currentModalProduct.code);
+  const stockOk = isInStock(product.code);
   const addBtn = $("modalAddBtn");
-  addBtn.disabled = !stockOk || state.qtyPick[currentModalPid] === 0;
+  addBtn.disabled = !stockOk || state.qtyPick[pid] === 0;
   addBtn.textContent = stockOk ? '🛒 Ajouter au panier' : '📦 Rupture de stock';
   addBtn.style.opacity = stockOk ? '1' : '0.6';
 };
 
 $("modalStepper").querySelector('[data-act="plus"]').onclick = () => {
-  if (!currentModalPid) return;
-  state.qtyPick[currentModalPid] = (state.qtyPick[currentModalPid] || 0) + 1;
-  $("modalQty").textContent = state.qtyPick[currentModalPid];
+  if (state.currentModalIndex === -1) return;
+  const product = state.visibleItems[state.currentModalIndex];
+  const pid = safeKey(`${product.catKey}_${product.code}_${product.name}`);
+  
+  state.qtyPick[pid] = (state.qtyPick[pid] || 0) + 1;
+  $("modalQty").textContent = state.qtyPick[pid];
   
   // Mettre à jour l'état du bouton d'ajout
-  const stockOk = isInStock(currentModalProduct.code);
+  const stockOk = isInStock(product.code);
   const addBtn = $("modalAddBtn");
   addBtn.disabled = !stockOk;
   addBtn.textContent = stockOk ? '🛒 Ajouter au panier' : '📦 Rupture de stock';
@@ -2617,23 +2809,23 @@ $("modalStepper").querySelector('[data-act="plus"]').onclick = () => {
 
 // Gestionnaire pour le bouton d'ajout dans le modal
 $("modalAddBtn").onclick = () => {
-  if (!currentModalProduct || !currentModalPid) return;
+  if (state.currentModalIndex === -1) return;
   
-  const q = state.qtyPick[currentModalPid] || 0;
+  const product = state.visibleItems[state.currentModalIndex];
+  const pid = safeKey(`${product.catKey}_${product.code}_${product.name}`);
+  
+  const q = state.qtyPick[pid] || 0;
   if (q <= 0) return;
-  
-  const pid = currentModalPid;
-  const it = currentModalProduct;
   
   if (state.cart[pid]) {
     state.cart[pid].qty += q;
   } else {
     state.cart[pid] = {
       pid,
-      name: it.name,
-      code: it.code,
-      price: it.price,
-      catLabel: it.catLabel,
+      name: product.name,
+      code: product.code,
+      price: product.price,
+      catLabel: product.catLabel,
       qty: q
     };
   }
@@ -2656,31 +2848,306 @@ $("modalAddBtn").onclick = () => {
   }, 800);
 };
 
-// Ajouter une touche Échap pour fermer le modal
+// Navigation clavier dans le modal
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    if ($("productModal").classList.contains('open')) {
-      closeProductModal();
+  if (e.key === 'Escape' && $("productModal").classList.contains('open')) {
+    closeProductModal();
+  }
+  if (e.key === 'ArrowLeft' && $("productModal").classList.contains('open')) {
+    if (!$("modalPrevBtn").disabled) navigateModal(-1);
+  }
+  if (e.key === 'ArrowRight' && $("productModal").classList.contains('open')) {
+    if (!$("modalNextBtn").disabled) navigateModal(1);
+  }
+});
+
+/* ===================== INITIALISATION ===================== */
+loadLocal();
+fillClientUI();
+renderHistory();
+
+// Ouverture automatique du panier si épinglé
+if (state.pinCart) {
+  setTimeout(() => openDrawer(), 300);
+}
+
+// Chargement des données CSV
+loadAll().then(() => {
+  console.log("Données chargées avec succès !");
+  
+  // Vérifier l'URL pour les codes clients
+  const urlParams = new URLSearchParams(window.location.search);
+  const clientCode = urlParams.get('client');
+  if (clientCode) {
+    importClientCode(clientCode);
+  }
+}).catch(err => {
+  console.error("Erreur lors du chargement des données:", err);
+  $("products").innerHTML = `<div class="warn" style="grid-column:1/-1;text-align:center;padding:30px;">
+    ❌ Erreur de chargement des produits. Veuillez rafraîchir la page.
+  </div>`;
+});
+
+// Activation du défilement fluide
+document.addEventListener('DOMContentLoaded', () => {
+  // Désactiver le zoom sur les champs numériques pour mobile
+  const numberInputs = document.querySelectorAll('input[type="number"]');
+  numberInputs.forEach(input => {
+    input.addEventListener('focus', () => {
+      input.style.fontSize = '16px';
+    });
+    input.addEventListener('blur', () => {
+      input.style.fontSize = '';
+    });
+  });
+});
+
+// Préchargement des images pour améliorer les performances
+function preloadImages() {
+  if (window.innerWidth <= 768) return; // Ne pas précharger sur mobile
+  
+  const imageUrls = [];
+  for (const c of CATEGORIES) {
+    const items = state.dataByCat.get(c.key) || [];
+    for (const item of items.slice(0, 20)) { // Précharger les 20 premiers
+      imageUrls.push(`images/products/${item.code}.jpg`);
     }
-    if ($("qrModal").classList.contains('open')) {
-      $("qrModal").classList.remove('open');
+  }
+  
+  imageUrls.forEach(url => {
+    const img = new Image();
+    img.src = url;
+  });
+}
+
+// Précharger après un délai
+setTimeout(preloadImages, 2000);
+
+// Amélioration du touch pour mobile
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+}, false);
+
+document.addEventListener('touchend', (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+}, false);
+
+function handleSwipe() {
+  const swipeThreshold = 50;
+  const diff = touchStartX - touchEndX;
+  
+  if (Math.abs(diff) > swipeThreshold) {
+    if (diff > 0) {
+      // Swipe gauche - suivant
+      if ($("productModal").classList.contains('open')) {
+        if (!$("modalNextBtn").disabled) navigateModal(1);
+      }
+    } else {
+      // Swipe droite - précédent
+      if ($("productModal").classList.contains('open')) {
+        if (!$("modalPrevBtn").disabled) navigateModal(-1);
+      }
     }
-    if ($("modalBack").classList.contains('open')) {
-      $("modalBack").classList.remove('open');
+  }
+}
+
+// Gestion du bouton de retour sur mobile
+window.addEventListener('popstate', () => {
+  if ($("productModal").classList.contains('open')) {
+    closeProductModal();
+  } else if ($("drawer").classList.contains('open')) {
+    closeDrawer();
+  }
+});
+
+// Amélioration du focus pour l'accessibilité
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Tab') {
+    const focusableElements = document.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    
+    if (e.shiftKey && document.activeElement === focusableElements[0]) {
+      e.preventDefault();
+      focusableElements[focusableElements.length - 1].focus();
+    } else if (!e.shiftKey && document.activeElement === focusableElements[focusableElements.length - 1]) {
+      e.preventDefault();
+      focusableElements[0].focus();
     }
   }
 });
 
-/* ===================== INIT ===================== */
-loadLocal();
-$("pinCart").checked = state.pinCart;
+// Notifications discrètes
+function showNotification(message, type = 'info') {
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--${type === 'success' ? 'accent' : 'danger'});
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    z-index: 9999;
+    box-shadow: var(--shadow);
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+  `;
+  
+  notification.textContent = message;
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.style.transform = 'translateX(0)';
+  }, 10);
+  
+  setTimeout(() => {
+    notification.style.transform = 'translateX(120%)';
+    setTimeout(() => notification.remove(), 300);
+  }, 3000);
+}
 
-fillClientUI();
-refreshCartUI({ openAfterAdd:false });
+// Gestionnaire pour copier avec notification
+function copyWithNotification(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    showNotification('✅ Copié dans le presse-papier !', 'success');
+  }).catch(() => {
+    // Fallback pour anciens navigateurs
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    showNotification('✅ Copié dans le presse-papier !', 'success');
+  });
+}
 
-if(state.pinCart) openDrawer(); else closeDrawer(true);
+// Mettre à jour le gestionnaire de copie
+$("copyBtn").onclick = ()=> {
+  copyWithNotification($("orderText").value);
+};
 
-loadAll();
-</script>
-</body>
-</html>
+// Mettre à jour le générateur de code client
+$("genCodeBtn").onclick = ()=>{
+  if(!state.client){
+    showNotification("Enregistre d'abord la fiche client.", 'warning');
+    return;
+  }
+  const code = buildClientCodeFromClient(state.client);
+  state.client.clientCode = code;
+  saveClient();
+  $("clientCode").value = code;
+  $("clientCode").select();
+  copyWithNotification(code);
+};
+
+// Gestion de la visibilité pour améliorer les performances
+let isVisible = true;
+document.addEventListener('visibilitychange', () => {
+  isVisible = !document.hidden;
+  
+  if (isVisible) {
+    // Recharger les données si la page devient visible après un certain temps
+    const lastUpdate = localStorage.getItem('maxi_last_update');
+    const now = Date.now();
+    if (lastUpdate && now - lastUpdate > 300000) { // 5 minutes
+      loadAll();
+    }
+    localStorage.setItem('maxi_last_update', now.toString());
+  }
+});
+
+// Enregistrer la dernière mise à jour
+localStorage.setItem('maxi_last_update', Date.now().toString());
+
+// Amélioration du scroll pour mobile
+let lastScrollTop = 0;
+const topBar = document.querySelector('.top');
+window.addEventListener('scroll', () => {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  
+  if (scrollTop > lastScrollTop && scrollTop > 50) {
+    // Scrolling down
+    topBar.style.transform = 'translateY(-100%)';
+  } else {
+    // Scrolling up
+    topBar.style.transform = 'translateY(0)';
+  }
+  
+  lastScrollTop = scrollTop;
+});
+
+// Gestion du resize pour recalculer les dimensions
+let resizeTimeout;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    render();
+  }, 250);
+});
+
+// Amélioration du chargement des images avec lazy loading
+const observerOptions = {
+  root: null,
+  rootMargin: '50px',
+  threshold: 0.1
+};
+
+const imageObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const img = entry.target;
+      if (img.dataset.src) {
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+      }
+      imageObserver.unobserve(img);
+    }
+  });
+}, observerOptions);
+
+// Fonction pour observer les images après le rendu
+function observeImages() {
+  document.querySelectorAll('.product-img[data-src]').forEach(img => {
+    imageObserver.observe(img);
+  });
+}
+
+// Appeler après chaque rendu
+const originalRender = render;
+render = function() {
+  originalRender.call(this);
+  setTimeout(observeImages, 100);
+};
+
+// Initialisation finale
+window.addEventListener('load', () => {
+  console.log('MAXI JDC MARKET - Application chargée avec succès');
+  
+  // Vérifier la connexion
+  if (!navigator.onLine) {
+    showNotification('📶 Vous êtes hors ligne. Certaines fonctionnalités peuvent être limitées.', 'warning');
+  }
+  
+  // Écouter les changements de connexion
+  window.addEventListener('online', () => {
+    showNotification('✅ Connexion rétablie !', 'success');
+  });
+  
+  window.addEventListener('offline', () => {
+    showNotification('📶 Vous êtes hors ligne.', 'warning');
+  });
+});
+
+// Service Worker pour le mode hors ligne (optionnel)
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(err => {
+    console.log('Service Worker non enregistré:', err);
+  });
+}
