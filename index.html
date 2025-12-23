@@ -237,6 +237,7 @@
       gap: 4px;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
+      z-index: 99;
     }
     .catsHorizontal::-webkit-scrollbar { display: none; }
     
@@ -411,7 +412,7 @@
     /* PRODUITS - 2 COLONNES SUR MOBILE, 3 SUR TABLETTE, 4 SUR DESKTOP */
     #products{
       display:grid;
-      grid-template-columns:repeat(2, 1fr); /* 2 colonnes sur mobile */
+      grid-template-columns:repeat(2, 1fr);
       gap:8px;
     }
 
@@ -419,19 +420,18 @@
       border-radius:8px;
       border:1px solid var(--line);
       background: var(--card2);
-      padding:6px; /* Réduit de 8px */
+      padding:6px;
       box-shadow:0 3px 10px rgba(0,0,0,.25);
       transition: all 0.2s ease;
       display:flex;
       flex-direction:column;
-      gap:5px; /* Réduit de 6px */
+      gap:5px;
       height: 100%;
-      cursor: pointer; /* Indique que c'est cliquable */
+      cursor: pointer;
       position: relative;
     }
     .card:hover{ border-color: var(--accent2); transform: translateY(-2px); }
 
-    /* Indicateur visuel que la carte est cliquable */
     .card::after {
       content: '👁️';
       position: absolute;
@@ -453,7 +453,7 @@
     /* PHOTO PLUS PETITE POUR OPTIMISER L'ESPACE */
     .imgWrap{
       width:100%;
-      height:70px; /* Réduit de 90px à 70px */
+      height:70px;
       border-radius:6px;
       border:1px solid rgba(255,255,255,.12);
       background: #ffffff;
@@ -480,7 +480,7 @@
       justify-content:center;
       color:#666666;
       font-weight:800;
-      font-size:7px; /* Réduit */
+      font-size:7px;
       background: #f8f8f8;
       text-align:center;
       padding:2px;
@@ -516,7 +516,7 @@
     }
     .name{
       font-weight:900;
-      font-size:10px; /* Réduit de 11px */
+      font-size:10px;
       line-height:1.2;
       min-width:0;
       display:-webkit-box;
@@ -528,17 +528,17 @@
     .price{
       flex:0 0 auto;
       font-weight:900;
-      padding:2px 4px; /* Réduit */
+      padding:2px 4px;
       border-radius:999px;
       border:1px solid var(--accent);
       background: rgba(0, 255, 136, 0.1);
       color:var(--accent);
-      font-size:8px; /* Réduit de 9px */
+      font-size:8px;
       white-space:nowrap;
     }
     .meta2{
       color:var(--muted);
-      font-size:7px; /* Réduit de 8px */
+      font-size:7px;
       display:flex;
       flex-direction:column;
       gap:1px;
@@ -546,12 +546,12 @@
 
     /* ACTIONS: DISPOSITION COMPACTE */
     .actions{
-      margin-top:2px; /* Réduit */
+      margin-top:2px;
       display:flex;
       align-items:center;
-      gap:3px; /* Réduit de 4px */
+      gap:3px;
       width:100%;
-      min-height: 22px; /* Réduit de 26px */
+      min-height: 22px;
     }
     
     /* STEPPER PLUS PETIT */
@@ -560,12 +560,12 @@
       align-items:center;
       justify-content:space-between;
       gap:2px;
-      padding:1px 2px; /* Réduit */
+      padding:1px 2px;
       border-radius:999px;
       border:1px solid var(--line);
       background: rgba(0,0,0,.2);
       min-width: 0;
-      width: 60px; /* Réduit de 65px */
+      width: 60px;
       flex-shrink: 0;
     }
     .stepper button{
@@ -595,23 +595,23 @@
 
     /* BOUTON STOCK PLUS PETIT */
     .stockBtn{
-      height:20px; /* Réduit de 22px */
+      height:20px;
       border-radius:4px;
       border:1px solid var(--line);
       background: rgba(255,255,255,.03);
       color: var(--text);
       cursor:pointer;
       font-weight:700;
-      font-size:6px; /* Réduit de 7px */
+      font-size:6px;
       display:flex;
       align-items:center;
       justify-content:center;
       gap:2px;
       transition: all .15s ease;
-      padding: 0 4px; /* Réduit */
+      padding: 0 4px;
       flex: 1;
       min-width: 0;
-      max-width: 65px; /* Réduit de 75px */
+      max-width: 65px;
     }
     .stockBtn:hover{ border-color: var(--accent2); background: rgba(255,255,255,.05); }
     .stockTag{
@@ -622,7 +622,7 @@
       background: rgba(0,0,0,.15);
       color: rgba(255,255,255,.9);
       font-weight:700;
-      min-width: 30px; /* Réduit de 32px */
+      min-width: 30px;
       text-align: center;
     }
     .stockTag.ok{ border-color: rgba(0,255,136,.3); color: var(--accent); background: rgba(0,255,136,.08); }
@@ -630,19 +630,19 @@
 
     /* BOUTON AJOUTER PLUS PETIT */
     .addBtn{
-      height:20px; /* Réduit de 22px */
-      padding:0 6px; /* Réduit de 7px */
+      height:20px;
+      padding:0 6px;
       border-radius:999px;
       border:1px solid var(--accent);
       background: rgba(0, 255, 136, 0.1);
       color:var(--accent);
       cursor:pointer;
       font-weight:900;
-      font-size:7px; /* Réduit de 8px */
+      font-size:7px;
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:2px; /* Réduit */
+      gap:2px;
       white-space:nowrap;
       transition: all 0.15s ease;
       min-width: 0;
@@ -1080,6 +1080,16 @@
     .qrInfo b{
       color:var(--accent);
     }
+    .qrUrlDisplay{
+      background: rgba(255,255,255,0.05);
+      border:1px solid var(--line);
+      border-radius:6px;
+      padding:8px;
+      margin:10px 0;
+      font-size:10px;
+      word-break:break-all;
+      color:var(--muted);
+    }
 
     /* MODAL ARTICLE AGRANDI - CORRIGÉ AVEC NAVIGATION ET Z-INDEX ÉLEVÉ */
     .product-modal {
@@ -1362,8 +1372,8 @@
       .top{padding: 10px;}
       .topRow{flex-direction: row; align-items: center;}
       .search-row{flex: 1;}
-      #products{grid-template-columns:repeat(3, 1fr);} /* 3 colonnes sur tablette */
-      .imgWrap{height: 75px;} /* Légèrement plus grand */
+      #products{grid-template-columns:repeat(3, 1fr);}
+      .imgWrap{height: 75px;}
       .row2{grid-template-columns:1fr 1fr;}
       .drawer{width: 90vw;}
       body.drawer-open .wrap{transform: translateX(-10vw);}
@@ -1385,17 +1395,17 @@
       .search input{min-width: 200px;}
       .pills{flex-wrap: nowrap;}
       .pill{font-size: 10px;}
-      #products{grid-template-columns:repeat(4, 1fr);} /* 4 colonnes sur desktop */
+      #products{grid-template-columns:repeat(4, 1fr);}
       .imgWrap{height: 85px;}
-      .card{padding:8px;} /* Un peu plus d'espace sur desktop */
-      .name{font-size:11px;} /* Texte légèrement plus grand */
+      .card{padding:8px;}
+      .name{font-size:11px;}
       .price{font-size:9px;}
       .drawer{width: var(--drawerW);}
       .drawer.open{transform: translateX(0);}
     }
 
     @media (min-width: 1024px){
-      #products{grid-template-columns:repeat(5, 1fr);} /* 5 colonnes sur grand écran */
+      #products{grid-template-columns:repeat(5, 1fr);}
       .imgWrap{height: 90px;}
     }
 
@@ -1618,6 +1628,7 @@
         Scannez ce QR Code pour accéder au site sur votre téléphone.<br>
         Partagez-le avec vos clients pour faciliter les commandes !
       </div>
+      <div class="qrUrlDisplay" id="qrUrlDisplay"></div>
       <button class="btn green" id="closeQrBtn">Fermer</button>
     </div>
   </div>
@@ -1959,37 +1970,48 @@ function renderPagination(totalItems) {
   }
 }
 
-/* ===================== QR CODE GÉNÉRATION ===================== */
+/* ===================== QR CODE GÉNÉRATION - CORRIGÉ ===================== */
 function generateQRCode() {
   const canvas = document.getElementById('qrCanvas');
   const currentUrl = window.location.href;
   
-  // Générer le QR Code
-  QRCode.toCanvas(canvas, currentUrl, {
-    width: 220,
-    height: 220,
-    margin: 2,
-    color: {
-      dark: '#0A1929',
-      light: '#00FF88'
-    }
-  }, function (error) {
-    if (error) {
-      console.error('Erreur génération QR Code:', error);
-      // Fallback simple
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#00FF88';
-      ctx.fillRect(0, 0, 220, 220);
-      ctx.fillStyle = '#0A1929';
-      ctx.font = 'bold 20px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('MAXI JDC', 110, 90);
-      ctx.fillText('MARKET', 110, 120);
-      ctx.font = '12px Arial';
-      ctx.fillText('QR Code', 110, 150);
-    }
-  });
+  // Afficher l'URL
+  $("qrUrlDisplay").textContent = currentUrl;
+  
+  // CORRECTION IMPORTANTE : Syntaxe correcte pour QRCode.toCanvas()
+  try {
+    // Vider le canvas d'abord
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Générer le QR Code avec la syntaxe CORRECTE
+    QRCode.toCanvas(canvas, currentUrl, {
+      width: 220,
+      margin: 2,
+      color: {
+        dark: '#0A1929',
+        light: '#00FF88'
+      }
+    }, function (error) {
+      if (error) {
+        console.error('Erreur génération QR Code:', error);
+        // Fallback simple
+        ctx.fillStyle = '#00FF88';
+        ctx.fillRect(0, 0, 220, 220);
+        ctx.fillStyle = '#0A1929';
+        ctx.font = 'bold 20px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('MAXI JDC', 110, 90);
+        ctx.fillText('MARKET', 110, 120);
+        ctx.font = '12px Arial';
+        ctx.fillText('QR Code', 110, 150);
+      }
+    });
+  } catch (error) {
+    console.error('Erreur fatale génération QR:', error);
+    alert("Erreur lors de la génération du QR Code. Vérifiez la console pour plus de détails.");
+  }
 }
 
 /* ===================== MODAL ARTICLE - NAVIGATION ===================== */
@@ -2533,7 +2555,7 @@ $("cartTopBtn").onclick = ()=> openDrawer();
 $("closeDrawer").onclick = ()=> closeDrawer(false);
 $("backdrop").onclick = ()=> closeDrawer(false);
 
-/* QR Code - GÉNÉRATION DYNAMIQUE */
+/* QR Code - GÉNÉRATION DYNAMIQUE CORRIGÉE */
 $("qrBtn").onclick = ()=> {
   generateQRCode();
   $("qrModal").classList.add("open");
