@@ -1075,7 +1075,7 @@
       color:var(--accent);
     }
 
-    /* MODAL ARTICLE AGRANDI */
+    /* MODAL ARTICLE AGRANDI - VERSION SIMPLIFIÉE */
     .product-modal {
       position: fixed;
       inset: 0;
@@ -1092,9 +1092,9 @@
       display: flex;
     }
 
-    .product-modal-content {
-      width: 100%;
-      max-width: 500px;
+    .product-modal-content.simple {
+      max-width: 400px;
+      width: 95vw;
       background: var(--card);
       border-radius: var(--radius);
       border: 2px solid var(--accent);
@@ -1104,18 +1104,29 @@
       flex-direction: column;
       max-height: 90vh;
       position: relative;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .product-modal-simple-header {
+      font-size: 18px;
+      color: var(--accent);
+      margin-bottom: 15px;
+      font-weight: 900;
     }
 
     .product-modal-img {
       width: 100%;
-      height: 250px;
+      height: 200px;
       background: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       position: relative;
-      border-bottom: 1px solid var(--line);
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border: 1px solid var(--line);
     }
 
     .product-modal-img img {
@@ -1134,19 +1145,19 @@
       justify-content: center;
       color: #666666;
       font-weight: 900;
-      font-size: 16px;
+      font-size: 14px;
       background: #f8f8f8;
       text-align: center;
       padding: 20px;
     }
 
-    /* CURSEURS DE NAVIGATION DANS LE MODAL - STYLE AMÉLIORÉ */
+    /* Curseurs de navigation */
     .modal-nav-btn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: rgba(10, 25, 47, 0.9);
       border: 2px solid var(--accent);
@@ -1156,7 +1167,7 @@
       justify-content: center;
       cursor: pointer;
       z-index: 51;
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 900;
       transition: all 0.2s ease;
       backdrop-filter: blur(5px);
@@ -1184,73 +1195,50 @@
     }
 
     .modal-nav-btn.prev {
-      left: 15px;
+      left: 10px;
     }
 
     .modal-nav-btn.next {
-      right: 15px;
-    }
-
-    /* Positionnement intelligent pour éviter le prix */
-    .modal-nav-btn.price-zone {
-      top: 40%;
-    }
-
-    .product-modal-info {
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .product-modal-name {
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--text);
-      line-height: 1.3;
-      margin: 0;
-      padding-right: 60px; /* Espace pour les curseurs */
+      right: 10px;
     }
 
     .product-modal-price {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 900;
       color: var(--accent);
       background: rgba(0, 255, 136, 0.1);
       border: 2px solid var(--accent);
       border-radius: 999px;
-      padding: 10px 20px;
-      align-self: flex-start;
-      margin-top: 5px;
+      padding: 8px 16px;
+      display: inline-block;
+      margin-bottom: 10px;
     }
 
     .product-modal-meta {
       color: var(--muted);
-      font-size: 14px;
+      font-size: 12px;
       line-height: 1.5;
       background: rgba(255,255,255,0.05);
-      padding: 10px;
+      padding: 8px;
       border-radius: 8px;
       border: 1px solid var(--line);
-      margin-top: 10px;
+      margin-bottom: 15px;
     }
 
     .product-modal-meta div {
-      margin: 5px 0;
+      margin: 3px 0;
     }
 
     .product-modal-actions {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-top: 15px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     .product-modal-close {
-      margin-left: auto;
       height: 40px;
       padding: 0 20px;
       border-radius: 8px;
@@ -1261,6 +1249,7 @@
       font-weight: 900;
       font-size: 14px;
       transition: all 0.2s ease;
+      width: 100%;
     }
 
     .product-modal-close:hover {
@@ -1268,9 +1257,9 @@
       border-color: var(--accent);
     }
 
-    /* Pour le stepper et boutons dans le modal */
+    /* Pour le stepper dans le modal */
     .product-modal-actions .stepper {
-      width: 120px;
+      width: 100px;
       padding: 5px 8px;
     }
 
@@ -1290,26 +1279,45 @@
       padding: 0 20px;
       font-size: 14px;
       border-radius: 8px;
+      flex: 1;
+    }
+
+    /* QR Code spécifique pour la livraison */
+    .qrCodeDelivery {
+      width: 120px;
+      height: 120px;
+      margin: 10px auto;
+      display: block;
+      border-radius: 8px;
+      border: 2px solid var(--accent2);
+      background: white;
+      padding: 5px;
+    }
+
+    /* Section QR code */
+    .qr-section {
+      margin-top: 20px;
+      border-top: 1px solid var(--line);
+      padding-top: 15px;
     }
 
     /* Responsive pour le modal */
     @media (max-width: 600px) {
       .product-modal-img {
-        height: 200px;
+        height: 180px;
       }
       
-      .product-modal-name {
+      .product-modal-simple-header {
         font-size: 16px;
-        padding-right: 50px;
       }
       
       .product-modal-price {
         font-size: 18px;
-        padding: 8px 16px;
+        padding: 6px 14px;
       }
       
       .product-modal-meta {
-        font-size: 12px;
+        font-size: 11px;
       }
       
       .product-modal-actions {
@@ -1323,23 +1331,22 @@
       }
       
       .product-modal-close {
-        margin-left: 0;
         width: 100%;
       }
       
       /* Curseurs plus petits sur mobile */
       .modal-nav-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 22px;
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
       }
       
       .modal-nav-btn.prev {
-        left: 8px;
+        left: 5px;
       }
       
       .modal-nav-btn.next {
-        right: 8px;
+        right: 5px;
       }
     }
 
@@ -1379,11 +1386,12 @@
       .price{font-size:9px;}
       .drawer{width: var(--drawerW);}
       .drawer.open{transform: translateX(0);}
-      .product-modal-content {
-        max-width: 600px;
+      .product-modal-content.simple {
+        max-width: 450px;
+        padding: 25px;
       }
       .product-modal-img {
-        height: 300px;
+        height: 220px;
       }
     }
 
@@ -1616,10 +1624,10 @@
     </div>
   </div>
 
-  <!-- Modal Article Agrandi -->
+  <!-- Modal Article Agrandi SIMPLIFIÉ -->
   <div class="product-modal" id="productModal">
-    <div class="product-modal-content">
-      <!-- Curseurs de navigation - Positionnés sur l'image -->
+    <div class="product-modal-content simple">
+      <!-- Curseurs de navigation seulement si plusieurs articles -->
       <button class="modal-nav-btn prev" id="modalPrevBtn" title="Article précédent (Flèche gauche)">‹</button>
       <button class="modal-nav-btn next" id="modalNextBtn" title="Article suivant (Flèche droite)">›</button>
       
@@ -1627,30 +1635,41 @@
         <div class="noPhoto" style="display:none;">Aucune photo disponible</div>
       </div>
       
-      <div class="product-modal-info">
-        <h2 class="product-modal-name" id="modalName"></h2>
-        <div class="product-modal-price" id="modalPrice"></div>
-        
-        <div class="product-modal-meta">
-          <div id="modalCode"></div>
-          <div id="modalCategory"></div>
-          <div id="modalStock"></div>
-        </div>
-        
-        <div class="product-modal-actions">
-          <div class="stepper" id="modalStepper">
-            <button data-act="minus" title="Moins">−</button>
-            <span class="qv" id="modalQty">0</span>
-            <button data-act="plus" title="Plus">+</button>
-          </div>
-          
-          <button class="addBtn" id="modalAddBtn" style="height: 40px; padding: 0 20px; font-size: 14px;">
-            🛒 Ajouter au panier
-          </button>
-          
-          <button class="product-modal-close" id="closeProductModal">Fermer</button>
-        </div>
+      <h3 class="product-modal-simple-header" id="modalName"></h3>
+      
+      <div class="product-modal-price" id="modalPrice"></div>
+      
+      <div class="product-modal-meta">
+        <div id="modalCode"></div>
+        <div id="modalCategory"></div>
+        <div id="modalStock"></div>
       </div>
+      
+      <div class="product-modal-actions">
+        <div class="stepper" id="modalStepper">
+          <button data-act="minus" title="Moins">−</button>
+          <span class="qv" id="modalQty">0</span>
+          <button data-act="plus" title="Plus">+</button>
+        </div>
+        
+        <button class="addBtn" id="modalAddBtn" style="height: 40px; padding: 0 20px; font-size: 14px;">
+          🛒 Ajouter au panier
+        </button>
+      </div>
+      
+      <!-- QR Code spécifique -->
+      <div class="qr-section">
+        <div style="color: var(--muted); font-size: 12px; margin-bottom: 10px;">
+          📱 Scanner pour commander
+        </div>
+        <img src="maxi-jdc-delivery/tools/image-qr.jpg" alt="QR Code MAXI JDC Delivery" 
+             class="qrCodeDelivery"
+             onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=120x120&data='+encodeURIComponent(window.location.href)+'&format=jpg&margin=5&color=0A1929&bgcolor=00FF88';">
+      </div>
+      
+      <button class="product-modal-close" id="closeProductModal" style="margin-top: 15px; width: 100%;">
+        Fermer
+      </button>
     </div>
   </div>
 
@@ -1980,7 +1999,7 @@ function openProductModal(product, pid) {
   // Ouvrir le modal
   $("productModal").classList.add('open');
   
-  // Ajuster la position des curseurs après ouverture
+  // Ajuster la position des curseurs
   setTimeout(adjustModalNavPosition, 100);
 }
 
@@ -2059,12 +2078,10 @@ function adjustModalNavPosition() {
   if (!modalImg || state.currentModalItems.length <= 1) return;
   
   const imgRect = modalImg.getBoundingClientRect();
-  
-  // Positionner les curseurs au centre vertical de l'image
   const imgCenterY = imgRect.top + (imgRect.height / 2);
   
   // Convertir en pourcentage par rapport au modal
-  const modalRect = document.querySelector('.product-modal-content').getBoundingClientRect();
+  const modalRect = document.querySelector('.product-modal-content.simple').getBoundingClientRect();
   const relativeY = ((imgCenterY - modalRect.top) / modalRect.height) * 100;
   
   prevBtn.style.top = `${relativeY}%`;
