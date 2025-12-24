@@ -8,6 +8,9 @@
   <!-- Bibliothèque pour générer les QR Codes -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   
+  <!-- Logo en base64 pour garantir son affichage -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+  
   <style>
     :root{
       --bg0:#0a1929;
@@ -535,7 +538,28 @@
       color:var(--accent);
       font-size:8px; /* Réduit de 9px */
       white-space:nowrap;
+      /* Éloignement du curseur avant/après */
+      position: relative;
+      padding-left: 15px;
+      padding-right: 15px;
     }
+    /* Ajout d'espacement pour éloigner le curseur */
+    .price::before,
+    .price::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 10px;
+      z-index: 1;
+    }
+    .price::before {
+      left: -5px;
+    }
+    .price::after {
+      right: -5px;
+    }
+    
     .meta2{
       color:var(--muted);
       font-size:7px; /* Réduit de 8px */
@@ -962,7 +986,7 @@
     th{ color:var(--muted); font-weight:900; font-size:7px; }
     td strong{ font-weight:900; color:var(--accent); }
 
-    /* Modal Commande */
+    /* Modal Résumé Commande */
     .modalBack{
       position:fixed;
       inset:0;
@@ -1032,7 +1056,7 @@
       flex-shrink: 0;
     }
 
-    /* QR Code Modal - CORRIGÉ */
+    /* QR Code Modal - CORRIGÉ ET FONCTIONNEL */
     .qrModal{
       position:fixed;
       inset:0;
@@ -1082,6 +1106,7 @@
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
+      display: block;
     }
     
     /* Canvas pour le QR Code généré (alternatif) */
@@ -1122,7 +1147,7 @@
       margin-right: auto;
     }
 
-    /* MODAL ARTICLE AGRANDI */
+    /* MODAL ARTICLE AGRANDI AVEC ESPACEMENT DU PRIX */
     .product-modal {
       position: fixed;
       inset: 0;
@@ -1206,6 +1231,7 @@
       padding-right: 40px;
     }
 
+    /* PRIX AVEC ESPACEMENT DU CURSEUR */
     .product-modal-price {
       font-size: 22px;
       font-weight: 900;
@@ -1213,11 +1239,33 @@
       background: rgba(0, 255, 136, 0.1);
       border: 2px solid var(--accent);
       border-radius: 999px;
-      padding: 10px 20px;
+      padding: 15px 30px; /* Plus d'espace pour éloigner le curseur */
       align-self: flex-start;
       z-index: 10;
       position: relative;
       margin-top: 10px;
+      margin-bottom: 10px;
+      /* Espacement supplémentaire pour éloigner le curseur */
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    /* Zones invisibles pour éloigner le curseur du prix */
+    .product-modal-price::before,
+    .product-modal-price::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 30px; /* Espacement important */
+      z-index: 1;
+      cursor: default;
+    }
+    .product-modal-price::before {
+      left: -25px;
+    }
+    .product-modal-price::after {
+      right: -25px;
     }
 
     .product-modal-meta {
@@ -1265,41 +1313,43 @@
       border-color: var(--accent);
     }
 
-    /* FLÈCHES DE NAVIGATION */
+    /* FLÈCHES DE NAVIGATION POUR RECULER À L'ARTICLE AVANT */
     .modal-nav {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
+      width: 50px; /* Plus large pour faciliter le clic */
+      height: 50px;
       border-radius: 50%;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.8);
       border: 2px solid var(--accent);
       color: var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 900;
       cursor: pointer;
-      z-index: 1;
+      z-index: 10;
       transition: all 0.2s ease;
-      opacity: 0.8;
+      opacity: 0.9;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
     
     .modal-nav:hover {
       background: rgba(0, 255, 136, 0.3);
-      transform: translateY(-50%) scale(1.1);
+      transform: translateY(-50%) scale(1.15);
       opacity: 1;
-      z-index: 3;
+      z-index: 11;
+      box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
     }
     
     .modal-nav.prev {
-      left: 10px;
+      left: 15px;
     }
     
     .modal-nav.next {
-      right: 10px;
+      right: 15px;
     }
     
     .modal-nav:disabled {
@@ -1310,9 +1360,10 @@
     }
     
     .modal-nav:disabled:hover {
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.8);
       transform: translateY(-50%);
       opacity: 0.3;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     /* Indicateur de position */
@@ -1322,9 +1373,9 @@
       right: 15px;
       background: rgba(0, 0, 0, 0.9);
       color: var(--accent);
-      padding: 5px 10px;
+      padding: 8px 15px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 900;
       border: 1px solid var(--accent);
       z-index: 10;
@@ -1332,28 +1383,28 @@
 
     /* Pour le stepper et boutons dans le modal */
     .product-modal-actions .stepper {
-      width: 120px;
-      padding: 5px 8px;
+      width: 140px;
+      padding: 8px 10px;
       z-index: 2;
       position: relative;
     }
 
     .product-modal-actions .stepper button {
-      width: 30px;
-      height: 30px;
-      font-size: 16px;
+      width: 35px;
+      height: 35px;
+      font-size: 18px;
     }
 
     .product-modal-actions .stepper span {
-      font-size: 16px;
-      min-width: 20px;
+      font-size: 18px;
+      min-width: 25px;
     }
 
     .product-modal-actions .addBtn {
-      height: 40px;
-      padding: 0 20px;
-      font-size: 14px;
-      border-radius: 8px;
+      height: 45px;
+      padding: 0 25px;
+      font-size: 16px;
+      border-radius: 10px;
       z-index: 2;
       position: relative;
     }
@@ -1371,9 +1422,22 @@
       
       .product-modal-price {
         font-size: 18px;
-        padding: 8px 16px;
+        padding: 12px 25px;
+        padding-left: 35px;
+        padding-right: 35px;
         margin-left: 0;
         z-index: 10;
+      }
+      
+      .product-modal-price::before,
+      .product-modal-price::after {
+        width: 25px;
+      }
+      .product-modal-price::before {
+        left: -20px;
+      }
+      .product-modal-price::after {
+        right: -20px;
       }
       
       .product-modal-meta {
@@ -1396,17 +1460,17 @@
       }
       
       .modal-nav {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
       }
       
       .modal-nav.prev {
-        left: 5px;
+        left: 8px;
       }
       
       .modal-nav.next {
-        right: 5px;
+        right: 8px;
       }
       
       /* QR Code sur mobile */
@@ -1524,7 +1588,8 @@
       <div class="topRow">
         <div class="brand">
           <div class="logo">
-            <!-- Logo à ajouter -->
+            <!-- Logo intégré en base64 pour garantir son affichage -->
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjM2IiBoZWlnaHQ9IjM2IiByeD0iNiIgZmlsbD0iIzBBMTkyOSIvPgo8cGF0aCBkPSJNMTggMTBMOCAyMEgyOEwxOCAxMFoiIGZpbGw9IiMwMEZGRjgiLz4KPHBhdGggZD0iTTEwIDEyTDE0IDI0IiBzdHJva2U9IiMwMEQ0RkYiIHN0cm9rZS13aWR0aD0iMiIvPgo8cGF0aCBkPSJNMjIgMTJMMjYgMjQiIHN0cm9rZT0iIzAwRDRGRiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxjaXJjbGUgY3g9IjE4IiBjeT0iOCIgcj0iMyIgZmlsbD0iIzAwRDRGRiIvPgo8L3N2Zz4K" alt="Logo MAXI JC MARKET">
           </div>
           <div class="brandText">
             <h1>MAXI JC MARKET</h1>
@@ -1720,22 +1785,15 @@
     </div>
   </div>
 
-  <!-- Modal QR Code - SPÉCIAL MAXI JC MARKET - CORRIGÉ -->
+  <!-- Modal QR Code - FONCTIONNEL -->
   <div class="qrModal" id="qrModal">
     <div class="qrBox">
       <h3>📱 QR Code MAXI JC MARKET</h3>
       
-      <!-- Conteneur pour l'image QR Code existante -->
+      <!-- Conteneur pour le QR Code -->
       <div class="qrImageContainer" id="qrImageContainer">
-        <img src="maxi-jdc-delivery/tools/image-qr.jpg" alt="QR Code MAXI JC MARKET" id="qrStaticImage">
-        <!-- Texte de secours si l'image ne se charge pas -->
-        <div style="display:none; text-align:center; color:#666; font-size:14px;" id="qrFallbackText">
-          QR Code non disponible
-        </div>
+        <canvas id="qrCanvas"></canvas>
       </div>
-      
-      <!-- Canvas pour génération dynamique (alternative) -->
-      <canvas id="qrCanvas"></canvas>
       
       <div class="qrInfo">
         <b>MAXI JC MARKET</b>
@@ -1746,10 +1804,10 @@
     </div>
   </div>
 
-  <!-- Modal Article Agrandi avec navigation -->
+  <!-- Modal Article Agrandi avec navigation et espacement du prix -->
   <div class="product-modal" id="productModal">
     <div class="product-modal-content">
-      <!-- Flèches de navigation -->
+      <!-- Flèches de navigation pour reculer à l'article avant -->
       <button class="modal-nav prev" id="modalPrevBtn" title="Article précédent">‹</button>
       <button class="modal-nav next" id="modalNextBtn" title="Article suivant">›</button>
       
@@ -1776,7 +1834,7 @@
             <button data-act="plus" title="Plus">+</button>
           </div>
           
-          <button class="addBtn" id="modalAddBtn" style="height: 40px; padding: 0 20px; font-size: 14px;">
+          <button class="addBtn" id="modalAddBtn" style="height: 45px; padding: 0 25px; font-size: 16px;">
             🛒 Ajouter au panier
           </button>
           
@@ -2083,76 +2141,64 @@ function renderPagination(totalItems) {
   }
 }
 
-/* ===================== QR CODE - CORRIGÉ POUR UTILISER L'IMAGE EXISTANTE ===================== */
+/* ===================== QR CODE - FONCTIONNEL ===================== */
 function showQRCode() {
-  // Vérifier si l'image QR existe
-  const qrImage = $("qrStaticImage");
-  const qrFallback = $("qrFallbackText");
-  const qrCanvas = $("qrCanvas");
-  const qrImageContainer = $("qrImageContainer");
-  
-  // Essayer de charger l'image QR existante
-  const qrImagePath = "maxi-jdc-delivery/tools/image-qr.jpg";
-  
-  // Créer une image pour vérifier si elle existe
-  const testImage = new Image();
-  testImage.onload = function() {
-    // L'image existe - afficher l'image
-    qrImage.style.display = "block";
-    qrFallback.style.display = "none";
-    qrCanvas.style.display = "none";
-    qrImageContainer.style.display = "flex";
-    console.log("QR Code image chargée avec succès:", qrImagePath);
-  };
-  
-  testImage.onerror = function() {
-    // L'image n'existe pas - générer un QR Code dynamique
-    console.warn("L'image QR n'existe pas, génération d'un QR Code dynamique");
-    qrImage.style.display = "none";
-    qrFallback.style.display = "flex";
-    qrCanvas.style.display = "block";
-    qrImageContainer.style.display = "none";
-    
-    // Générer un QR Code dynamique
-    generateDynamicQRCode();
-  };
-  
-  testImage.src = qrImagePath;
-  
-  // Ouvrir le modal
-  $("qrModal").classList.add("open");
-}
-
-function generateDynamicQRCode() {
   try {
-    // URL à encoder dans le QR Code
-    const currentUrl = window.location.href;
+    const canvas = document.getElementById('qrCanvas');
+    const ctx = canvas.getContext('2d');
     
-    // Options pour le QR Code
-    const qrOptions = {
-      width: 280,
-      height: 280,
+    // Taille du canvas
+    canvas.width = 280;
+    canvas.height = 280;
+    
+    // Effacer le canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // URL à encoder (l'URL actuelle)
+    const url = window.location.href;
+    
+    // Générer le QR Code
+    QRCode.toCanvas(canvas, url, {
+      width: canvas.width,
       margin: 2,
       color: {
         dark: '#0A1929',
         light: '#FFFFFF'
       }
-    };
-    
-    // Générer le QR Code
-    QRCode.toCanvas($("qrCanvas"), currentUrl, qrOptions, function(error) {
+    }, function(error) {
       if (error) {
         console.error('Erreur génération QR Code:', error);
-        // Fallback
-        $("qrCanvas").style.display = "none";
-        $("qrFallbackText").style.display = "flex";
-        $("qrFallbackText").textContent = "Erreur génération QR Code";
+        // Fallback simple
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#0A1929';
+        ctx.font = 'bold 20px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('MAXI JC MARKET', canvas.width/2, canvas.height/2 - 20);
+        ctx.font = '16px Arial';
+        ctx.fillText('QR Code', canvas.width/2, canvas.height/2 + 10);
       } else {
-        console.log('QR Code dynamique généré avec succès!');
+        // Ajouter une bordure colorée
+        ctx.strokeStyle = '#00FF88';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(0, 0, canvas.width, canvas.height);
+        
+        // Ajouter le texte
+        ctx.fillStyle = '#0A1929';
+        ctx.font = 'bold 16px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText('MAXI JC MARKET', canvas.width/2, canvas.height + 5);
       }
     });
+    
+    // Afficher le modal
+    $("qrModal").classList.add("open");
+    
   } catch (error) {
-    console.error('Erreur lors de la génération du QR Code:', error);
+    console.error('Erreur QR Code:', error);
+    alert("Erreur lors de la génération du QR Code. Veuillez réessayer.");
   }
 }
 
@@ -2700,7 +2746,7 @@ $("cartTopBtn").onclick = ()=> openDrawer();
 $("closeDrawer").onclick = ()=> closeDrawer(false);
 $("backdrop").onclick = ()=> closeDrawer(false);
 
-/* QR Code - CORRIGÉ */
+/* QR Code - FONCTIONNEL */
 $("qrBtn").onclick = ()=> {
   showQRCode();
 };
@@ -3024,9 +3070,6 @@ loadAll().then(() => {
     importClientCode(clientCode);
   }
   
-  // Précharger l'image QR Code
-  const qrImage = new Image();
-  qrImage.src = "maxi-jdc-delivery/tools/image-qr.jpg";
 }).catch(err => {
   console.error("Erreur lors du chargement des données:", err);
   $("products").innerHTML = `<div class="warn" style="grid-column:1/-1;text-align:center;padding:30px;">
