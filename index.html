@@ -406,7 +406,7 @@
       font-size: 11px;
     }
 
-    /* PAGINATION EN HAUT */
+    /* PAGINATION EN HAUT - CURSEURS SUR LA MÊME LIGNE */
     .pagination-top {
       display: flex;
       justify-content: space-between;
@@ -453,6 +453,8 @@
     .page-info {
       font-size: 12px;
       font-weight: 600;
+      min-width: 80px;
+      text-align: center;
     }
 
     .page-count {
@@ -2272,7 +2274,7 @@
           <h2 id="activeCategoryLabel">Produits</h2>
           <div class="meta" id="activeCategoryMeta">Sélectionnez une catégorie</div>
           
-          <!-- PAGINATION EN HAUT -->
+          <!-- PAGINATION EN HAUT - CURSEURS SUR LA MÊME LIGNE -->
           <div class="pagination-top">
             <div class="page-controls">
               <button class="page-btn" id="prevPageBtn" title="Page précédente">‹</button>
@@ -2535,13 +2537,12 @@
       
       <div class="qr-modal-body">
         <div class="qr-code-container" id="qrCodeContainer">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://maxi-jdc-market.com" 
-               alt="QR Code MAXI JDC MARKET">
+          <!-- QR Code dynamique -->
         </div>
         
         <div class="qr-instructions">
           <p>Scannez ce code avec votre téléphone pour accéder à l'application MAXI JDC MARKET.</p>
-          <p>Ou utilisez ce lien : <strong>maxi-jdc-market.com</strong></p>
+          <p>Ou utilisez ce lien : <strong id="qrUrl"></strong></p>
         </div>
       </div>
       
@@ -2612,7 +2613,7 @@ const CONFIG = {
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v7',
+  localStorageKey: 'maxi_jdc_market_app_v8',
   appUrl: window.location.href
 };
 
@@ -2686,7 +2687,7 @@ function saveState() {
     user: state.user,
     cart: state.cart,
     stock: state.stock,
-    version: '7.0'
+    version: '8.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -2694,7 +2695,7 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '7.0') {
+    if (data && data.version === '8.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.stock = data.stock || {};
@@ -3208,15 +3209,18 @@ function renderProducts() {
     const productId = generateProductId(product);
     const inStock = isInStock(product.code);
     
+    // Vérifier si l'image existe réellement
+    const imgSrc = `images/products/${product.code}.jpg`;
+    
     const card = document.createElement('div');
     card.className = 'product-card';
     card.innerHTML = `
       <div class="product-image">
-        <img src="images/products/${product.code}.jpg" 
+        <img src="${imgSrc}" 
              alt="${product.name}"
              onload="this.style.display='block'; this.parentElement.querySelector('.no-photo').style.display='none';"
              onerror="this.style.display='none'; this.parentElement.querySelector('.no-photo').style.display='flex';">
-        <div class="no-photo" style="display:none;">Aucune photo</div>
+        <div class="no-photo" style="display:none;">${product.code}</div>
       </div>
       
       <div class="product-info">
@@ -3296,7 +3300,9 @@ function openProductModal(product) {
   const img = $('modalProductImage');
   const noPhoto = $('modalNoPhoto');
   
-  img.src = `images/products/${product.code}.jpg`;
+  // Utiliser l'URL correcte pour l'image
+  const imgSrc = `images/products/${product.code}.jpg`;
+  img.src = imgSrc;
   img.onload = () => {
     img.style.display = 'block';
     noPhoto.style.display = 'none';
@@ -3304,6 +3310,7 @@ function openProductModal(product) {
   img.onerror = () => {
     img.style.display = 'none';
     noPhoto.style.display = 'flex';
+    noPhoto.textContent = `Aucune photo pour ${product.code}`;
   };
   
   updateImageNavBar();
@@ -3367,6 +3374,16 @@ function updateModalQuantity() {
 
 // ===================== MODAL QR CODE =====================
 function openQrModal() {
+  const qrCodeContainer = $('qrCodeContainer');
+  const qrUrl = $('qrUrl');
+  
+  // Créer le QR code dynamiquement
+  const currentUrl = window.location.href;
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl)}`;
+  
+  qrCodeContainer.innerHTML = `<img src="${qrCodeUrl}" alt="QR Code MAXI JDC MARKET">`;
+  qrUrl.textContent = currentUrl;
+  
   $('qrModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -3658,7 +3675,7 @@ function init() {
     updateCategoriesUI();
   };
   
-  // QR Code
+  // QR Code - CORRIGÉ
   $('qrBtn').onclick = openQrModal;
   $('qrDirectBtn').onclick = openQrModal;
   $('closeQrModalBtn').onclick = closeQrModal;
