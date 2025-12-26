@@ -3228,8 +3228,10 @@ function renderProducts() {
     const productId = generateProductId(product);
     const inStock = isInStock(product.code);
     
-    // Utiliser une image unique par code produit
-    const imgSrc = `images/products/${product.code}.jpg`;
+    // Utiliser une image unique par code produit - CORRECTION ICI
+    // On utilise le code comme nom de fichier, mais on ajoute un hash pour éviter les répétitions
+    const imageHash = generateImageHash(product);
+    const imgSrc = `images/products/${imageHash}.jpg`;
     
     const card = document.createElement('div');
     card.className = 'product-card';
@@ -3262,6 +3264,18 @@ function renderProducts() {
     
     grid.appendChild(card);
   });
+}
+
+// Fonction pour générer un hash unique pour l'image basé sur le produit
+function generateImageHash(product) {
+  // Créer un hash unique en combinant code, nom et catégorie
+  const str = `${product.code}_${product.name}_${product.categoryKey}`;
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash = hash & hash;
+  }
+  return Math.abs(hash).toString(16).substring(0, 8);
 }
 
 // ===================== NAVIGATION PRODUITS =====================
@@ -3319,8 +3333,10 @@ function openProductModal(product) {
   const img = $('modalProductImage');
   const noPhoto = $('modalNoPhoto');
   
-  // Utiliser l'URL correcte pour l'image
-  const imgSrc = `images/products/${product.code}.jpg`;
+  // Utiliser le même hash que dans renderProducts
+  const imageHash = generateImageHash(product);
+  const imgSrc = `images/products/${imageHash}.jpg`;
+  
   img.src = imgSrc;
   img.onload = () => {
     img.style.display = 'block';
