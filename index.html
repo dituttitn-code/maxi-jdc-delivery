@@ -190,6 +190,7 @@
     .search-input {
       flex: 1;
       min-width: 0;
+      position: relative;
     }
 
     .search-input input {
@@ -203,6 +204,7 @@
       outline: none;
       font-size: 14px;
       transition: all 0.2s ease;
+      padding-right: 44px;
     }
 
     .search-input input:focus {
@@ -247,6 +249,30 @@
       background: rgba(0, 255, 136, 0.25);
     }
 
+    /* Bouton Entrer dans la recherche */
+    .search-enter-btn {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid var(--accent);
+      background: rgba(0, 255, 136, 0.15);
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .search-enter-btn:hover {
+      background: rgba(0, 255, 136, 0.25);
+    }
+
     /* INFOS RAPIDES - CORRIGÉES (pas de texte blanc) */
     .quick-info {
       display: flex;
@@ -269,7 +295,7 @@
       border-radius: 20px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,.08);
-      color: var(--muted); /* Changé de var(--text) à var(--muted) pour mieux lire */
+      color: var(--muted);
       font-size: 11px;
       white-space: nowrap;
       flex-shrink: 0;
@@ -277,7 +303,7 @@
 
     .info-pill strong {
       font-weight: 800;
-      color: var(--accent2); /* Changé pour une meilleure visibilité */
+      color: var(--accent2);
     }
 
     .qr-pill {
@@ -392,6 +418,50 @@
       gap: 8px;
     }
 
+    /* PAGINATION EN BAS */
+    .pagination-bottom {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0 40px;
+      color: var(--muted);
+      font-size: 14px;
+      gap: 16px;
+    }
+
+    .pagination-bottom .page-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      border: 2px solid var(--line);
+      background: rgba(255,255,255,.1);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .pagination-bottom .page-btn:hover {
+      background: rgba(255,255,255,.2);
+      border-color: var(--accent);
+    }
+
+    .pagination-bottom .page-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .pagination-bottom .page-info {
+      font-size: 14px;
+      font-weight: 700;
+      min-width: 120px;
+      text-align: center;
+    }
+
     .page-controls {
       display: flex;
       align-items: center;
@@ -434,7 +504,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      padding: 8px 0 80px;
+      padding: 8px 0 20px;
     }
 
     @media (min-width: 480px) {
@@ -937,6 +1007,15 @@
       margin-top: 10px;
     }
 
+    .modal-actions-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 20px 0 0;
+      border-top: 1px solid var(--line);
+      margin-top: 20px;
+    }
+
     .modal-quantity-controls {
       display: flex;
       align-items: center;
@@ -1024,6 +1103,30 @@
       color: var(--muted);
     }
 
+    .modal-close-bottom-btn {
+      width: 100%;
+      height: 55px;
+      padding: 0 30px;
+      border-radius: 15px;
+      border: 2px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      margin-top: 10px;
+    }
+
+    .modal-close-bottom-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--accent2);
+    }
+
     .modal-stock-btn {
       height: 55px;
       padding: 0 25px;
@@ -1044,6 +1147,82 @@
     .modal-stock-btn:hover {
       background: rgba(255,255,255,0.1);
       border-color: var(--accent2);
+    }
+
+    /* MODAL QR CODE */
+    .qr-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2500;
+      padding: 20px;
+      backdrop-filter: blur(20px);
+    }
+
+    .qr-modal-overlay.open {
+      display: flex;
+    }
+
+    .qr-modal {
+      width: 100%;
+      max-width: 320px;
+      background: linear-gradient(135deg, var(--bg0) 0%, var(--bg1) 100%);
+      border-radius: 20px;
+      border: 3px solid var(--accent);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .qr-modal-header {
+      padding: 20px;
+      background: rgba(0, 255, 136, 0.1);
+      border-bottom: 1px solid var(--accent);
+      text-align: center;
+    }
+
+    .qr-modal-header h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    .qr-modal-body {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .qr-code-container {
+      width: 200px;
+      height: 200px;
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-instructions {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .qr-modal-footer {
+      padding: 20px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: center;
     }
 
     /* PANIER (DRAWER) */
@@ -1236,7 +1415,7 @@
 
     .tel-input-wrapper input {
       padding-left: 50px !important;
-      letter-spacing: 1px; /* Espacement pour mieux lire les chiffres */
+      letter-spacing: 1px;
     }
 
     .tel-prefix {
@@ -1839,6 +2018,9 @@
       box-shadow: 0 5px 20px rgba(0,255,136,0.3);
       animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.5s forwards;
       max-width: 300px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .toast.warning {
@@ -2001,6 +2183,7 @@
       <div class="search-container">
         <div class="search-input">
           <input id="searchInput" type="search" placeholder="🔍 Rechercher un produit..." autocomplete="off">
+          <button class="search-enter-btn" id="searchEnterBtn" title="Rechercher">↵</button>
         </div>
         <div class="search-buttons">
           <button class="search-btn" id="clearSearchBtn">Effacer</button>
@@ -2031,7 +2214,7 @@
           <h2 id="activeCategoryLabel">Produits</h2>
           <div class="meta" id="activeCategoryMeta">Sélectionnez une catégorie</div>
           
-          <!-- PAGINATION -->
+          <!-- PAGINATION EN HAUT -->
           <div class="pagination-top">
             <div class="page-controls">
               <button class="page-btn" id="prevPageBtn" title="Page précédente">‹</button>
@@ -2044,6 +2227,13 @@
 
         <!-- GRID PRODUITS -->
         <div class="products-grid" id="productsGrid"></div>
+
+        <!-- PAGINATION EN BAS -->
+        <div class="pagination-bottom" id="paginationBottom">
+          <button class="page-btn" id="prevPageBottomBtn" title="Page précédente">‹</button>
+          <span class="page-info" id="pageInfoBottom">Page 1/1</span>
+          <button class="page-btn" id="nextPageBottomBtn" title="Page suivante">›</button>
+        </div>
       </div>
     </main>
   </div>
@@ -2081,7 +2271,7 @@
                        pattern="[0-9]{8}" inputmode="numeric" maxlength="8">
                 <button type="button" class="tel-clear-btn" id="clearPhoneBtn">×</button>
               </div>
-              <div class="tel-hint">Format: 25 600 978 (8 chiffres)</div>
+              <div class="tel-hint">Format: 8 chiffres (ex: 25 600 978)</div>
             </div>
           </div>
           
@@ -2157,7 +2347,7 @@
           </div>
         </div>
         
-        <!-- CONDITIONS LIVRAISON */
+        <!-- CONDITIONS LIVRAISON -->
         <div class="delivery-info">
           <h5>📦 Conditions de livraison</h5>
           <div class="delivery-rules">
@@ -2202,12 +2392,12 @@
       <div class="modal-content">
         <!-- IMAGE PRODUIT -->
         <div class="modal-image-container">
-          <button class="image-nav-btn prev" id="modalPrevImageBtn" disabled>‹</button>
+          <button class="image-nav-btn prev" id="modalPrevImageBtn">‹</button>
           
           <img class="modal-image" id="modalProductImage" alt="">
           <div class="modal-no-photo" id="modalNoPhoto">Aucune photo disponible</div>
           
-          <button class="image-nav-btn next" id="modalNextImageBtn" disabled>›</button>
+          <button class="image-nav-btn next" id="modalNextImageBtn">›</button>
         </div>
         
         <!-- INFOS PRODUIT -->
@@ -2252,6 +2442,39 @@
             </button>
           </div>
         </div>
+
+        <!-- BOUTON FERMER EN BAS -->
+        <div class="modal-actions-bottom">
+          <button class="modal-close-bottom-btn" id="modalCloseBottomBtn">
+            ✕ Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL QR CODE -->
+  <div class="qr-modal-overlay" id="qrModal">
+    <div class="qr-modal">
+      <div class="qr-modal-header">
+        <h3>📱 Scanner le QR Code</h3>
+      </div>
+      
+      <div class="qr-modal-body">
+        <div class="qr-code-container" id="qrCodeContainer">
+          <!-- QR Code sera généré ici -->
+          <canvas id="qrCodeCanvas"></canvas>
+        </div>
+        
+        <div class="qr-instructions">
+          <p>Scannez ce code avec votre téléphone pour accéder à l'application MAXI JDC MARKET</p>
+        </div>
+      </div>
+      
+      <div class="qr-modal-footer">
+        <button class="form-btn" id="closeQrModalBtn">
+          ✕ Fermer
+        </button>
       </div>
     </div>
   </div>
@@ -2307,15 +2530,19 @@
    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
    crossorigin=""></script>
 
+  <!-- QR Code Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
 <script>
 // ===================== CONFIGURATION =====================
 const CONFIG = {
   minOrder: 15,
-  freeShipping: 100, // Changé de 30 à 100 dt
+  freeShipping: 100,
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v4'
+  localStorageKey: 'maxi_jdc_market_app_v5',
+  appUrl: window.location.href
 };
 
 // Catégories avec fichiers CSV
@@ -2354,7 +2581,10 @@ const state = {
   showAllCategories: false,
   currentPage: 1,
   currentModalProduct: null,
-  quantityPicks: {}
+  quantityPicks: {},
+  filteredProducts: [],
+  currentImageIndex: 0,
+  productImages: {}
 };
 
 // ===================== UTILITAIRES =====================
@@ -2363,12 +2593,15 @@ function formatPrice(amount) {
   return Number(amount).toFixed(2).replace('.', ',') + ' dt';
 }
 function generateProductId(product) {
-  return `${product.category}_${product.code}_${product.name}`.replace(/[^a-z0-9_]/gi, '_').toLowerCase();
+  return `${product.categoryKey}_${product.code}_${product.name}`.replace(/[^a-z0-9_]/gi, '_').toLowerCase();
 }
 function showToast(message, type = 'success') {
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.textContent = message;
+  toast.innerHTML = `
+    <span>${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : '❌'}</span>
+    <span>${message}</span>
+  `;
   document.body.appendChild(toast);
   
   setTimeout(() => {
@@ -2382,7 +2615,7 @@ function saveState() {
     user: state.user,
     cart: state.cart,
     stock: state.stock,
-    version: '4.0'
+    version: '5.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -2390,12 +2623,11 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '4.0') {
+    if (data && data.version === '5.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.stock = data.stock || {};
       
-      // Mettre à jour l'interface utilisateur
       updateUserUI();
       updateCartUI();
     }
@@ -2411,14 +2643,12 @@ function updateUserUI() {
   const editBtn = $('editAccountBtn');
   
   if (state.user) {
-    // Remplir les champs
     $('clientName').value = state.user.name || '';
     $('clientPhone').value = state.user.phone || '';
     $('clientAddress').value = state.user.address || '';
     $('clientLat').value = state.user.lat || '';
     $('clientLng').value = state.user.lng || '';
     
-    // Désactiver les champs
     $('clientName').disabled = true;
     $('clientPhone').disabled = true;
     $('clientAddress').disabled = true;
@@ -2430,7 +2660,6 @@ function updateUserUI() {
     accountStatus.textContent = 'Connecté';
     accountStatus.style.background = 'rgba(0,255,136,0.2)';
     
-    // Mettre à jour l'aperçu de la carte
     if (state.user.lat && state.user.lng) {
       $('mapPreview').innerHTML = `
         <div style="width:100%;height:100%;background:#333;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;">
@@ -2439,14 +2668,12 @@ function updateUserUI() {
       `;
     }
   } else {
-    // Réinitialiser les champs
     $('clientName').value = '';
     $('clientPhone').value = '';
     $('clientAddress').value = '';
     $('clientLat').value = '';
     $('clientLng').value = '';
     
-    // Activer les champs
     $('clientName').disabled = false;
     $('clientPhone').disabled = false;
     $('clientAddress').disabled = false;
@@ -2461,7 +2688,6 @@ function updateUserUI() {
     $('mapPreview').innerHTML = '<span>Cliquez pour localiser</span>';
   }
   
-  // Mettre à jour le bouton effacer du téléphone
   updatePhoneClearButton();
 }
 
@@ -2488,7 +2714,6 @@ function saveUser() {
     return;
   }
   
-  // Nettoyer le numéro de téléphone (enlever les espaces)
   phone = phone.replace(/\s/g, '');
   
   if (phone.length !== 8 || !/^\d+$/.test(phone)) {
@@ -2511,14 +2736,12 @@ function saveUser() {
   updateUserUI();
   showToast('✅ Compte enregistré avec succès !');
   
-  // Focus sur le champ de recherche
   $('searchInput').focus();
 }
 
 function editUser() {
   if (!state.user) return;
   
-  // Activer l'édition
   $('clientName').disabled = false;
   $('clientPhone').disabled = false;
   $('clientAddress').disabled = false;
@@ -2536,11 +2759,9 @@ function updateCartUI() {
   const cartCount = Object.values(state.cart).reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
   
-  // Mettre à jour le compteur du header
   $('cartTopCount').textContent = cartCount;
   $('cartItemsCount').textContent = `${cartCount} article(s)`;
   
-  // Mettre à jour la liste du panier
   const cartItemsList = $('cartItemsList');
   const cartEmptyMessage = $('cartEmptyMessage');
   
@@ -2577,7 +2798,6 @@ function updateCartUI() {
     });
   }
   
-  // Mettre à jour les totaux
   $('cartSubtotal').textContent = formatPrice(subtotal);
   
   let shippingFee = CONFIG.shippingFee;
@@ -2603,7 +2823,6 @@ function updateCartUI() {
     $('placeOrderBtn').disabled = true;
   }
   
-  // Mettre à jour les règles de livraison
   const minOrderRule = $('minOrderRule');
   const shippingRule = $('shippingRule');
   const freeShippingRule = $('freeShippingRule');
@@ -2643,11 +2862,19 @@ function addToCart(productId, product, quantity = 1) {
     };
   }
   
-  // Réinitialiser la quantité choisie
+  // Réinitialiser la quantité choisie et montrer un message
   state.quantityPicks[productId] = 0;
   
   updateCartUI();
-  showToast(`✅ ${quantity} × ${product.name} ajouté au panier`);
+  
+  // Message amélioré pour l'ajout au panier
+  showToast(`✅ ${quantity} × ${product.name} ajouté au panier !`);
+  
+  // Réinitialiser la quantité affichée dans le modal si c'est le produit courant
+  if (state.currentModalProduct && generateProductId(state.currentModalProduct) === productId) {
+    state.quantityPicks[productId] = 0;
+    updateModalQuantity();
+  }
 }
 
 function removeFromCart(productId, quantity = 1) {
@@ -2683,7 +2910,7 @@ function isInStock(productCode) {
   return state.stock[productCode] !== false;
 }
 
-// ===================== CHARGEMENT DES DONNÉES - CORRIGÉ =====================
+// ===================== CHARGEMENT DES DONNÉES =====================
 async function loadCategoryData(categoryKey) {
   try {
     const category = CATEGORIES.find(c => c.key === categoryKey);
@@ -2700,7 +2927,6 @@ async function loadCategoryData(categoryKey) {
     
     if (lines.length === 0) return [];
     
-    // Vérifier le format du CSV (tab ou point-virgule)
     const firstLine = lines[0];
     const separator = firstLine.includes('\t') ? '\t' : ';';
     
@@ -2712,7 +2938,6 @@ async function loadCategoryData(categoryKey) {
       const name = parts[1];
       let priceStr = parts[2];
       
-      // Nettoyer le prix
       priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
       const price = parseFloat(priceStr);
       
@@ -2735,14 +2960,12 @@ async function loadCategoryData(categoryKey) {
 async function loadAllProducts() {
   state.products.clear();
   
-  // Charger d'abord la catégorie par défaut pour un affichage rapide
   const defaultProducts = await loadCategoryData('cafe');
   state.products.set('cafe', defaultProducts);
   
   renderCategories();
   renderProducts();
   
-  // Charger les autres catégories en arrière-plan
   setTimeout(async () => {
     for (const category of CATEGORIES) {
       if (category.key !== 'cafe') {
@@ -2762,20 +2985,19 @@ function renderCategories() {
   const container = $('categoriesContainer');
   container.innerHTML = '';
   
-  // Bouton "Tous"
   const allButton = document.createElement('button');
   allButton.className = `cat-btn ${state.showAllCategories ? 'active' : ''}`;
   const allProductsCount = [...state.products.values()].flat().length;
   allButton.innerHTML = `🌐 Tous <span class="cat-count">${allProductsCount}</span>`;
   allButton.onclick = () => {
     state.showAllCategories = true;
+    state.activeCategory = null;
     state.currentPage = 1;
     renderProducts();
     updateCategoriesUI();
   };
   container.appendChild(allButton);
   
-  // Boutons catégories
   CATEGORIES.forEach(category => {
     const products = state.products.get(category.key) || [];
     const button = document.createElement('button');
@@ -2827,7 +3049,6 @@ function getFilteredProducts() {
     products = state.products.get(state.activeCategory) || [];
   }
   
-  // Filtre recherche
   if (state.searchQuery) {
     const query = state.searchQuery.toLowerCase();
     products = products.filter(product =>
@@ -2837,24 +3058,32 @@ function getFilteredProducts() {
     );
   }
   
-  return products.sort((a, b) => a.name.localeCompare(b.name));
+  state.filteredProducts = products.sort((a, b) => a.name.localeCompare(b.name));
+  return state.filteredProducts;
 }
 
 function renderProducts() {
   const products = getFilteredProducts();
   const totalPages = Math.ceil(products.length / CONFIG.itemsPerPage) || 1;
   
-  // Ajuster la page courante si nécessaire
   if (state.currentPage > totalPages) {
     state.currentPage = totalPages || 1;
   }
   
-  // Mettre à jour la pagination
-  $('pageInfo').textContent = `Page ${state.currentPage}/${totalPages}`;
+  // Mettre à jour les informations de pagination
+  const pageInfo = `Page ${state.currentPage}/${totalPages}`;
+  $('pageInfo').textContent = pageInfo;
+  $('pageInfoBottom').textContent = pageInfo;
   $('itemCount').textContent = `${products.length} article(s)`;
   
+  // Mettre à jour les boutons de pagination
   $('prevPageBtn').disabled = state.currentPage === 1;
   $('nextPageBtn').disabled = state.currentPage === totalPages;
+  $('prevPageBottomBtn').disabled = state.currentPage === 1;
+  $('nextPageBottomBtn').disabled = state.currentPage === totalPages;
+  
+  // Afficher ou masquer la pagination en bas
+  $('paginationBottom').style.display = totalPages > 1 ? 'flex' : 'none';
   
   // Calculer les produits à afficher
   const startIndex = (state.currentPage - 1) * CONFIG.itemsPerPage;
@@ -2921,7 +3150,6 @@ function renderProducts() {
       </div>
     `;
     
-    // Ajouter l'événement de clic sur la carte pour ouvrir le modal
     card.addEventListener('click', (e) => {
       if (!e.target.closest('button')) {
         openProductModal(product);
@@ -2961,7 +3189,6 @@ function renderProducts() {
     btn.onclick = (e) => {
       e.stopPropagation();
       const productId = btn.dataset.id;
-      const products = getFilteredProducts();
       const product = products.find(p => generateProductId(p) === productId);
       
       if (product) {
@@ -2973,6 +3200,35 @@ function renderProducts() {
       }
     };
   });
+}
+
+// ===================== NAVIGATION PRODUITS =====================
+function navigateToNextProduct() {
+  if (!state.currentModalProduct) return;
+  
+  const products = state.filteredProducts;
+  const currentIndex = products.findIndex(p => 
+    p.code === state.currentModalProduct.code && 
+    p.categoryKey === state.currentModalProduct.categoryKey
+  );
+  
+  if (currentIndex !== -1 && currentIndex < products.length - 1) {
+    openProductModal(products[currentIndex + 1]);
+  }
+}
+
+function navigateToPrevProduct() {
+  if (!state.currentModalProduct) return;
+  
+  const products = state.filteredProducts;
+  const currentIndex = products.findIndex(p => 
+    p.code === state.currentModalProduct.code && 
+    p.categoryKey === state.currentModalProduct.categoryKey
+  );
+  
+  if (currentIndex > 0) {
+    openProductModal(products[currentIndex - 1]);
+  }
 }
 
 // ===================== MODAL PRODUIT =====================
@@ -3000,7 +3256,7 @@ function openProductModal(product) {
   addBtn.disabled = !inStock || quantity === 0;
   addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
   
-  // Charger l'image
+  // Charger l'image et simuler plusieurs images
   const img = $('modalProductImage');
   const noPhoto = $('modalNoPhoto');
   
@@ -3014,9 +3270,14 @@ function openProductModal(product) {
     noPhoto.style.display = 'flex';
   };
   
-  // Désactiver la navigation d'image (une seule image pour l'instant)
-  $('modalPrevImageBtn').disabled = true;
-  $('modalNextImageBtn').disabled = true;
+  // Activer/désactiver la navigation d'image
+  const products = state.filteredProducts;
+  const currentIndex = products.findIndex(p => 
+    p.code === product.code && p.categoryKey === product.categoryKey
+  );
+  
+  $('modalPrevImageBtn').disabled = currentIndex === 0;
+  $('modalNextImageBtn').disabled = currentIndex === products.length - 1;
   
   // Ouvrir le modal
   $('productModal').classList.add('open');
@@ -3027,6 +3288,50 @@ function closeProductModal() {
   $('productModal').classList.remove('open');
   document.body.style.overflow = '';
   state.currentModalProduct = null;
+  state.currentImageIndex = 0;
+}
+
+function updateModalQuantity() {
+  if (!state.currentModalProduct) return;
+  
+  const productId = generateProductId(state.currentModalProduct);
+  const quantity = state.quantityPicks[productId] || 0;
+  
+  $('modalProductQuantity').textContent = quantity;
+  
+  const addBtn = $('modalAddToCartBtn');
+  const inStock = isInStock(state.currentModalProduct.code);
+  
+  addBtn.disabled = !inStock || quantity === 0;
+  addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
+}
+
+// ===================== MODAL QR CODE =====================
+function openQrModal() {
+  // Générer le QR Code
+  const canvas = document.getElementById('qrCodeCanvas');
+  QRCode.toCanvas(canvas, CONFIG.appUrl, {
+    width: 170,
+    height: 170,
+    margin: 1,
+    color: {
+      dark: '#00ff88',
+      light: '#0a1929'
+    }
+  }, function(error) {
+    if (error) {
+      console.error('Erreur génération QR Code:', error);
+      $('qrCodeContainer').innerHTML = '<div style="color:var(--danger);text-align:center;">Erreur génération QR Code</div>';
+    }
+  });
+  
+  $('qrModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeQrModal() {
+  $('qrModal').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 // ===================== MODAL CARTE (LOCALISATION) =====================
@@ -3037,7 +3342,6 @@ function openMapModal() {
   $('mapModal').classList.add('open');
   document.body.style.overflow = 'hidden';
   
-  // Initialiser la carte après un petit délai pour s'assurer que le modal est visible
   setTimeout(initMap, 100);
 }
 
@@ -3062,23 +3366,19 @@ function initMap() {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
   
-  // Créer le marqueur
   marker = L.marker([defaultLat, defaultLng], {
     draggable: true
   }).addTo(map);
   
-  // Mettre à jour les coordonnées lors du déplacement du marqueur
   marker.on('dragend', function(e) {
     const position = marker.getLatLng();
     updateCoordinates(position.lat, position.lng);
     reverseGeocode(position.lat, position.lng);
   });
   
-  // Si l'utilisateur a déjà des coordonnées, zoomer dessus
   if (state.user?.lat && state.user?.lng) {
     map.setView([state.user.lat, state.user.lng], 16);
   } else {
-    // Sinon, essayer de géolocaliser l'utilisateur
     locateUser();
   }
 }
@@ -3149,13 +3449,11 @@ function openOrderModal() {
   const shipping = subtotal >= CONFIG.freeShipping ? 0 : CONFIG.shippingFee;
   const total = subtotal + shipping;
   
-  // Vérifier le minimum de commande
   if (subtotal < CONFIG.minOrder) {
     showToast(`Minimum commande: ${formatPrice(CONFIG.minOrder)}`, 'warning');
     return;
   }
   
-  // Générer le résumé de la commande
   let summary = `=== COMMANDE MAXI JDC MARKET ===\n\n`;
   summary += `📅 Date: ${new Date().toLocaleString('fr-FR')}\n`;
   summary += `👤 Client: ${state.user.name}\n`;
@@ -3198,7 +3496,6 @@ function copyOrderToClipboard() {
   navigator.clipboard.writeText(text)
     .then(() => showToast('✅ Commande copiée dans le presse-papiers'))
     .catch(() => {
-      // Fallback pour anciens navigateurs
       const textarea = document.createElement('textarea');
       textarea.value = text;
       document.body.appendChild(textarea);
@@ -3232,7 +3529,6 @@ function sendOrderViaWhatsApp() {
   const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${text}`;
   window.open(url, '_blank');
   
-  // Vider le panier après envoi
   state.cart = {};
   updateCartUI();
   closeOrderModal();
@@ -3257,10 +3553,7 @@ function closeDrawer() {
 
 // ===================== INITIALISATION =====================
 function init() {
-  // Charger l'état sauvegardé
   loadState();
-  
-  // Configurer les événements
   
   // Header
   $('cartTopBtn').onclick = openDrawer;
@@ -3270,6 +3563,19 @@ function init() {
     state.searchQuery = e.target.value;
     state.currentPage = 1;
     renderProducts();
+  });
+  
+  $('searchEnterBtn').onclick = () => {
+    state.currentPage = 1;
+    renderProducts();
+    $('searchInput').focus();
+  };
+  
+  $('searchInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      state.currentPage = 1;
+      renderProducts();
+    }
   });
   
   $('clearSearchBtn').onclick = () => {
@@ -3288,20 +3594,24 @@ function init() {
   };
   
   // QR Code
-  $('qrBtn').onclick = () => {
-    showToast('Fonction QR Code à implémenter', 'warning');
-  };
+  $('qrBtn').onclick = openQrModal;
+  $('closeQrModalBtn').onclick = closeQrModal;
   
   // Pagination
-  $('prevPageBtn').onclick = () => {
+  $('prevPageBtn').onclick = navigateToPrevPage;
+  $('nextPageBtn').onclick = navigateToNextPage;
+  $('prevPageBottomBtn').onclick = navigateToPrevPage;
+  $('nextPageBottomBtn').onclick = navigateToNextPage;
+  
+  function navigateToPrevPage() {
     if (state.currentPage > 1) {
       state.currentPage--;
       renderProducts();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  };
+  }
   
-  $('nextPageBtn').onclick = () => {
+  function navigateToNextPage() {
     const products = getFilteredProducts();
     const totalPages = Math.ceil(products.length / CONFIG.itemsPerPage) || 1;
     
@@ -3310,7 +3620,7 @@ function init() {
       renderProducts();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  };
+  }
   
   // Drawer
   $('closeDrawerBtn').onclick = closeDrawer;
@@ -3320,13 +3630,11 @@ function init() {
   $('saveAccountBtn').onclick = saveUser;
   $('editAccountBtn').onclick = editUser;
   
-  // Téléphone - gestion améliorée
+  // Téléphone
   $('clientPhone').addEventListener('input', function() {
-    // Formater avec des espaces tous les 2 chiffres
     let value = this.value.replace(/\D/g, '');
     if (value.length > 8) value = value.substring(0, 8);
     
-    // Ajouter des espaces
     let formatted = '';
     for (let i = 0; i < value.length; i++) {
       if (i > 0 && i % 2 === 0) formatted += ' ';
@@ -3354,7 +3662,7 @@ function init() {
   $('mapPreview').onclick = openMapModal;
   $('closeMapModalBtn').onclick = closeMapModal;
   
-  // Panier (dans le drawer)
+  // Panier
   $('cartItemsList').addEventListener('click', (e) => {
     const btn = e.target.closest('[data-action]');
     if (!btn) return;
@@ -3377,24 +3685,26 @@ function init() {
   
   // Modal produit
   $('closeProductModalBtn').onclick = closeProductModal;
+  $('modalCloseBottomBtn').onclick = closeProductModal;
+  
   $('modalDecreaseBtn').onclick = () => {
     if (!state.currentModalProduct) return;
     const productId = generateProductId(state.currentModalProduct);
     state.quantityPicks[productId] = Math.max(0, (state.quantityPicks[productId] || 0) - 1);
-    openProductModal(state.currentModalProduct); // Re-render pour mettre à jour
+    updateModalQuantity();
   };
   
   $('modalIncreaseBtn').onclick = () => {
     if (!state.currentModalProduct) return;
     const productId = generateProductId(state.currentModalProduct);
     state.quantityPicks[productId] = (state.quantityPicks[productId] || 0) + 1;
-    openProductModal(state.currentModalProduct); // Re-render pour mettre à jour
+    updateModalQuantity();
   };
   
   $('modalToggleStockBtn').onclick = () => {
     if (!state.currentModalProduct) return;
     toggleStock(state.currentModalProduct.code);
-    openProductModal(state.currentModalProduct); // Re-render pour mettre à jour
+    openProductModal(state.currentModalProduct);
   };
   
   $('modalAddToCartBtn').onclick = () => {
@@ -3408,6 +3718,10 @@ function init() {
     }
   };
   
+  // Navigation entre produits dans le modal
+  $('modalPrevImageBtn').onclick = navigateToPrevProduct;
+  $('modalNextImageBtn').onclick = navigateToNextProduct;
+  
   // Modal commande
   $('closeOrderModalBtn').onclick = closeOrderModal;
   $('copyOrderBtn').onclick = copyOrderToClipboard;
@@ -3416,10 +3730,11 @@ function init() {
   
   // Gestionnaire d'événements clavier
   document.addEventListener('keydown', (e) => {
-    // Échap pour fermer les modaux
     if (e.key === 'Escape') {
       if ($('productModal').classList.contains('open')) {
         closeProductModal();
+      } else if ($('qrModal').classList.contains('open')) {
+        closeQrModal();
       } else if ($('mapModal').classList.contains('open')) {
         closeMapModal();
       } else if ($('orderModal').classList.contains('open')) {
@@ -3429,12 +3744,11 @@ function init() {
       }
     }
     
-    // Navigation par flèches dans le modal produit
     if ($('productModal').classList.contains('open')) {
       if (e.key === 'ArrowLeft') {
-        $('modalDecreaseBtn').click();
+        $('modalPrevImageBtn').click();
       } else if (e.key === 'ArrowRight') {
-        $('modalIncreaseBtn').click();
+        $('modalNextImageBtn').click();
       } else if (e.key === 'Enter' && !$('modalAddToCartBtn').disabled) {
         $('modalAddToCartBtn').click();
       }
@@ -3444,11 +3758,9 @@ function init() {
   // Charger les produits
   loadAllProducts();
   
-  // Mettre à jour l'interface utilisateur
   updateUserUI();
   updateCartUI();
   
-  // Afficher un message de bienvenue si nouvel utilisateur
   if (!state.user) {
     setTimeout(() => {
       showToast('👋 Bienvenue ! Veuillez créer votre compte pour commander');
