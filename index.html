@@ -406,7 +406,7 @@
       font-size: 11px;
     }
 
-    /* PAGINATION */
+    /* PAGINATION EN HAUT - NOUVELLE STYLE AVEC FLÈCHES VISIBLES */
     .pagination-top {
       display: flex;
       justify-content: space-between;
@@ -416,6 +416,51 @@
       font-size: 12px;
       flex-wrap: wrap;
       gap: 8px;
+    }
+
+    .page-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .page-btn {
+      width: 80px;
+      height: 36px;
+      border-radius: 8px;
+      border: 2px solid var(--line);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .page-btn:hover {
+      background: rgba(255,255,255,.15);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .page-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .page-info {
+      font-size: 14px;
+      font-weight: 700;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .page-count {
+      font-size: 11px;
+      color: var(--muted);
     }
 
     /* PAGINATION EN BAS - NOUVELLE STYLE AVEC FLÈCHES LARGES */
@@ -449,59 +494,24 @@
     .pagination-bottom .page-btn:hover {
       background: rgba(255,255,255,.2);
       border-color: var(--accent);
+      transform: translateY(-2px);
     }
 
     .pagination-bottom .page-btn:disabled {
       opacity: 0.3;
       cursor: not-allowed;
+      transform: none;
     }
 
     .pagination-bottom .page-info {
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 16px;
+      font-weight: 900;
       min-width: 120px;
       text-align: center;
       background: rgba(255,255,255,.05);
       padding: 10px 20px;
       border-radius: 10px;
       border: 1px solid var(--line);
-    }
-
-    .page-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .page-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 900;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-    }
-
-    .page-btn:hover {
-      background: rgba(255,255,255,.15);
-      border-color: var(--accent);
-    }
-
-    .page-info {
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .page-count {
-      font-size: 11px;
-      color: var(--muted);
     }
 
     /* GRID PRODUITS */
@@ -824,31 +834,34 @@
       transform: scale(1.2);
     }
 
-    /* NAVIGATION IMAGES */
+    /* NAVIGATION IMAGES - CURSEURS PLUS VISIBLES */
     .image-nav-btn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      background: rgba(10, 25, 47, 0.9);
-      border: 2px solid var(--accent);
+      background: rgba(10, 25, 47, 0.95);
+      border: 3px solid var(--accent);
       color: var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       z-index: 5;
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 900;
       transition: all 0.3s ease;
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
 
     .image-nav-btn:hover {
       background: rgba(0, 255, 136, 0.3);
       transform: translateY(-50%) scale(1.1);
+      border-color: var(--accent2);
+      box-shadow: 0 6px 30px rgba(0,255,136,0.3);
     }
 
     .image-nav-btn:disabled {
@@ -861,6 +874,7 @@
     .image-nav-btn:disabled:hover {
       background: rgba(10, 25, 47, 0.9);
       transform: translateY(-50%);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
 
     .image-nav-btn.prev {
@@ -1082,13 +1096,14 @@
     .qr-modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.95);
+      background: rgba(0,0,0,0.98);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 2500;
       padding: 20px;
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
     }
 
     .qr-modal-overlay.open {
@@ -1102,16 +1117,29 @@
       border-radius: 20px;
       border: 3px solid var(--accent);
       overflow: hidden;
-      box-shadow: var(--shadow);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
       display: flex;
       flex-direction: column;
+      animation: modalAppear 0.3s ease-out;
+    }
+
+    @keyframes modalAppear {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
     }
 
     .qr-modal-header {
       padding: 20px;
-      background: rgba(0, 255, 136, 0.1);
+      background: rgba(0, 255, 136, 0.15);
       border-bottom: 1px solid var(--accent);
       text-align: center;
+      backdrop-filter: blur(10px);
     }
 
     .qr-modal-header h3 {
@@ -1119,6 +1147,7 @@
       font-size: 18px;
       color: var(--accent);
       font-weight: 900;
+      text-shadow: 0 2px 10px rgba(0,255,136,0.3);
     }
 
     .qr-modal-body {
@@ -1130,16 +1159,22 @@
     }
 
     .qr-code-container {
-      width: 200px;
-      height: 200px;
+      width: 220px;
+      height: 220px;
       background: white;
-      border-radius: 12px;
-      padding: 15px;
+      border-radius: 16px;
+      padding: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       border: 3px solid var(--accent);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .qr-code-container:hover {
+      transform: scale(1.02);
     }
 
     .qr-code-container img {
@@ -1157,11 +1192,17 @@
       padding: 0 10px;
     }
 
+    .qr-instructions strong {
+      color: var(--accent2);
+      font-weight: 900;
+    }
+
     .qr-modal-footer {
       padding: 20px;
       border-top: 1px solid var(--line);
       display: flex;
       justify-content: center;
+      backdrop-filter: blur(10px);
     }
 
     /* BOUTON QR CODE DIRECT */
@@ -1172,7 +1213,7 @@
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      background: rgba(0, 212, 255, 0.2);
+      background: rgba(0, 212, 255, 0.25);
       border: 2px solid var(--accent2);
       color: var(--accent2);
       cursor: pointer;
@@ -1181,15 +1222,16 @@
       align-items: center;
       justify-content: center;
       z-index: 999;
-      box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
       transition: all 0.3s ease;
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .qr-direct-btn:hover {
-      background: rgba(0, 212, 255, 0.3);
-      transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+      background: rgba(0, 212, 255, 0.4);
+      transform: scale(1.1) rotate(10deg);
+      box-shadow: 0 6px 30px rgba(0, 212, 255, 0.6);
     }
 
     /* PANIER (DRAWER) */
@@ -1383,6 +1425,8 @@
     .tel-input-wrapper input {
       padding-left: 50px !important;
       letter-spacing: 1px;
+      font-size: 15px;
+      font-weight: 600;
     }
 
     .tel-prefix {
@@ -1392,7 +1436,7 @@
       transform: translateY(-50%);
       color: var(--accent2);
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 900;
     }
 
     .tel-hint {
@@ -2048,6 +2092,17 @@
         width: 100px;
         font-size: 14px;
       }
+      
+      .pagination-top .page-btn {
+        width: 70px;
+        font-size: 12px;
+      }
+      
+      .image-nav-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -2098,12 +2153,35 @@
         max-width: 280px;
       }
       
+      .pagination-top {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .pagination-top .page-controls {
+        justify-content: center;
+      }
+      
       .qr-direct-btn {
         bottom: 70px;
         right: 10px;
         width: 50px;
         height: 50px;
         font-size: 20px;
+      }
+      
+      .image-nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+      
+      .image-nav-btn.prev {
+        left: 10px;
+      }
+      
+      .image-nav-btn.next {
+        right: 10px;
       }
     }
 
@@ -2203,12 +2281,16 @@
           <h2 id="activeCategoryLabel">Produits</h2>
           <div class="meta" id="activeCategoryMeta">Sélectionnez une catégorie</div>
           
-          <!-- PAGINATION EN HAUT -->
+          <!-- PAGINATION EN HAUT AVEC FLÈCHES VISIBLES -->
           <div class="pagination-top">
             <div class="page-controls">
-              <button class="page-btn" id="prevPageBtn" title="Page précédente">‹</button>
+              <button class="page-btn" id="prevPageBtn" title="Page précédente">
+                ‹‹ Précédent
+              </button>
               <span class="page-info" id="pageInfo">Page 1/1</span>
-              <button class="page-btn" id="nextPageBtn" title="Page suivante">›</button>
+              <button class="page-btn" id="nextPageBtn" title="Page suivante">
+                Suivant ››
+              </button>
             </div>
             <div class="page-count" id="itemCount">0 article(s)</div>
           </div>
@@ -2465,7 +2547,7 @@
       
       <div class="qr-modal-body">
         <div class="qr-code-container" id="qrCodeContainer">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://maxi-jdc-market.com" 
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://maxi-jdc-market.com&color=0a1929&bgcolor=ffffff&qzone=2&format=svg" 
                alt="QR Code MAXI JDC MARKET">
         </div>
         
@@ -2715,24 +2797,32 @@ function saveUser() {
     return;
   }
   
+  // Supprimer tous les espaces du numéro de téléphone
   phone = phone.replace(/\s/g, '');
   
-  // CORRECTION: Vérification de 8 chiffres exactement
+  // Vérification de 8 chiffres exactement
   if (phone.length !== 8 || !/^\d{8}$/.test(phone)) {
     showToast('Le numéro de téléphone doit contenir exactement 8 chiffres', 'warning');
     $('clientPhone').focus();
     return;
   }
   
+  // Formater le numéro avec des espaces pour l'affichage
+  const formattedPhone = phone.replace(/(\d{2})(?=\d)/g, '$1 ');
+  
   state.user = {
     name,
     phone: phone, // Stocker sans espaces
+    displayPhone: formattedPhone, // Stocker avec format pour l'affichage
     address,
     lat: lat || null,
     lng: lng || null,
     createdAt: new Date().toISOString(),
     lastLogin: new Date().toISOString()
   };
+  
+  // Mettre à jour l'affichage avec le numéro formaté
+  $('clientPhone').value = formattedPhone;
   
   saveState();
   updateUserUI();
@@ -3267,6 +3357,11 @@ function updateModalQuantity() {
 
 // ===================== MODAL QR CODE =====================
 function openQrModal() {
+  // Générer un QR Code dynamique avec l'URL de l'application
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.href)}&color=0a1929&bgcolor=ffffff&qzone=2&format=svg`;
+  const qrCodeContainer = $('qrCodeContainer');
+  qrCodeContainer.innerHTML = `<img src="${qrCodeUrl}" alt="QR Code MAXI JDC MARKET">`;
+  
   $('qrModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -3396,10 +3491,13 @@ function openOrderModal() {
     return;
   }
   
+  // Utiliser le numéro formaté pour l'affichage
+  const displayPhone = state.user.displayPhone || state.user.phone.replace(/(\d{2})(?=\d)/g, '$1 ');
+  
   let summary = `=== COMMANDE MAXI JDC MARKET ===\n\n`;
   summary += `📅 Date: ${new Date().toLocaleString('fr-FR')}\n`;
   summary += `👤 Client: ${state.user.name}\n`;
-  summary += `📞 Téléphone: +216 ${state.user.phone}\n`;
+  summary += `📞 Téléphone: +216 ${displayPhone}\n`;
   summary += `📍 Adresse: ${state.user.address}\n`;
   if (state.user.lat && state.user.lng) {
     summary += `🗺️ Coordonnées: ${state.user.lat}, ${state.user.lng}\n`;
@@ -3710,15 +3808,6 @@ function init() {
       showToast('👋 Bienvenue ! Veuillez créer votre compte pour commander');
     }, 1000);
   }
-  
-  // Ajouter le bouton QR code direct
-  const qrDirectBtn = document.createElement('button');
-  qrDirectBtn.className = 'qr-direct-btn';
-  qrDirectBtn.id = 'qrDirectBtn';
-  qrDirectBtn.innerHTML = '📱';
-  qrDirectBtn.title = 'Scanner QR Code';
-  qrDirectBtn.onclick = openQrModal;
-  document.body.appendChild(qrDirectBtn);
 }
 
 // Démarrer l'application
