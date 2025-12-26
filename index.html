@@ -247,7 +247,7 @@
       background: rgba(0, 255, 136, 0.25);
     }
 
-    /* INFOS RAPIDES */
+    /* INFOS RAPIDES - CORRIGÉES (pas de texte blanc) */
     .quick-info {
       display: flex;
       gap: 8px;
@@ -269,7 +269,7 @@
       border-radius: 20px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,.08);
-      color: var(--text);
+      color: var(--muted); /* Changé de var(--text) à var(--muted) pour mieux lire */
       font-size: 11px;
       white-space: nowrap;
       flex-shrink: 0;
@@ -277,7 +277,7 @@
 
     .info-pill strong {
       font-weight: 800;
-      color: var(--accent);
+      color: var(--accent2); /* Changé pour une meilleure visibilité */
     }
 
     .qr-pill {
@@ -455,7 +455,7 @@
       }
     }
 
-    /* CARTE PRODUIT */
+    /* CARTE PRODUIT - AMÉLIORÉE */
     .product-card {
       border-radius: 12px;
       border: 1px solid var(--line);
@@ -1138,7 +1138,7 @@
       gap: 20px;
     }
 
-    /* SECTION COMPTE CLIENT */
+    /* SECTION COMPTE CLIENT - TÉLÉPHONE AMÉLIORÉ */
     .account-section {
       background: var(--card2);
       border-radius: var(--radius);
@@ -1229,13 +1229,14 @@
       cursor: not-allowed;
     }
 
-    /* INPUT TÉLÉPHONE AVEC CLAVIER NUMÉRIQUE */
+    /* INPUT TÉLÉPHONE AVEC CLAVIER NUMÉRIQUE - CORRIGÉ */
     .tel-input-wrapper {
       position: relative;
     }
 
     .tel-input-wrapper input {
-      padding-left: 45px !important;
+      padding-left: 50px !important;
+      letter-spacing: 1px; /* Espacement pour mieux lire les chiffres */
     }
 
     .tel-prefix {
@@ -1243,15 +1244,39 @@
       left: 15px;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--muted);
+      color: var(--accent2);
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .tel-hint {
       font-size: 11px;
       color: var(--muted);
       margin-top: 4px;
+    }
+
+    /* Bouton effacer pour le téléphone */
+    .tel-clear-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 18px;
+      cursor: pointer;
+      display: none;
+      padding: 5px;
+    }
+
+    .tel-input-wrapper:focus-within .tel-clear-btn,
+    .tel-input-wrapper input:not(:placeholder-shown) + .tel-clear-btn {
+      display: block;
+    }
+
+    .tel-clear-btn:hover {
+      color: var(--danger);
     }
 
     .form-actions {
@@ -1325,6 +1350,11 @@
       color: var(--muted);
       font-size: 11px;
       flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .map-preview:hover {
+      border-color: var(--accent2);
     }
 
     /* SECTION PANIER */
@@ -1979,11 +2009,11 @@
       </div>
     </div>
 
-    <!-- INFOS RAPIDES -->
+    <!-- INFOS RAPIDES - CORRIGÉES -->
     <div class="quick-info">
       <div class="info-pill">📍 Jardins de Carthage</div>
       <div class="info-pill">🕒 7h – 1h</div>
-      <div class="info-pill"><strong>WhatsApp:</strong> 00216 25 600 978</div>
+      <div class="info-pill"><strong>WhatsApp:</strong> +216 25 600 978</div>
       <button class="info-pill qr-pill" id="qrBtn" title="Scanner le QR Code">
         📱 QR Code
       </button>
@@ -2049,8 +2079,9 @@
                 <span class="tel-prefix">+216</span>
                 <input type="tel" id="clientPhone" placeholder="25 600 978" 
                        pattern="[0-9]{8}" inputmode="numeric" maxlength="8">
+                <button type="button" class="tel-clear-btn" id="clearPhoneBtn">×</button>
               </div>
-              <div class="tel-hint">Le clavier numérique s'ouvrira automatiquement</div>
+              <div class="tel-hint">Format: 25 600 978 (8 chiffres)</div>
             </div>
           </div>
           
@@ -2126,7 +2157,7 @@
           </div>
         </div>
         
-        <!-- CONDITIONS LIVRAISON -->
+        <!-- CONDITIONS LIVRAISON */
         <div class="delivery-info">
           <h5>📦 Conditions de livraison</h5>
           <div class="delivery-rules">
@@ -2280,11 +2311,11 @@
 // ===================== CONFIGURATION =====================
 const CONFIG = {
   minOrder: 15,
-  freeShipping: 100,
+  freeShipping: 100, // Changé de 30 à 100 dt
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v3'
+  localStorageKey: 'maxi_jdc_market_app_v4'
 };
 
 // Catégories avec fichiers CSV
@@ -2351,7 +2382,7 @@ function saveState() {
     user: state.user,
     cart: state.cart,
     stock: state.stock,
-    version: '3.0'
+    version: '4.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -2359,7 +2390,7 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '3.0') {
+    if (data && data.version === '4.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.stock = data.stock || {};
@@ -2429,11 +2460,25 @@ function updateUserUI() {
     
     $('mapPreview').innerHTML = '<span>Cliquez pour localiser</span>';
   }
+  
+  // Mettre à jour le bouton effacer du téléphone
+  updatePhoneClearButton();
+}
+
+function updatePhoneClearButton() {
+  const phoneInput = $('clientPhone');
+  const clearBtn = $('clearPhoneBtn');
+  
+  if (phoneInput.value.trim()) {
+    clearBtn.style.display = 'block';
+  } else {
+    clearBtn.style.display = 'none';
+  }
 }
 
 function saveUser() {
   const name = $('clientName').value.trim();
-  const phone = $('clientPhone').value.trim();
+  let phone = $('clientPhone').value.trim();
   const address = $('clientAddress').value.trim();
   const lat = $('clientLat').value.trim();
   const lng = $('clientLng').value.trim();
@@ -2442,6 +2487,9 @@ function saveUser() {
     showToast('Veuillez remplir tous les champs obligatoires (*)', 'warning');
     return;
   }
+  
+  // Nettoyer le numéro de téléphone (enlever les espaces)
+  phone = phone.replace(/\s/g, '');
   
   if (phone.length !== 8 || !/^\d+$/.test(phone)) {
     showToast('Le numéro de téléphone doit contenir 8 chiffres', 'warning');
@@ -2635,28 +2683,49 @@ function isInStock(productCode) {
   return state.stock[productCode] !== false;
 }
 
-// ===================== CHARGEMENT DES DONNÉES =====================
+// ===================== CHARGEMENT DES DONNÉES - CORRIGÉ =====================
 async function loadCategoryData(categoryKey) {
   try {
     const category = CATEGORIES.find(c => c.key === categoryKey);
     if (!category) return [];
     
     const response = await fetch(category.file);
-    if (!response.ok) return [];
+    if (!response.ok) {
+      console.warn(`Fichier non trouvé: ${category.file}`);
+      return [];
+    }
     
     const text = await response.text();
     const lines = text.split('\n').filter(line => line.trim());
     
+    if (lines.length === 0) return [];
+    
+    // Vérifier le format du CSV (tab ou point-virgule)
+    const firstLine = lines[0];
+    const separator = firstLine.includes('\t') ? '\t' : ';';
+    
     return lines.slice(1).map(line => {
-      const [code, name, price] = line.split('\t').map(field => field.trim());
+      const parts = line.split(separator).map(field => field.trim());
+      if (parts.length < 3) return null;
+      
+      const code = parts[0];
+      const name = parts[1];
+      let priceStr = parts[2];
+      
+      // Nettoyer le prix
+      priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
+      const price = parseFloat(priceStr);
+      
+      if (!code || !name || isNaN(price) || price <= 0) return null;
+      
       return {
         code,
         name,
-        price: parseFloat(price.replace(',', '.')),
+        price: price,
         category: category.label,
         categoryKey: category.key
       };
-    }).filter(product => product.code && product.name && !isNaN(product.price));
+    }).filter(product => product !== null);
   } catch (error) {
     console.error(`Erreur chargement ${categoryKey}:`, error);
     return [];
@@ -2666,13 +2735,26 @@ async function loadCategoryData(categoryKey) {
 async function loadAllProducts() {
   state.products.clear();
   
-  for (const category of CATEGORIES) {
-    const products = await loadCategoryData(category.key);
-    state.products.set(category.key, products);
-  }
+  // Charger d'abord la catégorie par défaut pour un affichage rapide
+  const defaultProducts = await loadCategoryData('cafe');
+  state.products.set('cafe', defaultProducts);
   
   renderCategories();
   renderProducts();
+  
+  // Charger les autres catégories en arrière-plan
+  setTimeout(async () => {
+    for (const category of CATEGORIES) {
+      if (category.key !== 'cafe') {
+        const products = await loadCategoryData(category.key);
+        state.products.set(category.key, products);
+      }
+    }
+    
+    renderCategories();
+    renderProducts();
+    showToast('✅ Tous les produits sont chargés');
+  }, 500);
 }
 
 // ===================== RENDU CATÉGORIES =====================
@@ -2683,9 +2765,8 @@ function renderCategories() {
   // Bouton "Tous"
   const allButton = document.createElement('button');
   allButton.className = `cat-btn ${state.showAllCategories ? 'active' : ''}`;
-  allButton.innerHTML = `🌐 Tous <span class="cat-count">${
-    [...state.products.values()].flat().length
-  }</span>`;
+  const allProductsCount = [...state.products.values()].flat().length;
+  allButton.innerHTML = `🌐 Tous <span class="cat-count">${allProductsCount}</span>`;
   allButton.onclick = () => {
     state.showAllCategories = true;
     state.currentPage = 1;
@@ -2727,7 +2808,9 @@ function updateCategoriesUI() {
     const category = CATEGORIES.find(c => c.key === state.activeCategory);
     if (category) {
       const index = CATEGORIES.findIndex(c => c.key === state.activeCategory) + 1;
-      buttons[index]?.classList.add('active');
+      if (buttons[index]) {
+        buttons[index].classList.add('active');
+      }
       $('activeCategoryLabel').textContent = category.label;
       $('activeCategoryMeta').textContent = `${category.key}.csv`;
     }
@@ -2804,6 +2887,7 @@ function renderProducts() {
       <div class="product-image">
         <img src="images/products/${product.code}.jpg" 
              alt="${product.name}"
+             onload="this.style.display='block'; this.parentElement.querySelector('.no-photo').style.display='none';"
              onerror="this.style.display='none'; this.parentElement.querySelector('.no-photo').style.display='flex';">
         <div class="no-photo" style="display:none;">Aucune photo</div>
       </div>
@@ -3096,7 +3180,7 @@ function openOrderModal() {
   summary += `=== INFORMATIONS ===\n\n`;
   summary += `📍 Jardins de Carthage\n`;
   summary += `🕒 7h – 1h\n`;
-  summary += `📱 WhatsApp: 00216 25 600 978\n`;
+  summary += `📱 WhatsApp: +216 25 600 978\n`;
   summary += `💳 Paiement à la livraison\n`;
   
   $('orderDetails').textContent = summary;
@@ -3236,6 +3320,35 @@ function init() {
   $('saveAccountBtn').onclick = saveUser;
   $('editAccountBtn').onclick = editUser;
   
+  // Téléphone - gestion améliorée
+  $('clientPhone').addEventListener('input', function() {
+    // Formater avec des espaces tous les 2 chiffres
+    let value = this.value.replace(/\D/g, '');
+    if (value.length > 8) value = value.substring(0, 8);
+    
+    // Ajouter des espaces
+    let formatted = '';
+    for (let i = 0; i < value.length; i++) {
+      if (i > 0 && i % 2 === 0) formatted += ' ';
+      formatted += value[i];
+    }
+    
+    this.value = formatted;
+    updatePhoneClearButton();
+  });
+  
+  $('clientPhone').addEventListener('focus', function() {
+    this.type = 'tel';
+    this.setAttribute('inputmode', 'numeric');
+    this.setAttribute('pattern', '[0-9]*');
+  });
+  
+  $('clearPhoneBtn').onclick = () => {
+    $('clientPhone').value = '';
+    $('clientPhone').focus();
+    updatePhoneClearButton();
+  };
+  
   // Localisation
   $('getLocationBtn').onclick = openMapModal;
   $('mapPreview').onclick = openMapModal;
@@ -3326,13 +3439,6 @@ function init() {
         $('modalAddToCartBtn').click();
       }
     }
-  });
-  
-  // Focus automatique sur le téléphone quand on clique dessus (ouvre clavier numérique)
-  $('clientPhone').addEventListener('focus', function() {
-    this.type = 'tel';
-    this.setAttribute('inputmode', 'numeric');
-    this.setAttribute('pattern', '[0-9]*');
   });
   
   // Charger les produits
