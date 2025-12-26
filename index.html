@@ -2235,7 +2235,7 @@
     <header class="header">
       <div class="logo-brand">
         <div class="logo">
-          <img src="logo-maxi-jdc-market.jpg" alt="MAXI JDC MARKET" onerror="this.style.display='none'">
+          <img src="maxi-jdc-market/images/logo-maxi-jdc-market.jpg" alt="MAXI JDC MARKET" onerror="this.style.display='none'">
         </div>
         <div class="brand-text">
           <h1>MAXI JDC MARKET</h1>
@@ -2266,7 +2266,7 @@
     <!-- INFOS RAPIDES -->
     <div class="quick-info">
       <div class="info-pill">📍 Jardins de Carthage</div>
-      <div class="info-pill">🕒 7am – 1am</div> <!-- MODIFIÉ ICI -->
+      <div class="info-pill">🕒 7am – 1am</div>
       <div class="info-pill"><strong>WhatsApp:</strong> +216 25 600 978</div>
       <button class="info-pill qr-pill" id="qrBtn" title="Scanner le QR Code">
         📱 QR Code
@@ -2625,32 +2625,34 @@ const CONFIG = {
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
   localStorageKey: 'maxi_jdc_market_app_v10',
-  appUrl: window.location.href
+  appUrl: window.location.href,
+  baseImagePath: 'maxi-jdc-market/images/products/'
 };
 
-// Catégories avec fichiers CSV
+// Catégories avec fichiers CSV (ajout de la catégorie Promotions)
 const CATEGORIES = [
-  { key:"animaux_compagnie", label:"🐶 Animaux", file:"data/animaux_compagnie.csv" },
-  { key:"bebe_maman", label:"👶 Bébé & Maman", file:"data/bebe_maman.csv" },
-  { key:"boulangerie_patisserie", label:"🥖 Boulangerie", file:"data/boulangerie_patisserie.csv" },
-  { key:"cafe", label:"☕ Café", file:"data/cafe.csv" },
-  { key:"chips_snacks", label:"🥔 Chips & Snacks", file:"data/chips_snacks.csv" },
-  { key:"chocolats_biscuits", label:"🍫 Chocolats", file:"data/chocolats_biscuits.csv" },
-  { key:"conserves", label:"🥫 Conserves", file:"data/conserves.csv" },
-  { key:"cuisine_monde", label:"🌍 Cuisine Monde", file:"data/cuisine_monde.csv" },
-  { key:"eaux", label:"💧 Eaux", file:"data/eaux.csv" },
-  { key:"epicerie_salee", label:"🧂 Épicerie Salée", file:"data/epicerie_salee.csv" },
-  { key:"epicerie_sucree", label:"🍬 Épicerie Sucrée", file:"data/epicerie_sucree.csv" },
-  { key:"fromage_charcuterie", label:"🧀 Fromage", file:"data/fromage_charcuterie.csv" },
-  { key:"fruits_legumes", label:"🍎 Fruits & Légumes", file:"data/fruits_legumes.csv" },
-  { key:"fruits_secs_noix", label:"🌰 Fruits Secs", file:"data/fruits_secs_noix.csv" },
-  { key:"hygiene_entretien", label:"🧼 Hygiène", file:"data/hygiene_entretien.csv" },
-  { key:"hygiene_soins", label:"🧴 Soins", file:"data/hygiene_soins.csv" },
-  { key:"jus_boissons", label:"🧃 Jus & Boissons", file:"data/jus_boissons.csv" },
-  { key:"lait_oeufs_produits_frais", label:"🥛 Lait & Œufs", file:"data/lait_oeufs_produits_frais.csv" },
-  { key:"pates", label:"🍝 Pâtes", file:"data/pates.csv" },
-  { key:"produits_surgeles", label:"🧊 Surgelés", file:"data/produits_surgeles.csv" },
-  { key:"vipa_selections", label:"⭐ VIP Sélections", file:"data/vipa_selections.csv" }
+  { key:"animaux_compagnie", label:"🐶 Animaux", file:"maxi-jdc-market/data/animaux_compagnie.csv" },
+  { key:"bebe_maman", label:"👶 Bébé & Maman", file:"maxi-jdc-market/data/bebe_maman.csv" },
+  { key:"boulangerie_patisserie", label:"🥖 Boulangerie", file:"maxi-jdc-market/data/boulangerie_patisserie.csv" },
+  { key:"cafe", label:"☕ Café", file:"maxi-jdc-market/data/cafe.csv" },
+  { key:"chips_snacks", label:"🥔 Chips & Snacks", file:"maxi-jdc-market/data/chips_snacks.csv" },
+  { key:"chocolats_biscuits", label:"🍫 Chocolats", file:"maxi-jdc-market/data/chocolats_biscuits.csv" },
+  { key:"conserves", label:"🥫 Conserves", file:"maxi-jdc-market/data/conserves.csv" },
+  { key:"cuisine_monde", label:"🌍 Cuisine Monde", file:"maxi-jdc-market/data/cuisine_monde.csv" },
+  { key:"eaux", label:"💧 Eaux", file:"maxi-jdc-market/data/eaux.csv" },
+  { key:"epicerie_salee", label:"🧂 Épicerie Salée", file:"maxi-jdc-market/data/epicerie_salee.csv" },
+  { key:"epicerie_sucree", label:"🍬 Épicerie Sucrée", file:"maxi-jdc-market/data/epicerie_sucree.csv" },
+  { key:"fromage_charcuterie", label:"🧀 Fromage", file:"maxi-jdc-market/data/fromage_charcuterie.csv" },
+  { key:"fruits_legumes", label:"🍎 Fruits & Légumes", file:"maxi-jdc-market/data/fruits_legumes.csv" },
+  { key:"fruits_secs_noix", label:"🌰 Fruits Secs", file:"maxi-jdc-market/data/fruits_secs_noix.csv" },
+  { key:"hygiene_entretien", label:"🧼 Hygiène", file:"maxi-jdc-market/data/hygiene_entretien.csv" },
+  { key:"hygiene_soins", label:"🧴 Soins", file:"maxi-jdc-market/data/hygiene_soins.csv" },
+  { key:"jus_boissons", label:"🧃 Jus & Boissons", file:"maxi-jdc-market/data/jus_boissons.csv" },
+  { key:"lait_oeufs_produits_frais", label:"🥛 Lait & Œufs", file:"maxi-jdc-market/data/lait_oeufs_produits_frais.csv" },
+  { key:"pates", label:"🍝 Pâtes", file:"maxi-jdc-market/data/pates.csv" },
+  { key:"produits_surgeles", label:"🧊 Surgelés", file:"maxi-jdc-market/data/produits_surgeles.csv" },
+  { key:"vipa_selections", label:"⭐ VIP Sélections", file:"maxi-jdc-market/data/vipa_selections.csv" },
+  { key:"promotions", label:"🔥 Promotions", file:"maxi-jdc-market/data/promotions.csv" }
 ];
 
 // ===================== ÉTAT GLOBAL =====================
@@ -3241,7 +3243,7 @@ function renderProducts() {
     
     // Utiliser une image unique par code produit
     const imageHash = generateImageHash(product);
-    const imgSrc = `images/products/${imageHash}.jpg`;
+    const imgSrc = `${CONFIG.baseImagePath}${imageHash}.jpg`;
     
     const card = document.createElement('div');
     card.className = 'product-card';
@@ -3345,7 +3347,7 @@ function openProductModal(product) {
   
   // Utiliser le même hash que dans renderProducts
   const imageHash = generateImageHash(product);
-  const imgSrc = `images/products/${imageHash}.jpg`;
+  const imgSrc = `${CONFIG.baseImagePath}${imageHash}.jpg`;
   
   img.src = imgSrc;
   img.onload = () => {
@@ -3584,7 +3586,7 @@ function openOrderModal() {
   summary += `TOTAL: ${formatPrice(total)}\n\n`;
   summary += `=== INFORMATIONS ===\n\n`;
   summary += `📍 Jardins de Carthage\n`;
-  summary += `🕒 7am – 1am\n`;  // MODIFIÉ ICI
+  summary += `🕒 7am – 1am\n`;
   summary += `📱 WhatsApp: +216 25 600 978\n`;
   summary += `💳 Paiement à la livraison\n`;
   
