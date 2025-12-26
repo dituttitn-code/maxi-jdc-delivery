@@ -525,7 +525,7 @@
       }
     }
 
-    /* CARTE PRODUIT - AMÉLIORÉE */
+    /* CARTE PRODUIT - SIMPLIFIÉE (sans panier, + et -) */
     .product-card {
       border-radius: 12px;
       border: 1px solid var(--line);
@@ -631,136 +631,30 @@
       gap: 3px;
     }
 
-    .product-actions {
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      width: 100%;
-      min-height: 32px;
-    }
-
-    .quantity-stepper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 4px;
+    /* MODIFIÉ: Supprimé .product-actions pour les cartes normales */
+    .product-stock-tag {
       padding: 4px 8px;
       border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(0,0,0,.3);
-      min-width: 0;
-      width: 80px;
-      flex-shrink: 0;
-    }
-
-    .stepper-btn {
-      width: 24px;
-      height: 24px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.1);
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 900;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s ease;
-      flex-shrink: 0;
-    }
-
-    .stepper-btn:hover {
-      border-color: var(--accent);
-      background: rgba(255,255,255,.2);
-    }
-
-    .stepper-value {
-      min-width: 24px;
-      text-align: center;
-      font-weight: 900;
-      color: var(--text);
-      font-size: 13px;
-    }
-
-    .stock-btn {
-      height: 32px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.05);
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      transition: all 0.15s ease;
-      padding: 0 8px;
-      flex: 1;
-      min-width: 0;
-    }
-
-    .stock-btn:hover {
-      border-color: var(--accent2);
-      background: rgba(255,255,255,.08);
-    }
-
-    .stock-tag {
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 9px;
+      font-size: 10px;
       border: 1px solid rgba(255,255,255,.1);
       background: rgba(0,0,0,.2);
       color: rgba(255,255,255,.9);
       font-weight: 700;
-      min-width: 50px;
       text-align: center;
+      align-self: flex-start;
+      margin-top: 4px;
     }
 
-    .stock-tag.ok {
+    .product-stock-tag.ok {
       border-color: rgba(0,255,136,.3);
       color: var(--accent);
       background: rgba(0,255,136,.08);
     }
 
-    .stock-tag.no {
+    .product-stock-tag.no {
       border-color: rgba(255,107,107,.4);
       color: var(--danger);
       background: rgba(255,107,107,.08);
-    }
-
-    .add-to-cart-btn {
-      height: 32px;
-      padding: 0 12px;
-      border-radius: 999px;
-      border: 2px solid var(--accent);
-      background: rgba(0, 255, 136, 0.15);
-      color: var(--accent);
-      cursor: pointer;
-      font-weight: 900;
-      font-size: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      white-space: nowrap;
-      transition: all 0.15s ease;
-      min-width: 0;
-      flex-shrink: 0;
-    }
-
-    .add-to-cart-btn:hover {
-      background: rgba(0, 255, 136, 0.25);
-      transform: translateY(-1px);
-    }
-
-    .add-to-cart-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      border-color: var(--muted);
     }
 
     /* MODAL ARTICLE AGRANDI */
@@ -895,6 +789,37 @@
       padding: 40px;
     }
 
+    /* BARRE DE NAVIGATION PRODUITS (CURSEUR) */
+    .image-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 0;
+      margin-top: 5px;
+    }
+
+    .image-nav-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid var(--line);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .image-nav-dot.active {
+      background: var(--accent);
+      transform: scale(1.3);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .image-nav-dot:hover {
+      background: var(--accent2);
+      transform: scale(1.2);
+    }
+
     /* NAVIGATION IMAGES */
     .image-nav-btn {
       position: absolute;
@@ -997,7 +922,7 @@
       font-weight: 600;
     }
 
-    /* ACTIONS MODAL */
+    /* ACTIONS MODAL - AVEC PANIER ET +/- */
     .modal-actions {
       display: flex;
       flex-direction: column;
@@ -1209,6 +1134,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+    }
+
+    .qr-code-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .qr-instructions {
@@ -2400,6 +2332,11 @@
           <button class="image-nav-btn next" id="modalNextImageBtn">›</button>
         </div>
         
+        <!-- BARRE DE NAVIGATION PRODUITS (CURSEUR) -->
+        <div class="image-nav-bar" id="imageNavBar">
+          <!-- Les points seront générés dynamiquement -->
+        </div>
+        
         <!-- INFOS PRODUIT -->
         <div class="modal-product-info">
           <h2 class="modal-product-name" id="modalProductNameFull"></h2>
@@ -2462,8 +2399,7 @@
       
       <div class="qr-modal-body">
         <div class="qr-code-container" id="qrCodeContainer">
-          <!-- QR Code sera généré ici -->
-          <canvas id="qrCodeCanvas"></canvas>
+          <!-- QR Code sera chargé ici depuis l'image -->
         </div>
         
         <div class="qr-instructions">
@@ -2529,9 +2465,6 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
    crossorigin=""></script>
-
-  <!-- QR Code Library -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
 <script>
 // ===================== CONFIGURATION =====================
@@ -2716,8 +2649,9 @@ function saveUser() {
   
   phone = phone.replace(/\s/g, '');
   
-  if (phone.length !== 8 || !/^\d+$/.test(phone)) {
-    showToast('Le numéro de téléphone doit contenir 8 chiffres', 'warning');
+  // CORRECTION: Vérification de 8 chiffres exactement
+  if (phone.length !== 8 || !/^\d{8}$/.test(phone)) {
+    showToast('Le numéro de téléphone doit contenir exactement 8 chiffres', 'warning');
     $('clientPhone').focus();
     return;
   }
@@ -3107,9 +3041,9 @@ function renderProducts() {
   
   productsToShow.forEach(product => {
     const productId = generateProductId(product);
-    const quantity = state.quantityPicks[productId] || 0;
     const inStock = isInStock(product.code);
     
+    // CARTE SIMPLIFIÉE - sans panier, + et -
     const card = document.createElement('div');
     card.className = 'product-card';
     card.innerHTML = `
@@ -3130,75 +3064,17 @@ function renderProducts() {
         <div class="product-price">${formatPrice(product.price)}</div>
       </div>
       
-      <div class="product-actions">
-        <div class="quantity-stepper">
-          <button class="stepper-btn" data-action="decrease" data-id="${productId}">−</button>
-          <span class="stepper-value">${quantity}</span>
-          <button class="stepper-btn" data-action="increase" data-id="${productId}">+</button>
-        </div>
-        
-        <button class="stock-btn" data-action="toggle-stock" data-code="${product.code}">
-          📦 <span class="stock-tag ${inStock ? 'ok' : 'no'}">${inStock ? 'En stock' : 'Rupture'}</span>
-        </button>
-        
-        <button class="add-to-cart-btn" 
-                data-action="add-to-cart" 
-                data-id="${productId}"
-                ${!inStock || quantity === 0 ? 'disabled' : ''}>
-          🛒
-        </button>
+      <div class="product-stock-tag ${inStock ? 'ok' : 'no'}">
+        ${inStock ? '✓ En stock' : '✗ Rupture'}
       </div>
     `;
     
-    card.addEventListener('click', (e) => {
-      if (!e.target.closest('button')) {
-        openProductModal(product);
-      }
+    // Clic sur toute la carte pour ouvrir le modal
+    card.addEventListener('click', () => {
+      openProductModal(product);
     });
     
     grid.appendChild(card);
-  });
-  
-  // Ajouter les événements aux boutons
-  grid.querySelectorAll('[data-action="decrease"]').forEach(btn => {
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      const productId = btn.dataset.id;
-      state.quantityPicks[productId] = Math.max(0, (state.quantityPicks[productId] || 0) - 1);
-      renderProducts();
-    };
-  });
-  
-  grid.querySelectorAll('[data-action="increase"]').forEach(btn => {
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      const productId = btn.dataset.id;
-      state.quantityPicks[productId] = (state.quantityPicks[productId] || 0) + 1;
-      renderProducts();
-    };
-  });
-  
-  grid.querySelectorAll('[data-action="toggle-stock"]').forEach(btn => {
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      toggleStock(btn.dataset.code);
-    };
-  });
-  
-  grid.querySelectorAll('[data-action="add-to-cart"]').forEach(btn => {
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      const productId = btn.dataset.id;
-      const product = products.find(p => generateProductId(p) === productId);
-      
-      if (product) {
-        const quantity = state.quantityPicks[productId] || 0;
-        if (quantity > 0) {
-          addToCart(productId, product, quantity);
-          renderProducts();
-        }
-      }
-    };
   });
 }
 
@@ -3256,7 +3132,7 @@ function openProductModal(product) {
   addBtn.disabled = !inStock || quantity === 0;
   addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
   
-  // Charger l'image et simuler plusieurs images
+  // Charger l'image
   const img = $('modalProductImage');
   const noPhoto = $('modalNoPhoto');
   
@@ -3270,6 +3146,9 @@ function openProductModal(product) {
     noPhoto.style.display = 'flex';
   };
   
+  // Mettre à jour la barre de navigation (curseur)
+  updateImageNavBar();
+  
   // Activer/désactiver la navigation d'image
   const products = state.filteredProducts;
   const currentIndex = products.findIndex(p => 
@@ -3282,6 +3161,30 @@ function openProductModal(product) {
   // Ouvrir le modal
   $('productModal').classList.add('open');
   document.body.style.overflow = 'hidden';
+}
+
+function updateImageNavBar() {
+  const products = state.filteredProducts;
+  const currentIndex = products.findIndex(p => 
+    p.code === state.currentModalProduct.code && 
+    p.categoryKey === state.currentModalProduct.categoryKey
+  );
+  
+  const navBar = $('imageNavBar');
+  navBar.innerHTML = '';
+  
+  // Créer des points de navigation pour tous les produits filtrés
+  for (let i = 0; i < products.length; i++) {
+    const dot = document.createElement('div');
+    dot.className = `image-nav-dot ${i === currentIndex ? 'active' : ''}`;
+    dot.title = `Produit ${i + 1} sur ${products.length}: ${products[i].name}`;
+    dot.onclick = () => {
+      if (i !== currentIndex) {
+        openProductModal(products[i]);
+      }
+    };
+    navBar.appendChild(dot);
+  }
 }
 
 function closeProductModal() {
@@ -3308,22 +3211,14 @@ function updateModalQuantity() {
 
 // ===================== MODAL QR CODE =====================
 function openQrModal() {
-  // Générer le QR Code
-  const canvas = document.getElementById('qrCodeCanvas');
-  QRCode.toCanvas(canvas, CONFIG.appUrl, {
-    width: 170,
-    height: 170,
-    margin: 1,
-    color: {
-      dark: '#00ff88',
-      light: '#0a1929'
-    }
-  }, function(error) {
-    if (error) {
-      console.error('Erreur génération QR Code:', error);
-      $('qrCodeContainer').innerHTML = '<div style="color:var(--danger);text-align:center;">Erreur génération QR Code</div>';
-    }
-  });
+  // Utiliser l'image existante
+  const container = $('qrCodeContainer');
+  container.innerHTML = `
+    <img src="maxi-jdc-delivery/tools/image-qr.jpg" 
+         alt="QR Code MAXI JDC MARKET" 
+         style="width:100%;height:100%;object-fit:contain;border-radius:8px;"
+         onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\\'color:var(--danger);text-align:center;padding:20px;\\'>Image QR Code non trouvée<br><small>maxi-jdc-delivery/tools/image-qr.jpg</small></div>';">
+  `;
   
   $('qrModal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -3630,9 +3525,10 @@ function init() {
   $('saveAccountBtn').onclick = saveUser;
   $('editAccountBtn').onclick = editUser;
   
-  // Téléphone
+  // Téléphone - CORRECTION: Limiter à 8 chiffres
   $('clientPhone').addEventListener('input', function() {
     let value = this.value.replace(/\D/g, '');
+    // Limiter à 8 chiffres maximum
     if (value.length > 8) value = value.substring(0, 8);
     
     let formatted = '';
