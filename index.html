@@ -2624,35 +2624,50 @@ const CONFIG = {
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v10',
+  localStorageKey: 'maxi_jdc_market_app_v11',
   appUrl: window.location.href,
-  baseImagePath: 'maxi-jdc-market/images/products/'
+  // MULTIPLES SOURCES D'IMAGES POUR TESTS
+  imageSources: [
+    // Sources web avec code produit
+    'https://source.unsplash.com/featured/300x300/?product,packaging&sig=',
+    'https://picsum.photos/300/300?random=',
+    'https://via.placeholder.com/300x300/1a365d/00ff88?text=',
+    // Images spécifiques par catégorie
+    'https://source.unsplash.com/featured/300x300/?coffee,drink&sig=',
+    'https://source.unsplash.com/featured/300x300/?food,grocery&sig=',
+    'https://source.unsplash.com/featured/300x300/?snack,chips&sig=',
+    'https://source.unsplash.com/featured/300x300/?drink,beverage&sig=',
+    'https://source.unsplash.com/featured/300x300/?fruit,vegetable&sig=',
+    'https://source.unsplash.com/featured/300x300/?milk,dairy&sig=',
+    'https://source.unsplash.com/featured/300x300/?chocolate,sweet&sig=',
+    'https://source.unsplash.com/featured/300x300/?bread,bakery&sig='
+  ]
 };
 
-// Catégories avec fichiers CSV (ajout de la catégorie Promotions)
+// Catégories avec fichiers CSV
 const CATEGORIES = [
-  { key:"animaux_compagnie", label:"🐶 Animaux", file:"maxi-jdc-market/data/animaux_compagnie.csv" },
-  { key:"bebe_maman", label:"👶 Bébé & Maman", file:"maxi-jdc-market/data/bebe_maman.csv" },
-  { key:"boulangerie_patisserie", label:"🥖 Boulangerie", file:"maxi-jdc-market/data/boulangerie_patisserie.csv" },
-  { key:"cafe", label:"☕ Café", file:"maxi-jdc-market/data/cafe.csv" },
-  { key:"chips_snacks", label:"🥔 Chips & Snacks", file:"maxi-jdc-market/data/chips_snacks.csv" },
-  { key:"chocolats_biscuits", label:"🍫 Chocolats", file:"maxi-jdc-market/data/chocolats_biscuits.csv" },
-  { key:"conserves", label:"🥫 Conserves", file:"maxi-jdc-market/data/conserves.csv" },
-  { key:"cuisine_monde", label:"🌍 Cuisine Monde", file:"maxi-jdc-market/data/cuisine_monde.csv" },
-  { key:"eaux", label:"💧 Eaux", file:"maxi-jdc-market/data/eaux.csv" },
-  { key:"epicerie_salee", label:"🧂 Épicerie Salée", file:"maxi-jdc-market/data/epicerie_salee.csv" },
-  { key:"epicerie_sucree", label:"🍬 Épicerie Sucrée", file:"maxi-jdc-market/data/epicerie_sucree.csv" },
-  { key:"fromage_charcuterie", label:"🧀 Fromage", file:"maxi-jdc-market/data/fromage_charcuterie.csv" },
-  { key:"fruits_legumes", label:"🍎 Fruits & Légumes", file:"maxi-jdc-market/data/fruits_legumes.csv" },
-  { key:"fruits_secs_noix", label:"🌰 Fruits Secs", file:"maxi-jdc-market/data/fruits_secs_noix.csv" },
-  { key:"hygiene_entretien", label:"🧼 Hygiène", file:"maxi-jdc-market/data/hygiene_entretien.csv" },
-  { key:"hygiene_soins", label:"🧴 Soins", file:"maxi-jdc-market/data/hygiene_soins.csv" },
-  { key:"jus_boissons", label:"🧃 Jus & Boissons", file:"maxi-jdc-market/data/jus_boissons.csv" },
-  { key:"lait_oeufs_produits_frais", label:"🥛 Lait & Œufs", file:"maxi-jdc-market/data/lait_oeufs_produits_frais.csv" },
-  { key:"pates", label:"🍝 Pâtes", file:"maxi-jdc-market/data/pates.csv" },
-  { key:"produits_surgeles", label:"🧊 Surgelés", file:"maxi-jdc-market/data/produits_surgeles.csv" },
-  { key:"vipa_selections", label:"⭐ VIP Sélections", file:"maxi-jdc-market/data/vipa_selections.csv" },
-  { key:"promotions", label:"🔥 Promotions", file:"maxi-jdc-market/data/promotions.csv" }
+  { key:"animaux_compagnie", label:"🐶 Animaux", file:"maxi-jdc-market/data/animaux_compagnie.csv", imageIndex: 5 },
+  { key:"bebe_maman", label:"👶 Bébé & Maman", file:"maxi-jdc-market/data/bebe_maman.csv", imageIndex: 5 },
+  { key:"boulangerie_patisserie", label:"🥖 Boulangerie", file:"maxi-jdc-market/data/boulangerie_patisserie.csv", imageIndex: 10 },
+  { key:"cafe", label:"☕ Café", file:"maxi-jdc-market/data/cafe.csv", imageIndex: 3 },
+  { key:"chips_snacks", label:"🥔 Chips & Snacks", file:"maxi-jdc-market/data/chips_snacks.csv", imageIndex: 5 },
+  { key:"chocolats_biscuits", label:"🍫 Chocolats", file:"maxi-jdc-market/data/chocolats_biscuits.csv", imageIndex: 8 },
+  { key:"conserves", label:"🥫 Conserves", file:"maxi-jdc-market/data/conserves.csv", imageIndex: 5 },
+  { key:"cuisine_monde", label:"🌍 Cuisine Monde", file:"maxi-jdc-market/data/cuisine_monde.csv", imageIndex: 5 },
+  { key:"eaux", label:"💧 Eaux", file:"maxi-jdc-market/data/eaux.csv", imageIndex: 6 },
+  { key:"epicerie_salee", label:"🧂 Épicerie Salée", file:"maxi-jdc-market/data/epicerie_salee.csv", imageIndex: 4 },
+  { key:"epicerie_sucree", label:"🍬 Épicerie Sucrée", file:"maxi-jdc-market/data/epicerie_sucree.csv", imageIndex: 7 },
+  { key:"fromage_charcuterie", label:"🧀 Fromage", file:"maxi-jdc-market/data/fromage_charcuterie.csv", imageIndex: 9 },
+  { key:"fruits_legumes", label:"🍎 Fruits & Légumes", file:"maxi-jdc-market/data/fruits_legumes.csv", imageIndex: 8 },
+  { key:"fruits_secs_noix", label:"🌰 Fruits Secs", file:"maxi-jdc-market/data/fruits_secs_noix.csv", imageIndex: 8 },
+  { key:"hygiene_entretien", label:"🧼 Hygiène", file:"maxi-jdc-market/data/hygiene_entretien.csv", imageIndex: 5 },
+  { key:"hygiene_soins", label:"🧴 Soins", file:"maxi-jdc-market/data/hygiene_soins.csv", imageIndex: 5 },
+  { key:"jus_boissons", label:"🧃 Jus & Boissons", file:"maxi-jdc-market/data/jus_boissons.csv", imageIndex: 6 },
+  { key:"lait_oeufs_produits_frais", label:"🥛 Lait & Œufs", file:"maxi-jdc-market/data/lait_oeufs_produits_frais.csv", imageIndex: 9 },
+  { key:"pates", label:"🍝 Pâtes", file:"maxi-jdc-market/data/pates.csv", imageIndex: 4 },
+  { key:"produits_surgeles", label:"🧊 Surgelés", file:"maxi-jdc-market/data/produits_surgeles.csv", imageIndex: 5 },
+  { key:"vipa_selections", label:"⭐ VIP Sélections", file:"maxi-jdc-market/data/vipa_selections.csv", imageIndex: 5 },
+  { key:"promotions", label:"🔥 Promotions", file:"maxi-jdc-market/data/promotions.csv", imageIndex: 5 }
 ];
 
 // ===================== ÉTAT GLOBAL =====================
@@ -2669,7 +2684,8 @@ const state = {
   quantityPicks: {},
   filteredProducts: [],
   currentImageIndex: 0,
-  productImages: {}
+  productImages: {},
+  imageCache: new Map() // Cache pour les images
 };
 
 // ===================== UTILITAIRES =====================
@@ -2694,13 +2710,52 @@ function showToast(message, type = 'success') {
   }, 3000);
 }
 
+// ===================== GESTION DES IMAGES =====================
+function getProductImageUrl(product) {
+  const cacheKey = `${product.categoryKey}_${product.code}`;
+  
+  // Vérifier le cache d'abord
+  if (state.imageCache.has(cacheKey)) {
+    return state.imageCache.get(cacheKey);
+  }
+  
+  // Générer une URL d'image basée sur le code produit
+  const category = CATEGORIES.find(c => c.key === product.categoryKey);
+  const imageIndex = category?.imageIndex || 0;
+  const baseSource = CONFIG.imageSources[imageIndex % CONFIG.imageSources.length];
+  
+  // Créer une signature unique basée sur le code produit
+  let signature = 0;
+  for (let i = 0; i < product.code.length; i++) {
+    signature = ((signature << 5) - signature) + product.code.charCodeAt(i);
+    signature = signature & signature;
+  }
+  signature = Math.abs(signature);
+  
+  let imageUrl;
+  if (baseSource.includes('unsplash.com')) {
+    imageUrl = `${baseSource}${signature}`;
+  } else if (baseSource.includes('picsum.photos')) {
+    imageUrl = `${baseSource}${signature}`;
+  } else if (baseSource.includes('placeholder.com')) {
+    const text = encodeURIComponent(product.code);
+    imageUrl = `${baseSource}${text}`;
+  } else {
+    imageUrl = `https://source.unsplash.com/featured/300x300/?product,grocery&sig=${signature}`;
+  }
+  
+  // Mettre en cache
+  state.imageCache.set(cacheKey, imageUrl);
+  return imageUrl;
+}
+
 // ===================== GESTION DU STOCKAGE =====================
 function saveState() {
   const data = {
     user: state.user,
     cart: state.cart,
     stock: state.stock,
-    version: '10.0'
+    version: '11.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -2708,7 +2763,7 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '10.0') {
+    if (data && data.version === '11.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.stock = data.stock || {};
@@ -2786,7 +2841,6 @@ function updateUserUI() {
   updatePhoneClearButton();
 }
 
-// Fonction pour formater le numéro de téléphone
 function formatPhoneNumber(phone) {
   // Supprimer tous les caractères non numériques
   let cleaned = phone.replace(/\D/g, '');
@@ -3240,17 +3294,15 @@ function renderProducts() {
   productsToShow.forEach(product => {
     const productId = generateProductId(product);
     const inStock = isInStock(product.code);
-    
-    // Utiliser une image unique par code produit
-    const imageHash = generateImageHash(product);
-    const imgSrc = `${CONFIG.baseImagePath}${imageHash}.jpg`;
+    const imgUrl = getProductImageUrl(product);
     
     const card = document.createElement('div');
     card.className = 'product-card';
     card.innerHTML = `
       <div class="product-image">
-        <img src="${imgSrc}" 
+        <img src="${imgUrl}" 
              alt="${product.name}"
+             loading="lazy"
              onload="this.style.display='block'; this.parentElement.querySelector('.no-photo').style.display='none';"
              onerror="this.style.display='none'; this.parentElement.querySelector('.no-photo').style.display='flex';">
         <div class="no-photo" style="display:none;">${product.code}</div>
@@ -3276,18 +3328,6 @@ function renderProducts() {
     
     grid.appendChild(card);
   });
-}
-
-// Fonction pour générer un hash unique pour l'image basé sur le produit
-function generateImageHash(product) {
-  // Créer un hash unique en combinant code, nom et catégorie
-  const str = `${product.code}_${product.name}_${product.categoryKey}`;
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = ((hash << 5) - hash) + str.charCodeAt(i);
-    hash = hash & hash;
-  }
-  return Math.abs(hash).toString(16).substring(0, 8);
 }
 
 // ===================== NAVIGATION PRODUITS =====================
@@ -3345,11 +3385,9 @@ function openProductModal(product) {
   const img = $('modalProductImage');
   const noPhoto = $('modalNoPhoto');
   
-  // Utiliser le même hash que dans renderProducts
-  const imageHash = generateImageHash(product);
-  const imgSrc = `${CONFIG.baseImagePath}${imageHash}.jpg`;
+  const imgUrl = getProductImageUrl(product);
   
-  img.src = imgSrc;
+  img.src = imgUrl;
   img.onload = () => {
     img.style.display = 'block';
     noPhoto.style.display = 'none';
