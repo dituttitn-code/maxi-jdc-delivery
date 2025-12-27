@@ -2235,7 +2235,7 @@
     <header class="header">
       <div class="logo-brand">
         <div class="logo">
-          <img src="maxi-jdc-market/images/logo-maxi-jdc-market.jpg" alt="MAXI JDC MARKET" onerror="this.style.display='none'">
+          <img src="logo-maxi-jdc-market.jpg" alt="MAXI JDC MARKET" onerror="this.style.display='none'">
         </div>
         <div class="brand-text">
           <h1>MAXI JDC MARKET</h1>
@@ -2266,7 +2266,7 @@
     <!-- INFOS RAPIDES -->
     <div class="quick-info">
       <div class="info-pill">📍 Jardins de Carthage</div>
-      <div class="info-pill">🕒 7am – 1am</div>
+      <div class="info-pill">🕒 7am – 1am</div> <!-- MODIFIÉ ICI -->
       <div class="info-pill"><strong>WhatsApp:</strong> +216 25 600 978</div>
       <button class="info-pill qr-pill" id="qrBtn" title="Scanner le QR Code">
         📱 QR Code
@@ -2624,35 +2624,33 @@ const CONFIG = {
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v12',
-  appUrl: window.location.href,
-  baseImagePath: 'maxi-jdc-market/images/products/'
+  localStorageKey: 'maxi_jdc_market_app_v10',
+  appUrl: window.location.href
 };
 
 // Catégories avec fichiers CSV
 const CATEGORIES = [
-  { key:"animaux_compagnie", label:"🐶 Animaux", file:"maxi-jdc-market/data/animaux_compagnie.csv" },
-  { key:"bebe_maman", label:"👶 Bébé & Maman", file:"maxi-jdc-market/data/bebe_maman.csv" },
-  { key:"boulangerie_patisserie", label:"🥖 Boulangerie", file:"maxi-jdc-market/data/boulangerie_patisserie.csv" },
-  { key:"cafe", label:"☕ Café", file:"maxi-jdc-market/data/cafe.csv" },
-  { key:"chips_snacks", label:"🥔 Chips & Snacks", file:"maxi-jdc-market/data/chips_snacks.csv" },
-  { key:"chocolats_biscuits", label:"🍫 Chocolats", file:"maxi-jdc-market/data/chocolats_biscuits.csv" },
-  { key:"conserves", label:"🥫 Conserves", file:"maxi-jdc-market/data/conserves.csv" },
-  { key:"cuisine_monde", label:"🌍 Cuisine Monde", file:"maxi-jdc-market/data/cuisine_monde.csv" },
-  { key:"eaux", label:"💧 Eaux", file:"maxi-jdc-market/data/eaux.csv" },
-  { key:"epicerie_salee", label:"🧂 Épicerie Salée", file:"maxi-jdc-market/data/epicerie_salee.csv" },
-  { key:"epicerie_sucree", label:"🍬 Épicerie Sucrée", file:"maxi-jdc-market/data/epicerie_sucree.csv" },
-  { key:"fromage_charcuterie", label:"🧀 Fromage", file:"maxi-jdc-market/data/fromage_charcuterie.csv" },
-  { key:"fruits_legumes", label:"🍎 Fruits & Légumes", file:"maxi-jdc-market/data/fruits_legumes.csv" },
-  { key:"fruits_secs_noix", label:"🌰 Fruits Secs", file:"maxi-jdc-market/data/fruits_secs_noix.csv" },
-  { key:"hygiene_entretien", label:"🧼 Hygiène", file:"maxi-jdc-market/data/hygiene_entretien.csv" },
-  { key:"hygiene_soins", label:"🧴 Soins", file:"maxi-jdc-market/data/hygiene_soins.csv" },
-  { key:"jus_boissons", label:"🧃 Jus & Boissons", file:"maxi-jdc-market/data/jus_boissons.csv" },
-  { key:"lait_oeufs_produits_frais", label:"🥛 Lait & Œufs", file:"maxi-jdc-market/data/lait_oeufs_produits_frais.csv" },
-  { key:"pates", label:"🍝 Pâtes", file:"maxi-jdc-market/data/pates.csv" },
-  { key:"produits_surgeles", label:"🧊 Surgelés", file:"maxi-jdc-market/data/produits_surgeles.csv" },
-  { key:"vipa_selections", label:"⭐ VIP Sélections", file:"maxi-jdc-market/data/vipa_selections.csv" },
-  { key:"promotions", label:"🔥 Promotions", file:"maxi-jdc-market/data/promotions.csv" }
+  { key:"animaux_compagnie", label:"🐶 Animaux", file:"data/animaux_compagnie.csv" },
+  { key:"bebe_maman", label:"👶 Bébé & Maman", file:"data/bebe_maman.csv" },
+  { key:"boulangerie_patisserie", label:"🥖 Boulangerie", file:"data/boulangerie_patisserie.csv" },
+  { key:"cafe", label:"☕ Café", file:"data/cafe.csv" },
+  { key:"chips_snacks", label:"🥔 Chips & Snacks", file:"data/chips_snacks.csv" },
+  { key:"chocolats_biscuits", label:"🍫 Chocolats", file:"data/chocolats_biscuits.csv" },
+  { key:"conserves", label:"🥫 Conserves", file:"data/conserves.csv" },
+  { key:"cuisine_monde", label:"🌍 Cuisine Monde", file:"data/cuisine_monde.csv" },
+  { key:"eaux", label:"💧 Eaux", file:"data/eaux.csv" },
+  { key:"epicerie_salee", label:"🧂 Épicerie Salée", file:"data/epicerie_salee.csv" },
+  { key:"epicerie_sucree", label:"🍬 Épicerie Sucrée", file:"data/epicerie_sucree.csv" },
+  { key:"fromage_charcuterie", label:"🧀 Fromage", file:"data/fromage_charcuterie.csv" },
+  { key:"fruits_legumes", label:"🍎 Fruits & Légumes", file:"data/fruits_legumes.csv" },
+  { key:"fruits_secs_noix", label:"🌰 Fruits Secs", file:"data/fruits_secs_noix.csv" },
+  { key:"hygiene_entretien", label:"🧼 Hygiène", file:"data/hygiene_entretien.csv" },
+  { key:"hygiene_soins", label:"🧴 Soins", file:"data/hygiene_soins.csv" },
+  { key:"jus_boissons", label:"🧃 Jus & Boissons", file:"data/jus_boissons.csv" },
+  { key:"lait_oeufs_produits_frais", label:"🥛 Lait & Œufs", file:"data/lait_oeufs_produits_frais.csv" },
+  { key:"pates", label:"🍝 Pâtes", file:"data/pates.csv" },
+  { key:"produits_surgeles", label:"🧊 Surgelés", file:"data/produits_surgeles.csv" },
+  { key:"vipa_selections", label:"⭐ VIP Sélections", file:"data/vipa_selections.csv" }
 ];
 
 // ===================== ÉTAT GLOBAL =====================
@@ -2669,8 +2667,7 @@ const state = {
   quantityPicks: {},
   filteredProducts: [],
   currentImageIndex: 0,
-  productImages: {},
-  imageCache: new Map()
+  productImages: {}
 };
 
 // ===================== UTILITAIRES =====================
@@ -2695,51 +2692,13 @@ function showToast(message, type = 'success') {
   }, 3000);
 }
 
-// ===================== GESTION DES IMAGES =====================
-function getProductImageUrl(product) {
-  const cacheKey = `${product.categoryKey}_${product.code}`;
-  
-  // Vérifier le cache d'abord
-  if (state.imageCache.has(cacheKey)) {
-    return state.imageCache.get(cacheKey);
-  }
-  
-  // Essayer différents formats d'image
-  const imageFormats = [
-    `${CONFIG.baseImagePath}${product.code}.jpg`,
-    `${CONFIG.baseImagePath}${product.code}.jpeg`,
-    `${CONFIG.baseImagePath}${product.code}.png`,
-    `${CONFIG.baseImagePath}${product.code.toLowerCase()}.jpg`,
-    `${CONFIG.baseImagePath}${product.code}_${product.name.replace(/[^a-z0-9]/gi, '_')}.jpg`,
-    // Fallback pour les produits sans photo
-    `https://via.placeholder.com/300x300/1a365d/00ff88?text=${encodeURIComponent(product.code)}`
-  ];
-  
-  // Utiliser la première image disponible
-  const imageUrl = imageFormats[0];
-  
-  // Mettre en cache
-  state.imageCache.set(cacheKey, imageUrl);
-  return imageUrl;
-}
-
-// Fonction pour précharger les images
-function preloadImage(url) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(url);
-    img.onerror = () => reject(url);
-    img.src = url;
-  });
-}
-
 // ===================== GESTION DU STOCKAGE =====================
 function saveState() {
   const data = {
     user: state.user,
     cart: state.cart,
     stock: state.stock,
-    version: '12.0'
+    version: '10.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -2747,7 +2706,7 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '12.0') {
+    if (data && data.version === '10.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.stock = data.stock || {};
@@ -2825,6 +2784,7 @@ function updateUserUI() {
   updatePhoneClearButton();
 }
 
+// Fonction pour formater le numéro de téléphone
 function formatPhoneNumber(phone) {
   // Supprimer tous les caractères non numériques
   let cleaned = phone.replace(/\D/g, '');
@@ -3125,17 +3085,11 @@ async function loadAllProducts() {
   renderCategories();
   renderProducts();
   
-  // Précharger les images pour les produits café
-  preloadProductImages(defaultProducts);
-  
   setTimeout(async () => {
     for (const category of CATEGORIES) {
       if (category.key !== 'cafe') {
         const products = await loadCategoryData(category.key);
         state.products.set(category.key, products);
-        
-        // Précharger les images pour cette catégorie
-        preloadProductImages(products);
       }
     }
     
@@ -3143,21 +3097,6 @@ async function loadAllProducts() {
     renderProducts();
     showToast('✅ Tous les produits sont chargés');
   }, 500);
-}
-
-// Précharger les images des produits
-function preloadProductImages(products) {
-  if (!products || products.length === 0) return;
-  
-  // Précharger les 10 premières images
-  const productsToPreload = products.slice(0, 10);
-  
-  productsToPreload.forEach(product => {
-    const imgUrl = getProductImageUrl(product);
-    preloadImage(imgUrl).catch(() => {
-      // Ignorer les erreurs de préchargement
-    });
-  });
 }
 
 // ===================== RENDU CATÉGORIES =====================
@@ -3299,15 +3238,17 @@ function renderProducts() {
   productsToShow.forEach(product => {
     const productId = generateProductId(product);
     const inStock = isInStock(product.code);
-    const imgUrl = getProductImageUrl(product);
+    
+    // Utiliser une image unique par code produit
+    const imageHash = generateImageHash(product);
+    const imgSrc = `images/products/${imageHash}.jpg`;
     
     const card = document.createElement('div');
     card.className = 'product-card';
     card.innerHTML = `
       <div class="product-image">
-        <img src="${imgUrl}" 
+        <img src="${imgSrc}" 
              alt="${product.name}"
-             loading="lazy"
              onload="this.style.display='block'; this.parentElement.querySelector('.no-photo').style.display='none';"
              onerror="this.style.display='none'; this.parentElement.querySelector('.no-photo').style.display='flex';">
         <div class="no-photo" style="display:none;">${product.code}</div>
@@ -3333,6 +3274,18 @@ function renderProducts() {
     
     grid.appendChild(card);
   });
+}
+
+// Fonction pour générer un hash unique pour l'image basé sur le produit
+function generateImageHash(product) {
+  // Créer un hash unique en combinant code, nom et catégorie
+  const str = `${product.code}_${product.name}_${product.categoryKey}`;
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash = hash & hash;
+  }
+  return Math.abs(hash).toString(16).substring(0, 8);
 }
 
 // ===================== NAVIGATION PRODUITS =====================
@@ -3390,9 +3343,11 @@ function openProductModal(product) {
   const img = $('modalProductImage');
   const noPhoto = $('modalNoPhoto');
   
-  const imgUrl = getProductImageUrl(product);
+  // Utiliser le même hash que dans renderProducts
+  const imageHash = generateImageHash(product);
+  const imgSrc = `images/products/${imageHash}.jpg`;
   
-  img.src = imgUrl;
+  img.src = imgSrc;
   img.onload = () => {
     img.style.display = 'block';
     noPhoto.style.display = 'none';
@@ -3629,7 +3584,7 @@ function openOrderModal() {
   summary += `TOTAL: ${formatPrice(total)}\n\n`;
   summary += `=== INFORMATIONS ===\n\n`;
   summary += `📍 Jardins de Carthage\n`;
-  summary += `🕒 7am – 1am\n`;
+  summary += `🕒 7am – 1am\n`;  // MODIFIÉ ICI
   summary += `📱 WhatsApp: +216 25 600 978\n`;
   summary += `💳 Paiement à la livraison\n`;
   
