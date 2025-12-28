@@ -322,6 +322,63 @@
       gap: 4px;
     }
 
+    /* BANNIÈRE PROMOTIONNELLE */
+    .promo-banner {
+      background: linear-gradient(135deg, #ff6b6b, #ffa726);
+      border-radius: var(--radius);
+      padding: 10px 15px;
+      margin: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      animation: pulse 2s infinite;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+
+    .promo-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .promo-icon {
+      font-size: 24px;
+    }
+
+    .promo-text {
+      flex: 1;
+    }
+
+    .promo-text h4 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 900;
+      color: #000;
+    }
+
+    .promo-text p {
+      margin: 2px 0 0;
+      font-size: 11px;
+      color: rgba(0,0,0,0.8);
+    }
+
+    .promo-btn {
+      background: rgba(0,0,0,0.3);
+      border: 2px solid rgba(255,255,255,0.5);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .promo-btn:hover {
+      background: rgba(0,0,0,0.5);
+      transform: scale(1.05);
+    }
+
     /* CATÉGORIES HORIZONTALES */
     .categories-scroll {
       margin-top: 12px;
@@ -659,6 +716,26 @@
       margin-top: auto;
     }
 
+    .product-old-price {
+      font-size: 10px;
+      color: var(--muted);
+      text-decoration: line-through;
+      margin-right: 5px;
+    }
+
+    .product-discount {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--danger);
+      color: white;
+      font-weight: 900;
+      font-size: 10px;
+      padding: 3px 6px;
+      border-radius: 4px;
+      z-index: 2;
+    }
+
     .product-meta {
       color: var(--muted);
       font-size: 10px;
@@ -917,6 +994,13 @@
       margin: 0;
     }
 
+    .modal-price-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
     .modal-product-price {
       font-size: 28px;
       font-weight: 900;
@@ -925,9 +1009,23 @@
       border: 3px solid var(--accent);
       border-radius: 20px;
       padding: 15px 25px;
-      align-self: flex-start;
       text-align: center;
       min-width: 180px;
+    }
+
+    .modal-product-old-price {
+      font-size: 18px;
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .modal-product-discount {
+      background: var(--danger);
+      color: white;
+      font-weight: 900;
+      font-size: 16px;
+      padding: 8px 15px;
+      border-radius: 10px;
     }
 
     .modal-product-meta {
@@ -1530,6 +1628,69 @@
 
     .form-btn.danger:hover {
       background: rgba(255, 107, 107, 0.25);
+    }
+
+    /* SECTION HISTORIQUE DES COMMANDES */
+    .order-history-section {
+      background: var(--card2);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin-top: 15px;
+    }
+
+    .history-items {
+      max-height: 300px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .history-item {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .history-item:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: var(--accent2);
+    }
+
+    .history-date {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+
+    .history-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .history-items-count {
+      font-size: 11px;
+      color: var(--text);
+    }
+
+    .history-total {
+      font-weight: 900;
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .history-empty {
+      text-align: center;
+      padding: 20px;
+      color: var(--muted);
+      font-size: 12px;
     }
 
     /* BOUTON LOCALISATION */
@@ -2263,14 +2424,26 @@
       </div>
     </div>
 
-    <!-- INFOS RAPIDES -->
-    <div class="quick-info">
+    <!-- INFOS RAPIDES DYNAMIQUES -->
+    <div class="quick-info" id="quickInfo">
       <div class="info-pill">📍 Jardins de Carthage</div>
-      <div class="info-pill">🕒 7am – 1am</div> <!-- MODIFIÉ ICI -->
+      <div class="info-pill">🕒 7am – 1am</div>
       <div class="info-pill"><strong>WhatsApp:</strong> +216 25 600 978</div>
       <button class="info-pill qr-pill" id="qrBtn" title="Scanner le QR Code">
         📱 QR Code
       </button>
+    </div>
+
+    <!-- BANNIÈRE PROMOTIONNELLE -->
+    <div class="promo-banner" id="promoBanner" style="display:none;">
+      <div class="promo-content">
+        <div class="promo-icon">🔥</div>
+        <div class="promo-text">
+          <h4 id="promoTitle">PROMOTIONS EN COURS</h4>
+          <p id="promoDesc">Découvrez nos offres spéciales</p>
+        </div>
+      </div>
+      <button class="promo-btn" id="viewPromosBtn">VOIR</button>
     </div>
 
     <!-- CATÉGORIES -->
@@ -2285,7 +2458,7 @@
           <h2 id="activeCategoryLabel">Produits</h2>
           <div class="meta" id="activeCategoryMeta">Sélectionnez une catégorie</div>
           
-          <!-- PAGINATION EN HAUT - CURSEURS SUR LA MÊME LIGNE -->
+          <!-- PAGINATION EN HAUT -->
           <div class="pagination-top">
             <div class="page-controls">
               <button class="page-btn" id="prevPageBtn" title="Page précédente">‹</button>
@@ -2299,7 +2472,7 @@
         <!-- GRID PRODUITS -->
         <div class="products-grid" id="productsGrid"></div>
 
-        <!-- PAGINATION EN BAS AVEC CURSEURS VISIBLES EN HORIZONTAL -->
+        <!-- PAGINATION EN BAS -->
         <div class="pagination-bottom" id="paginationBottom">
           <button class="page-btn" id="prevPageBottomBtn" title="Page précédente">
             ‹
@@ -2390,7 +2563,26 @@
             <button class="form-btn" id="editAccountBtn" style="display:none">
               ✏️ Modifier
             </button>
+            <button class="form-btn" id="viewHistoryBtn" style="display:none">
+              📋 Historique
+            </button>
           </div>
+        </div>
+      </section>
+
+      <!-- SECTION HISTORIQUE DES COMMANDES -->
+      <section class="order-history-section" id="orderHistorySection" style="display:none">
+        <div class="section-title">
+          <h4>📋 Historique des commandes</h4>
+          <span class="account-status" id="historyCount">0 commande(s)</span>
+        </div>
+        
+        <div class="history-items" id="historyItemsList">
+          <!-- Les commandes historiques seront insérées ici -->
+        </div>
+        
+        <div class="history-empty" id="historyEmptyMessage">
+          Aucune commande passée dans les 2 dernières années
         </div>
       </section>
 
@@ -2481,16 +2673,18 @@
           <button class="image-nav-btn next" id="modalNextImageBtn">›</button>
         </div>
         
-        <!-- BARRE DE NAVIGATION PRODUITS (CURSEUR) -->
-        <div class="image-nav-bar" id="imageNavBar">
-          <!-- Les points seront générés dynamiquement -->
-        </div>
+        <!-- BARRE DE NAVIGATION PRODUITS -->
+        <div class="image-nav-bar" id="imageNavBar"></div>
         
         <!-- INFOS PRODUIT -->
         <div class="modal-product-info">
           <h2 class="modal-product-name" id="modalProductNameFull"></h2>
           
-          <div class="modal-product-price" id="modalProductPrice"></div>
+          <div class="modal-price-container">
+            <div class="modal-product-price" id="modalProductPrice"></div>
+            <div class="modal-product-old-price" id="modalProductOldPrice" style="display:none"></div>
+            <div class="modal-product-discount" id="modalProductDiscount" style="display:none"></div>
+          </div>
           
           <div class="modal-product-meta">
             <div class="meta-row">
@@ -2539,7 +2733,7 @@
     </div>
   </div>
 
-  <!-- MODAL QR CODE CORRIGÉ -->
+  <!-- MODAL QR CODE -->
   <div class="qr-modal-overlay" id="qrModal">
     <div class="qr-modal">
       <div class="qr-modal-header">
@@ -2547,9 +2741,7 @@
       </div>
       
       <div class="qr-modal-body">
-        <div class="qr-code-container" id="qrCodeContainer">
-          <!-- QR Code dynamique -->
-        </div>
+        <div class="qr-code-container" id="qrCodeContainer"></div>
         
         <div class="qr-instructions">
           <p>Scannez ce code avec votre téléphone pour accéder à l'application MAXI JDC MARKET.</p>
@@ -2624,33 +2816,35 @@ const CONFIG = {
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v10',
-  appUrl: window.location.href
+  localStorageKey: 'maxi_jdc_market_app_v11',
+  imagesBasePath: 'images/products/',
+  historyRetentionYears: 2
 };
 
-// Catégories avec fichiers CSV
+// Catégories avec noms complets
 const CATEGORIES = [
-  { key:"animaux_compagnie", label:"🐶 Animaux", file:"data/animaux_compagnie.csv" },
+  { key:"animaux_compagnie", label:"🐶 Animaux de Compagnie", file:"data/animaux_compagnie.csv" },
   { key:"bebe_maman", label:"👶 Bébé & Maman", file:"data/bebe_maman.csv" },
-  { key:"boulangerie_patisserie", label:"🥖 Boulangerie", file:"data/boulangerie_patisserie.csv" },
-  { key:"cafe", label:"☕ Café", file:"data/cafe.csv" },
+  { key:"boulangerie_patisserie", label:"🥖 Boulangerie & Pâtisserie", file:"data/boulangerie_patisserie.csv" },
+  { key:"cafe", label:"☕ Café & Thés", file:"data/cafe.csv" },
   { key:"chips_snacks", label:"🥔 Chips & Snacks", file:"data/chips_snacks.csv" },
-  { key:"chocolats_biscuits", label:"🍫 Chocolats", file:"data/chocolats_biscuits.csv" },
-  { key:"conserves", label:"🥫 Conserves", file:"data/conserves.csv" },
-  { key:"cuisine_monde", label:"🌍 Cuisine Monde", file:"data/cuisine_monde.csv" },
-  { key:"eaux", label:"💧 Eaux", file:"data/eaux.csv" },
+  { key:"chocolats_biscuits", label:"🍫 Chocolats & Biscuits", file:"data/chocolats_biscuits.csv" },
+  { key:"conserves", label:"🥫 Conserves & Bocaux", file:"data/conserves.csv" },
+  { key:"cuisine_monde", label:"🌍 Cuisine du Monde", file:"data/cuisine_monde.csv" },
+  { key:"eaux", label:"💧 Eaux & Boissons", file:"data/eaux.csv" },
   { key:"epicerie_salee", label:"🧂 Épicerie Salée", file:"data/epicerie_salee.csv" },
   { key:"epicerie_sucree", label:"🍬 Épicerie Sucrée", file:"data/epicerie_sucree.csv" },
-  { key:"fromage_charcuterie", label:"🧀 Fromage", file:"data/fromage_charcuterie.csv" },
+  { key:"fromage_charcuterie", label:"🧀 Fromages & Charcuteries", file:"data/fromage_charcuterie.csv" },
   { key:"fruits_legumes", label:"🍎 Fruits & Légumes", file:"data/fruits_legumes.csv" },
-  { key:"fruits_secs_noix", label:"🌰 Fruits Secs", file:"data/fruits_secs_noix.csv" },
-  { key:"hygiene_entretien", label:"🧼 Hygiène", file:"data/hygiene_entretien.csv" },
-  { key:"hygiene_soins", label:"🧴 Soins", file:"data/hygiene_soins.csv" },
+  { key:"fruits_secs_noix", label:"🌰 Fruits Secs & Noix", file:"data/fruits_secs_noix.csv" },
+  { key:"hygiene_entretien", label:"🧼 Hygiène & Entretien", file:"data/hygiene_entretien.csv" },
+  { key:"hygiene_soins", label:"🧴 Soins & Beauté", file:"data/hygiene_soins.csv" },
   { key:"jus_boissons", label:"🧃 Jus & Boissons", file:"data/jus_boissons.csv" },
-  { key:"lait_oeufs_produits_frais", label:"🥛 Lait & Œufs", file:"data/lait_oeufs_produits_frais.csv" },
-  { key:"pates", label:"🍝 Pâtes", file:"data/pates.csv" },
-  { key:"produits_surgeles", label:"🧊 Surgelés", file:"data/produits_surgeles.csv" },
-  { key:"vipa_selections", label:"⭐ VIP Sélections", file:"data/vipa_selections.csv" }
+  { key:"lait_oeufs_produits_frais", label:"🥛 Lait & Œufs Frais", file:"data/lait_oeufs_produits_frais.csv" },
+  { key:"pates", label:"🍝 Pâtes & Riz", file:"data/pates.csv" },
+  { key:"produits_surgeles", label:"🧊 Produits Surgelés", file:"data/produits_surgeles.csv" },
+  { key:"vipa_selections", label:"⭐ Sélections VIP", file:"data/vipa_selections.csv" },
+  { key:"promotions", label:"🔥 PROMOTIONS", file:"data/promotions.csv" }
 ];
 
 // ===================== ÉTAT GLOBAL =====================
@@ -2667,7 +2861,9 @@ const state = {
   quantityPicks: {},
   filteredProducts: [],
   currentImageIndex: 0,
-  productImages: {}
+  productImages: {},
+  orderHistory: [],
+  promotions: []
 };
 
 // ===================== UTILITAIRES =====================
@@ -2698,7 +2894,8 @@ function saveState() {
     user: state.user,
     cart: state.cart,
     stock: state.stock,
-    version: '10.0'
+    orderHistory: state.orderHistory,
+    version: '11.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -2706,10 +2903,11 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '10.0') {
+    if (data && data.version === '11.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.stock = data.stock || {};
+      state.orderHistory = data.orderHistory || [];
       
       updateUserUI();
       updateCartUI();
@@ -2724,15 +2922,15 @@ function updateUserUI() {
   const accountStatus = $('accountStatus');
   const saveBtn = $('saveAccountBtn');
   const editBtn = $('editAccountBtn');
+  const historyBtn = $('viewHistoryBtn');
+  const historySection = $('orderHistorySection');
   
   if (state.user) {
     $('clientName').value = state.user.name || '';
     
-    // Afficher le numéro formaté s'il existe
     if (state.user.displayPhone) {
       $('clientPhone').value = state.user.displayPhone;
     } else if (state.user.phone) {
-      // Formater le numéro s'il n'est pas déjà formaté
       const phone = state.user.phone.replace(/\s/g, '');
       const formattedPhone = formatPhoneNumber(phone);
       $('clientPhone').value = formattedPhone;
@@ -2749,6 +2947,7 @@ function updateUserUI() {
     $('clientLng').disabled = true;
     saveBtn.style.display = 'none';
     editBtn.style.display = 'block';
+    historyBtn.style.display = 'block';
     
     accountStatus.textContent = 'Connecté';
     accountStatus.style.background = 'rgba(0,255,136,0.2)';
@@ -2760,6 +2959,9 @@ function updateUserUI() {
         </div>
       `;
     }
+    
+    // Charger l'historique si le numéro correspond
+    loadUserOrderHistory();
   } else {
     $('clientName').value = '';
     $('clientPhone').value = '';
@@ -2774,6 +2976,8 @@ function updateUserUI() {
     $('clientLng').disabled = false;
     saveBtn.style.display = 'block';
     editBtn.style.display = 'none';
+    historyBtn.style.display = 'none';
+    historySection.style.display = 'none';
     
     accountStatus.textContent = 'Nouveau';
     accountStatus.style.background = 'rgba(255,255,255,0.1)';
@@ -2784,27 +2988,16 @@ function updateUserUI() {
   updatePhoneClearButton();
 }
 
-// Fonction pour formater le numéro de téléphone
 function formatPhoneNumber(phone) {
-  // Supprimer tous les caractères non numériques
   let cleaned = phone.replace(/\D/g, '');
-  
-  // S'assurer qu'on a exactement 8 chiffres
   if (cleaned.length !== 8) return phone;
-  
-  // Formater comme "25 600 978"
   return cleaned.replace(/(\d{2})(\d{3})(\d{3})/, '$1 $2 $3');
 }
 
 function updatePhoneClearButton() {
   const phoneInput = $('clientPhone');
   const clearBtn = $('clearPhoneBtn');
-  
-  if (phoneInput.value.trim()) {
-    clearBtn.style.display = 'flex';
-  } else {
-    clearBtn.style.display = 'none';
-  }
+  clearBtn.style.display = phoneInput.value.trim() ? 'flex' : 'none';
 }
 
 function saveUser() {
@@ -2819,23 +3012,20 @@ function saveUser() {
     return;
   }
   
-  // Supprimer tous les espaces du numéro de téléphone
   phone = phone.replace(/\s/g, '');
   
-  // Vérification de 8 chiffres exactement après le +216
   if (phone.length !== 8 || !/^\d{8}$/.test(phone)) {
     showToast('Le numéro de téléphone doit contenir exactement 8 chiffres après +216', 'warning');
     $('clientPhone').focus();
     return;
   }
   
-  // Formater le numéro avec des espaces pour l'affichage
   const formattedPhone = formatPhoneNumber(phone);
   
   state.user = {
     name,
-    phone: phone, // Stocker sans espaces
-    displayPhone: formattedPhone, // Stocker avec format pour l'affichage
+    phone: phone,
+    displayPhone: formattedPhone,
     address,
     lat: lat || null,
     lng: lng || null,
@@ -2843,7 +3033,6 @@ function saveUser() {
     lastLogin: new Date().toISOString()
   };
   
-  // Mettre à jour l'affichage avec le numéro formaté
   $('clientPhone').value = formattedPhone;
   
   saveState();
@@ -2864,8 +3053,94 @@ function editUser() {
   
   $('saveAccountBtn').style.display = 'block';
   $('editAccountBtn').style.display = 'none';
+  $('viewHistoryBtn').style.display = 'none';
+  $('orderHistorySection').style.display = 'none';
   
   showToast('Vous pouvez maintenant modifier vos informations');
+}
+
+// ===================== HISTORIQUE DES COMMANDES =====================
+function loadUserOrderHistory() {
+  if (!state.user || !state.user.phone) {
+    $('orderHistorySection').style.display = 'none';
+    return;
+  }
+  
+  const userPhone = state.user.phone.replace(/\s/g, '');
+  const twoYearsAgo = new Date();
+  twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - CONFIG.historyRetentionYears);
+  
+  const userHistory = state.orderHistory.filter(order => {
+    const orderPhone = order.phone.replace(/\s/g, '');
+    const orderDate = new Date(order.date);
+    return orderPhone === userPhone && orderDate >= twoYearsAgo;
+  });
+  
+  $('historyCount').textContent = `${userHistory.length} commande(s)`;
+  const historyList = $('historyItemsList');
+  const emptyMessage = $('historyEmptyMessage');
+  
+  if (userHistory.length === 0) {
+    historyList.style.display = 'none';
+    emptyMessage.style.display = 'block';
+  } else {
+    historyList.style.display = 'flex';
+    emptyMessage.style.display = 'none';
+    
+    historyList.innerHTML = '';
+    userHistory.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(order => {
+      const item = document.createElement('div');
+      item.className = 'history-item';
+      item.innerHTML = `
+        <div class="history-date">${new Date(order.date).toLocaleDateString('fr-FR')} ${new Date(order.date).toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})}</div>
+        <div class="history-summary">
+          <div class="history-items-count">${order.itemCount} article(s)</div>
+          <div class="history-total">${formatPrice(order.total)}</div>
+        </div>
+      `;
+      item.onclick = () => viewOrderDetails(order);
+      historyList.appendChild(item);
+    });
+  }
+  
+  $('orderHistorySection').style.display = 'block';
+}
+
+function viewOrderDetails(order) {
+  let details = `=== COMMANDE DU ${new Date(order.date).toLocaleDateString('fr-FR')} ===\n\n`;
+  details += `👤 Client: ${order.name}\n`;
+  details += `📞 Téléphone: +216 ${formatPhoneNumber(order.phone)}\n`;
+  details += `📍 Adresse: ${order.address}\n\n`;
+  details += `=== ARTICLES ===\n\n`;
+  
+  order.items.forEach(item => {
+    const lineTotal = item.price * item.quantity;
+    details += `• ${item.name}\n`;
+    details += `  Qté: ${item.quantity} | Prix: ${formatPrice(item.price)}\n`;
+    details += `  Total: ${formatPrice(lineTotal)}\n\n`;
+  });
+  
+  details += `=== TOTAUX ===\n\n`;
+  details += `Sous-total: ${formatPrice(order.subtotal)}\n`;
+  details += `Livraison: ${order.shipping === 0 ? 'GRATUITE' : formatPrice(order.shipping)}\n`;
+  details += `TOTAL: ${formatPrice(order.total)}\n`;
+  
+  alert(details);
+}
+
+function addToOrderHistory(orderData) {
+  const order = {
+    ...orderData,
+    date: new Date().toISOString(),
+    id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
+  };
+  
+  state.orderHistory.push(order);
+  saveState();
+  
+  if (state.user && state.user.phone === orderData.phone.replace(/\s/g, '')) {
+    loadUserOrderHistory();
+  }
 }
 
 // ===================== GESTION PANIER =====================
@@ -3041,7 +3316,7 @@ async function loadCategoryData(categoryKey) {
     const firstLine = lines[0];
     const separator = firstLine.includes('\t') ? '\t' : ';';
     
-    const productsMap = new Map(); // Pour éviter les doublons
+    const productsMap = new Map();
     
     lines.slice(1).forEach(line => {
       const parts = line.split(separator).map(field => field.trim());
@@ -3050,21 +3325,29 @@ async function loadCategoryData(categoryKey) {
       const code = parts[0];
       const name = parts[1];
       let priceStr = parts[2];
+      let oldPriceStr = parts.length > 3 ? parts[3] : null;
       
       priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
       const price = parseFloat(priceStr);
       
+      let oldPrice = null;
+      if (oldPriceStr) {
+        oldPriceStr = oldPriceStr.replace(',', '.').replace(/[^\d.]/g, '');
+        oldPrice = parseFloat(oldPriceStr);
+      }
+      
       if (!code || !name || isNaN(price) || price <= 0) return null;
       
-      // Vérifier si le produit existe déjà
       const productKey = `${code}_${name}`;
       if (!productsMap.has(productKey)) {
         productsMap.set(productKey, {
           code,
           name,
           price: price,
+          oldPrice: oldPrice,
           category: category.label,
-          categoryKey: category.key
+          categoryKey: category.key,
+          isPromotion: category.key === 'promotions' || oldPrice !== null
         });
       }
     });
@@ -3085,9 +3368,19 @@ async function loadAllProducts() {
   renderCategories();
   renderProducts();
   
+  // Charger les promotions
+  setTimeout(async () => {
+    const promotions = await loadCategoryData('promotions');
+    if (promotions.length > 0) {
+      state.promotions = promotions;
+      showPromoBanner(promotions);
+    }
+  }, 500);
+  
+  // Charger les autres catégories
   setTimeout(async () => {
     for (const category of CATEGORIES) {
-      if (category.key !== 'cafe') {
+      if (category.key !== 'cafe' && category.key !== 'promotions') {
         const products = await loadCategoryData(category.key);
         state.products.set(category.key, products);
       }
@@ -3096,7 +3389,20 @@ async function loadAllProducts() {
     renderCategories();
     renderProducts();
     showToast('✅ Tous les produits sont chargés');
-  }, 500);
+  }, 1000);
+}
+
+// ===================== PROMOTIONS =====================
+function showPromoBanner(promotions) {
+  if (promotions.length === 0) {
+    $('promoBanner').style.display = 'none';
+    return;
+  }
+  
+  const promo = promotions[Math.floor(Math.random() * promotions.length)];
+  $('promoTitle').textContent = promo.name;
+  $('promoDesc').textContent = `À seulement ${formatPrice(promo.price)}${promo.oldPrice ? ` au lieu de ${formatPrice(promo.oldPrice)}` : ''}`;
+  $('promoBanner').style.display = 'flex';
 }
 
 // ===================== RENDU CATÉGORIES =====================
@@ -3177,7 +3483,6 @@ function getFilteredProducts() {
     );
   }
   
-  // Supprimer les doublons basés sur le code et le nom
   const seen = new Set();
   const uniqueProducts = products.filter(product => {
     const key = `${product.code}_${product.name}`;
@@ -3200,27 +3505,21 @@ function renderProducts() {
     state.currentPage = totalPages || 1;
   }
   
-  // Mettre à jour les informations de pagination
-  const pageInfo = `Page ${state.currentPage}/${totalPages}`;
-  $('pageInfo').textContent = pageInfo;
-  $('pageInfoBottom').textContent = pageInfo;
+  $('pageInfo').textContent = `Page ${state.currentPage}/${totalPages}`;
+  $('pageInfoBottom').textContent = `Page ${state.currentPage}/${totalPages}`;
   $('itemCount').textContent = `${products.length} article(s)`;
   
-  // Mettre à jour les boutons de pagination
   $('prevPageBtn').disabled = state.currentPage === 1;
   $('nextPageBtn').disabled = state.currentPage === totalPages;
   $('prevPageBottomBtn').disabled = state.currentPage === 1;
   $('nextPageBottomBtn').disabled = state.currentPage === totalPages;
   
-  // Afficher ou masquer la pagination en bas
   $('paginationBottom').style.display = totalPages > 1 ? 'flex' : 'none';
   
-  // Calculer les produits à afficher
   const startIndex = (state.currentPage - 1) * CONFIG.itemsPerPage;
   const endIndex = startIndex + CONFIG.itemsPerPage;
   const productsToShow = products.slice(startIndex, endIndex);
   
-  // Rendre les produits
   const grid = $('productsGrid');
   grid.innerHTML = '';
   
@@ -3239,12 +3538,22 @@ function renderProducts() {
     const productId = generateProductId(product);
     const inStock = isInStock(product.code);
     
-    // Utiliser une image unique par code produit
-    const imageHash = generateImageHash(product);
-    const imgSrc = `images/products/${imageHash}.jpg`;
+    // Génération de l'URL de l'image basée sur le code produit
+    const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
     
     const card = document.createElement('div');
     card.className = 'product-card';
+    
+    // Ajouter un badge de promotion si nécessaire
+    const discountBadge = product.isPromotion && product.oldPrice 
+      ? `<div class="product-discount">-${Math.round((1 - product.price / product.oldPrice) * 100)}%</div>`
+      : '';
+    
+    // Afficher l'ancien prix si en promotion
+    const oldPriceDisplay = product.isPromotion && product.oldPrice 
+      ? `<div class="product-old-price">${formatPrice(product.oldPrice)}</div>`
+      : '';
+    
     card.innerHTML = `
       <div class="product-image">
         <img src="${imgSrc}" 
@@ -3254,13 +3563,18 @@ function renderProducts() {
         <div class="no-photo" style="display:none;">${product.code}</div>
       </div>
       
+      ${discountBadge}
+      
       <div class="product-info">
         <div class="product-name">${product.name}</div>
         <div class="product-meta">
           <div>Code: ${product.code}</div>
           <div>${product.category}</div>
         </div>
-        <div class="product-price">${formatPrice(product.price)}</div>
+        <div class="product-price">
+          ${oldPriceDisplay}
+          ${formatPrice(product.price)}
+        </div>
       </div>
       
       <div class="product-stock-tag ${inStock ? 'ok' : 'no'}">
@@ -3274,18 +3588,6 @@ function renderProducts() {
     
     grid.appendChild(card);
   });
-}
-
-// Fonction pour générer un hash unique pour l'image basé sur le produit
-function generateImageHash(product) {
-  // Créer un hash unique en combinant code, nom et catégorie
-  const str = `${product.code}_${product.name}_${product.categoryKey}`;
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = ((hash << 5) - hash) + str.charCodeAt(i);
-    hash = hash & hash;
-  }
-  return Math.abs(hash).toString(16).substring(0, 8);
 }
 
 // ===================== NAVIGATION PRODUITS =====================
@@ -3336,6 +3638,18 @@ function openProductModal(product) {
   $('modalProductQuantity').textContent = quantity;
   $('modalStockStatus').textContent = inStock ? 'En stock' : 'Rupture';
   
+  // Gestion des promotions dans le modal
+  if (product.isPromotion && product.oldPrice) {
+    $('modalProductOldPrice').textContent = formatPrice(product.oldPrice);
+    $('modalProductOldPrice').style.display = 'block';
+    const discountPercent = Math.round((1 - product.price / product.oldPrice) * 100);
+    $('modalProductDiscount').textContent = `-${discountPercent}%`;
+    $('modalProductDiscount').style.display = 'block';
+  } else {
+    $('modalProductOldPrice').style.display = 'none';
+    $('modalProductDiscount').style.display = 'none';
+  }
+  
   const addBtn = $('modalAddToCartBtn');
   addBtn.disabled = !inStock || quantity === 0;
   addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
@@ -3343,9 +3657,8 @@ function openProductModal(product) {
   const img = $('modalProductImage');
   const noPhoto = $('modalNoPhoto');
   
-  // Utiliser le même hash que dans renderProducts
-  const imageHash = generateImageHash(product);
-  const imgSrc = `images/products/${imageHash}.jpg`;
+  // Utiliser le même chemin d'image que dans renderProducts
+  const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
   
   img.src = imgSrc;
   img.onload = () => {
@@ -3422,7 +3735,6 @@ function openQrModal() {
   const qrCodeContainer = $('qrCodeContainer');
   const qrUrl = $('qrUrl');
   
-  // Créer le QR code dynamiquement
   const currentUrl = window.location.href;
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl)}`;
   
@@ -3508,11 +3820,6 @@ function locateUser() {
     },
     (error) => {
       showToast('Impossible d\'obtenir votre position. Placez le marqueur manuellement.', 'warning');
-    },
-    {
-      enableHighAccuracy: true,
-      timeout: 10000,
-      maximumAge: 0
     }
   );
 }
@@ -3558,7 +3865,6 @@ function openOrderModal() {
     return;
   }
   
-  // Utiliser le numéro formaté pour l'affichage
   const displayPhone = state.user.displayPhone || formatPhoneNumber(state.user.phone);
   
   let summary = `=== COMMANDE MAXI JDC MARKET ===\n\n`;
@@ -3584,13 +3890,30 @@ function openOrderModal() {
   summary += `TOTAL: ${formatPrice(total)}\n\n`;
   summary += `=== INFORMATIONS ===\n\n`;
   summary += `📍 Jardins de Carthage\n`;
-  summary += `🕒 7am – 1am\n`;  // MODIFIÉ ICI
+  summary += `🕒 7am – 1am\n`;
   summary += `📱 WhatsApp: +216 25 600 978\n`;
   summary += `💳 Paiement à la livraison\n`;
   
   $('orderDetails').textContent = summary;
   $('orderModal').classList.add('open');
   document.body.style.overflow = 'hidden';
+  
+  // Sauvegarder la commande dans l'historique
+  addToOrderHistory({
+    name: state.user.name,
+    phone: state.user.phone,
+    address: state.user.address,
+    items: cartItems.map(item => ({
+      name: item.name,
+      code: item.code,
+      price: item.price,
+      quantity: item.quantity
+    })),
+    subtotal: subtotal,
+    shipping: shipping,
+    total: total,
+    itemCount: cartItems.reduce((sum, item) => sum + item.quantity, 0)
+  });
 }
 
 function closeOrderModal() {
@@ -3725,6 +4048,16 @@ function init() {
   $('qrDirectBtn').onclick = openQrModal;
   $('closeQrModalBtn').onclick = closeQrModal;
   
+  // Promotions
+  $('viewPromosBtn').onclick = () => {
+    state.showAllCategories = false;
+    state.activeCategory = 'promotions';
+    state.currentPage = 1;
+    renderProducts();
+    updateCategoriesUI();
+    closeDrawer();
+  };
+  
   // Pagination
   $('prevPageBtn').onclick = navigateToPrevPage;
   $('nextPageBtn').onclick = navigateToNextPage;
@@ -3738,24 +4071,21 @@ function init() {
   // Compte utilisateur
   $('saveAccountBtn').onclick = saveUser;
   $('editAccountBtn').onclick = editUser;
+  $('viewHistoryBtn').onclick = () => {
+    loadUserOrderHistory();
+    $('orderHistorySection').scrollIntoView({ behavior: 'smooth' });
+  };
   
   // Téléphone
   $('clientPhone').addEventListener('input', function(e) {
-    // Récupérer la valeur actuelle
     let value = this.value;
-    
-    // Sauvegarder la position du curseur
     const cursorPos = this.selectionStart;
     
-    // Supprimer tous les caractères non numériques
     let digits = value.replace(/\D/g, '');
-    
-    // Limiter à 8 chiffres (après le +216)
     if (digits.length > 8) {
       digits = digits.substring(0, 8);
     }
     
-    // Formater avec des espaces: "25 600 978"
     let formatted = '';
     for (let i = 0; i < digits.length; i++) {
       if (i === 2 || i === 5) {
@@ -3764,21 +4094,14 @@ function init() {
       formatted += digits[i];
     }
     
-    // Mettre à jour la valeur
     this.value = formatted;
-    
-    // Restaurer la position du curseur
     const newCursorPos = cursorPos + (formatted.length - value.length);
     this.setSelectionRange(newCursorPos, newCursorPos);
     
-    // Mettre à jour le bouton d'effacement
     updatePhoneClearButton();
-    
-    // Valider en temps réel
     validatePhoneInput(this);
   });
   
-  // Fonction de validation en temps réel
   function validatePhoneInput(input) {
     const digits = input.value.replace(/\D/g, '');
     if (digits.length === 8) {
