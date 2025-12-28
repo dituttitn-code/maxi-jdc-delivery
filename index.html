@@ -468,7 +468,7 @@
       font-size: 11px;
     }
 
-    /* PAGINATION EN HAUT - CURSEURS SUR LA MÊME LIGNE */
+    /* PAGINATION EN HAUT */
     .pagination-top {
       display: flex;
       justify-content: space-between;
@@ -524,7 +524,7 @@
       color: var(--muted);
     }
 
-    /* PAGINATION EN BAS - CURSEURS PLUS VISIBLES EN HORIZONTAL */
+    /* PAGINATION EN BAS */
     .pagination-bottom {
       display: flex;
       justify-content: center;
@@ -560,22 +560,12 @@
       box-shadow: 0 8px 25px rgba(0,255,136,0.3);
     }
 
-    .pagination-bottom .page-btn:active {
-      transform: translateY(-1px) scale(1.05);
-    }
-
     .pagination-bottom .page-btn:disabled {
       opacity: 0.3;
       cursor: not-allowed;
       border-color: var(--muted);
       background: rgba(255,255,255,0.1);
       color: var(--muted);
-      transform: none;
-      box-shadow: none;
-    }
-
-    .pagination-bottom .page-btn:disabled:hover {
-      background: rgba(255,255,255,0.1);
       transform: none;
       box-shadow: none;
     }
@@ -618,7 +608,7 @@
       }
     }
 
-    /* CARTE PRODUIT - SIMPLIFIÉE */
+    /* CARTE PRODUIT */
     .product-card {
       border-radius: 12px;
       border: 1px solid var(--line);
@@ -769,7 +759,7 @@
       background: rgba(255,107,107,.08);
     }
 
-    /* MODAL ARTICLE AGRANDI */
+    /* MODAL ARTICLE */
     .product-modal-overlay {
       position: fixed;
       inset: 0;
@@ -799,7 +789,6 @@
       position: relative;
     }
 
-    /* HEADER MODAL */
     .modal-header {
       padding: 15px;
       display: flex;
@@ -850,7 +839,6 @@
       transform: rotate(90deg);
     }
 
-    /* CONTENU MODAL */
     .modal-content {
       flex: 1;
       overflow-y: auto;
@@ -861,7 +849,6 @@
       gap: 20px;
     }
 
-    /* IMAGE MODAL */
     .modal-image-container {
       width: 100%;
       height: 40vh;
@@ -901,7 +888,6 @@
       padding: 40px;
     }
 
-    /* BARRE DE NAVIGATION PRODUITS */
     .image-nav-bar {
       display: flex;
       align-items: center;
@@ -932,7 +918,6 @@
       transform: scale(1.2);
     }
 
-    /* NAVIGATION IMAGES */
     .image-nav-btn {
       position: absolute;
       top: 50%;
@@ -966,11 +951,6 @@
       color: var(--muted);
     }
 
-    .image-nav-btn:disabled:hover {
-      background: rgba(10, 25, 47, 0.9);
-      transform: translateY(-50%);
-    }
-
     .image-nav-btn.prev {
       left: 20px;
     }
@@ -979,7 +959,6 @@
       right: 20px;
     }
 
-    /* INFOS PRODUIT MODAL */
     .modal-product-info {
       display: flex;
       flex-direction: column;
@@ -1055,7 +1034,6 @@
       font-weight: 600;
     }
 
-    /* ACTIONS MODAL */
     .modal-actions {
       display: flex;
       flex-direction: column;
@@ -1207,7 +1185,7 @@
       border-color: var(--accent2);
     }
 
-    /* MODAL QR CODE - CORRIGÉ */
+    /* MODAL QR CODE */
     .qr-modal-overlay {
       position: fixed;
       inset: 0;
@@ -1504,7 +1482,7 @@
       cursor: not-allowed;
     }
 
-    /* INPUT TÉLÉPHONE - NOUVELLE VERSION FONCTIONNELLE */
+    /* INPUT TÉLÉPHONE */
     .tel-input-wrapper {
       position: relative;
       display: flex;
@@ -1568,7 +1546,6 @@
       background: rgba(255,107,107,0.1);
     }
 
-    /* Style pour l'input téléphone quand il est invalide */
     .tel-input-wrapper input:invalid {
       border-color: var(--danger);
       background: rgba(255,107,107,0.05);
@@ -1577,6 +1554,44 @@
     .tel-input-wrapper input:valid {
       border-color: var(--accent);
       background: rgba(0,255,136,0.05);
+    }
+
+    /* NOUVELLE SECTION POUR CHERCHER HISTORIQUE */
+    .history-search-section {
+      background: var(--card2);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 15px;
+    }
+
+    .history-search-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .search-history-btn {
+      width: 100%;
+      height: 44px;
+      border-radius: 8px;
+      border: 2px solid var(--accent2);
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--accent2);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .search-history-btn:hover {
+      background: rgba(0, 212, 255, 0.2);
+      transform: translateY(-1px);
     }
 
     .form-actions {
@@ -2188,6 +2203,37 @@
       line-height: 1.5;
     }
 
+    /* BOUTON OK POUR MAP */
+    .map-ok-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      max-width: 300px;
+      height: 50px;
+      border-radius: 12px;
+      border: 3px solid var(--accent);
+      background: rgba(0, 255, 136, 0.2);
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(0,255,136,0.3);
+    }
+
+    .map-ok-btn:hover {
+      background: rgba(0, 255, 136, 0.3);
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,255,136,0.4);
+    }
+
     /* TOAST NOTIFICATIONS */
     .toast {
       position: fixed;
@@ -2241,6 +2287,15 @@
 
     .pulse {
       animation: pulse 0.5s ease;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .float {
+      animation: float 3s ease-in-out infinite;
     }
 
     /* RESPONSIVE ADJUSTMENTS */
@@ -2347,6 +2402,12 @@
       .tel-prefix {
         font-size: 14px;
         padding: 3px 6px;
+      }
+      
+      .map-ok-btn {
+        width: 90%;
+        height: 45px;
+        font-size: 16px;
       }
     }
 
@@ -2486,7 +2547,7 @@
     </main>
     
     <!-- BOUTON QR CODE DIRECT -->
-    <button class="qr-direct-btn" id="qrDirectBtn" title="Scanner QR Code">
+    <button class="qr-direct-btn float" id="qrDirectBtn" title="Scanner QR Code">
       📱
     </button>
   </div>
@@ -2563,17 +2624,40 @@
             <button class="form-btn" id="editAccountBtn" style="display:none">
               ✏️ Modifier
             </button>
-            <button class="form-btn" id="viewHistoryBtn" style="display:none">
-              📋 Historique
-            </button>
           </div>
+        </div>
+      </section>
+
+      <!-- NOUVELLE SECTION CHERCHER HISTORIQUE -->
+      <section class="history-search-section">
+        <div class="section-title">
+          <h4>📋 Historique des commandes</h4>
+        </div>
+        
+        <div class="history-search-form">
+          <div class="form-field">
+            <label for="searchHistoryPhone">
+              🔍 Entrez votre numéro pour voir votre historique
+            </label>
+            <div class="tel-input-wrapper">
+              <span class="tel-prefix">+216</span>
+              <input type="tel" id="searchHistoryPhone" placeholder="25 600 978" 
+                     pattern="[0-9\s]{8,12}" inputmode="numeric" maxlength="12"
+                     title="8 chiffres après +216">
+            </div>
+            <div class="tel-hint">Même numéro utilisé pour vos commandes précédentes</div>
+          </div>
+          
+          <button class="search-history-btn" id="searchHistoryBtn">
+            🔎 Voir mon historique
+          </button>
         </div>
       </section>
 
       <!-- SECTION HISTORIQUE DES COMMANDES -->
       <section class="order-history-section" id="orderHistorySection" style="display:none">
         <div class="section-title">
-          <h4>📋 Historique des commandes</h4>
+          <h4>📜 Vos commandes</h4>
           <span class="account-status" id="historyCount">0 commande(s)</span>
         </div>
         
@@ -2767,10 +2851,14 @@
       
       <div class="map-container">
         <div id="map"></div>
+        <!-- BOUTON OK POUR VALIDER LA LOCALISATION -->
+        <button class="map-ok-btn" id="mapOkBtn">
+          ✅ OK, utiliser cette position
+        </button>
       </div>
       
       <div class="map-instructions">
-        <p><strong>Instructions :</strong> Déplacez le marqueur à votre position exacte. L'adresse sera automatiquement détectée.</p>
+        <p><strong>Instructions :</strong> Déplacez le marqueur à votre position exacte. Cliquez sur "OK" pour valider.</p>
       </div>
     </div>
   </div>
@@ -2816,7 +2904,7 @@ const CONFIG = {
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v11',
+  localStorageKey: 'maxi_jdc_market_app_v12',
   imagesBasePath: 'images/products/',
   historyRetentionYears: 2
 };
@@ -2863,7 +2951,8 @@ const state = {
   currentImageIndex: 0,
   productImages: {},
   orderHistory: [],
-  promotions: []
+  promotions: [],
+  tempMapCoords: null
 };
 
 // ===================== UTILITAIRES =====================
@@ -2888,6 +2977,14 @@ function showToast(message, type = 'success') {
   }, 3000);
 }
 
+// Fonction pour valider les prix
+function validatePrice(price) {
+  if (typeof price !== 'number' || isNaN(price) || price <= 0) {
+    return false;
+  }
+  return true;
+}
+
 // ===================== GESTION DU STOCKAGE =====================
 function saveState() {
   const data = {
@@ -2895,7 +2992,7 @@ function saveState() {
     cart: state.cart,
     stock: state.stock,
     orderHistory: state.orderHistory,
-    version: '11.0'
+    version: '12.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -2903,7 +3000,7 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '11.0') {
+    if (data && data.version === '12.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.stock = data.stock || {};
@@ -2922,8 +3019,6 @@ function updateUserUI() {
   const accountStatus = $('accountStatus');
   const saveBtn = $('saveAccountBtn');
   const editBtn = $('editAccountBtn');
-  const historyBtn = $('viewHistoryBtn');
-  const historySection = $('orderHistorySection');
   
   if (state.user) {
     $('clientName').value = state.user.name || '';
@@ -2947,7 +3042,6 @@ function updateUserUI() {
     $('clientLng').disabled = true;
     saveBtn.style.display = 'none';
     editBtn.style.display = 'block';
-    historyBtn.style.display = 'block';
     
     accountStatus.textContent = 'Connecté';
     accountStatus.style.background = 'rgba(0,255,136,0.2)';
@@ -2959,9 +3053,6 @@ function updateUserUI() {
         </div>
       `;
     }
-    
-    // Charger l'historique si le numéro correspond
-    loadUserOrderHistory();
   } else {
     $('clientName').value = '';
     $('clientPhone').value = '';
@@ -2976,8 +3067,6 @@ function updateUserUI() {
     $('clientLng').disabled = false;
     saveBtn.style.display = 'block';
     editBtn.style.display = 'none';
-    historyBtn.style.display = 'none';
-    historySection.style.display = 'none';
     
     accountStatus.textContent = 'Nouveau';
     accountStatus.style.background = 'rgba(255,255,255,0.1)';
@@ -3053,42 +3142,56 @@ function editUser() {
   
   $('saveAccountBtn').style.display = 'block';
   $('editAccountBtn').style.display = 'none';
-  $('viewHistoryBtn').style.display = 'none';
-  $('orderHistorySection').style.display = 'none';
   
   showToast('Vous pouvez maintenant modifier vos informations');
 }
 
 // ===================== HISTORIQUE DES COMMANDES =====================
-function loadUserOrderHistory() {
-  if (!state.user || !state.user.phone) {
-    $('orderHistorySection').style.display = 'none';
+function searchOrderHistory() {
+  const searchPhoneInput = $('searchHistoryPhone');
+  let phone = searchPhoneInput.value.trim();
+  
+  if (!phone) {
+    showToast('Veuillez entrer un numéro de téléphone', 'warning');
     return;
   }
   
-  const userPhone = state.user.phone.replace(/\s/g, '');
+  phone = phone.replace(/\s/g, '');
+  
+  if (phone.length !== 8 || !/^\d{8}$/.test(phone)) {
+    showToast('Le numéro de téléphone doit contenir 8 chiffres', 'warning');
+    searchPhoneInput.focus();
+    return;
+  }
+  
   const twoYearsAgo = new Date();
   twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - CONFIG.historyRetentionYears);
   
   const userHistory = state.orderHistory.filter(order => {
     const orderPhone = order.phone.replace(/\s/g, '');
     const orderDate = new Date(order.date);
-    return orderPhone === userPhone && orderDate >= twoYearsAgo;
+    return orderPhone === phone && orderDate >= twoYearsAgo;
   });
   
-  $('historyCount').textContent = `${userHistory.length} commande(s)`;
+  displayOrderHistory(userHistory, phone);
+}
+
+function displayOrderHistory(history, phone) {
+  $('historyCount').textContent = `${history.length} commande(s)`;
   const historyList = $('historyItemsList');
   const emptyMessage = $('historyEmptyMessage');
+  const historySection = $('orderHistorySection');
   
-  if (userHistory.length === 0) {
+  if (history.length === 0) {
     historyList.style.display = 'none';
     emptyMessage.style.display = 'block';
+    emptyMessage.textContent = `Aucune commande trouvée pour le numéro ${formatPhoneNumber(phone)}`;
   } else {
     historyList.style.display = 'flex';
     emptyMessage.style.display = 'none';
     
     historyList.innerHTML = '';
-    userHistory.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(order => {
+    history.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(order => {
       const item = document.createElement('div');
       item.className = 'history-item';
       item.innerHTML = `
@@ -3103,7 +3206,8 @@ function loadUserOrderHistory() {
     });
   }
   
-  $('orderHistorySection').style.display = 'block';
+  historySection.style.display = 'block';
+  historySection.scrollIntoView({ behavior: 'smooth' });
 }
 
 function viewOrderDetails(order) {
@@ -3138,9 +3242,7 @@ function addToOrderHistory(orderData) {
   state.orderHistory.push(order);
   saveState();
   
-  if (state.user && state.user.phone === orderData.phone.replace(/\s/g, '')) {
-    loadUserOrderHistory();
-  }
+  showToast('✅ Commande ajoutée à l\'historique');
 }
 
 // ===================== GESTION PANIER =====================
@@ -3189,6 +3291,7 @@ function updateCartUI() {
   
   $('cartSubtotal').textContent = formatPrice(subtotal);
   
+  // CALCUL CORRIGÉ POUR LA GRATUITÉ
   let shippingFee = CONFIG.shippingFee;
   let shippingText = formatPrice(shippingFee);
   
@@ -3327,16 +3430,25 @@ async function loadCategoryData(categoryKey) {
       let priceStr = parts[2];
       let oldPriceStr = parts.length > 3 ? parts[3] : null;
       
+      // Validation du prix
       priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
       const price = parseFloat(priceStr);
+      
+      if (!validatePrice(price)) {
+        console.warn(`Prix invalide pour ${name}: ${priceStr}`);
+        return null;
+      }
       
       let oldPrice = null;
       if (oldPriceStr) {
         oldPriceStr = oldPriceStr.replace(',', '.').replace(/[^\d.]/g, '');
         oldPrice = parseFloat(oldPriceStr);
+        if (!validatePrice(oldPrice)) {
+          oldPrice = null;
+        }
       }
       
-      if (!code || !name || isNaN(price) || price <= 0) return null;
+      if (!code || !name) return null;
       
       const productKey = `${code}_${name}`;
       if (!productsMap.has(productKey)) {
@@ -3788,7 +3900,7 @@ function initMap() {
   
   marker.on('dragend', function(e) {
     const position = marker.getLatLng();
-    updateCoordinates(position.lat, position.lng);
+    state.tempMapCoords = { lat: position.lat, lng: position.lng };
     reverseGeocode(position.lat, position.lng);
   });
   
@@ -3813,7 +3925,7 @@ function locateUser() {
       map.setView([lat, lng], 16);
       marker.setLatLng([lat, lng]);
       
-      updateCoordinates(lat, lng);
+      state.tempMapCoords = { lat, lng };
       reverseGeocode(lat, lng);
       
       showToast('Localisation trouvée ! Déplacez le marqueur pour ajuster');
@@ -3830,16 +3942,35 @@ async function reverseGeocode(lat, lng) {
     const data = await response.json();
     
     if (data && data.display_name) {
-      $('clientAddress').value = data.display_name;
+      state.tempAddress = data.display_name;
     }
   } catch (error) {
     console.warn('Erreur de géocodage inverse:', error);
   }
 }
 
-function updateCoordinates(lat, lng) {
-  $('clientLat').value = lat.toFixed(6);
-  $('clientLng').value = lng.toFixed(6);
+function saveMapLocation() {
+  if (!state.tempMapCoords) {
+    showToast('Veuillez d\'abord sélectionner une position sur la carte', 'warning');
+    return;
+  }
+  
+  $('clientLat').value = state.tempMapCoords.lat.toFixed(6);
+  $('clientLng').value = state.tempMapCoords.lng.toFixed(6);
+  
+  if (state.tempAddress) {
+    $('clientAddress').value = state.tempAddress;
+  }
+  
+  closeMapModal();
+  showToast('✅ Position enregistrée avec succès');
+  
+  // Mettre à jour l'aperçu de la carte
+  $('mapPreview').innerHTML = `
+    <div style="width:100%;height:100%;background:#333;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;">
+      📍 Localisé
+    </div>
+  `;
 }
 
 // ===================== MODAL COMMANDE =====================
@@ -4001,6 +4132,75 @@ function navigateToNextPage() {
   }
 }
 
+// ===================== ANIMATIONS ET DYNAMISME =====================
+function addDynamicEffects() {
+  // Animation aléatoire des cartes produits
+  const productCards = document.querySelectorAll('.product-card');
+  productCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = 'translateY(-5px) rotate(1deg)';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'translateY(0) rotate(0)';
+    });
+  });
+  
+  // Animation du bouton QR code
+  const qrBtn = $('qrDirectBtn');
+  setInterval(() => {
+    qrBtn.classList.toggle('float');
+  }, 5000);
+  
+  // Animation de la bannière promo
+  const promoBanner = $('promoBanner');
+  if (promoBanner.style.display !== 'none') {
+    setInterval(() => {
+      promoBanner.classList.toggle('pulse');
+    }, 3000);
+  }
+  
+  // Effet de neige/confetti occasionnel (pour les fêtes)
+  const today = new Date();
+  if (today.getMonth() === 11 || today.getMonth() === 0) { // Décembre ou Janvier
+    createSnowEffect();
+  }
+}
+
+function createSnowEffect() {
+  const snowContainer = document.createElement('div');
+  snowContainer.style.position = 'fixed';
+  snowContainer.style.top = '0';
+  snowContainer.style.left = '0';
+  snowContainer.style.width = '100%';
+  snowContainer.style.height = '100%';
+  snowContainer.style.pointerEvents = 'none';
+  snowContainer.style.zIndex = '9999';
+  document.body.appendChild(snowContainer);
+  
+  for (let i = 0; i < 30; i++) {
+    const snowflake = document.createElement('div');
+    snowflake.innerHTML = '❄️';
+    snowflake.style.position = 'absolute';
+    snowflake.style.fontSize = Math.random() * 20 + 10 + 'px';
+    snowflake.style.left = Math.random() * 100 + 'vw';
+    snowflake.style.top = '-50px';
+    snowflake.style.opacity = Math.random() * 0.5 + 0.3;
+    snowflake.style.animation = `fall ${Math.random() * 5 + 5}s linear infinite`;
+    snowContainer.appendChild(snowflake);
+  }
+  
+  // Ajouter une animation CSS pour la chute
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 // ===================== INITIALISATION =====================
 function init() {
   loadState();
@@ -4071,10 +4271,9 @@ function init() {
   // Compte utilisateur
   $('saveAccountBtn').onclick = saveUser;
   $('editAccountBtn').onclick = editUser;
-  $('viewHistoryBtn').onclick = () => {
-    loadUserOrderHistory();
-    $('orderHistorySection').scrollIntoView({ behavior: 'smooth' });
-  };
+  
+  // Historique
+  $('searchHistoryBtn').onclick = searchOrderHistory;
   
   // Téléphone
   $('clientPhone').addEventListener('input', function(e) {
@@ -4134,10 +4333,30 @@ function init() {
     updatePhoneClearButton();
   };
   
+  // Même traitement pour le champ de recherche d'historique
+  $('searchHistoryPhone').addEventListener('input', function(e) {
+    let value = this.value;
+    let digits = value.replace(/\D/g, '');
+    if (digits.length > 8) {
+      digits = digits.substring(0, 8);
+    }
+    
+    let formatted = '';
+    for (let i = 0; i < digits.length; i++) {
+      if (i === 2 || i === 5) {
+        formatted += ' ';
+      }
+      formatted += digits[i];
+    }
+    
+    this.value = formatted;
+  });
+  
   // Localisation
   $('getLocationBtn').onclick = openMapModal;
   $('mapPreview').onclick = openMapModal;
   $('closeMapModalBtn').onclick = closeMapModal;
+  $('mapOkBtn').onclick = saveMapLocation;
   
   // Panier
   $('cartItemsList').addEventListener('click', (e) => {
@@ -4237,6 +4456,9 @@ function init() {
   
   updateUserUI();
   updateCartUI();
+  
+  // Ajouter des effets dynamiques
+  setTimeout(addDynamicEffects, 2000);
   
   if (!state.user) {
     setTimeout(() => {
