@@ -521,17 +521,23 @@
       font-size: 11px;
     }
 
-    /* SECTION TEXTE DYNAMIQUE POUR PROMOTIONS - NOUVELLE VERSION */
+    /* SECTION TEXTE DYNAMIQUE POUR PROMOTIONS - NOUVELLE VERSION COMPACTE */
     .dynamic-promo-section {
       background: linear-gradient(135deg, #ff0000 0%, #ff6b00 50%, #ffd000 100%);
       border-radius: var(--radius);
       padding: 0;
-      margin: 0 8px 20px;
-      border: 3px solid #ff9900;
-      box-shadow: 0 8px 30px rgba(255, 107, 0, 0.4);
+      margin: 0 8px 10px;
+      border: 2px solid #ff9900;
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
       overflow: hidden;
       display: none;
       position: relative;
+      max-height: 150px;
+      transition: max-height 0.3s ease;
+    }
+
+    .dynamic-promo-section.expanded {
+      max-height: 300px;
     }
 
     .dynamic-promo-section.visible {
@@ -540,48 +546,51 @@
 
     .dynamic-promo-header {
       background: rgba(0, 0, 0, 0.3);
-      padding: 12px 15px;
+      padding: 8px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      min-height: 44px;
     }
 
     .dynamic-promo-title {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       font-weight: 900;
       color: #ffffff;
-      font-size: 15px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      font-size: 13px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
 
     .dynamic-promo-badge {
       background: #000000;
       color: #ffcc00;
-      padding: 3px 10px;
-      border-radius: 10px;
-      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: 10px;
       font-weight: 900;
       animation: pulse 1.5s infinite;
     }
 
     .dynamic-promo-content {
-      padding: 20px;
+      padding: 10px 15px;
       background: rgba(0, 0, 0, 0.2);
+      max-height: 120px;
+      overflow-y: auto;
     }
 
     .dynamic-promo-text {
-      font-size: 16px;
+      font-size: 13px;
       font-weight: 700;
       color: #ffffff;
-      line-height: 1.5;
+      line-height: 1.4;
       white-space: pre-line;
       margin: 0;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-      text-align: center;
-      letter-spacing: 0.3px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      text-align: left;
+      letter-spacing: 0.2px;
     }
 
     /* Style spécial pour les pourcentages de promotion dans le texte */
@@ -589,30 +598,73 @@
       color: #ffcc00;
       font-weight: 900;
       background: rgba(0,0,0,0.3);
-      padding: 2px 6px;
-      border-radius: 6px;
+      padding: 1px 4px;
+      border-radius: 4px;
       margin: 0 2px;
       display: inline-block;
-      transform: translateY(-2px);
+      font-size: 12px;
     }
 
     .dynamic-promo-controls {
       display: flex;
-      gap: 8px;
-      padding: 15px;
+      gap: 6px;
+      padding: 8px 12px;
       background: rgba(0, 0, 0, 0.4);
       border-top: 1px solid rgba(255, 255, 255, 0.2);
     }
 
+    .dynamic-promo-toggle {
+      flex: 1;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 11px;
+      transition: all 0.2s ease;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .dynamic-promo-toggle:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .dynamic-promo-toggle.hide {
+      background: rgba(255,107,107,0.2);
+      border-color: rgba(255,107,107,0.5);
+    }
+
+    .dynamic-promo-toggle.hide:hover {
+      background: rgba(255,107,107,0.3);
+    }
+
+    /* Boutons admin (cachés par défaut) */
+    .admin-controls {
+      display: none;
+      gap: 6px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .admin-controls.visible {
+      display: flex;
+    }
+
     .dynamic-promo-btn {
       flex: 1;
-      padding: 10px 15px;
-      border-radius: 8px;
+      padding: 6px 10px;
+      border-radius: 6px;
       border: 2px solid;
-      background: rgba(255,255,255,0.9);
       cursor: pointer;
-      font-weight: 900;
-      font-size: 13px;
+      font-weight: 700;
+      font-size: 11px;
       transition: all 0.2s ease;
       text-align: center;
     }
@@ -625,8 +677,8 @@
 
     .dynamic-promo-btn.edit:hover {
       background: linear-gradient(135deg, #00ffaa, #00ee77);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,255,136,0.3);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(0,255,136,0.3);
     }
 
     .dynamic-promo-btn.clear {
@@ -637,8 +689,8 @@
 
     .dynamic-promo-btn.clear:hover {
       background: linear-gradient(135deg, #ff8888, #ff5555);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(255,107,107,0.3);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(255,107,107,0.3);
     }
 
     /* MODAL ÉDITION TEXTE DYNAMIQUE */
@@ -730,6 +782,113 @@
       gap: 10px;
       justify-content: flex-end;
       flex-wrap: wrap;
+    }
+
+    /* SECTION ADMIN DANS LE PANIER */
+    .admin-section {
+      background: var(--card2);
+      border-radius: var(--radius);
+      border: 2px solid var(--warning);
+      padding: 15px;
+      box-shadow: var(--shadow);
+      margin-bottom: 15px;
+      display: none;
+    }
+
+    .admin-section.visible {
+      display: block;
+    }
+
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--warning);
+    }
+
+    .admin-header h4 {
+      margin: 0;
+      font-size: 14px;
+      color: var(--warning);
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .admin-badge {
+      background: rgba(255, 167, 38, 0.2);
+      color: var(--warning);
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .admin-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .admin-btn {
+      padding: 10px;
+      border-radius: 8px;
+      border: 2px solid;
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+      text-align: center;
+      min-height: 70px;
+    }
+
+    .admin-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .admin-btn.promo {
+      border-color: var(--accent);
+      background: rgba(0, 255, 136, 0.1);
+      color: var(--accent);
+    }
+
+    .admin-btn.stock {
+      border-color: var(--accent2);
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--accent2);
+    }
+
+    .admin-btn.stats {
+      border-color: #ff6b6b;
+      background: rgba(255, 107, 107, 0.1);
+      color: #ff6b6b;
+    }
+
+    .admin-btn.settings {
+      border-color: #ffa726;
+      background: rgba(255, 167, 38, 0.1);
+      color: #ffa726;
+    }
+
+    .admin-icon {
+      font-size: 20px;
+    }
+
+    .admin-label {
+      font-size: 10px;
+      font-weight: 900;
     }
 
     /* PAGINATION EN HAUT */
@@ -850,42 +1009,42 @@
     .products-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      gap: 12px;
       padding: 8px 0 20px;
     }
 
     @media (min-width: 480px) {
       .products-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 18px;
+        gap: 14px;
       }
     }
 
     @media (min-width: 768px) {
       .products-grid {
         grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
+        gap: 16px;
       }
     }
 
     @media (min-width: 1024px) {
       .products-grid {
         grid-template-columns: repeat(5, 1fr);
-        gap: 22px;
+        gap: 18px;
       }
     }
 
     /* CARTE PRODUIT AVEC BADGE PROMO SUR L'IMAGE */
     .product-card {
-      border-radius: 12px;
+      border-radius: 10px;
       border: 1px solid var(--line);
       background: var(--card2);
-      padding: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,.25);
+      padding: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,.2);
       transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       height: 100%;
       cursor: pointer;
       position: relative;
@@ -894,26 +1053,26 @@
 
     .product-card:hover {
       border-color: var(--accent2);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0,212,255,0.15);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,212,255,0.15);
     }
 
     .product-card.promo-card {
       border: 2px solid #ff9900;
       background: linear-gradient(135deg, var(--card2) 0%, #1a1a2e 100%);
-      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.2);
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.2);
     }
 
     .product-card.promo-card:hover {
       border-color: #ffcc00;
-      transform: translateY(-4px);
-      box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
     }
 
     .product-image {
       width: 100%;
-      height: 140px;
-      border-radius: 8px;
+      height: 120px;
+      border-radius: 6px;
       border: 1px solid rgba(255,255,255,.12);
       background: linear-gradient(135deg, #1a365d 0%, #112240 100%);
       display: flex;
@@ -921,11 +1080,11 @@
       justify-content: center;
       overflow: hidden;
       position: relative;
-      padding: 8px;
+      padding: 6px;
     }
 
     .product-card.promo-card .product-image {
-      border: 2px solid rgba(255, 153, 0, 0.3);
+      border: 1px solid rgba(255, 153, 0, 0.3);
       background: linear-gradient(135deg, #0a1929 0%, #1a1a2e 100%);
     }
 
@@ -951,26 +1110,26 @@
       justify-content: center;
       color: var(--muted);
       font-weight: 800;
-      font-size: 12px;
+      font-size: 11px;
       background: linear-gradient(135deg, var(--card) 0%, var(--card2) 100%);
       text-align: center;
-      padding: 20px;
+      padding: 15px;
     }
 
     /* BADGE PROMO SUR L'IMAGE */
     .image-promo-badge {
       position: absolute;
-      top: 8px;
-      right: 8px;
+      top: 6px;
+      right: 6px;
       background: linear-gradient(135deg, #ff0000 0%, #ff6b00 100%);
       color: white;
       font-weight: 900;
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 20px;
+      font-size: 10px;
+      padding: 3px 6px;
+      border-radius: 15px;
       z-index: 2;
-      border: 2px solid rgba(255,255,255,0.5);
-      box-shadow: 0 3px 10px rgba(255, 107, 0, 0.5);
+      border: 1px solid rgba(255,255,255,0.5);
+      box-shadow: 0 2px 6px rgba(255, 107, 0, 0.5);
       animation: pulse 1.5s infinite;
       transform: rotate(5deg);
     }
@@ -979,13 +1138,13 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       min-height: 0;
     }
 
     .product-name {
       font-weight: 900;
-      font-size: 13px;
+      font-size: 12px;
       line-height: 1.3;
       min-width: 0;
       display: -webkit-box;
@@ -997,12 +1156,12 @@
 
     .product-price {
       font-weight: 900;
-      padding: 6px 10px;
+      padding: 5px 8px;
       border-radius: 999px;
       border: 2px solid var(--accent);
       background: rgba(0, 255, 136, 0.1);
       color: var(--accent);
-      font-size: 13px;
+      font-size: 12px;
       white-space: nowrap;
       text-align: center;
       margin-top: auto;
@@ -1015,10 +1174,10 @@
     }
 
     .product-old-price {
-      font-size: 10px;
+      font-size: 9px;
       color: var(--muted);
       text-decoration: line-through;
-      margin-right: 5px;
+      margin-right: 3px;
     }
 
     .product-card.promo-card .product-old-price {
@@ -1027,38 +1186,38 @@
 
     .product-discount {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 8px;
+      right: 8px;
       background: linear-gradient(135deg, #ff0000, #ff6b00);
       color: white;
       font-weight: 900;
-      font-size: 10px;
-      padding: 3px 6px;
+      font-size: 9px;
+      padding: 2px 5px;
       border-radius: 4px;
       z-index: 2;
       border: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 0 2px 8px rgba(255, 0, 0, 0.3);
+      box-shadow: 0 2px 6px rgba(255, 0, 0, 0.3);
     }
 
     .product-meta {
       color: var(--muted);
-      font-size: 10px;
+      font-size: 9px;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
     }
 
     .product-stock-tag {
-      padding: 4px 8px;
+      padding: 3px 6px;
       border-radius: 999px;
-      font-size: 10px;
+      font-size: 9px;
       border: 1px solid rgba(255,255,255,.1);
       background: rgba(0,0,0,.2);
       color: rgba(255,255,255,.9);
       font-weight: 700;
       text-align: center;
       align-self: flex-start;
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
     .product-stock-tag.ok {
@@ -1157,18 +1316,18 @@
       flex: 1;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      padding: 20px;
+      padding: 15px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 15px;
     }
 
     .modal-image-container {
       width: 100%;
-      height: 40vh;
-      min-height: 300px;
-      max-height: 500px;
-      border-radius: 16px;
+      height: 35vh;
+      min-height: 250px;
+      max-height: 400px;
+      border-radius: 12px;
       border: 2px solid var(--line);
       background: linear-gradient(135deg, #000000 0%, #1a365d 100%);
       display: flex;
@@ -1196,26 +1355,26 @@
       justify-content: center;
       color: var(--muted);
       font-weight: 800;
-      font-size: 18px;
+      font-size: 16px;
       background: linear-gradient(135deg, var(--card) 0%, var(--card2) 100%);
       text-align: center;
-      padding: 40px;
+      padding: 30px;
     }
 
     /* BADGE PROMO SUR L'IMAGE MODALE */
     .modal-promo-badge {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 15px;
+      right: 15px;
       background: linear-gradient(135deg, #ff0000 0%, #ff6b00 100%);
       color: white;
       font-weight: 900;
-      font-size: 14px;
-      padding: 8px 15px;
-      border-radius: 25px;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 20px;
       z-index: 10;
-      border: 3px solid rgba(255,255,255,0.7);
-      box-shadow: 0 5px 20px rgba(255, 0, 0, 0.5);
+      border: 2px solid rgba(255,255,255,0.7);
+      box-shadow: 0 4px 12px rgba(255, 0, 0, 0.5);
       animation: pulse 1.5s infinite;
       transform: rotate(5deg);
     }
@@ -1224,8 +1383,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 10px 0;
+      gap: 6px;
+      padding: 8px 0;
       margin-top: 5px;
       margin-left: 10px;
       margin-right: 10px;
@@ -1233,8 +1392,8 @@
     }
 
     .image-nav-dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: rgba(255,255,255,0.2);
       border: 1px solid var(--line);
@@ -1246,7 +1405,7 @@
     .image-nav-dot.active {
       background: var(--accent);
       transform: scale(1.3);
-      box-shadow: 0 0 8px var(--accent);
+      box-shadow: 0 0 6px var(--accent);
     }
 
     .image-nav-dot:hover {
@@ -1258,8 +1417,8 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: rgba(10, 25, 47, 0.9);
       border: 2px solid var(--accent);
@@ -1269,7 +1428,7 @@
       justify-content: center;
       cursor: pointer;
       z-index: 5;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 900;
       transition: all 0.3s ease;
       backdrop-filter: blur(5px);
@@ -1288,21 +1447,21 @@
     }
 
     .image-nav-btn.prev {
-      left: 20px;
+      left: 15px;
     }
 
     .image-nav-btn.next {
-      right: 20px;
+      right: 15px;
     }
 
     .modal-product-info {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 12px;
     }
 
     .modal-product-name {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 900;
       color: var(--text);
       line-height: 1.3;
@@ -1312,24 +1471,24 @@
     .modal-price-container {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
     .modal-product-price {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 900;
       color: var(--accent);
       background: rgba(0, 255, 136, 0.1);
-      border: 3px solid var(--accent);
-      border-radius: 20px;
-      padding: 15px 25px;
+      border: 2px solid var(--accent);
+      border-radius: 15px;
+      padding: 12px 20px;
       text-align: center;
-      min-width: 180px;
+      min-width: 150px;
     }
 
     .modal-product-old-price {
-      font-size: 18px;
+      font-size: 16px;
       color: var(--muted);
       text-decoration: line-through;
     }
@@ -1338,33 +1497,33 @@
       background: linear-gradient(135deg, #ff0000, #ff6b00);
       color: white;
       font-weight: 900;
-      font-size: 16px;
-      padding: 8px 15px;
-      border-radius: 10px;
+      font-size: 14px;
+      padding: 6px 12px;
+      border-radius: 8px;
       border: 2px solid rgba(255,255,255,0.3);
-      box-shadow: 0 3px 10px rgba(255, 0, 0, 0.3);
+      box-shadow: 0 2px 8px rgba(255, 0, 0, 0.3);
     }
 
     .modal-product-meta {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 15px;
+      border-radius: 10px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .meta-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 14px;
+      gap: 8px;
+      font-size: 13px;
     }
 
     .meta-label {
       color: var(--muted);
-      min-width: 80px;
+      min-width: 70px;
     }
 
     .meta-value {
@@ -1375,49 +1534,49 @@
     .modal-actions {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      padding: 20px 0;
+      gap: 12px;
+      padding: 15px 0;
       border-top: 1px solid var(--line);
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .modal-actions-bottom {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      padding: 20px 0 0;
+      gap: 8px;
+      padding: 15px 0 0;
       border-top: 1px solid var(--line);
-      margin-top: 20px;
+      margin-top: 15px;
     }
 
     .modal-quantity-controls {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
     .modal-stepper {
       display: flex;
       align-items: center;
-      gap: 15px;
-      padding: 10px 20px;
+      gap: 12px;
+      padding: 8px 15px;
       background: rgba(0, 0, 0, 0.3);
       border-radius: 999px;
       border: 2px solid var(--line);
-      min-width: 180px;
+      min-width: 150px;
     }
 
     .modal-stepper-btn {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       border: 2px solid var(--line);
       background: rgba(255,255,255,0.1);
       color: var(--text);
       cursor: pointer;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 900;
       display: flex;
       align-items: center;
@@ -1431,42 +1590,42 @@
     }
 
     .modal-quantity {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 900;
       color: var(--accent);
-      min-width: 50px;
+      min-width: 40px;
       text-align: center;
     }
 
     .modal-action-buttons {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .modal-add-btn {
       flex: 1;
-      min-width: 200px;
-      height: 55px;
-      padding: 0 30px;
-      border-radius: 15px;
-      border: 3px solid var(--accent);
+      min-width: 180px;
+      height: 50px;
+      padding: 0 25px;
+      border-radius: 12px;
+      border: 2px solid var(--accent);
       background: rgba(0, 255, 136, 0.15);
       color: var(--accent);
       cursor: pointer;
       font-weight: 900;
-      font-size: 18px;
+      font-size: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       transition: all 0.3s ease;
     }
 
     .modal-add-btn:hover {
       background: rgba(0, 255, 136, 0.25);
       transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(0,255,136,0.2);
+      box-shadow: 0 4px 15px rgba(0,255,136,0.2);
     }
 
     .modal-add-btn:disabled {
@@ -1479,32 +1638,9 @@
 
     .modal-close-bottom-btn {
       width: 100%;
-      height: 55px;
-      padding: 0 30px;
-      border-radius: 15px;
-      border: 2px solid var(--line);
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: all 0.2s ease;
-      margin-top: 10px;
-    }
-
-    .modal-close-bottom-btn:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: var(--accent2);
-    }
-
-    .modal-stock-btn {
-      height: 55px;
+      height: 50px;
       padding: 0 25px;
-      border-radius: 15px;
+      border-radius: 12px;
       border: 2px solid var(--line);
       background: rgba(255,255,255,0.05);
       color: var(--text);
@@ -1516,6 +1652,29 @@
       justify-content: center;
       gap: 8px;
       transition: all 0.2s ease;
+      margin-top: 8px;
+    }
+
+    .modal-close-bottom-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--accent2);
+    }
+
+    .modal-stock-btn {
+      height: 50px;
+      padding: 0 20px;
+      border-radius: 12px;
+      border: 2px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
     }
 
     .modal-stock-btn:hover {
@@ -1525,8 +1684,8 @@
 
     /* SECTION ARTICLES SIMILAIRES - NOUVEAU */
     .similar-products-section {
-      margin-top: 20px;
-      padding-top: 20px;
+      margin-top: 15px;
+      padding-top: 15px;
       border-top: 2px solid var(--accent2);
     }
 
@@ -1534,22 +1693,22 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
     }
 
     .similar-products-header h4 {
       margin: 0;
-      font-size: 18px;
+      font-size: 16px;
       color: var(--accent2);
       font-weight: 900;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .similar-products-count {
-      font-size: 12px;
-      padding: 4px 10px;
+      font-size: 11px;
+      padding: 3px 8px;
       border-radius: 999px;
       background: rgba(0, 212, 255, 0.1);
       color: var(--accent2);
@@ -1559,8 +1718,8 @@
     .similar-products-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      padding: 10px 0;
+      gap: 10px;
+      padding: 8px 0;
     }
 
     @media (min-width: 768px) {
@@ -1576,26 +1735,26 @@
     }
 
     .similar-product-card {
-      border-radius: 10px;
+      border-radius: 8px;
       border: 1px solid var(--line);
       background: rgba(26, 54, 93, 0.5);
-      padding: 10px;
+      padding: 8px;
       transition: all 0.2s ease;
       cursor: pointer;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .similar-product-card:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,255,136,0.1);
+      box-shadow: 0 4px 10px rgba(0,255,136,0.1);
     }
 
     .similar-product-image {
       width: 100%;
-      height: 80px;
+      height: 70px;
       border-radius: 6px;
       background: linear-gradient(135deg, #1a365d 0%, #112240 100%);
       display: flex;
@@ -1617,12 +1776,12 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
     .similar-product-name {
       font-weight: 700;
-      font-size: 11px;
+      font-size: 10px;
       line-height: 1.2;
       color: var(--text);
       display: -webkit-box;
@@ -1633,9 +1792,9 @@
 
     .similar-product-price {
       font-weight: 900;
-      font-size: 12px;
+      font-size: 11px;
       color: var(--accent);
-      padding: 4px 8px;
+      padding: 3px 6px;
       border-radius: 999px;
       border: 1px solid var(--accent);
       background: rgba(0, 255, 136, 0.05);
@@ -1644,8 +1803,8 @@
     }
 
     .similar-product-stock {
-      font-size: 9px;
-      padding: 2px 6px;
+      font-size: 8px;
+      padding: 2px 5px;
       border-radius: 999px;
       background: rgba(0,255,136,0.1);
       color: var(--accent);
@@ -2786,16 +2945,16 @@
       }
       
       .modal-image-container {
-        height: 35vh;
-        min-height: 250px;
+        height: 30vh;
+        min-height: 200px;
       }
       
       .modal-product-name {
-        font-size: 20px;
+        font-size: 18px;
       }
       
       .modal-product-price {
-        font-size: 24px;
+        font-size: 20px;
       }
       
       .pagination-bottom .page-btn {
@@ -2815,7 +2974,7 @@
       }
       
       .dynamic-promo-text {
-        font-size: 14px;
+        font-size: 12px;
       }
     }
 
@@ -2839,40 +2998,40 @@
       }
       
       .modal-stepper {
-        min-width: 150px;
+        min-width: 140px;
       }
       
       .modal-stepper-btn {
         width: 36px;
         height: 36px;
-        font-size: 20px;
+        font-size: 18px;
       }
       
       .modal-quantity {
-        font-size: 20px;
+        font-size: 18px;
       }
       
       .modal-add-btn {
-        font-size: 16px;
-        height: 50px;
+        font-size: 14px;
+        height: 45px;
       }
       
       .pagination-bottom {
         flex-direction: row;
-        gap: 15px;
+        gap: 12px;
         padding: 20px 0 40px;
       }
       
       .pagination-bottom .page-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
       }
       
       .pagination-bottom .page-info {
         font-size: 14px;
         min-width: 100px;
-        padding: 10px 15px;
+        padding: 8px 12px;
       }
       
       .qr-direct-btn {
@@ -2905,15 +3064,19 @@
       
       .products-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
+        gap: 10px;
       }
       
       .dynamic-promo-text {
-        font-size: 13px;
+        font-size: 11px;
       }
       
       .dynamic-promo-section.visible {
-        margin-bottom: 15px;
+        margin-bottom: 8px;
+      }
+      
+      .admin-controls-grid {
+        grid-template-columns: repeat(1, 1fr);
       }
     }
 
@@ -3012,8 +3175,8 @@
       <div class="promo-content">
         <div class="promo-icon">🔥</div>
         <div class="promo-text">
-          <h4 id="promoTitle">🔥 PROMOTIONS EXCLUSIVES</h4>
-          <p id="promoDesc">Découvrez nos offres spéciales cette semaine !</p>
+          <h4 id="promoTitle">🔥 2 PRODUITS À -50%</h4>
+          <p id="promoDesc">Dont CRUNCHIES PAPRIKA & CHEESE à 0.50 dt seulement !</p>
         </div>
       </div>
       <button class="promo-btn" id="viewPromosBtn">VOIR →</button>
@@ -3024,12 +3187,12 @@
       <div class="cat-scroll-container" id="categoriesContainer"></div>
     </div>
 
-    <!-- NOUVELLE SECTION TEXTE DYNAMIQUE POUR PROMOTIONS -->
+    <!-- NOUVELLE SECTION TEXTE DYNAMIQUE POUR PROMOTIONS - VERSION COMPACTE -->
     <div class="dynamic-promo-section" id="dynamicPromoSection">
       <div class="dynamic-promo-header">
         <div class="dynamic-promo-title">
-          📢 ANNONCE SPÉCIALE
-          <span class="dynamic-promo-badge">LIVE</span>
+          📢 Offres promotionnelles
+          <span class="dynamic-promo-badge">MAXI JDC MARKET</span>
         </div>
       </div>
       
@@ -3044,11 +3207,21 @@
       </div>
       
       <div class="dynamic-promo-controls">
-        <button class="dynamic-promo-btn clear" id="clearDynamicTextBtn">
-          Effacer
+        <button class="dynamic-promo-toggle" id="togglePromoTextBtn">
+          🔽 Voir plus
         </button>
+        <button class="dynamic-promo-toggle hide" id="hidePromoBtn">
+          🗨️ Masquer
+        </button>
+      </div>
+      
+      <!-- SECTION ADMIN (CACHÉE PAR DÉFAUT) -->
+      <div class="admin-controls" id="adminControls">
         <button class="dynamic-promo-btn edit" id="editDynamicTextBtn">
-          Modifier
+          ✏️ Modifier
+        </button>
+        <button class="dynamic-promo-btn clear" id="clearDynamicTextBtn">
+          🗑️ Effacer
         </button>
       </div>
     </div>
@@ -3104,6 +3277,36 @@
     </div>
 
     <div class="drawer-content">
+      <!-- SECTION ADMIN (CACHÉE PAR DÉFAUT) -->
+      <section class="admin-section" id="adminSection">
+        <div class="admin-header">
+          <h4>🔧 Espace Administrateur</h4>
+          <span class="admin-badge">ADMIN</span>
+        </div>
+        
+        <div class="admin-controls-grid">
+          <button class="admin-btn promo" id="adminPromoBtn">
+            <span class="admin-icon">📢</span>
+            <span class="admin-label">Gérer promotions</span>
+          </button>
+          
+          <button class="admin-btn stock" id="adminStockBtn">
+            <span class="admin-icon">📦</span>
+            <span class="admin-label">Gérer stock</span>
+          </button>
+          
+          <button class="admin-btn stats" id="adminStatsBtn">
+            <span class="admin-icon">📊</span>
+            <span class="admin-label">Statistiques</span>
+          </button>
+          
+          <button class="admin-btn settings" id="adminSettingsBtn">
+            <span class="admin-icon">⚙️</span>
+            <span class="admin-label">Paramètres</span>
+          </button>
+        </div>
+      </section>
+
       <!-- SECTION COMPTE CLIENT -->
       <section class="account-section">
         <div class="section-title">
@@ -3398,13 +3601,14 @@
   <div class="edit-text-modal-overlay" id="editTextModal">
     <div class="edit-text-modal">
       <div class="edit-text-header">
-        <h3>📝 Éditer l'annonce spéciale</h3>
+        <h3>📝 Éditer les offres promotionnelles</h3>
       </div>
       
       <div class="edit-text-body">
-        <textarea class="edit-text-area" id="editTextArea" placeholder="Saisissez votre texte d'annonce spéciale ici..."></textarea>
+        <textarea class="edit-text-area" id="editTextArea" placeholder="Saisissez vos offres promotionnelles ici..."></textarea>
         <div class="edit-text-instructions">
-          <p><strong>💡 Conseils :</strong> Utilisez ce texte pour promouvoir vos meilleures offres, nouvelles arrivées ou événements spéciaux. Ce texte s'affichera uniquement dans la catégorie PROMOTIONS.</p>
+          <p><strong>💡 Conseils :</strong> Utilisez ce texte pour promouvoir vos meilleures offres, nouvelles arrivées ou événements spéciaux. Ce texte s'affichera uniquement dans la catégorie PROMOTIONS et sera visible par tous les clients.</p>
+          <p><strong>⚠️ Important :</strong> Les modifications seront immédiatement visibles par tous les utilisateurs de l'application.</p>
         </div>
       </div>
       
@@ -3413,7 +3617,7 @@
           Annuler
         </button>
         <button class="form-btn primary" id="saveEditTextBtn">
-          💾 Enregistrer
+          💾 Enregistrer pour tous
         </button>
       </div>
     </div>
@@ -3482,10 +3686,11 @@ const CONFIG = {
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v16',
+  localStorageKey: 'maxi_jdc_market_app_v17',
   imagesBasePath: 'maxi-jdc-market/images/products/',
   historyRetentionYears: 2,
-  dynamicTextKey: 'maxi_jdc_dynamic_text'
+  dynamicTextKey: 'maxi_jdc_dynamic_text',
+  adminPasswordKey: 'maxi_jdc_admin_password'
 };
 
 // Catégories avec noms complets - PROMOTIONS EN PREMIER
@@ -3535,7 +3740,11 @@ const state = {
   globalStock: {}, // Stock global partagé entre tous les utilisateurs
   dynamicText: "", // Texte dynamique pour les annonces
   // Mappage des produits par groupes d'utilisation
-  productGroups: {}
+  productGroups: {},
+  // État admin
+  isAdmin: false,
+  adminPassword: "admin123", // Mot de passe par défaut pour l'admin
+  showPromoSection: true // Par défaut, afficher la section promo
 };
 
 // ===================== UTILITAIRES =====================
@@ -3568,6 +3777,45 @@ function validatePrice(price) {
   return true;
 }
 
+// ===================== GESTION ADMIN =====================
+function checkAdminStatus() {
+  const savedPassword = localStorage.getItem(CONFIG.adminPasswordKey);
+  state.isAdmin = savedPassword === state.adminPassword;
+  updateAdminUI();
+}
+
+function toggleAdminMode() {
+  if (!state.isAdmin) {
+    const password = prompt("Entrez le mot de passe administrateur:");
+    if (password === state.adminPassword) {
+      state.isAdmin = true;
+      localStorage.setItem(CONFIG.adminPasswordKey, password);
+      updateAdminUI();
+      showToast('🔓 Mode administrateur activé', 'success');
+    } else {
+      showToast('❌ Mot de passe incorrect', 'error');
+    }
+  } else {
+    state.isAdmin = false;
+    localStorage.removeItem(CONFIG.adminPasswordKey);
+    updateAdminUI();
+    showToast('🔐 Mode administrateur désactivé', 'warning');
+  }
+}
+
+function updateAdminUI() {
+  const adminSection = $('adminSection');
+  const adminControls = $('adminControls');
+  
+  if (state.isAdmin) {
+    adminSection.classList.add('visible');
+    adminControls.classList.add('visible');
+  } else {
+    adminSection.classList.remove('visible');
+    adminControls.classList.remove('visible');
+  }
+}
+
 // ===================== GESTION DU TEXTE DYNAMIQUE =====================
 function loadDynamicText() {
   const savedText = localStorage.getItem(CONFIG.dynamicTextKey);
@@ -3593,15 +3841,47 @@ function updateDynamicTextDisplay() {
 
 function updateDynamicTextVisibility() {
   const promoSection = $('dynamicPromoSection');
-  if (state.activeCategory === 'promotions' && state.dynamicText && state.dynamicText.trim()) {
+  if (state.activeCategory === 'promotions' && state.dynamicText && state.dynamicText.trim() && state.showPromoSection) {
     promoSection.classList.add('visible');
   } else {
     promoSection.classList.remove('visible');
   }
 }
 
+function togglePromoText() {
+  const promoSection = $('dynamicPromoSection');
+  const toggleBtn = $('togglePromoTextBtn');
+  
+  if (promoSection.classList.contains('expanded')) {
+    promoSection.classList.remove('expanded');
+    toggleBtn.innerHTML = '🔽 Voir plus';
+  } else {
+    promoSection.classList.add('expanded');
+    toggleBtn.innerHTML = '🔼 Réduire';
+  }
+}
+
+function hidePromoSection() {
+  state.showPromoSection = false;
+  updateDynamicTextVisibility();
+  showToast('📢 Section promotions masquée', 'warning');
+}
+
+function showPromoSection() {
+  state.showPromoSection = true;
+  updateDynamicTextVisibility();
+  showToast('📢 Section promotions affichée', 'success');
+}
+
 function openEditTextModal() {
-  $('editTextArea').value = state.dynamicText.replace(/<br>/g, '\n').replace(/<[^>]*>/g, '');
+  if (!state.isAdmin) {
+    showToast('❌ Accès réservé à l\'administrateur', 'error');
+    return;
+  }
+  
+  // Supprimer les balises HTML pour l'édition
+  const plainText = state.dynamicText.replace(/<[^>]*>/g, '').replace(/<br>/g, '\n');
+  $('editTextArea').value = plainText;
   $('editTextModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -3612,19 +3892,25 @@ function closeEditTextModal() {
 }
 
 function saveDynamicText() {
+  if (!state.isAdmin) {
+    showToast('❌ Accès réservé à l\'administrateur', 'error');
+    return;
+  }
+  
   const text = $('editTextArea').value.trim();
   if (text) {
     // Formater le texte pour l'affichage HTML
     const formattedText = text
       .replace(/\n/g, '<br>')
       .replace(/(\d+)%/g, "<span class='promo-percent'>$1%</span>")
-      .replace(/CRUNCHIES PAPRIKA|CRUNCHIES CHEESE|CIUFFI CHIEN STRIP POLLO|GOLDEN COFFEE EXTREME|CHIPS LAYS SEL/gi, '<strong>$&</strong>');
+      .replace(/CRUNCHIES PAPRIKA|CRUNCHIES CHEESE|CIUFFI CHIEN STRIP POLLO|GOLDEN COFFEE EXTREME|CHIPS LAYS SEL/gi, '<strong>$&</strong>')
+      .replace(/MAXI JDC MARKET/gi, '<strong>$&</strong>');
     
     state.dynamicText = formattedText;
     updateDynamicTextDisplay();
     localStorage.setItem(CONFIG.dynamicTextKey, formattedText);
     closeEditTextModal();
-    showToast('✅ Texte enregistré avec succès !');
+    showToast('✅ Texte enregistré avec succès ! Visible par tous les clients.');
     updateDynamicTextVisibility();
   } else {
     showToast('⚠️ Le texte ne peut pas être vide', 'warning');
@@ -3632,11 +3918,16 @@ function saveDynamicText() {
 }
 
 function clearDynamicText() {
-  if (confirm('Voulez-vous vraiment effacer le texte dynamique ?')) {
+  if (!state.isAdmin) {
+    showToast('❌ Accès réservé à l\'administrateur', 'error');
+    return;
+  }
+  
+  if (confirm('Voulez-vous vraiment effacer le texte dynamique ? Ce changement sera visible par tous les clients.')) {
     state.dynamicText = '';
     $('dynamicPromoText').textContent = '';
     localStorage.removeItem(CONFIG.dynamicTextKey);
-    showToast('Texte effacé', 'warning');
+    showToast('Texte effacé. Visible par tous les clients.', 'warning');
     updateDynamicTextVisibility();
   }
 }
@@ -3793,7 +4084,8 @@ function saveState() {
     user: state.user,
     cart: state.cart,
     orderHistory: state.orderHistory,
-    version: '16.0'
+    showPromoSection: state.showPromoSection,
+    version: '17.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -3801,10 +4093,11 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '16.0') {
+    if (data && data.version === '17.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.orderHistory = data.orderHistory || [];
+      state.showPromoSection = data.showPromoSection !== undefined ? data.showPromoSection : true;
       
       updateUserUI();
       updateCartUI();
@@ -4302,6 +4595,9 @@ async function loadAllProducts() {
   
   // Charger le texte dynamique
   loadDynamicText();
+  
+  // Vérifier le statut admin
+  checkAdminStatus();
   
   // Charger les PROMOTIONS en premier
   const promotions = await loadCategoryData('promotions');
@@ -5101,6 +5397,9 @@ function navigateToNextPage() {
 function init() {
   loadState();
   
+  // Vérifier le statut admin
+  checkAdminStatus();
+  
   // Header
   $('cartTopBtn').onclick = openDrawer;
   
@@ -5141,6 +5440,8 @@ function init() {
   };
   
   // Texte dynamique
+  $('togglePromoTextBtn').onclick = togglePromoText;
+  $('hidePromoBtn').onclick = hidePromoSection;
   $('editDynamicTextBtn').onclick = openEditTextModal;
   $('clearDynamicTextBtn').onclick = clearDynamicText;
   $('saveEditTextBtn').onclick = saveDynamicText;
@@ -5171,6 +5472,39 @@ function init() {
   // Drawer
   $('closeDrawerBtn').onclick = closeDrawer;
   $('drawerOverlay').onclick = closeDrawer;
+  
+  // Admin
+  $('adminPromoBtn').onclick = () => {
+    if (!state.isAdmin) {
+      toggleAdminMode();
+      return;
+    }
+    openEditTextModal();
+  };
+  
+  $('adminStockBtn').onclick = () => {
+    if (!state.isAdmin) {
+      toggleAdminMode();
+      return;
+    }
+    showToast('📦 Gestion du stock - Fonctionnalité à venir', 'warning');
+  };
+  
+  $('adminStatsBtn').onclick = () => {
+    if (!state.isAdmin) {
+      toggleAdminMode();
+      return;
+    }
+    showToast('📊 Statistiques - Fonctionnalité à venir', 'warning');
+  };
+  
+  $('adminSettingsBtn').onclick = () => {
+    if (!state.isAdmin) {
+      toggleAdminMode();
+      return;
+    }
+    showToast('⚙️ Paramètres - Fonctionnalité à venir', 'warning');
+  };
   
   // Compte utilisateur
   $('saveAccountBtn').onclick = saveUser;
