@@ -327,27 +327,32 @@
       background: rgba(0, 212, 255, 0.2);
     }
 
-    /* BANNIÈRE PROMOTIONNELLE */
+    /* NOUVELLE BANNIÈRE PROMOTIONNELLE AMÉLIORÉE */
     .promo-banner {
-      background: linear-gradient(135deg, #ff6b6b, #ffa726);
+      background: linear-gradient(135deg, #ff0000 0%, #ff6b00 50%, #ffd000 100%);
       border-radius: var(--radius);
-      padding: 10px 15px;
+      padding: 0;
       margin: 8px;
       display: flex;
-      align-items: center;
+      align-items: stretch;
       justify-content: space-between;
+      border: 2px solid #ff9900;
+      box-shadow: 0 5px 25px rgba(255, 107, 0, 0.3);
       animation: pulse 2s infinite;
-      border: 2px solid rgba(255,255,255,0.2);
+      overflow: hidden;
+      position: relative;
     }
 
     .promo-content {
+      flex: 1;
       display: flex;
-      align-items: center;
-      gap: 10px;
+      flex-direction: column;
+      padding: 12px 15px;
     }
 
     .promo-icon {
-      font-size: 24px;
+      font-size: 28px;
+      margin-bottom: 5px;
     }
 
     .promo-text {
@@ -356,31 +361,41 @@
 
     .promo-text h4 {
       margin: 0;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 900;
-      color: #000;
+      color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      line-height: 1.2;
+      letter-spacing: 0.5px;
     }
 
     .promo-text p {
-      margin: 2px 0 0;
-      font-size: 11px;
-      color: rgba(0,0,0,0.8);
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.3;
     }
 
     .promo-btn {
       background: rgba(0,0,0,0.3);
-      border: 2px solid rgba(255,255,255,0.5);
+      border: 2px solid rgba(255,255,255,0.7);
       color: white;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-weight: 800;
-      font-size: 11px;
+      padding: 0 20px;
+      border-radius: 0;
+      font-weight: 900;
+      font-size: 13px;
       cursor: pointer;
       transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 100px;
+      background: linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 100%);
     }
 
     .promo-btn:hover {
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
+      border-color: #ffffff;
       transform: scale(1.05);
     }
 
@@ -438,18 +453,20 @@
 
     /* Style spécial pour le bouton PROMOTIONS */
     .cat-btn.promo {
-      background: linear-gradient(135deg, #ff6b6b, #ffa726);
-      color: #000;
-      border-color: #ffa726;
+      background: linear-gradient(135deg, #ff0000, #ff6b00);
+      color: #ffffff;
+      border-color: #ff9900;
       font-weight: 900;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
       animation: pulse 2s infinite;
     }
 
     .cat-btn.promo.active {
       background: linear-gradient(135deg, #ff4444, #ff9900);
-      color: #000;
-      border-color: #ff9900;
-      box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+      color: #ffffff;
+      border-color: #ffcc00;
+      box-shadow: 0 0 15px rgba(255, 107, 0, 0.7);
+      transform: scale(1.05);
     }
 
     /* Note dynamique pour promotions */
@@ -504,15 +521,17 @@
       font-size: 11px;
     }
 
-    /* SECTION TEXTE DYNAMIQUE POUR PROMOTIONS */
+    /* SECTION TEXTE DYNAMIQUE POUR PROMOTIONS - NOUVELLE VERSION */
     .dynamic-promo-section {
-      background: linear-gradient(135deg, #ff6b6b, #ffa726);
+      background: linear-gradient(135deg, #ff0000 0%, #ff6b00 50%, #ffd000 100%);
       border-radius: var(--radius);
-      padding: 15px;
-      margin: 0 8px 12px;
-      border: 2px solid rgba(255,255,255,0.2);
-      box-shadow: var(--shadow);
+      padding: 0;
+      margin: 0 8px 20px;
+      border: 3px solid #ff9900;
+      box-shadow: 0 8px 30px rgba(255, 107, 0, 0.4);
+      overflow: hidden;
       display: none;
+      position: relative;
     }
 
     .dynamic-promo-section.visible {
@@ -520,10 +539,12 @@
     }
 
     .dynamic-promo-header {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 12px 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 10px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
     }
 
     .dynamic-promo-title {
@@ -531,72 +552,93 @@
       align-items: center;
       gap: 8px;
       font-weight: 900;
-      color: #000;
-      font-size: 14px;
+      color: #ffffff;
+      font-size: 15px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
 
     .dynamic-promo-badge {
-      background: #000;
-      color: #ffa726;
-      padding: 2px 8px;
+      background: #000000;
+      color: #ffcc00;
+      padding: 3px 10px;
       border-radius: 10px;
-      font-size: 10px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 900;
+      animation: pulse 1.5s infinite;
     }
 
     .dynamic-promo-content {
-      position: relative;
-      background: rgba(255,255,255,0.95);
-      border-radius: 8px;
-      padding: 12px;
-      border: 2px solid #ff9900;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.2);
     }
 
     .dynamic-promo-text {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
-      color: #000;
-      line-height: 1.4;
+      color: #ffffff;
+      line-height: 1.5;
       white-space: pre-line;
       margin: 0;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+
+    /* Style spécial pour les pourcentages de promotion dans le texte */
+    .dynamic-promo-text .promo-percent {
+      color: #ffcc00;
+      font-weight: 900;
+      background: rgba(0,0,0,0.3);
+      padding: 2px 6px;
+      border-radius: 6px;
+      margin: 0 2px;
+      display: inline-block;
+      transform: translateY(-2px);
     }
 
     .dynamic-promo-controls {
       display: flex;
       gap: 8px;
-      margin-top: 10px;
-      justify-content: flex-end;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.4);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .dynamic-promo-btn {
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid;
+      flex: 1;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 2px solid;
       background: rgba(255,255,255,0.9);
       cursor: pointer;
-      font-weight: 700;
-      font-size: 11px;
+      font-weight: 900;
+      font-size: 13px;
       transition: all 0.2s ease;
+      text-align: center;
     }
 
     .dynamic-promo-btn.edit {
       border-color: #00ff88;
-      background: rgba(0,255,136,0.9);
-      color: #000;
+      background: linear-gradient(135deg, #00ff88, #00cc66);
+      color: #000000;
     }
 
     .dynamic-promo-btn.edit:hover {
-      background: #00ff88;
+      background: linear-gradient(135deg, #00ffaa, #00ee77);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,255,136,0.3);
     }
 
     .dynamic-promo-btn.clear {
       border-color: #ff6b6b;
-      background: rgba(255,107,107,0.9);
-      color: #000;
+      background: linear-gradient(135deg, #ff6b6b, #ff4444);
+      color: #000000;
     }
 
     .dynamic-promo-btn.clear:hover {
-      background: #ff6b6b;
+      background: linear-gradient(135deg, #ff8888, #ff5555);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255,107,107,0.3);
     }
 
     /* MODAL ÉDITION TEXTE DYNAMIQUE */
@@ -661,7 +703,7 @@
       border: 2px solid var(--accent);
       background: rgba(255,255,255,0.1);
       color: var(--text);
-      font-size: 14px;
+      font-size: 16px;
       line-height: 1.5;
       font-family: inherit;
       resize: vertical;
@@ -804,33 +846,36 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* GRID PRODUITS */
+    /* GRID PRODUITS - ESPACÉ POUR PROMOTIONS */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 16px;
       padding: 8px 0 20px;
     }
 
     @media (min-width: 480px) {
       .products-grid {
         grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
       }
     }
 
     @media (min-width: 768px) {
       .products-grid {
         grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
       }
     }
 
     @media (min-width: 1024px) {
       .products-grid {
         grid-template-columns: repeat(5, 1fr);
+        gap: 22px;
       }
     }
 
-    /* CARTE PRODUIT */
+    /* CARTE PRODUIT AVEC BADGE PROMO SUR L'IMAGE */
     .product-card {
       border-radius: 12px;
       border: 1px solid var(--line);
@@ -853,6 +898,18 @@
       box-shadow: 0 8px 24px rgba(0,212,255,0.15);
     }
 
+    .product-card.promo-card {
+      border: 2px solid #ff9900;
+      background: linear-gradient(135deg, var(--card2) 0%, #1a1a2e 100%);
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.2);
+    }
+
+    .product-card.promo-card:hover {
+      border-color: #ffcc00;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3);
+    }
+
     .product-image {
       width: 100%;
       height: 140px;
@@ -865,6 +922,11 @@
       overflow: hidden;
       position: relative;
       padding: 8px;
+    }
+
+    .product-card.promo-card .product-image {
+      border: 2px solid rgba(255, 153, 0, 0.3);
+      background: linear-gradient(135deg, #0a1929 0%, #1a1a2e 100%);
     }
 
     .product-image img {
@@ -893,6 +955,24 @@
       background: linear-gradient(135deg, var(--card) 0%, var(--card2) 100%);
       text-align: center;
       padding: 20px;
+    }
+
+    /* BADGE PROMO SUR L'IMAGE */
+    .image-promo-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: linear-gradient(135deg, #ff0000 0%, #ff6b00 100%);
+      color: white;
+      font-weight: 900;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 20px;
+      z-index: 2;
+      border: 2px solid rgba(255,255,255,0.5);
+      box-shadow: 0 3px 10px rgba(255, 107, 0, 0.5);
+      animation: pulse 1.5s infinite;
+      transform: rotate(5deg);
     }
 
     .product-info {
@@ -928,6 +1008,12 @@
       margin-top: auto;
     }
 
+    .product-card.promo-card .product-price {
+      border: 2px solid #ff9900;
+      background: rgba(255, 153, 0, 0.15);
+      color: #ffcc00;
+    }
+
     .product-old-price {
       font-size: 10px;
       color: var(--muted);
@@ -935,17 +1021,23 @@
       margin-right: 5px;
     }
 
+    .product-card.promo-card .product-old-price {
+      color: #ff8888;
+    }
+
     .product-discount {
       position: absolute;
       top: 10px;
       right: 10px;
-      background: var(--danger);
+      background: linear-gradient(135deg, #ff0000, #ff6b00);
       color: white;
       font-weight: 900;
       font-size: 10px;
       padding: 3px 6px;
       border-radius: 4px;
       z-index: 2;
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 2px 8px rgba(255, 0, 0, 0.3);
     }
 
     .product-meta {
@@ -1110,6 +1202,24 @@
       padding: 40px;
     }
 
+    /* BADGE PROMO SUR L'IMAGE MODALE */
+    .modal-promo-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #ff0000 0%, #ff6b00 100%);
+      color: white;
+      font-weight: 900;
+      font-size: 14px;
+      padding: 8px 15px;
+      border-radius: 25px;
+      z-index: 10;
+      border: 3px solid rgba(255,255,255,0.7);
+      box-shadow: 0 5px 20px rgba(255, 0, 0, 0.5);
+      animation: pulse 1.5s infinite;
+      transform: rotate(5deg);
+    }
+
     .image-nav-bar {
       display: flex;
       align-items: center;
@@ -1225,12 +1335,14 @@
     }
 
     .modal-product-discount {
-      background: var(--danger);
+      background: linear-gradient(135deg, #ff0000, #ff6b00);
       color: white;
       font-weight: 900;
       font-size: 16px;
       padding: 8px 15px;
       border-radius: 10px;
+      border: 2px solid rgba(255,255,255,0.3);
+      box-shadow: 0 3px 10px rgba(255, 0, 0, 0.3);
     }
 
     .modal-product-meta {
@@ -2653,8 +2765,14 @@
     }
 
     @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 5px 25px rgba(255, 107, 0, 0.3);
+      }
+      50% { 
+        transform: scale(1.02); 
+        box-shadow: 0 8px 30px rgba(255, 107, 0, 0.5);
+      }
     }
 
     .pulse {
@@ -2694,6 +2812,10 @@
       
       .similar-products-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .dynamic-promo-text {
+        font-size: 14px;
       }
     }
 
@@ -2779,6 +2901,19 @@
       
       .similar-products-grid {
         grid-template-columns: repeat(1, 1fr);
+      }
+      
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+      
+      .dynamic-promo-text {
+        font-size: 13px;
+      }
+      
+      .dynamic-promo-section.visible {
+        margin-bottom: 15px;
       }
     }
 
@@ -2872,16 +3007,16 @@
       </div>
     </div>
 
-    <!-- BANNIÈRE PROMOTIONNELLE -->
+    <!-- NOUVELLE BANNIÈRE PROMOTIONNELLE AMÉLIORÉE -->
     <div class="promo-banner" id="promoBanner" style="display:none;">
       <div class="promo-content">
         <div class="promo-icon">🔥</div>
         <div class="promo-text">
-          <h4 id="promoTitle">PROMOTIONS DE LA SEMAINE</h4>
-          <p id="promoDesc">Découvrez nos offres spéciales chez MAXI JDC MARKET</p>
+          <h4 id="promoTitle">🔥 PROMOTIONS EXCLUSIVES</h4>
+          <p id="promoDesc">Découvrez nos offres spéciales cette semaine !</p>
         </div>
       </div>
-      <button class="promo-btn" id="viewPromosBtn">VOIR PROMOTIONS</button>
+      <button class="promo-btn" id="viewPromosBtn">VOIR →</button>
     </div>
 
     <!-- CATÉGORIES -->
@@ -2889,7 +3024,7 @@
       <div class="cat-scroll-container" id="categoriesContainer"></div>
     </div>
 
-    <!-- SECTION TEXTE DYNAMIQUE POUR PROMOTIONS -->
+    <!-- NOUVELLE SECTION TEXTE DYNAMIQUE POUR PROMOTIONS -->
     <div class="dynamic-promo-section" id="dynamicPromoSection">
       <div class="dynamic-promo-header">
         <div class="dynamic-promo-title">
@@ -2900,7 +3035,11 @@
       
       <div class="dynamic-promo-content">
         <p class="dynamic-promo-text" id="dynamicPromoText">
-          Cette semaine chez MAXI JDC MARKET: 'LE CIUFFI CHIEN STRIP POLLO 200GR à 6 dt au lieu de 8.50 dt. Il y a 25% de rabais sur les produits 10 CAPSULES GOLDEN COFFEE EXTREME et CHIPS LAYS SEL 80GR. Achetez maintenant!
+          🎉 Cette semaine chez MAXI JDC MARKET ! 🎉<br>
+          Profitez de <span class="promo-percent">50%</span> de réduction sur CRUNCHIES PAPRIKA et CRUNCHIES CHEESE !<br>
+          Le CIUFFI CHIEN STRIP POLLO 200GR à <strong>6 dt</strong> au lieu de <del>8.50 dt</del><br>
+          <span class="promo-percent">25%</span> de rabais sur les produits 10 CAPSULES GOLDEN COFFEE EXTREME et CHIPS LAYS SEL 80GR<br>
+          ⚡ Offres limitées, faites vite ! ⚡
         </p>
       </div>
       
@@ -3156,6 +3295,11 @@
           <img class="modal-image" id="modalProductImage" alt="">
           <div class="modal-no-photo" id="modalNoPhoto">Aucune photo disponible</div>
           
+          <!-- BADGE PROMO SUR L'IMAGE -->
+          <div class="modal-promo-badge" id="modalPromoBadge" style="display:none">
+            50% OFF
+          </div>
+          
           <button class="image-nav-btn next" id="modalNextImageBtn">›</button>
         </div>
         
@@ -3338,8 +3482,8 @@ const CONFIG = {
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v15',
-  imagesBasePath: 'images/products/',
+  localStorageKey: 'maxi_jdc_market_app_v16',
+  imagesBasePath: 'maxi-jdc-market/images/products/',
   historyRetentionYears: 2,
   dynamicTextKey: 'maxi_jdc_dynamic_text'
 };
@@ -3429,17 +3573,22 @@ function loadDynamicText() {
   const savedText = localStorage.getItem(CONFIG.dynamicTextKey);
   if (savedText) {
     state.dynamicText = savedText;
-    $('dynamicPromoText').textContent = savedText;
+    updateDynamicTextDisplay();
   } else {
-    // Texte par défaut
-    const defaultText = "Cette semaine chez MAXI JDC MARKET: 'LE CIUFFI CHIEN STRIP POLLO 200GR à 6 dt au lieu de 8.50 dt. Il y a 25% de rabais sur les produits 10 CAPSULES GOLDEN COFFEE EXTREME et CHIPS LAYS SEL 80GR. Achetez maintenant!";
+    // Texte par défaut amélioré
+    const defaultText = "🎉 Cette semaine chez MAXI JDC MARKET ! 🎉<br>Profitez de <span class='promo-percent'>50%</span> de réduction sur CRUNCHIES PAPRIKA et CRUNCHIES CHEESE !<br>Le CIUFFI CHIEN STRIP POLLO 200GR à <strong>6 dt</strong> au lieu de <del>8.50 dt</del><br><span class='promo-percent'>25%</span> de rabais sur les produits 10 CAPSULES GOLDEN COFFEE EXTREME et CHIPS LAYS SEL 80GR<br>⚡ Offres limitées, faites vite ! ⚡";
     state.dynamicText = defaultText;
-    $('dynamicPromoText').textContent = defaultText;
+    updateDynamicTextDisplay();
     localStorage.setItem(CONFIG.dynamicTextKey, defaultText);
   }
   
   // Afficher/masquer la section selon la catégorie active
   updateDynamicTextVisibility();
+}
+
+function updateDynamicTextDisplay() {
+  const dynamicTextElement = $('dynamicPromoText');
+  dynamicTextElement.innerHTML = state.dynamicText;
 }
 
 function updateDynamicTextVisibility() {
@@ -3452,7 +3601,7 @@ function updateDynamicTextVisibility() {
 }
 
 function openEditTextModal() {
-  $('editTextArea').value = state.dynamicText;
+  $('editTextArea').value = state.dynamicText.replace(/<br>/g, '\n').replace(/<[^>]*>/g, '');
   $('editTextModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -3465,9 +3614,15 @@ function closeEditTextModal() {
 function saveDynamicText() {
   const text = $('editTextArea').value.trim();
   if (text) {
-    state.dynamicText = text;
-    $('dynamicPromoText').textContent = text;
-    localStorage.setItem(CONFIG.dynamicTextKey, text);
+    // Formater le texte pour l'affichage HTML
+    const formattedText = text
+      .replace(/\n/g, '<br>')
+      .replace(/(\d+)%/g, "<span class='promo-percent'>$1%</span>")
+      .replace(/CRUNCHIES PAPRIKA|CRUNCHIES CHEESE|CIUFFI CHIEN STRIP POLLO|GOLDEN COFFEE EXTREME|CHIPS LAYS SEL/gi, '<strong>$&</strong>');
+    
+    state.dynamicText = formattedText;
+    updateDynamicTextDisplay();
+    localStorage.setItem(CONFIG.dynamicTextKey, formattedText);
     closeEditTextModal();
     showToast('✅ Texte enregistré avec succès !');
     updateDynamicTextVisibility();
@@ -3500,7 +3655,7 @@ function categorizeProductByUsage(product) {
     'boissons_energisantes': ['red bull', 'monster', 'burn', 'energy drink', 'boisson énergisante'],
     
     // Snacks
-    'snacks_sales': ['chips', 'cacahuètes', 'noix', 'amandes', 'biscuits salés', 'crackers', 'pretzels'],
+    'snacks_sales': ['chips', 'cacahuètes', 'noix', 'amandes', 'biscuits salés', 'crackers', 'pretzels', 'crunchies'],
     'snacks_sucres': ['chocolat', 'biscuit', 'gâteau', 'bonbon', 'sucre', 'chewing-gum', 'caramel'],
     'glaces_desserts': ['glace', 'crème glacée', 'yaourt', 'dessert', 'mousse', 'pudding'],
     
@@ -3521,7 +3676,7 @@ function categorizeProductByUsage(product) {
     
     // Bébé & Animaux
     'produits_bebe': ['couche', 'lait bébé', 'biberon', 'tétine', 'jouet bébé'],
-    'animaux': ['croquette', 'chien', 'chat', 'nourriture animale', 'litière', 'jouet animal'],
+    'animaux': ['croquette', 'chien', 'chat', 'nourriture animale', 'litière', 'jouet animal', 'ciuffi'],
     
     // Spécialités
     'produits_du_monde': ['couscous', 'tajine', 'sushi', 'pizza', 'hamburger', 'kebab'],
@@ -3585,7 +3740,7 @@ function getSimilarProductsByUsage(currentProduct) {
 // ===================== GESTION DU STOCK GLOBAL =====================
 async function loadGlobalStock() {
   try {
-    // Pour l'exemple, nous allons simuler un stock global
+    // Stock global avec les nouveaux produits
     state.globalStock = {
       'CAF001': { inStock: true, quantity: 50 },
       'CAF002': { inStock: true, quantity: 30 },
@@ -3601,7 +3756,9 @@ async function loadGlobalStock() {
       'LAI001': { inStock: true, quantity: 20 },
       'LAI002': { inStock: false, quantity: 0 },
       'FRI001': { inStock: true, quantity: 70 },
-      'FRI002': { inStock: true, quantity: 55 }
+      'FRI002': { inStock: true, quantity: 55 },
+      '4350': { inStock: true, quantity: 40 }, // CRUNCHIES PAPRIKA
+      '4349': { inStock: true, quantity: 35 }  // CRUNCHIES CHEESE
     };
     
     console.log('Stock global chargé:', Object.keys(state.globalStock).length, 'produits');
@@ -3636,7 +3793,7 @@ function saveState() {
     user: state.user,
     cart: state.cart,
     orderHistory: state.orderHistory,
-    version: '15.0'
+    version: '16.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -3644,7 +3801,7 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '15.0') {
+    if (data && data.version === '16.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.orderHistory = data.orderHistory || [];
@@ -4148,6 +4305,31 @@ async function loadAllProducts() {
   
   // Charger les PROMOTIONS en premier
   const promotions = await loadCategoryData('promotions');
+  
+  // Ajouter les nouveaux produits aux promotions
+  const crunchiesPaprika = {
+    code: '4350',
+    name: 'CRUNCHIES PAPRIKA',
+    price: 0.5, // Prix après 50% de réduction (1 dt * 0.5)
+    oldPrice: 1,
+    category: '🔥 PROMOTIONS',
+    categoryKey: 'promotions',
+    isPromotion: true
+  };
+  
+  const crunchiesCheese = {
+    code: '4349',
+    name: 'CRUNCHIES CHEESE',
+    price: 0.5, // Prix après 50% de réduction (1 dt * 0.5)
+    oldPrice: 1,
+    category: '🔥 PROMOTIONS',
+    categoryKey: 'promotions',
+    isPromotion: true
+  };
+  
+  // Ajouter les nouveaux produits au début de la liste des promotions
+  promotions.unshift(crunchiesPaprika, crunchiesCheese);
+  
   if (promotions.length > 0) {
     state.products.set('promotions', promotions);
     state.promotions = promotions;
@@ -4193,9 +4375,12 @@ function showPromoBanner(promotions) {
     return;
   }
   
-  const promo = promotions[Math.floor(Math.random() * promotions.length)];
-  $('promoTitle').textContent = "🔥 PROMOTIONS DE LA SEMAINE";
-  $('promoDesc').textContent = `Découvrez ${promotions.length} offres spéciales chez MAXI JDC MARKET`;
+  const crunchiesCount = promotions.filter(p => p.name.includes('CRUNCHIES')).length;
+  const promoTitle = `🔥 ${crunchiesCount} PRODUITS À -50%`;
+  const promoDesc = `Dont CRUNCHIES PAPRIKA & CHEESE à 0.50 dt seulement !`;
+  
+  $('promoTitle').textContent = promoTitle;
+  $('promoDesc').textContent = promoDesc;
   $('promoBanner').style.display = 'flex';
 }
 
@@ -4262,11 +4447,12 @@ function updateCategoriesUI() {
       // Afficher le texte dynamique pour les promotions
       if (category.isPromo) {
         if (state.dynamicText && state.dynamicText.trim()) {
-          // Limiter la longueur du texte pour l'affichage
-          const shortText = state.dynamicText.length > 100 
-            ? state.dynamicText.substring(0, 100) + '...' 
-            : state.dynamicText;
-          $('activeCategoryMeta').innerHTML = `<span style="color:var(--warning);">📢 ${shortText}</span>`;
+          // Extraire le texte sans les balises HTML pour l'affichage
+          const textWithoutTags = state.dynamicText.replace(/<[^>]*>/g, '');
+          const shortText = textWithoutTags.length > 80 
+            ? textWithoutTags.substring(0, 80) + '...' 
+            : textWithoutTags;
+          $('activeCategoryMeta').innerHTML = `<span style="color:var(--warning);font-weight:700;">📢 ${shortText}</span>`;
         } else {
           $('activeCategoryMeta').textContent = `${category.key}.csv`;
         }
@@ -4356,11 +4542,11 @@ function renderProducts() {
     const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
     
     const card = document.createElement('div');
-    card.className = 'product-card';
+    card.className = `product-card ${product.isPromotion ? 'promo-card' : ''}`;
     
-    // Ajouter un badge de promotion si nécessaire
-    const discountBadge = product.isPromotion && product.oldPrice 
-      ? `<div class="product-discount">-${Math.round((1 - product.price / product.oldPrice) * 100)}%</div>`
+    // Ajouter un badge de promotion sur l'image si nécessaire
+    const imagePromoBadge = product.isPromotion && product.oldPrice 
+      ? `<div class="image-promo-badge">-${Math.round((1 - product.price / product.oldPrice) * 100)}%</div>`
       : '';
     
     // Afficher l'ancien prix si en promotion
@@ -4375,9 +4561,8 @@ function renderProducts() {
              onload="this.style.display='block'; this.parentElement.querySelector('.no-photo').style.display='none';"
              onerror="this.style.display='none'; this.parentElement.querySelector('.no-photo').style.display='flex';">
         <div class="no-photo" style="display:none;">${product.code}</div>
+        ${imagePromoBadge}
       </div>
-      
-      ${discountBadge}
       
       <div class="product-info">
         <div class="product-name">${product.name}</div>
@@ -4517,9 +4702,18 @@ function openProductModal(product) {
     const discountPercent = Math.round((1 - product.price / product.oldPrice) * 100);
     $('modalProductDiscount').textContent = `-${discountPercent}%`;
     $('modalProductDiscount').style.display = 'block';
+    
+    // Afficher le badge promo sur l'image
+    if (discountPercent === 50) {
+      $('modalPromoBadge').style.display = 'block';
+      $('modalPromoBadge').textContent = `${discountPercent}% OFF`;
+    } else {
+      $('modalPromoBadge').style.display = 'none';
+    }
   } else {
     $('modalProductOldPrice').style.display = 'none';
     $('modalProductDiscount').style.display = 'none';
+    $('modalPromoBadge').style.display = 'none';
   }
   
   const addBtn = $('modalAddToCartBtn');
