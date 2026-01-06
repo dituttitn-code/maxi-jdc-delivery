@@ -278,90 +278,53 @@
       background: rgba(0, 255, 136, 0.25);
     }
 
-    /* NOUVELLE SECTION TEXTE DYNAMIQUE */
-    .dynamic-text-section {
-      background: linear-gradient(135deg, #ff6b6b, #ffa726);
+    /* INFO BAR DYNAMIQUE HORIZONTALE */
+    .info-bar {
+      margin-top: 8px;
+      padding: 8px;
+      background: var(--card);
       border-radius: var(--radius);
-      padding: 10px 15px;
-      margin: 8px;
-      border: 2px solid rgba(255,255,255,0.2);
-      box-shadow: var(--shadow);
-    }
-
-    .dynamic-text-content {
+      border: 1px solid var(--line);
+      overflow: hidden;
       position: relative;
     }
 
-    .dynamic-text-editable {
-      min-height: 60px;
-      width: 100%;
-      background: rgba(255,255,255,0.9);
-      border: 2px solid #ff9900;
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #000;
-      outline: none;
-      resize: vertical;
-      font-family: inherit;
-      line-height: 1.4;
-    }
-
-    .dynamic-text-editable:focus {
-      background: white;
-      box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
-    }
-
-    .dynamic-text-label {
-      position: absolute;
-      top: -10px;
-      left: 10px;
-      background: #ff9900;
-      color: #000;
-      font-weight: 900;
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 10px;
-      z-index: 1;
-    }
-
-    .dynamic-text-controls {
+    .info-bar-container {
       display: flex;
-      gap: 8px;
-      margin-top: 8px;
-      justify-content: flex-end;
+      gap: 20px;
+      animation: scrollHorizontal 30s linear infinite;
+      white-space: nowrap;
+      padding: 5px 0;
     }
 
-    .dynamic-text-btn {
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid;
-      background: rgba(255,255,255,0.9);
+    .info-bar-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    .info-bar-item strong {
+      font-weight: 800;
+      color: var(--accent2);
+    }
+
+    .info-bar-item.qr-item {
+      border-color: var(--accent2);
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--accent2);
+      font-weight: 800;
       cursor: pointer;
-      font-weight: 700;
-      font-size: 11px;
-      transition: all 0.2s ease;
     }
 
-    .dynamic-text-btn.save {
-      border-color: #00ff88;
-      background: rgba(0,255,136,0.9);
-      color: #000;
-    }
-
-    .dynamic-text-btn.save:hover {
-      background: #00ff88;
-    }
-
-    .dynamic-text-btn.clear {
-      border-color: #ff6b6b;
-      background: rgba(255,107,107,0.9);
-      color: #000;
-    }
-
-    .dynamic-text-btn.clear:hover {
-      background: #ff6b6b;
+    .info-bar-item.qr-item:hover {
+      background: rgba(0, 212, 255, 0.2);
     }
 
     /* BANNIÈRE PROMOTIONNELLE */
@@ -539,6 +502,192 @@
       margin: 2px 0 0;
       color: var(--muted);
       font-size: 11px;
+    }
+
+    /* SECTION TEXTE DYNAMIQUE POUR PROMOTIONS */
+    .dynamic-promo-section {
+      background: linear-gradient(135deg, #ff6b6b, #ffa726);
+      border-radius: var(--radius);
+      padding: 15px;
+      margin: 0 8px 12px;
+      border: 2px solid rgba(255,255,255,0.2);
+      box-shadow: var(--shadow);
+      display: none;
+    }
+
+    .dynamic-promo-section.visible {
+      display: block;
+    }
+
+    .dynamic-promo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .dynamic-promo-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 900;
+      color: #000;
+      font-size: 14px;
+    }
+
+    .dynamic-promo-badge {
+      background: #000;
+      color: #ffa726;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .dynamic-promo-content {
+      position: relative;
+      background: rgba(255,255,255,0.95);
+      border-radius: 8px;
+      padding: 12px;
+      border: 2px solid #ff9900;
+    }
+
+    .dynamic-promo-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: #000;
+      line-height: 1.4;
+      white-space: pre-line;
+      margin: 0;
+    }
+
+    .dynamic-promo-controls {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      justify-content: flex-end;
+    }
+
+    .dynamic-promo-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid;
+      background: rgba(255,255,255,0.9);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 11px;
+      transition: all 0.2s ease;
+    }
+
+    .dynamic-promo-btn.edit {
+      border-color: #00ff88;
+      background: rgba(0,255,136,0.9);
+      color: #000;
+    }
+
+    .dynamic-promo-btn.edit:hover {
+      background: #00ff88;
+    }
+
+    .dynamic-promo-btn.clear {
+      border-color: #ff6b6b;
+      background: rgba(255,107,107,0.9);
+      color: #000;
+    }
+
+    .dynamic-promo-btn.clear:hover {
+      background: #ff6b6b;
+    }
+
+    /* MODAL ÉDITION TEXTE DYNAMIQUE */
+    .edit-text-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2500;
+      padding: 20px;
+      backdrop-filter: blur(20px);
+    }
+
+    .edit-text-modal-overlay.open {
+      display: flex;
+    }
+
+    .edit-text-modal {
+      width: 100%;
+      max-width: 500px;
+      background: linear-gradient(135deg, var(--bg0) 0%, var(--bg1) 100%);
+      border-radius: 20px;
+      border: 3px solid var(--accent);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      max-height: 90vh;
+    }
+
+    .edit-text-header {
+      padding: 20px;
+      background: rgba(0, 255, 136, 0.1);
+      border-bottom: 1px solid var(--accent);
+      text-align: center;
+    }
+
+    .edit-text-header h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--accent);
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .edit-text-body {
+      padding: 20px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .edit-text-area {
+      width: 100%;
+      min-height: 200px;
+      padding: 15px;
+      border-radius: 10px;
+      border: 2px solid var(--accent);
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+      font-family: inherit;
+      resize: vertical;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .edit-text-area:focus {
+      background: rgba(255,255,255,0.15);
+      border-color: var(--accent2);
+    }
+
+    .edit-text-instructions {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .edit-text-footer {
+      padding: 20px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
     }
 
     /* PAGINATION EN HAUT */
@@ -2477,55 +2626,6 @@
       color: #fff;
     }
 
-    /* INFO BAR DYNAMIQUE HORIZONTALE */
-    .info-bar {
-      margin-top: 8px;
-      padding: 8px;
-      background: var(--card);
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .info-bar-container {
-      display: flex;
-      gap: 20px;
-      animation: scrollHorizontal 30s linear infinite;
-      white-space: nowrap;
-      padding: 5px 0;
-    }
-
-    .info-bar-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: var(--muted);
-      padding: 4px 10px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line);
-      flex-shrink: 0;
-    }
-
-    .info-bar-item strong {
-      font-weight: 800;
-      color: var(--accent2);
-    }
-
-    .info-bar-item.qr-item {
-      border-color: var(--accent2);
-      background: rgba(0, 212, 255, 0.1);
-      color: var(--accent2);
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .info-bar-item.qr-item:hover {
-      background: rgba(0, 212, 255, 0.2);
-    }
-
     /* ANIMATIONS */
     @keyframes scrollHorizontal {
       0% {
@@ -2756,25 +2856,6 @@
       </div>
     </div>
 
-    <!-- NOUVELLE SECTION TEXTE DYNAMIQUE -->
-    <div class="dynamic-text-section">
-      <div class="dynamic-text-content">
-        <div class="dynamic-text-label">📢 ANNONCE SPÉCIALE</div>
-        <textarea class="dynamic-text-editable" id="dynamicText" 
-                  placeholder="Cette semaine chez MAXI JDC MARKET: 'LE CIUFFI CHIEN STRIP POLLO 200GR à 6 dt au lieu de 8.50 dt. Il y a 25% de rabais sur les produits 10 CAPSULES GOLDEN COFFEE EXTREME et CHIPS LAYS SEL 80GR. Achetez maintenant!'">
-Cette semaine chez MAXI JDC MARKET: 'LE CIUFFI CHIEN STRIP POLLO 200GR à 6 dt au lieu de 8.50 dt. Il y a 25% de rabais sur les produits 10 CAPSULES GOLDEN COFFEE EXTREME et CHIPS LAYS SEL 80GR. Achetez maintenant!
-        </textarea>
-        <div class="dynamic-text-controls">
-          <button class="dynamic-text-btn clear" id="clearDynamicTextBtn">
-            Effacer
-          </button>
-          <button class="dynamic-text-btn save" id="saveDynamicTextBtn">
-            Enregistrer
-          </button>
-        </div>
-      </div>
-    </div>
-
     <!-- INFO BAR DYNAMIQUE HORIZONTALE -->
     <div class="info-bar">
       <div class="info-bar-container">
@@ -2806,6 +2887,31 @@ Cette semaine chez MAXI JDC MARKET: 'LE CIUFFI CHIEN STRIP POLLO 200GR à 6 dt a
     <!-- CATÉGORIES -->
     <div class="categories-scroll">
       <div class="cat-scroll-container" id="categoriesContainer"></div>
+    </div>
+
+    <!-- SECTION TEXTE DYNAMIQUE POUR PROMOTIONS -->
+    <div class="dynamic-promo-section" id="dynamicPromoSection">
+      <div class="dynamic-promo-header">
+        <div class="dynamic-promo-title">
+          📢 ANNONCE SPÉCIALE
+          <span class="dynamic-promo-badge">LIVE</span>
+        </div>
+      </div>
+      
+      <div class="dynamic-promo-content">
+        <p class="dynamic-promo-text" id="dynamicPromoText">
+          Cette semaine chez MAXI JDC MARKET: 'LE CIUFFI CHIEN STRIP POLLO 200GR à 6 dt au lieu de 8.50 dt. Il y a 25% de rabais sur les produits 10 CAPSULES GOLDEN COFFEE EXTREME et CHIPS LAYS SEL 80GR. Achetez maintenant!
+        </p>
+      </div>
+      
+      <div class="dynamic-promo-controls">
+        <button class="dynamic-promo-btn clear" id="clearDynamicTextBtn">
+          Effacer
+        </button>
+        <button class="dynamic-promo-btn edit" id="editDynamicTextBtn">
+          Modifier
+        </button>
+      </div>
     </div>
 
     <!-- CONTENU PRINCIPAL -->
@@ -3144,6 +3250,31 @@ Cette semaine chez MAXI JDC MARKET: 'LE CIUFFI CHIEN STRIP POLLO 200GR à 6 dt a
     </div>
   </div>
 
+  <!-- MODAL ÉDITION TEXTE DYNAMIQUE -->
+  <div class="edit-text-modal-overlay" id="editTextModal">
+    <div class="edit-text-modal">
+      <div class="edit-text-header">
+        <h3>📝 Éditer l'annonce spéciale</h3>
+      </div>
+      
+      <div class="edit-text-body">
+        <textarea class="edit-text-area" id="editTextArea" placeholder="Saisissez votre texte d'annonce spéciale ici..."></textarea>
+        <div class="edit-text-instructions">
+          <p><strong>💡 Conseils :</strong> Utilisez ce texte pour promouvoir vos meilleures offres, nouvelles arrivées ou événements spéciaux. Ce texte s'affichera uniquement dans la catégorie PROMOTIONS.</p>
+        </div>
+      </div>
+      
+      <div class="edit-text-footer">
+        <button class="form-btn" id="cancelEditTextBtn">
+          Annuler
+        </button>
+        <button class="form-btn primary" id="saveEditTextBtn">
+          💾 Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL LOCALISATION MAP -->
   <div class="map-modal-overlay" id="mapModal">
     <div class="map-modal">
@@ -3298,27 +3429,48 @@ function loadDynamicText() {
   const savedText = localStorage.getItem(CONFIG.dynamicTextKey);
   if (savedText) {
     state.dynamicText = savedText;
-    $('dynamicText').value = savedText;
+    $('dynamicPromoText').textContent = savedText;
   } else {
     // Texte par défaut
     const defaultText = "Cette semaine chez MAXI JDC MARKET: 'LE CIUFFI CHIEN STRIP POLLO 200GR à 6 dt au lieu de 8.50 dt. Il y a 25% de rabais sur les produits 10 CAPSULES GOLDEN COFFEE EXTREME et CHIPS LAYS SEL 80GR. Achetez maintenant!";
     state.dynamicText = defaultText;
-    $('dynamicText').value = defaultText;
-    saveDynamicText();
+    $('dynamicPromoText').textContent = defaultText;
+    localStorage.setItem(CONFIG.dynamicTextKey, defaultText);
+  }
+  
+  // Afficher/masquer la section selon la catégorie active
+  updateDynamicTextVisibility();
+}
+
+function updateDynamicTextVisibility() {
+  const promoSection = $('dynamicPromoSection');
+  if (state.activeCategory === 'promotions' && state.dynamicText && state.dynamicText.trim()) {
+    promoSection.classList.add('visible');
+  } else {
+    promoSection.classList.remove('visible');
   }
 }
 
+function openEditTextModal() {
+  $('editTextArea').value = state.dynamicText;
+  $('editTextModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeEditTextModal() {
+  $('editTextModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 function saveDynamicText() {
-  const text = $('dynamicText').value.trim();
+  const text = $('editTextArea').value.trim();
   if (text) {
     state.dynamicText = text;
+    $('dynamicPromoText').textContent = text;
     localStorage.setItem(CONFIG.dynamicTextKey, text);
+    closeEditTextModal();
     showToast('✅ Texte enregistré avec succès !');
-    
-    // Mettre à jour l'affichage si on est dans la catégorie promotions
-    if (state.activeCategory === 'promotions') {
-      updateCategoriesUI();
-    }
+    updateDynamicTextVisibility();
   } else {
     showToast('⚠️ Le texte ne peut pas être vide', 'warning');
   }
@@ -3326,14 +3478,11 @@ function saveDynamicText() {
 
 function clearDynamicText() {
   if (confirm('Voulez-vous vraiment effacer le texte dynamique ?')) {
-    $('dynamicText').value = '';
     state.dynamicText = '';
+    $('dynamicPromoText').textContent = '';
     localStorage.removeItem(CONFIG.dynamicTextKey);
     showToast('Texte effacé', 'warning');
-    
-    if (state.activeCategory === 'promotions') {
-      updateCategoriesUI();
-    }
+    updateDynamicTextVisibility();
   }
 }
 
@@ -4065,6 +4214,7 @@ function renderCategories() {
     state.currentPage = 1;
     renderProducts();
     updateCategoriesUI();
+    updateDynamicTextVisibility();
   };
   container.appendChild(allButton);
   
@@ -4084,6 +4234,7 @@ function renderCategories() {
       state.currentPage = 1;
       renderProducts();
       updateCategoriesUI();
+      updateDynamicTextVisibility();
     };
     container.appendChild(button);
   });
@@ -4117,7 +4268,7 @@ function updateCategoriesUI() {
             : state.dynamicText;
           $('activeCategoryMeta').innerHTML = `<span style="color:var(--warning);">📢 ${shortText}</span>`;
         } else {
-          $('activeCategoryMeta').textContent = `${promotions.length} promotions disponibles`;
+          $('activeCategoryMeta').textContent = `${category.key}.csv`;
         }
       } else {
         $('activeCategoryMeta').textContent = `${category.key}.csv`;
@@ -4792,11 +4943,14 @@ function init() {
     state.currentPage = 1;
     renderProducts();
     updateCategoriesUI();
+    updateDynamicTextVisibility();
   };
   
   // Texte dynamique
-  $('saveDynamicTextBtn').onclick = saveDynamicText;
+  $('editDynamicTextBtn').onclick = openEditTextModal;
   $('clearDynamicTextBtn').onclick = clearDynamicText;
+  $('saveEditTextBtn').onclick = saveDynamicText;
+  $('cancelEditTextBtn').onclick = closeEditTextModal;
   
   // QR Code
   $('qrInfoBtn').onclick = openQrModal;
@@ -4810,6 +4964,7 @@ function init() {
     state.currentPage = 1;
     renderProducts();
     updateCategoriesUI();
+    updateDynamicTextVisibility();
     closeDrawer();
   };
   
@@ -4997,6 +5152,8 @@ function init() {
         closeProductModal();
       } else if ($('qrModal').classList.contains('open')) {
         closeQrModal();
+      } else if ($('editTextModal').classList.contains('open')) {
+        closeEditTextModal();
       } else if ($('mapModal').classList.contains('open')) {
         closeMapModal();
       } else if ($('orderModal').classList.contains('open')) {
