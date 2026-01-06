@@ -387,6 +387,37 @@
       color: var(--accent);
     }
 
+    /* Style spécial pour le bouton PROMOTIONS */
+    .cat-btn.promo {
+      background: linear-gradient(135deg, #ff6b6b, #ffa726);
+      color: #000;
+      border-color: #ffa726;
+      font-weight: 900;
+      animation: pulse 2s infinite;
+    }
+
+    .cat-btn.promo.active {
+      background: linear-gradient(135deg, #ff4444, #ff9900);
+      color: #000;
+      border-color: #ff9900;
+      box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+    }
+
+    /* Note dynamique pour promotions */
+    .dynamic-note {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--danger);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 107, 107, 0.1);
+      padding: 3px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 107, 107, 0.3);
+    }
+
     .cat-count {
       font-size: 10px;
       padding: 2px 6px;
@@ -2656,11 +2687,11 @@
       <div class="promo-content">
         <div class="promo-icon">🔥</div>
         <div class="promo-text">
-          <h4 id="promoTitle">PROMOTIONS EN COURS</h4>
-          <p id="promoDesc">Découvrez nos offres spéciales</p>
+          <h4 id="promoTitle">PROMOTIONS DE LA SEMAINE</h4>
+          <p id="promoDesc">Découvrez nos offres spéciales chez MAXI JDC MARKET</p>
         </div>
       </div>
-      <button class="promo-btn" id="viewPromosBtn">VOIR</button>
+      <button class="promo-btn" id="viewPromosBtn">VOIR PROMOTIONS</button>
     </div>
 
     <!-- CATÉGORIES -->
@@ -3072,8 +3103,9 @@ const CONFIG = {
   historyRetentionYears: 2
 };
 
-// Catégories avec noms complets
+// Catégories avec noms complets - PROMOTIONS EN PREMIER
 const CATEGORIES = [
+  { key:"promotions", label:"🔥 PROMOTIONS", file:"data/promotions.csv", isPromo: true },
   { key:"animaux_compagnie", label:"🐶 Animaux de Compagnie", file:"data/animaux_compagnie.csv" },
   { key:"bebe_maman", label:"👶 Bébé & Maman", file:"data/bebe_maman.csv" },
   { key:"boulangerie_patisserie", label:"🥖 Boulangerie & Pâtisserie", file:"data/boulangerie_patisserie.csv" },
@@ -3094,8 +3126,7 @@ const CATEGORIES = [
   { key:"lait_oeufs_produits_frais", label:"🥛 Lait & Œufs Frais", file:"data/lait_oeufs_produits_frais.csv" },
   { key:"pates", label:"🍝 Pâtes & Riz", file:"data/pates.csv" },
   { key:"produits_surgeles", label:"🧊 Produits Surgelés", file:"data/produits_surgeles.csv" },
-  { key:"vipa_selections", label:"⭐ Sélections VIP", file:"data/vipa_selections.csv" },
-  { key:"promotions", label:"🔥 PROMOTIONS", file:"data/promotions.csv" }
+  { key:"vipa_selections", label:"⭐ Sélections VIP", file:"data/vipa_selections.csv" }
 ];
 
 // ===================== ÉTAT GLOBAL =====================
@@ -3116,7 +3147,8 @@ const state = {
   orderHistory: [],
   promotions: [],
   tempMapCoords: null,
-  globalStock: {} // Stock global partagé entre tous les utilisateurs
+  globalStock: {}, // Stock global partagé entre tous les utilisateurs
+  promoNote: "🔥 PROMOTIONS DE LA SEMAINE CHEZ MAXI JDC MARKET"
 };
 
 // ===================== UTILITAIRES =====================
@@ -3507,7 +3539,7 @@ function updateCartUI() {
   
   $('cartSubtotal').textContent = formatPrice(subtotal);
   
-  // CALCUL CORRIGÉ POUR LA GRATUITÉ
+  // CALCUL CORRIGÉ POUR LA GRATUITÉ - AVEC CORRECTION
   let shippingFee = CONFIG.shippingFee;
   let shippingText = formatPrice(shippingFee);
   
@@ -3547,11 +3579,20 @@ function updateCartUI() {
     shippingRule.className = 'rule ok';
     shippingRule.innerHTML = '<span class="rule-icon">🎁</span><span>Livraison gratuite !</span>';
     freeShippingRule.className = 'rule ok';
+    freeShippingRule.innerHTML = '<span class="rule-icon">✅</span><span>Livraison gratuite atteinte</span>';
   } else {
     shippingRule.className = 'rule';
     freeShippingRule.className = 'rule warning';
     if (subtotal > 0) {
-      freeShippingRule.innerHTML = `<span class="rule-icon">💰</span><span>Il manque ${formatPrice(CONFIG.freeShipping - subtotal)} pour la gratuité</span>`;
+      const remaining = CONFIG.freeShipping - subtotal;
+      // CORRECTION ICI : Si le montant est déjà supérieur à 100 dt, afficher 0 dt manquant
+      if (remaining <= 0) {
+        freeShippingRule.innerHTML = '<span class="rule-icon">✅</span><span>Livraison gratuite atteinte</span>';
+      } else {
+        freeShippingRule.innerHTML = `<span class="rule-icon">💰</span><span>Il manque ${formatPrice(remaining)} pour la gratuité</span>`;
+      }
+    } else {
+      freeShippingRule.innerHTML = `<span class="rule-icon">💰</span><span>Livraison gratuite à ${formatPrice(CONFIG.freeShipping)}</span>`;
     }
   }
   
@@ -3708,25 +3749,34 @@ async function loadAllProducts() {
   // Charger le stock global
   await loadGlobalStock();
   
+  // Charger les PROMOTIONS en premier
+  const promotions = await loadCategoryData('promotions');
+  if (promotions.length > 0) {
+    state.products.set('promotions', promotions);
+    state.promotions = promotions;
+    
+    // Mettre à jour la note dynamique
+    state.promoNote = `🔥 ${promotions.length} PROMOTIONS DE LA SEMAINE CHEZ MAXI JDC MARKET`;
+    
+    // Afficher la bannière des promotions
+    showPromoBanner(promotions);
+    
+    // Définir les promotions comme catégorie active par défaut
+    state.activeCategory = 'promotions';
+    state.showAllCategories = false;
+  }
+  
+  // Charger la catégorie café par défaut
   const defaultProducts = await loadCategoryData('cafe');
   state.products.set('cafe', defaultProducts);
   
   renderCategories();
   renderProducts();
   
-  // Charger les promotions
-  setTimeout(async () => {
-    const promotions = await loadCategoryData('promotions');
-    if (promotions.length > 0) {
-      state.promotions = promotions;
-      showPromoBanner(promotions);
-    }
-  }, 500);
-  
   // Charger les autres catégories
   setTimeout(async () => {
     for (const category of CATEGORIES) {
-      if (category.key !== 'cafe' && category.key !== 'promotions') {
+      if (category.key !== 'promotions' && category.key !== 'cafe') {
         const products = await loadCategoryData(category.key);
         state.products.set(category.key, products);
       }
@@ -3746,8 +3796,8 @@ function showPromoBanner(promotions) {
   }
   
   const promo = promotions[Math.floor(Math.random() * promotions.length)];
-  $('promoTitle').textContent = promo.name;
-  $('promoDesc').textContent = `À seulement ${formatPrice(promo.price)}${promo.oldPrice ? ` au lieu de ${formatPrice(promo.oldPrice)}` : ''}`;
+  $('promoTitle').textContent = "🔥 PROMOTIONS DE LA SEMAINE";
+  $('promoDesc').textContent = `Découvrez ${promotions.length} offres spéciales chez MAXI JDC MARKET`;
   $('promoBanner').style.display = 'flex';
 }
 
@@ -3772,10 +3822,14 @@ function renderCategories() {
   CATEGORIES.forEach(category => {
     const products = state.products.get(category.key) || [];
     const button = document.createElement('button');
-    button.className = `cat-btn ${
+    button.className = `cat-btn ${category.isPromo ? 'promo' : ''} ${
       !state.showAllCategories && state.activeCategory === category.key ? 'active' : ''
     }`;
-    button.innerHTML = `${category.label} <span class="cat-count">${products.length}</span>`;
+    
+    // Ajouter la note dynamique pour les promotions
+    let buttonContent = `${category.label} <span class="cat-count">${products.length}</span>`;
+    
+    button.innerHTML = buttonContent;
     button.onclick = () => {
       state.showAllCategories = false;
       state.activeCategory = category.key;
@@ -3805,7 +3859,13 @@ function updateCategoriesUI() {
         buttons[index].classList.add('active');
       }
       $('activeCategoryLabel').textContent = category.label;
-      $('activeCategoryMeta').textContent = `${category.key}.csv`;
+      
+      // Afficher la note spéciale pour les promotions
+      if (category.isPromo) {
+        $('activeCategoryMeta').innerHTML = `${state.promoNote}`;
+      } else {
+        $('activeCategoryMeta').textContent = `${category.key}.csv`;
+      }
     }
   }
 }
@@ -4760,4 +4820,3 @@ document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
-
