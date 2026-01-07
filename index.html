@@ -537,7 +537,7 @@
     }
 
     .dynamic-promo-section.expanded {
-      max-height: 300px;
+      max-height: 400px;
     }
 
     .dynamic-promo-section.visible {
@@ -577,7 +577,7 @@
     .dynamic-promo-content {
       padding: 10px 15px;
       background: rgba(0, 0, 0, 0.2);
-      max-height: 120px;
+      max-height: 250px;
       overflow-y: auto;
     }
 
@@ -2938,6 +2938,34 @@
       animation: pulse 0.5s ease;
     }
 
+    /* BOUTON ADMIN SECRET */
+    .secret-admin-btn {
+      position: fixed;
+      bottom: 150px;
+      right: 15px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255,167,38,0.2);
+      border: 2px solid var(--warning);
+      color: var(--warning);
+      cursor: pointer;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      box-shadow: 0 4px 15px rgba(255, 167, 38, 0.3);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .secret-admin-btn:hover {
+      background: rgba(255,167,38,0.3);
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(255, 167, 38, 0.4);
+    }
+
     /* RESPONSIVE ADJUSTMENTS */
     @media (max-width: 768px) {
       .drawer {
@@ -3077,6 +3105,14 @@
       
       .admin-controls-grid {
         grid-template-columns: repeat(1, 1fr);
+      }
+      
+      .secret-admin-btn {
+        bottom: 130px;
+        right: 10px;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
       }
     }
 
@@ -3263,6 +3299,11 @@
     <!-- BOUTON QR CODE DIRECT -->
     <button class="qr-direct-btn" id="qrDirectBtn" title="Scanner QR Code">
       📱
+    </button>
+
+    <!-- BOUTON ADMIN SECRET -->
+    <button class="secret-admin-btn" id="secretAdminBtn" title="Activer/Désactiver mode admin">
+      🔓
     </button>
   </div>
 
@@ -3785,7 +3826,14 @@ function checkAdminStatus() {
 }
 
 function toggleAdminMode() {
-  if (!state.isAdmin) {
+  if (state.isAdmin) {
+    // Si déjà admin, désactiver
+    state.isAdmin = false;
+    localStorage.removeItem(CONFIG.adminPasswordKey);
+    updateAdminUI();
+    showToast('🔐 Mode administrateur désactivé', 'warning');
+  } else {
+    // Sinon, demander le mot de passe
     const password = prompt("Entrez le mot de passe administrateur:");
     if (password === state.adminPassword) {
       state.isAdmin = true;
@@ -3795,11 +3843,6 @@ function toggleAdminMode() {
     } else {
       showToast('❌ Mot de passe incorrect', 'error');
     }
-  } else {
-    state.isAdmin = false;
-    localStorage.removeItem(CONFIG.adminPasswordKey);
-    updateAdminUI();
-    showToast('🔐 Mode administrateur désactivé', 'warning');
   }
 }
 
@@ -3864,12 +3907,26 @@ function togglePromoText() {
 function hidePromoSection() {
   state.showPromoSection = false;
   updateDynamicTextVisibility();
+  
+  // Réinitialiser l'état du bouton "Voir plus"
+  const promoSection = $('dynamicPromoSection');
+  const toggleBtn = $('togglePromoTextBtn');
+  promoSection.classList.remove('expanded');
+  toggleBtn.innerHTML = '🔽 Voir plus';
+  
   showToast('📢 Section promotions masquée', 'warning');
 }
 
 function showPromoSection() {
   state.showPromoSection = true;
   updateDynamicTextVisibility();
+  
+  // Réinitialiser l'état du bouton "Voir plus"
+  const promoSection = $('dynamicPromoSection');
+  const toggleBtn = $('togglePromoTextBtn');
+  promoSection.classList.remove('expanded');
+  toggleBtn.innerHTML = '🔽 Voir plus';
+  
   showToast('📢 Section promotions affichée', 'success');
 }
 
@@ -5474,6 +5531,8 @@ function init() {
   $('drawerOverlay').onclick = closeDrawer;
   
   // Admin
+  $('secretAdminBtn').onclick = toggleAdminMode;
+  
   $('adminPromoBtn').onclick = () => {
     if (!state.isAdmin) {
       toggleAdminMode();
