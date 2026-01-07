@@ -232,11 +232,11 @@
       cursor: pointer;
       font-weight: 700;
       font-size: 12px;
-      transition: all 0.2s ease;
-      white-space: nowrap;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: all 0.2s ease;
+      white-space: nowrap;
     }
 
     .search-btn:hover {
@@ -862,7 +862,7 @@
       background: rgba(255,107,107,.08);
     }
 
-    /* MODAL ARTICLE - MODIFIÉ POUR ARTICLES SIMILAIRES */
+    /* MODAL ARTICLE */
     .product-modal-overlay {
       position: fixed;
       inset: 0;
@@ -1290,29 +1290,7 @@
       border-color: var(--accent2);
     }
 
-    .modal-stock-btn {
-      height: 50px;
-      padding: 0 20px;
-      border-radius: 12px;
-      border: 2px solid var(--line);
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
-
-    .modal-stock-btn:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: var(--accent2);
-    }
-
-    /* SECTION ARTICLES SIMILAIRES - NOUVEAU */
+    /* SECTION ARTICLES SIMILAIRES */
     .similar-products-section {
       margin-top: 15px;
       padding-top: 15px;
@@ -3233,7 +3211,7 @@
           <button class="image-nav-btn next" id="modalNextImageBtn">›</button>
         </div>
         
-        <!-- BARRE DE NAVIGATION PRODUITS - CORRIGÉE POUR ÉVITER LE GLISSEMENT -->
+        <!-- BARRE DE NAVIGATION PRODUITS -->
         <div class="image-nav-bar" id="imageNavBar"></div>
         
         <!-- INFOS PRODUIT -->
@@ -3387,7 +3365,7 @@ const CONFIG = {
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v19',
+  localStorageKey: 'maxi_jdc_market_app_v20',
   imagesBasePath: 'maxi-jdc-market/images/products/',
   historyRetentionYears: 2,
   adminPasswordKey: 'maxi_jdc_admin_password'
@@ -3424,7 +3402,6 @@ const state = {
   user: null,
   products: new Map(),
   cart: {},
-  stock: {},
   searchQuery: '',
   activeCategory: 'promotions',
   showAllCategories: false,
@@ -3432,17 +3409,11 @@ const state = {
   currentModalProduct: null,
   quantityPicks: {},
   filteredProducts: [],
-  currentImageIndex: 0,
-  productImages: {},
   orderHistory: [],
   promotions: [],
   tempMapCoords: null,
-  globalStock: {},
-  productGroups: {},
   isAdmin: false,
-  adminPassword: "admin123",
-  promotionItems: [],
-  stockData: new Map() // Nouveau: stock par code produit
+  adminPassword: "admin123"
 };
 
 // ===================== UTILITAIRES =====================
@@ -3505,100 +3476,13 @@ function updateAdminUI() {
   adminSection.classList.toggle('visible', state.isAdmin);
 }
 
-// ===================== GESTION DU STOCK =====================
-async function loadStockData() {
-  try {
-    // Charger le stock depuis le fichier PROMOTIONS.csv
-    const response = await fetch('data/PROMOTIONS.csv');
-    if (!response.ok) {
-      console.warn('Fichier PROMOTIONS.csv non trouvé');
-      return;
-    }
-    
-    const text = await response.text();
-    const lines = text.split('\n').filter(line => line.trim());
-    
-    if (lines.length === 0) return;
-    
-    const firstLine = lines[0];
-    const separator = firstLine.includes('\t') ? '\t' : ';';
-    
-    state.stockData.clear();
-    
-    lines.slice(1).forEach(line => {
-      const parts = line.split(separator).map(field => field.trim());
-      if (parts.length < 4) return;
-      
-      const code = parts[0];
-      const name = parts[1];
-      const priceStr = parts[2];
-      const stockStr = parts[3];
-      
-      const stock = parseInt(stockStr) || 0;
-      
-      if (code && name) {
-        state.stockData.set(code, {
-          code,
-          name,
-          stock,
-          inStock: stock > 0
-        });
-      }
-    });
-    
-    console.log('Stock chargé:', state.stockData.size, 'produits');
-  } catch (error) {
-    console.error('Erreur chargement stock:', error);
-    state.stockData = new Map();
-  }
-}
-
-function isInStock(productCode) {
-  const stockInfo = state.stockData.get(productCode);
-  if (stockInfo) {
-    return stockInfo.inStock;
-  }
-  
-  // Si pas trouvé dans stockData, vérifier dans globalStock pour rétrocompatibilité
-  if (state.globalStock[productCode]) {
-    return state.globalStock[productCode].inStock;
-  }
-  
-  return true; // Par défaut en stock
-}
-
-function getStockQuantity(productCode) {
-  const stockInfo = state.stockData.get(productCode);
-  if (stockInfo) {
-    return stockInfo.stock;
-  }
-  
-  // Si pas trouvé dans stockData, vérifier dans globalStock
-  if (state.globalStock[productCode]) {
-    return state.globalStock[productCode].quantity;
-  }
-  
-  return 999;
-}
-
-function updateStock(productCode, quantity) {
-  const stockInfo = state.stockData.get(productCode);
-  if (stockInfo) {
-    stockInfo.stock = Math.max(0, stockInfo.stock - quantity);
-    stockInfo.inStock = stockInfo.stock > 0;
-  } else if (state.globalStock[productCode]) {
-    state.globalStock[productCode].quantity = Math.max(0, state.globalStock[productCode].quantity - quantity);
-    state.globalStock[productCode].inStock = state.globalStock[productCode].quantity > 0;
-  }
-}
-
 // ===================== GESTION DU STOCKAGE LOCAL =====================
 function saveState() {
   const data = {
     user: state.user,
     cart: state.cart,
     orderHistory: state.orderHistory,
-    version: '19.0'
+    version: '20.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -3606,7 +3490,7 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '19.0') {
+    if (data && data.version === '20.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.orderHistory = data.orderHistory || [];
@@ -3957,19 +3841,6 @@ function updateCartUI() {
 function addToCart(productId, product, quantity = 1) {
   if (!product || quantity <= 0) return;
   
-  if (!isInStock(product.code)) {
-    showToast('❌ Ce produit n\'est plus en stock', 'error');
-    return;
-  }
-  
-  const stockQuantity = getStockQuantity(product.code);
-  const currentQuantity = state.cart[productId] ? state.cart[productId].quantity : 0;
-  
-  if (currentQuantity + quantity > stockQuantity) {
-    showToast(`❌ Stock insuffisant. Il reste ${stockQuantity} unité(s)`, 'error');
-    return;
-  }
-  
   if (state.cart[productId]) {
     state.cart[productId].quantity += quantity;
   } else {
@@ -3980,8 +3851,6 @@ function addToCart(productId, product, quantity = 1) {
   }
   
   state.quantityPicks[productId] = 0;
-  
-  updateStock(product.code, quantity);
   
   updateCartUI();
   
@@ -3998,9 +3867,6 @@ function removeFromCart(productId, quantity = 1) {
   
   state.cart[productId].quantity -= quantity;
   
-  const product = state.cart[productId];
-  updateStock(product.code, -quantity);
-  
   if (state.cart[productId].quantity <= 0) {
     delete state.cart[productId];
   }
@@ -4012,10 +3878,6 @@ function clearCart() {
   if (Object.keys(state.cart).length === 0) return;
   
   if (confirm('Voulez-vous vraiment vider tout votre panier ?')) {
-    Object.values(state.cart).forEach(item => {
-      updateStock(item.code, -item.quantity);
-    });
-    
     state.cart = {};
     updateCartUI();
     showToast('Panier vidé', 'warning');
@@ -4051,7 +3913,6 @@ async function loadCategoryData(categoryKey) {
       const code = parts[0];
       const name = parts[1];
       let priceStr = parts[2];
-      let discountInfo = parts.length > 3 ? parts[3] : null;
       
       priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
       const price = parseFloat(priceStr);
@@ -4059,26 +3920,6 @@ async function loadCategoryData(categoryKey) {
       if (!validatePrice(price)) {
         console.warn(`Prix invalide pour ${name}: ${priceStr}`);
         return null;
-      }
-      
-      let oldPrice = null;
-      let isPromotion = false;
-      
-      if (discountInfo) {
-        if (discountInfo.includes('%')) {
-          const percent = parseFloat(discountInfo.replace('%', '').trim());
-          if (!isNaN(percent) && percent > 0) {
-            oldPrice = price / (1 - percent / 100);
-            oldPrice = Math.round(oldPrice * 100) / 100;
-            isPromotion = true;
-          }
-        } else if (discountInfo.includes('dt')) {
-          const originalPriceStr = discountInfo.replace('dt', '').replace(',', '.').replace(/[^\d.]/g, '');
-          oldPrice = parseFloat(originalPriceStr);
-          if (!isNaN(oldPrice) && oldPrice > price) {
-            isPromotion = true;
-          }
-        }
       }
       
       if (!code || !name) return null;
@@ -4089,21 +3930,12 @@ async function loadCategoryData(categoryKey) {
           code,
           name,
           price: price,
-          oldPrice: oldPrice,
           category: category.label,
           categoryKey: category.key,
-          isPromotion: category.key === 'promotions' || isPromotion
+          isPromotion: false
         };
         
         productsMap.set(productKey, product);
-        
-        if (isPromotion && category.key !== 'promotions') {
-          state.promotionItems.push({
-            ...product,
-            originalCategory: category.label,
-            discountInfo: discountInfo
-          });
-        }
       }
     });
     
@@ -4114,10 +3946,12 @@ async function loadCategoryData(categoryKey) {
   }
 }
 
-// NOUVELLE FONCTION: Charger les promotions avec stock
-async function loadPromotionsWithStock() {
+async function loadPromotionsData() {
   try {
-    const response = await fetch('data/PROMOTIONS.csv');
+    const category = CATEGORIES.find(c => c.key === 'promotions');
+    if (!category) return [];
+    
+    const response = await fetch(category.file);
     if (!response.ok) {
       console.warn('Fichier PROMOTIONS.csv non trouvé');
       return [];
@@ -4125,57 +3959,34 @@ async function loadPromotionsWithStock() {
     
     const text = await response.text();
     const lines = text.split('\n').filter(line => line.trim());
-    
     if (lines.length === 0) return [];
     
-    const firstLine = lines[0];
-    const separator = firstLine.includes('\t') ? '\t' : ';';
-    
+    const separator = lines[0].includes('\t') ? '\t' : ';';
     const promotions = [];
     
     lines.slice(1).forEach(line => {
       const parts = line.split(separator).map(field => field.trim());
-      if (parts.length < 4) return null;
+      // Format attendu: CODE;NOM;PRIX_PROMO;STOCK
+      if (parts.length < 3) return;
       
       const code = parts[0];
       const name = parts[1];
       let priceStr = parts[2];
-      const stockStr = parts[3];
+      const stock = parts.length > 3 ? parseInt(parts[3]) || 0 : 0;
       
       priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
       const price = parseFloat(priceStr);
-      const stock = parseInt(stockStr) || 0;
       
-      if (!validatePrice(price) || !code || !name) return null;
-      
-      // Chercher l'ancien prix dans les autres catégories
-      let oldPrice = null;
-      let foundInOtherCategory = false;
-      let originalCategory = '';
-      
-      for (const [catKey, products] of state.products.entries()) {
-        if (catKey === 'promotions') continue;
-        
-        const originalProduct = products.find(p => p.code === code);
-        if (originalProduct && originalProduct.price !== price) {
-          oldPrice = originalProduct.price;
-          originalCategory = CATEGORIES.find(c => c.key === catKey)?.label || catKey;
-          foundInOtherCategory = true;
-          break;
-        }
-      }
+      if (!validatePrice(price) || !code || !name) return;
       
       promotions.push({
         code,
         name,
         price: price,
-        oldPrice: oldPrice,
         stock: stock,
         category: '🔥 PROMOTIONS',
         categoryKey: 'promotions',
-        isPromotion: true,
-        originalCategory: foundInOtherCategory ? originalCategory : '',
-        foundInOtherCategory: foundInOtherCategory
+        isPromotion: true
       });
     });
     
@@ -4186,14 +3997,34 @@ async function loadPromotionsWithStock() {
   }
 }
 
+function applyPromotionsToCategories(promotions) {
+  promotions.forEach(promoProduct => {
+    // Chercher ce produit dans toutes les autres catégories
+    for (const [catKey, products] of state.products.entries()) {
+      if (catKey === 'promotions') continue;
+      
+      const originalProductIndex = products.findIndex(p => 
+        p.code === promoProduct.code
+      );
+      
+      if (originalProductIndex !== -1) {
+        // Produit trouvé ! Mettre à jour avec les infos de promotion
+        const originalProduct = products[originalProductIndex];
+        products[originalProductIndex] = {
+          ...originalProduct,
+          oldPrice: originalProduct.price, // Sauvegarder l'ancien prix
+          price: promoProduct.price,       // Appliquer le prix promo
+          isPromotion: true,               // Marquer comme promotion
+          promotionStock: promoProduct.stock // Stock spécifique à la promo
+        };
+        console.log(`Promo appliquée: ${promoProduct.code} dans ${catKey}`);
+      }
+    }
+  });
+}
+
 async function loadAllProducts() {
   state.products.clear();
-  state.promotionItems = [];
-  
-  // Charger le stock
-  await loadStockData();
-  
-  checkAdminStatus();
   
   // Charger toutes les catégories normales d'abord
   const categoryPromises = CATEGORIES.map(async category => {
@@ -4207,34 +4038,15 @@ async function loadAllProducts() {
   
   await Promise.all(categoryPromises);
   
-  // Maintenant charger les promotions avec stock
-  const promotions = await loadPromotionsWithStock();
+  // Maintenant charger les promotions
+  const promotions = await loadPromotionsData();
   
   if (promotions.length > 0) {
     state.products.set('promotions', promotions);
     state.promotions = promotions;
     
-    // Mettre à jour les produits dans les autres catégories avec les prix promotionnels
-    promotions.forEach(promo => {
-      if (promo.foundInOtherCategory) {
-        // Trouver et mettre à jour le produit dans sa catégorie d'origine
-        for (const [catKey, products] of state.products.entries()) {
-          if (catKey !== 'promotions') {
-            const index = products.findIndex(p => p.code === promo.code);
-            if (index !== -1) {
-              // Mettre à jour le produit avec le prix promotionnel
-              products[index] = {
-                ...products[index],
-                oldPrice: promo.oldPrice,
-                isPromotion: true,
-                promotionPrice: promo.price
-              };
-              break;
-            }
-          }
-        }
-      }
-    });
+    // Appliquer les promotions aux autres catégories
+    applyPromotionsToCategories(promotions);
     
     showPromoBanner(promotions);
   } else {
@@ -4245,8 +4057,6 @@ async function loadAllProducts() {
   
   renderCategories();
   renderProducts();
-  
-  initializeProductGroups();
   
   showToast('✅ Tous les produits sont chargés');
 }
@@ -4417,8 +4227,8 @@ function renderProducts() {
   
   productsToShow.forEach(product => {
     const productId = generateProductId(product);
-    const inStock = isInStock(product.code);
-    const stockQuantity = getStockQuantity(product.code);
+    const stock = product.promotionStock || 0;
+    const inStock = stock > 0;
     
     const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
     
@@ -4426,9 +4236,8 @@ function renderProducts() {
     card.className = `product-card ${product.isPromotion ? 'promo-card' : ''}`;
     
     let imagePromoBadge = '';
-    if (product.isPromotion && product.oldPrice) {
-      const discountPercent = Math.round((1 - product.price / product.oldPrice) * 100);
-      imagePromoBadge = `<div class="image-promo-badge">-${discountPercent}%</div>`;
+    if (product.isPromotion) {
+      imagePromoBadge = '<div class="image-promo-badge">PROMO</div>';
     }
     
     const oldPriceDisplay = product.isPromotion && product.oldPrice 
@@ -4439,9 +4248,8 @@ function renderProducts() {
       <div class="product-image">
         <img src="${imgSrc}" 
              alt="${product.name}"
-             onload="this.style.display='block'; this.parentElement.querySelector('.no-photo').style.display='none';"
-             onerror="this.style.display='none'; this.parentElement.querySelector('.no-photo').style.display='flex';">
-        <div class="no-photo" style="display:none;">${product.code}</div>
+             onload="this.style.display='block';"
+             onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23112340%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%238b949e%22 font-size=%2210%22>${product.code}</text></svg>';">
         ${imagePromoBadge}
       </div>
       
@@ -4458,7 +4266,7 @@ function renderProducts() {
       </div>
       
       <div class="product-stock-tag ${inStock ? 'ok' : 'no'}">
-        ${inStock ? `✓ ${stockQuantity} en stock` : '✗ Rupture'}
+        ${inStock ? `✓ ${stock} en stock` : '✗ Rupture'}
       </div>
     `;
     
@@ -4505,8 +4313,8 @@ function renderSimilarProducts(currentProduct) {
   similarGrid.innerHTML = '';
   
   similarProducts.forEach(product => {
-    const inStock = isInStock(product.code);
-    const stockQuantity = getStockQuantity(product.code);
+    const stock = product.promotionStock || 0;
+    const inStock = stock > 0;
     
     const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
     
@@ -4522,7 +4330,7 @@ function renderSimilarProducts(currentProduct) {
         <div class="similar-product-name">${product.name}</div>
         <div class="similar-product-price">${formatPrice(product.price)}</div>
         <div class="similar-product-stock ${inStock ? '' : 'out'}">
-          ${inStock ? `${stockQuantity} en stock` : 'Rupture'}
+          ${inStock ? `${stock} en stock` : 'Rupture'}
         </div>
       </div>
     `;
@@ -4574,15 +4382,15 @@ function openProductModal(product) {
   state.currentModalProduct = product;
   const productId = generateProductId(product);
   const quantity = state.quantityPicks[productId] || 0;
-  const inStock = isInStock(product.code);
-  const stockQuantity = getStockQuantity(product.code);
+  const stock = product.promotionStock || 0;
+  const inStock = stock > 0;
   
   $('modalProductName').textContent = product.name;
   $('modalProductNameFull').textContent = product.name;
   $('modalProductPrice').textContent = formatPrice(product.price);
   $('modalProductCode').textContent = product.code;
   $('modalProductCategory').textContent = product.category;
-  $('modalProductStock').textContent = inStock ? `✅ ${stockQuantity} en stock` : '❌ Rupture de stock';
+  $('modalProductStock').textContent = inStock ? `✅ ${stock} en stock` : '❌ Rupture de stock';
   $('modalProductStock').style.color = inStock ? 'var(--accent)' : 'var(--danger)';
   $('modalProductQuantity').textContent = quantity;
   
@@ -4679,7 +4487,6 @@ function closeProductModal() {
   $('productModal').classList.remove('open');
   document.body.style.overflow = '';
   state.currentModalProduct = null;
-  state.currentImageIndex = 0;
 }
 
 function updateModalQuantity() {
@@ -4691,7 +4498,8 @@ function updateModalQuantity() {
   $('modalProductQuantity').textContent = quantity;
   
   const addBtn = $('modalAddToCartBtn');
-  const inStock = isInStock(state.currentModalProduct.code);
+  const stock = state.currentModalProduct.promotionStock || 0;
+  const inStock = stock > 0;
   
   addBtn.disabled = !inStock || quantity === 0;
   addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
@@ -5189,16 +4997,7 @@ function init() {
     
     if (action === 'increase') {
       if (state.cart[id]) {
-        const product = state.cart[id];
-        const stockQuantity = getStockQuantity(product.code);
-        
-        if (state.cart[id].quantity + 1 > stockQuantity) {
-          showToast(`❌ Stock insuffisant. Il reste ${stockQuantity} unité(s)`, 'error');
-          return;
-        }
-        
         state.cart[id].quantity++;
-        updateStock(product.code, 1);
         updateCartUI();
       }
     } else if (action === 'decrease') {
@@ -5223,15 +5022,7 @@ function init() {
   $('modalIncreaseBtn').onclick = () => {
     if (!state.currentModalProduct) return;
     const productId = generateProductId(state.currentModalProduct);
-    const stockQuantity = getStockQuantity(state.currentModalProduct.code);
-    const currentQuantity = state.quantityPicks[productId] || 0;
-    
-    if (currentQuantity + 1 > stockQuantity) {
-      showToast(`❌ Stock insuffisant. Il reste ${stockQuantity} unité(s)`, 'error');
-      return;
-    }
-    
-    state.quantityPicks[productId] = currentQuantity + 1;
+    state.quantityPicks[productId] = (state.quantityPicks[productId] || 0) + 1;
     updateModalQuantity();
   };
   
@@ -5312,59 +5103,6 @@ function registerServiceWorker() {
         });
     });
   }
-}
-
-// ===================== GROUPES DE PRODUITS =====================
-function categorizeProductByUsage(product) {
-  const name = product.name.toLowerCase();
-  const category = product.categoryKey.toLowerCase();
-  
-  const groups = {
-    'boissons_froides': ['eau', 'jus', 'soda', 'boisson gazeuse', 'limonade', 'cola', 'fanta', 'sprite', 'orangina'],
-    'boissons_chaudes': ['café', 'thé', 'infusion', 'chocolat chaud', 'cappuccino', 'expresso', 'nescafé'],
-    'snacks_sales': ['chips', 'cacahuètes', 'noix', 'amandes', 'biscuits salés', 'crackers', 'pretzels', 'crunchies'],
-    'snacks_sucres': ['chocolat', 'biscuit', 'gâteau', 'bonbon', 'sucre', 'chewing-gum', 'caramel'],
-    'produits_laitiers': ['lait', 'yaourt', 'fromage', 'beurre', 'crème', 'yogourt', 'petit suisse'],
-    'viandes_charcuteries': ['jambon', 'saucisson', 'pâté', 'viande', 'poulet', 'bœuf', 'charcuterie'],
-    'fruits_legumes': ['pomme', 'banane', 'orange', 'fraise', 'salade', 'tomate', 'carotte', 'oignon'],
-    'conserves': ['conserve', 'boîte', 'haricots', 'maïs', 'thon', 'sardine', 'pâté'],
-    'pates_riz': ['pâtes', 'spaghetti', 'riz', 'couscous', 'semoule', 'nouilles'],
-    'hygiene_corporelle': ['savon', 'shampooing', 'dentifrice', 'déodorant', 'gel douche', 'rasoir'],
-    'produits_menage': ['lessive', 'détergent', 'nettoyant', 'javel', 'éponge', 'sac poubelle'],
-    'produits_bebe': ['couche', 'lait bébé', 'biberon', 'tétine', 'jouet bébé'],
-    'animaux': ['croquette', 'chien', 'chat', 'nourriture animale', 'litière', 'jouet animal', 'ciuffi']
-  };
-  
-  for (const [group, keywords] of Object.entries(groups)) {
-    for (const keyword of keywords) {
-      if (name.includes(keyword) || category.includes(keyword)) {
-        return group;
-      }
-    }
-  }
-  
-  return category;
-}
-
-function initializeProductGroups() {
-  state.productGroups = {};
-  
-  for (const [categoryKey, products] of state.products.entries()) {
-    for (const product of products) {
-      const group = categorizeProductByUsage(product);
-      
-      if (!state.productGroups[group]) {
-        state.productGroups[group] = [];
-      }
-      
-      state.productGroups[group].push({
-        ...product,
-        categoryKey: categoryKey
-      });
-    }
-  }
-  
-  console.log('Groupes de produits initialisés:', Object.keys(state.productGroups).length, 'groupes');
 }
 
 // Démarrer l'application
