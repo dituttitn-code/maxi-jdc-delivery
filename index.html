@@ -579,26 +579,6 @@
       background: rgba(0, 0, 0, 0.2);
       max-height: 250px;
       overflow-y: auto;
-      position: relative;
-    }
-
-    /* Ajout d'un curseur scroll personnalisé */
-    .dynamic-promo-content::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    .dynamic-promo-content::-webkit-scrollbar-track {
-      background: rgba(0,0,0,0.2);
-      border-radius: 4px;
-    }
-
-    .dynamic-promo-content::-webkit-scrollbar-thumb {
-      background: linear-gradient(135deg, #ffcc00, #ff9900);
-      border-radius: 4px;
-    }
-
-    .dynamic-promo-content::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(135deg, #ffdd44, #ffaa00);
     }
 
     .dynamic-promo-text {
@@ -3182,7 +3162,7 @@
     <header class="header">
       <div class="logo-brand">
         <div class="logo">
-          <img src="maxi-jdc-market/images/logo-maxi-jdc-market.jpg" alt="MAXI JDC MARKET" onerror="this.style.display='none'">
+          <img src="logo-maxi-jdc-market.jpg" alt="MAXI JDC MARKET" onerror="this.style.display='none'">
         </div>
         <div class="brand-text">
           <h1>MAXI JDC MARKET</h1>
@@ -3684,51 +3664,6 @@
     </div>
   </div>
 
-  <!-- MODAL GESTION STOCK -->
-  <div class="edit-text-modal-overlay" id="stockModal">
-    <div class="edit-text-modal">
-      <div class="edit-text-header">
-        <h3>📦 Gestion du stock</h3>
-      </div>
-      
-      <div class="edit-text-body">
-        <div id="stockListContainer">
-          <!-- Liste des produits avec leur stock -->
-        </div>
-      </div>
-      
-      <div class="edit-text-footer">
-        <button class="form-btn" id="cancelStockBtn">
-          Annuler
-        </button>
-        <button class="form-btn primary" id="saveStockBtn">
-          💾 Enregistrer le stock
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL STATISTIQUES -->
-  <div class="edit-text-modal-overlay" id="statsModal">
-    <div class="edit-text-modal">
-      <div class="edit-text-header">
-        <h3>📊 Statistiques de vente</h3>
-      </div>
-      
-      <div class="edit-text-body">
-        <div id="statsContainer">
-          <!-- Graphiques et statistiques -->
-        </div>
-      </div>
-      
-      <div class="edit-text-footer">
-        <button class="form-btn" id="closeStatsBtn">
-          Fermer
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- MODAL LOCALISATION MAP -->
   <div class="map-modal-overlay" id="mapModal">
     <div class="map-modal">
@@ -3792,15 +3727,11 @@ const CONFIG = {
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v18',
-  serverSyncKey: 'maxi_jdc_server_sync',
+  localStorageKey: 'maxi_jdc_market_app_v17',
   imagesBasePath: 'maxi-jdc-market/images/products/',
   historyRetentionYears: 2,
   dynamicTextKey: 'maxi_jdc_dynamic_text',
-  adminPasswordKey: 'maxi_jdc_admin_password',
-  stockKey: 'maxi_jdc_stock',
-  promotionsKey: 'maxi_jdc_promotions',
-  salesStatsKey: 'maxi_jdc_sales_stats'
+  adminPasswordKey: 'maxi_jdc_admin_password'
 };
 
 // Catégories avec noms complets - PROMOTIONS EN PREMIER
@@ -3847,25 +3778,14 @@ const state = {
   orderHistory: [],
   promotions: [],
   tempMapCoords: null,
-  globalStock: {}, // Stock global synchronisé
+  globalStock: {}, // Stock global partagé entre tous les utilisateurs
   dynamicText: "", // Texte dynamique pour les annonces
-  promoProducts: {}, // Produits en promotion synchronisés
   // Mappage des produits par groupes d'utilisation
   productGroups: {},
   // État admin
   isAdmin: false,
   adminPassword: "admin123", // Mot de passe par défaut pour l'admin
-  showPromoSection: true, // Par défaut, afficher la section promo
-  // Statistiques
-  salesStats: {
-    daily: 0,
-    weekly: 0,
-    monthly: 0,
-    totalOrders: 0,
-    totalRevenue: 0,
-    popularProducts: [],
-    lastSync: null
-  }
+  showPromoSection: true // Par défaut, afficher la section promo
 };
 
 // ===================== UTILITAIRES =====================
@@ -3896,48 +3816,6 @@ function validatePrice(price) {
     return false;
   }
   return true;
-}
-
-// ===================== SYNCHRONISATION SERVEUR SIMULÉE =====================
-// Dans une vraie application, cette partie communiquerait avec un backend
-// Pour cette démo, nous utilisons localStorage avec une clé partagée
-
-function saveToServer(key, data) {
-  // Simuler l'envoi au serveur
-  localStorage.setItem(key, JSON.stringify(data));
-  localStorage.setItem(CONFIG.serverSyncKey, Date.now().toString());
-  
-  // Dans un cas réel, vous enverriez une requête AJAX/Fetch ici
-  // fetch('/api/sync', { method: 'POST', body: JSON.stringify({ key, data }) })
-}
-
-function loadFromServer(key) {
-  // Simuler le chargement depuis le serveur
-  const data = localStorage.getItem(key);
-  return data ? JSON.parse(data) : null;
-}
-
-function syncWithServer() {
-  // Synchroniser toutes les données importantes
-  if (state.isAdmin) {
-    saveToServer(CONFIG.dynamicTextKey, state.dynamicText);
-    saveToServer(CONFIG.stockKey, state.globalStock);
-    saveToServer(CONFIG.promotionsKey, state.promoProducts);
-    saveToServer(CONFIG.salesStatsKey, state.salesStats);
-  }
-}
-
-function loadServerData() {
-  // Charger les données du "serveur"
-  const dynamicText = loadFromServer(CONFIG.dynamicTextKey);
-  const stock = loadFromServer(CONFIG.stockKey);
-  const promotions = loadFromServer(CONFIG.promotionsKey);
-  const stats = loadFromServer(CONFIG.salesStatsKey);
-  
-  if (dynamicText) state.dynamicText = dynamicText;
-  if (stock) state.globalStock = stock;
-  if (promotions) state.promoProducts = promotions;
-  if (stats) state.salesStats = stats;
 }
 
 // ===================== GESTION ADMIN =====================
@@ -3983,16 +3861,17 @@ function updateAdminUI() {
 
 // ===================== GESTION DU TEXTE DYNAMIQUE =====================
 function loadDynamicText() {
-  loadServerData(); // Charger les données du serveur
-  
-  if (!state.dynamicText) {
+  const savedText = localStorage.getItem(CONFIG.dynamicTextKey);
+  if (savedText) {
+    state.dynamicText = savedText;
+    updateDynamicTextDisplay();
+  } else {
     // Texte par défaut amélioré
     const defaultText = "🎉 Cette semaine chez MAXI JDC MARKET ! 🎉<br>Profitez de <span class='promo-percent'>50%</span> de réduction sur CRUNCHIES PAPRIKA et CRUNCHIES CHEESE !<br>Le CIUFFI CHIEN STRIP POLLO 200GR à <strong>6 dt</strong> au lieu de <del>8.50 dt</del><br><span class='promo-percent'>25%</span> de rabais sur les produits 10 CAPSULES GOLDEN COFFEE EXTREME et CHIPS LAYS SEL 80GR<br>⚡ Offres limitées, faites vite ! ⚡";
     state.dynamicText = defaultText;
-    saveToServer(CONFIG.dynamicTextKey, defaultText);
+    updateDynamicTextDisplay();
+    localStorage.setItem(CONFIG.dynamicTextKey, defaultText);
   }
-  
-  updateDynamicTextDisplay();
   
   // Afficher/masquer la section selon la catégorie active
   updateDynamicTextVisibility();
@@ -4001,10 +3880,6 @@ function loadDynamicText() {
 function updateDynamicTextDisplay() {
   const dynamicTextElement = $('dynamicPromoText');
   dynamicTextElement.innerHTML = state.dynamicText;
-  
-  // Forcer l'affichage des boutons de contrôle
-  const controls = $('dynamicPromoControls');
-  controls.style.display = 'flex';
 }
 
 function updateDynamicTextVisibility() {
@@ -4090,16 +3965,10 @@ function saveDynamicText() {
     
     state.dynamicText = formattedText;
     updateDynamicTextDisplay();
-    
-    // Synchroniser avec le serveur
-    saveToServer(CONFIG.dynamicTextKey, formattedText);
-    
+    localStorage.setItem(CONFIG.dynamicTextKey, formattedText);
     closeEditTextModal();
     showToast('✅ Texte enregistré avec succès ! Visible par tous les clients.');
     updateDynamicTextVisibility();
-    
-    // Mettre à jour les promotions dans les produits
-    updatePromotionProducts();
   } else {
     showToast('⚠️ Le texte ne peut pas être vide', 'warning');
   }
@@ -4114,76 +3983,112 @@ function clearDynamicText() {
   if (confirm('Voulez-vous vraiment effacer le texte dynamique ? Ce changement sera visible par tous les clients.')) {
     state.dynamicText = '';
     $('dynamicPromoText').textContent = '';
-    
-    // Synchroniser avec le serveur
-    saveToServer(CONFIG.dynamicTextKey, '');
-    
+    localStorage.removeItem(CONFIG.dynamicTextKey);
     showToast('Texte effacé. Visible par tous les clients.', 'warning');
     updateDynamicTextVisibility();
   }
 }
 
-// ===================== GESTION DES PROMOTIONS SYNCHRONISÉES =====================
-function updatePromotionProducts() {
-  // Analyser le texte dynamique pour extraire les promotions
-  const text = state.dynamicText.toLowerCase();
+// ===================== GROUPES DE PRODUITS POUR ARTICLES SIMILAIRES =====================
+// Cette fonction catégorise les produits par groupe d'utilisation
+function categorizeProductByUsage(product) {
+  const name = product.name.toLowerCase();
+  const category = product.categoryKey.toLowerCase();
   
-  // Extraire les pourcentages de promotion
-  const percentMatches = text.match(/(\d+)%/g);
-  if (percentMatches) {
-    const discountPercent = parseInt(percentMatches[0]) || 50;
+  // Groupes par type d'utilisation
+  const groups = {
+    // Boissons
+    'boissons_froides': ['eau', 'jus', 'soda', 'boisson gazeuse', 'limonade', 'cola', 'fanta', 'sprite', 'orangina'],
+    'boissons_chaudes': ['café', 'thé', 'infusion', 'chocolat chaud', 'cappuccino', 'expresso', 'nescafé'],
+    'boissons_energisantes': ['red bull', 'monster', 'burn', 'energy drink', 'boisson énergisante'],
     
-    // Mettre à jour les produits en promotion
-    Object.keys(state.promoProducts).forEach(productCode => {
-      if (state.promoProducts[productCode]) {
-        // Mettre à jour le prix avec le nouveau pourcentage
-        const originalPrice = state.promoProducts[productCode].originalPrice || 1;
-        const newPrice = originalPrice * (1 - discountPercent / 100);
-        
-        state.promoProducts[productCode].price = parseFloat(newPrice.toFixed(2));
-        state.promoProducts[productCode].discount = discountPercent;
-        
-        // Mettre à jour dans les produits
-        updateProductPrice(productCode, newPrice, discountPercent);
-      }
-    });
+    // Snacks
+    'snacks_sales': ['chips', 'cacahuètes', 'noix', 'amandes', 'biscuits salés', 'crackers', 'pretzels', 'crunchies'],
+    'snacks_sucres': ['chocolat', 'biscuit', 'gâteau', 'bonbon', 'sucre', 'chewing-gum', 'caramel'],
+    'glaces_desserts': ['glace', 'crème glacée', 'yaourt', 'dessert', 'mousse', 'pudding'],
     
-    // Synchroniser avec le serveur
-    saveToServer(CONFIG.promotionsKey, state.promoProducts);
-  }
-}
-
-function updateProductPrice(productCode, newPrice, discountPercent) {
-  // Mettre à jour le prix dans tous les produits
-  for (const [categoryKey, products] of state.products.entries()) {
-    const index = products.findIndex(p => p.code === productCode);
-    if (index !== -1) {
-      products[index].price = newPrice;
-      products[index].oldPrice = state.promoProducts[productCode]?.originalPrice || newPrice * (1 / (1 - discountPercent/100));
-      products[index].isPromotion = true;
-      
-      // Recréer l'ID du produit
-      const productId = generateProductId(products[index]);
-      
-      // Mettre à jour dans le panier si présent
-      if (state.cart[productId]) {
-        state.cart[productId].price = newPrice;
-        updateCartUI();
+    // Produits frais
+    'produits_laitiers': ['lait', 'yaourt', 'fromage', 'beurre', 'crème', 'yogourt', 'petit suisse'],
+    'viandes_charcuteries': ['jambon', 'saucisson', 'pâté', 'viande', 'poulet', 'bœuf', 'charcuterie'],
+    'fruits_legumes': ['pomme', 'banane', 'orange', 'fraise', 'salade', 'tomate', 'carotte', 'oignon'],
+    
+    // Épicerie
+    'conserves': ['conserve', 'boîte', 'haricots', 'maïs', 'thon', 'sardine', 'pâté'],
+    'pates_riz': ['pâtes', 'spaghetti', 'riz', 'couscous', 'semoule', 'nouilles'],
+    'huiles_condiments': ['huile', 'vinaigre', 'sel', 'poivre', 'épice', 'sauce', 'ketchup', 'mayonnaise'],
+    
+    // Hygiène & Soins
+    'hygiene_corporelle': ['savon', 'shampooing', 'dentifrice', 'déodorant', 'gel douche', 'rasoir'],
+    'produits_menage': ['lessive', 'détergent', 'nettoyant', 'javel', 'éponge', 'sac poubelle'],
+    'soins_beaute': ['crème', 'parfum', 'maquillage', 'vernis', 'lotion', 'solaire'],
+    
+    // Bébé & Animaux
+    'produits_bebe': ['couche', 'lait bébé', 'biberon', 'tétine', 'jouet bébé'],
+    'animaux': ['croquette', 'chien', 'chat', 'nourriture animale', 'litière', 'jouet animal', 'ciuffi'],
+    
+    // Spécialités
+    'produits_du_monde': ['couscous', 'tajine', 'sushi', 'pizza', 'hamburger', 'kebab'],
+    'produits_sans_gluten': ['sans gluten', 'gluten free'],
+    'produits_bio': ['bio', 'biologique', 'organic']
+  };
+  
+  // Trouver le groupe correspondant
+  for (const [group, keywords] of Object.entries(groups)) {
+    for (const keyword of keywords) {
+      if (name.includes(keyword) || category.includes(keyword)) {
+        return group;
       }
-      
-      // Mettre à jour l'affichage
-      renderProducts();
-      break;
     }
   }
+  
+  // Si aucun groupe trouvé, utiliser la catégorie principale
+  return category;
 }
 
-// ===================== GESTION DU STOCK SYNCHRONISÉ =====================
-async function loadGlobalStock() {
-  loadServerData(); // Charger les données du serveur
+// Initialiser les groupes de produits
+function initializeProductGroups() {
+  state.productGroups = {};
   
-  if (!state.globalStock || Object.keys(state.globalStock).length === 0) {
-    // Stock global initial avec les nouveaux produits
+  // Parcourir tous les produits
+  for (const [categoryKey, products] of state.products.entries()) {
+    for (const product of products) {
+      const group = categorizeProductByUsage(product);
+      
+      if (!state.productGroups[group]) {
+        state.productGroups[group] = [];
+      }
+      
+      // Ajouter une référence au produit
+      state.productGroups[group].push({
+        ...product,
+        categoryKey: categoryKey
+      });
+    }
+  }
+  
+  console.log('Groupes de produits initialisés:', Object.keys(state.productGroups).length, 'groupes');
+}
+
+// Obtenir les produits similaires par groupe d'utilisation
+function getSimilarProductsByUsage(currentProduct) {
+  if (!currentProduct) return [];
+  
+  const group = categorizeProductByUsage(currentProduct);
+  const similarProducts = state.productGroups[group] || [];
+  
+  // Filtrer le produit actuel
+  const filtered = similarProducts.filter(product => 
+    !(product.code === currentProduct.code && product.categoryKey === currentProduct.categoryKey)
+  );
+  
+  // Limiter à 6 produits maximum
+  return filtered.slice(0, 6);
+}
+
+// ===================== GESTION DU STOCK GLOBAL =====================
+async function loadGlobalStock() {
+  try {
+    // Stock global avec les nouveaux produits
     state.globalStock = {
       'CAF001': { inStock: true, quantity: 50 },
       'CAF002': { inStock: true, quantity: 30 },
@@ -4204,32 +4109,11 @@ async function loadGlobalStock() {
       '4349': { inStock: true, quantity: 35 }  // CRUNCHIES CHEESE
     };
     
-    // Initialiser les produits en promotion
-    state.promoProducts = {
-      '4350': { 
-        code: '4350',
-        name: 'CRUNCHIES PAPRIKA',
-        price: 0.5,
-        originalPrice: 1,
-        discount: 50,
-        isPromotion: true
-      },
-      '4349': {
-        code: '4349',
-        name: 'CRUNCHIES CHEESE',
-        price: 0.5,
-        originalPrice: 1,
-        discount: 50,
-        isPromotion: true
-      }
-    };
-    
-    // Sauvegarder sur le serveur
-    saveToServer(CONFIG.stockKey, state.globalStock);
-    saveToServer(CONFIG.promotionsKey, state.promoProducts);
+    console.log('Stock global chargé:', Object.keys(state.globalStock).length, 'produits');
+  } catch (error) {
+    console.error('Erreur chargement stock global:', error);
+    state.globalStock = {};
   }
-  
-  console.log('Stock global chargé:', Object.keys(state.globalStock).length, 'produits');
 }
 
 function isInStockGlobal(productCode) {
@@ -4248,12 +4132,6 @@ function updateGlobalStock(productCode, quantity) {
     if (state.globalStock[productCode].quantity <= 0) {
       state.globalStock[productCode].inStock = false;
     }
-    
-    // Mettre à jour les statistiques
-    updateSalesStats(productCode, quantity);
-    
-    // Synchroniser avec le serveur
-    saveToServer(CONFIG.stockKey, state.globalStock);
   }
 }
 
@@ -4264,7 +4142,7 @@ function saveState() {
     cart: state.cart,
     orderHistory: state.orderHistory,
     showPromoSection: state.showPromoSection,
-    version: '18.0'
+    version: '17.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -4272,7 +4150,7 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '18.0') {
+    if (data && data.version === '17.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.orderHistory = data.orderHistory || [];
@@ -4514,366 +4392,7 @@ function addToOrderHistory(orderData) {
   state.orderHistory.push(order);
   saveState();
   
-  // Mettre à jour les statistiques
-  updateSalesStatsFromOrder(order);
-  
   showToast('✅ Commande ajoutée à l\'historique');
-}
-
-// ===================== STATISTIQUES DE VENTE =====================
-function updateSalesStatsFromOrder(order) {
-  // Mettre à jour les statistiques globales
-  state.salesStats.totalOrders += 1;
-  state.salesStats.totalRevenue += order.total;
-  
-  // Mettre à jour les statistiques par période
-  const today = new Date().toDateString();
-  const orderDate = new Date(order.date).toDateString();
-  
-  if (orderDate === today) {
-    state.salesStats.daily += order.total;
-  }
-  
-  // Mettre à jour les produits populaires
-  order.items.forEach(item => {
-    const existing = state.salesStats.popularProducts.find(p => p.code === item.code);
-    if (existing) {
-      existing.quantity += item.quantity;
-      existing.revenue += item.price * item.quantity;
-    } else {
-      state.salesStats.popularProducts.push({
-        code: item.code,
-        name: item.name,
-        quantity: item.quantity,
-        revenue: item.price * item.quantity
-      });
-    }
-  });
-  
-  // Trier par revenu
-  state.salesStats.popularProducts.sort((a, b) => b.revenue - a.revenue);
-  
-  // Limiter à 10 produits
-  state.salesStats.popularProducts = state.salesStats.popularProducts.slice(0, 10);
-  
-  state.salesStats.lastSync = new Date().toISOString();
-  
-  // Synchroniser avec le serveur
-  saveToServer(CONFIG.salesStatsKey, state.salesStats);
-}
-
-function updateSalesStats(productCode, quantity) {
-  // Mettre à jour les statistiques pour un produit vendu
-  const product = findProductByCode(productCode);
-  if (product) {
-    const existing = state.salesStats.popularProducts.find(p => p.code === productCode);
-    if (existing) {
-      existing.quantity += quantity;
-      existing.revenue += product.price * quantity;
-    } else {
-      state.salesStats.popularProducts.push({
-        code: productCode,
-        name: product.name,
-        quantity: quantity,
-        revenue: product.price * quantity
-      });
-    }
-    
-    // Trier par revenu
-    state.salesStats.popularProducts.sort((a, b) => b.revenue - a.revenue);
-    
-    // Limiter à 10 produits
-    state.salesStats.popularProducts = state.salesStats.popularProducts.slice(0, 10);
-    
-    state.salesStats.lastSync = new Date().toISOString();
-    
-    // Synchroniser avec le serveur
-    saveToServer(CONFIG.salesStatsKey, state.salesStats);
-  }
-}
-
-function findProductByCode(productCode) {
-  for (const [categoryKey, products] of state.products.entries()) {
-    const product = products.find(p => p.code === productCode);
-    if (product) return product;
-  }
-  return null;
-}
-
-function openStatsModal() {
-  if (!state.isAdmin) {
-    toggleAdminMode();
-    return;
-  }
-  
-  const statsContainer = $('statsContainer');
-  statsContainer.innerHTML = `
-    <div style="display: flex; flex-direction: column; gap: 20px;">
-      <div style="background: var(--card2); border-radius: var(--radius); padding: 15px;">
-        <h4 style="color: var(--accent); margin-bottom: 10px;">📊 Vue d'ensemble</h4>
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-          <div style="background: rgba(0,255,136,0.1); padding: 10px; border-radius: 8px; border: 1px solid var(--accent);">
-            <div style="font-size: 11px; color: var(--muted);">Commandes totales</div>
-            <div style="font-size: 24px; font-weight: 900; color: var(--accent);">${state.salesStats.totalOrders}</div>
-          </div>
-          <div style="background: rgba(0,212,255,0.1); padding: 10px; border-radius: 8px; border: 1px solid var(--accent2);">
-            <div style="font-size: 11px; color: var(--muted);">Revenu total</div>
-            <div style="font-size: 24px; font-weight: 900; color: var(--accent2);">${formatPrice(state.salesStats.totalRevenue)}</div>
-          </div>
-        </div>
-      </div>
-      
-      <div style="background: var(--card2); border-radius: var(--radius); padding: 15px;">
-        <h4 style="color: var(--accent); margin-bottom: 10px;">🏆 Produits les plus vendus</h4>
-        <div style="max-height: 300px; overflow-y: auto;">
-          ${state.salesStats.popularProducts.length > 0 ? 
-            state.salesStats.popularProducts.map((product, index) => `
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div style="width: 20px; height: 20px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900;">${index + 1}</div>
-                  <div>
-                    <div style="font-weight: 700; font-size: 12px;">${product.name}</div>
-                    <div style="font-size: 10px; color: var(--muted);">Code: ${product.code}</div>
-                  </div>
-                </div>
-                <div style="text-align: right;">
-                  <div style="font-weight: 900; color: var(--accent);">${product.quantity} unités</div>
-                  <div style="font-size: 11px; color: var(--muted);">${formatPrice(product.revenue)}</div>
-                </div>
-              </div>
-            `).join('') :
-            '<div style="text-align: center; padding: 20px; color: var(--muted);">Aucune donnée de vente disponible</div>'
-          }
-        </div>
-      </div>
-      
-      <div style="background: var(--card2); border-radius: var(--radius); padding: 15px;">
-        <h4 style="color: var(--accent); margin-bottom: 10px;">📈 Tendances</h4>
-        <div style="font-size: 12px; color: var(--muted);">
-          <div>Dernière synchronisation: ${state.salesStats.lastSync ? new Date(state.salesStats.lastSync).toLocaleString('fr-FR') : 'Jamais'}</div>
-          <div style="margin-top: 10px;">
-            <button class="form-btn primary" style="width: 100%;" onclick="refreshStats()">
-              🔄 Actualiser les statistiques
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  $('statsModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function refreshStats() {
-  // Recharger les statistiques du serveur
-  loadServerData();
-  openStatsModal();
-  showToast('✅ Statistiques actualisées');
-}
-
-function closeStatsModal() {
-  $('statsModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-// ===================== GESTION STOCK (ADMIN) =====================
-function openStockModal() {
-  if (!state.isAdmin) {
-    toggleAdminMode();
-    return;
-  }
-  
-  const stockListContainer = $('stockListContainer');
-  let html = '<div style="display: flex; flex-direction: column; gap: 10px;">';
-  
-  // Liste des produits avec leur stock
-  const allProducts = [];
-  for (const [categoryKey, products] of state.products.entries()) {
-    products.forEach(product => {
-      allProducts.push({
-        ...product,
-        categoryKey
-      });
-    });
-  }
-  
-  // Trier par nom
-  allProducts.sort((a, b) => a.name.localeCompare(b.name));
-  
-  allProducts.forEach(product => {
-    const stockInfo = state.globalStock[product.code] || { inStock: true, quantity: 0 };
-    html += `
-      <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.1);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <div>
-            <div style="font-weight: 700; font-size: 12px;">${product.name}</div>
-            <div style="font-size: 10px; color: var(--muted);">Code: ${product.code} | Cat: ${product.category}</div>
-          </div>
-          <div style="text-align: right;">
-            <div style="font-weight: 900; color: ${stockInfo.inStock ? 'var(--accent)' : 'var(--danger)'};">
-              ${stockInfo.inStock ? '✓ EN STOCK' : '✗ RUPTURE'}
-            </div>
-          </div>
-        </div>
-        <div style="display: flex; gap: 10px; align-items: center;">
-          <input type="number" 
-                 id="stock_${product.code}" 
-                 value="${stockInfo.quantity}"
-                 min="0"
-                 style="flex: 1; padding: 8px; border-radius: 6px; border: 1px solid var(--line); background: rgba(255,255,255,0.1); color: var(--text);">
-          <label style="display: flex; align-items: center; gap: 5px; font-size: 11px;">
-            <input type="checkbox" 
-                   id="instock_${product.code}" 
-                   ${stockInfo.inStock ? 'checked' : ''}
-                   style="transform: scale(1.2);">
-            En stock
-          </label>
-        </div>
-      </div>
-    `;
-  });
-  
-  html += '</div>';
-  stockListContainer.innerHTML = html;
-  
-  $('stockModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeStockModal() {
-  $('stockModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function saveStock() {
-  if (!state.isAdmin) {
-    showToast('❌ Accès réservé à l\'administrateur', 'error');
-    return;
-  }
-  
-  // Parcourir tous les produits et mettre à jour le stock
-  for (const [categoryKey, products] of state.products.entries()) {
-    products.forEach(product => {
-      const quantityInput = $(`stock_${product.code}`);
-      const inStockInput = $(`instock_${product.code}`);
-      
-      if (quantityInput && inStockInput) {
-        const quantity = parseInt(quantityInput.value) || 0;
-        const inStock = inStockInput.checked;
-        
-        state.globalStock[product.code] = {
-          inStock: inStock,
-          quantity: quantity
-        };
-      }
-    });
-  }
-  
-  // Synchroniser avec le serveur
-  saveToServer(CONFIG.stockKey, state.globalStock);
-  
-  closeStockModal();
-  showToast('✅ Stock mis à jour pour tous les clients !');
-  
-  // Rafraîchir l'affichage
-  renderProducts();
-}
-
-// ===================== GROUPES DE PRODUITS POUR ARTICLES SIMILAIRES =====================
-// Cette fonction catégorise les produits par groupe d'utilisation
-function categorizeProductByUsage(product) {
-  const name = product.name.toLowerCase();
-  const category = product.categoryKey.toLowerCase();
-  
-  // Groupes par type d'utilisation
-  const groups = {
-    // Boissons
-    'boissons_froides': ['eau', 'jus', 'soda', 'boisson gazeuse', 'limonade', 'cola', 'fanta', 'sprite', 'orangina'],
-    'boissons_chaudes': ['café', 'thé', 'infusion', 'chocolat chaud', 'cappuccino', 'expresso', 'nescafé'],
-    'boissons_energisantes': ['red bull', 'monster', 'burn', 'energy drink', 'boisson énergisante'],
-    
-    // Snacks
-    'snacks_sales': ['chips', 'cacahuètes', 'noix', 'amandes', 'biscuits salés', 'crackers', 'pretzels', 'crunchies', 'croustilles'],
-    'snacks_sucres': ['chocolat', 'biscuit', 'gâteau', 'bonbon', 'sucre', 'chewing-gum', 'caramel', 'cookie', 'brownie'],
-    'glaces_desserts': ['glace', 'crème glacée', 'yaourt', 'dessert', 'mousse', 'pudding', 'fromage frais'],
-    
-    // Produits frais
-    'produits_laitiers': ['lait', 'yaourt', 'fromage', 'beurre', 'crème', 'yogourt', 'petit suisse', 'crème fraîche'],
-    'viandes_charcuteries': ['jambon', 'saucisson', 'pâté', 'viande', 'poulet', 'bœuf', 'charcuterie', 'saucisse', 'steak'],
-    'fruits_legumes': ['pomme', 'banane', 'orange', 'fraise', 'salade', 'tomate', 'carotte', 'oignon', 'pomme de terre', 'raisin'],
-    
-    // Épicerie
-    'conserves': ['conserve', 'boîte', 'haricots', 'maïs', 'thon', 'sardine', 'pâté', 'légume en conserve', 'fruit en conserve'],
-    'pates_riz': ['pâtes', 'spaghetti', 'riz', 'couscous', 'semoule', 'nouilles', 'penne', 'tagliatelle', 'basmati'],
-    'huiles_condiments': ['huile', 'vinaigre', 'sel', 'poivre', 'épice', 'sauce', 'ketchup', 'mayonnaise', 'moutarde', 'soja'],
-    
-    // Hygiène & Soins
-    'hygiene_corporelle': ['savon', 'shampooing', 'dentifrice', 'déodorant', 'gel douche', 'rasoir', 'brosse à dents', 'cotons'],
-    'produits_menage': ['lessive', 'détergent', 'nettoyant', 'javel', 'éponge', 'sac poubelle', 'produit vaisselle', 'adoucissant'],
-    'soins_beaute': ['crème', 'parfum', 'maquillage', 'vernis', 'lotion', 'solaire', 'mascara', 'fond de teint', 'rouge à lèvres'],
-    
-    // Bébé & Animaux
-    'produits_bebe': ['couche', 'lait bébé', 'biberon', 'tétine', 'jouet bébé', 'bébé', 'nourrisson'],
-    'animaux': ['croquette', 'chien', 'chat', 'nourriture animale', 'litière', 'jouet animal', 'ciuffi', 'animal', 'pet'],
-    
-    // Spécialités
-    'produits_du_monde': ['couscous', 'tajine', 'sushi', 'pizza', 'hamburger', 'kebab', 'taco', 'burrito', 'nems'],
-    'produits_sans_gluten': ['sans gluten', 'gluten free', 'sans blé'],
-    'produits_bio': ['bio', 'biologique', 'organic', 'écologique']
-  };
-  
-  // Trouver le groupe correspondant
-  for (const [group, keywords] of Object.entries(groups)) {
-    for (const keyword of keywords) {
-      if (name.includes(keyword) || category.includes(keyword)) {
-        return group;
-      }
-    }
-  }
-  
-  // Si aucun groupe trouvé, utiliser la catégorie principale
-  return category;
-}
-
-// Initialiser les groupes de produits
-function initializeProductGroups() {
-  state.productGroups = {};
-  
-  // Parcourir tous les produits
-  for (const [categoryKey, products] of state.products.entries()) {
-    for (const product of products) {
-      const group = categorizeProductByUsage(product);
-      
-      if (!state.productGroups[group]) {
-        state.productGroups[group] = [];
-      }
-      
-      // Ajouter une référence au produit
-      state.productGroups[group].push({
-        ...product,
-        categoryKey: categoryKey
-      });
-    }
-  }
-  
-  console.log('Groupes de produits initialisés:', Object.keys(state.productGroups).length, 'groupes');
-}
-
-// Obtenir les produits similaires par groupe d'utilisation
-function getSimilarProductsByUsage(currentProduct) {
-  if (!currentProduct) return [];
-  
-  const group = categorizeProductByUsage(currentProduct);
-  const similarProducts = state.productGroups[group] || [];
-  
-  // Filtrer le produit actuel
-  const filtered = similarProducts.filter(product => 
-    !(product.code === currentProduct.code && product.categoryKey === currentProduct.categoryKey)
-  );
-  
-  // Limiter à 8 produits maximum pour une meilleure expérience
-  return filtered.slice(0, 8);
 }
 
 // ===================== GESTION PANIER =====================
@@ -4974,7 +4493,7 @@ function updateCartUI() {
         freeShippingRule.innerHTML = `<span class="rule-icon">💰</span><span>Il manque ${formatPrice(remaining)} pour la gratuité</span>`;
       }
     } else {
-      freeShippingRule.innerHTML = `<span class="rule-icon">💰</span><span>Livraison gratuite à ${formatPrice(CONFIG.freeShipping)}</span>';
+      freeShippingRule.innerHTML = `<span class="rule-icon">💰</span><span>Livraison gratuite à ${formatPrice(CONFIG.freeShipping)}</span>`;
     }
   }
   
@@ -5106,19 +4625,14 @@ async function loadCategoryData(categoryKey) {
       
       const productKey = `${code}_${name}`;
       if (!productsMap.has(productKey)) {
-        // Vérifier si le produit est en promotion
-        const isPromotion = state.promoProducts[code] || oldPrice !== null;
-        const finalPrice = state.promoProducts[code] ? state.promoProducts[code].price : price;
-        const finalOldPrice = state.promoProducts[code] ? state.promoProducts[code].originalPrice : oldPrice;
-        
         productsMap.set(productKey, {
           code,
           name,
-          price: finalPrice,
-          oldPrice: finalOldPrice,
+          price: price,
+          oldPrice: oldPrice,
           category: category.label,
           categoryKey: category.key,
-          isPromotion: isPromotion
+          isPromotion: category.key === 'promotions' || oldPrice !== null
         });
       }
     });
@@ -5133,7 +4647,7 @@ async function loadCategoryData(categoryKey) {
 async function loadAllProducts() {
   state.products.clear();
   
-  // Charger le stock global et les promotions
+  // Charger le stock global
   await loadGlobalStock();
   
   // Charger le texte dynamique
@@ -5145,20 +4659,29 @@ async function loadAllProducts() {
   // Charger les PROMOTIONS en premier
   const promotions = await loadCategoryData('promotions');
   
-  // Ajouter les produits en promotion depuis les données synchronisées
-  Object.values(state.promoProducts).forEach(promoProduct => {
-    if (!promotions.find(p => p.code === promoProduct.code)) {
-      promotions.unshift({
-        code: promoProduct.code,
-        name: promoProduct.name,
-        price: promoProduct.price,
-        oldPrice: promoProduct.originalPrice,
-        category: '🔥 PROMOTIONS',
-        categoryKey: 'promotions',
-        isPromotion: true
-      });
-    }
-  });
+  // Ajouter les nouveaux produits aux promotions
+  const crunchiesPaprika = {
+    code: '4350',
+    name: 'CRUNCHIES PAPRIKA',
+    price: 0.5, // Prix après 50% de réduction (1 dt * 0.5)
+    oldPrice: 1,
+    category: '🔥 PROMOTIONS',
+    categoryKey: 'promotions',
+    isPromotion: true
+  };
+  
+  const crunchiesCheese = {
+    code: '4349',
+    name: 'CRUNCHIES CHEESE',
+    price: 0.5, // Prix après 50% de réduction (1 dt * 0.5)
+    oldPrice: 1,
+    category: '🔥 PROMOTIONS',
+    categoryKey: 'promotions',
+    isPromotion: true
+  };
+  
+  // Ajouter les nouveaux produits au début de la liste des promotions
+  promotions.unshift(crunchiesPaprika, crunchiesCheese);
   
   if (promotions.length > 0) {
     state.products.set('promotions', promotions);
@@ -5206,8 +4729,8 @@ function showPromoBanner(promotions) {
   }
   
   const crunchiesCount = promotions.filter(p => p.name.includes('CRUNCHIES')).length;
-  const promoTitle = `🔥 ${crunchiesCount} PRODUITS À -${state.promoProducts['4350']?.discount || 50}%`;
-  const promoDesc = `Dont CRUNCHIES PAPRIKA & CHEESE à ${formatPrice(state.promoProducts['4350']?.price || 0.5)} seulement !`;
+  const promoTitle = `🔥 ${crunchiesCount} PRODUITS À -50%`;
+  const promoDesc = `Dont CRUNCHIES PAPRIKA & CHEESE à 0.50 dt seulement !`;
   
   $('promoTitle').textContent = promoTitle;
   $('promoDesc').textContent = promoDesc;
@@ -5375,12 +4898,8 @@ function renderProducts() {
     card.className = `product-card ${product.isPromotion ? 'promo-card' : ''}`;
     
     // Ajouter un badge de promotion sur l'image si nécessaire
-    const discountPercent = product.isPromotion && product.oldPrice 
-      ? Math.round((1 - product.price / product.oldPrice) * 100)
-      : 0;
-    
-    const imagePromoBadge = discountPercent > 0
-      ? `<div class="image-promo-badge">-${discountPercent}%</div>`
+    const imagePromoBadge = product.isPromotion && product.oldPrice 
+      ? `<div class="image-promo-badge">-${Math.round((1 - product.price / product.oldPrice) * 100)}%</div>`
       : '';
     
     // Afficher l'ancien prix si en promotion
@@ -5538,7 +5057,7 @@ function openProductModal(product) {
     $('modalProductDiscount').style.display = 'block';
     
     // Afficher le badge promo sur l'image
-    if (discountPercent > 0) {
+    if (discountPercent === 50) {
       $('modalPromoBadge').style.display = 'block';
       $('modalPromoBadge').textContent = `${discountPercent}% OFF`;
     } else {
@@ -6027,7 +5546,7 @@ function init() {
       toggleAdminMode();
       return;
     }
-    openStockModal();
+    showToast('📦 Gestion du stock - Fonctionnalité à venir', 'warning');
   };
   
   $('adminStatsBtn').onclick = () => {
@@ -6035,7 +5554,7 @@ function init() {
       toggleAdminMode();
       return;
     }
-    openStatsModal();
+    showToast('📊 Statistiques - Fonctionnalité à venir', 'warning');
   };
   
   $('adminSettingsBtn').onclick = () => {
@@ -6213,13 +5732,6 @@ function init() {
   $('downloadOrderBtn').onclick = downloadOrder;
   $('whatsappOrderBtn').onclick = sendOrderViaWhatsApp;
   
-  // Modal stock
-  $('cancelStockBtn').onclick = closeStockModal;
-  $('saveStockBtn').onclick = saveStock;
-  
-  // Modal statistiques
-  $('closeStatsBtn').onclick = closeStatsModal;
-  
   // Gestionnaire d'événements clavier
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -6229,10 +5741,6 @@ function init() {
         closeQrModal();
       } else if ($('editTextModal').classList.contains('open')) {
         closeEditTextModal();
-      } else if ($('stockModal').classList.contains('open')) {
-        closeStockModal();
-      } else if ($('statsModal').classList.contains('open')) {
-        closeStatsModal();
       } else if ($('mapModal').classList.contains('open')) {
         closeMapModal();
       } else if ($('orderModal').classList.contains('open')) {
