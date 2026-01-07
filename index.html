@@ -521,376 +521,6 @@
       font-size: 11px;
     }
 
-    /* SECTION TEXTE DYNAMIQUE POUR PROMOTIONS - NOUVELLE VERSION COMPACTE */
-    .dynamic-promo-section {
-      background: linear-gradient(135deg, #ff0000 0%, #ff6b00 50%, #ffd000 100%);
-      border-radius: var(--radius);
-      padding: 0;
-      margin: 0 8px 10px;
-      border: 2px solid #ff9900;
-      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
-      overflow: hidden;
-      display: none;
-      position: relative;
-      max-height: 150px;
-      transition: max-height 0.3s ease;
-    }
-
-    .dynamic-promo-section.expanded {
-      max-height: 400px;
-    }
-
-    .dynamic-promo-section.visible {
-      display: block;
-    }
-
-    .dynamic-promo-header {
-      background: rgba(0, 0, 0, 0.3);
-      padding: 8px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      min-height: 44px;
-    }
-
-    .dynamic-promo-title {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 900;
-      color: #ffffff;
-      font-size: 13px;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    }
-
-    .dynamic-promo-badge {
-      background: #000000;
-      color: #ffcc00;
-      padding: 2px 8px;
-      border-radius: 8px;
-      font-size: 10px;
-      font-weight: 900;
-      animation: pulse 1.5s infinite;
-    }
-
-    .dynamic-promo-content {
-      padding: 10px 15px;
-      background: rgba(0, 0, 0, 0.2);
-      max-height: 250px;
-      overflow-y: auto;
-    }
-
-    .dynamic-promo-text {
-      font-size: 13px;
-      font-weight: 700;
-      color: #ffffff;
-      line-height: 1.4;
-      white-space: pre-line;
-      margin: 0;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-      text-align: left;
-      letter-spacing: 0.2px;
-    }
-
-    /* Style spécial pour les pourcentages de promotion dans le texte */
-    .dynamic-promo-text .promo-percent {
-      color: #ffcc00;
-      font-weight: 900;
-      background: rgba(0,0,0,0.3);
-      padding: 1px 4px;
-      border-radius: 4px;
-      margin: 0 2px;
-      display: inline-block;
-      font-size: 12px;
-    }
-
-    .dynamic-promo-controls {
-      display: flex;
-      gap: 6px;
-      padding: 8px 12px;
-      background: rgba(0, 0, 0, 0.4);
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .dynamic-promo-toggle {
-      flex: 1;
-      padding: 6px 10px;
-      border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.3);
-      background: rgba(255,255,255,0.1);
-      color: white;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 11px;
-      transition: all 0.2s ease;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
-
-    .dynamic-promo-toggle:hover {
-      background: rgba(255,255,255,0.2);
-    }
-
-    .dynamic-promo-toggle.hide {
-      background: rgba(255,107,107,0.2);
-      border-color: rgba(255,107,107,0.5);
-    }
-
-    .dynamic-promo-toggle.hide:hover {
-      background: rgba(255,107,107,0.3);
-    }
-
-    /* Boutons admin (cachés par défaut) */
-    .admin-controls {
-      display: none;
-      gap: 6px;
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .admin-controls.visible {
-      display: flex;
-    }
-
-    .dynamic-promo-btn {
-      flex: 1;
-      padding: 6px 10px;
-      border-radius: 6px;
-      border: 2px solid;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 11px;
-      transition: all 0.2s ease;
-      text-align: center;
-    }
-
-    .dynamic-promo-btn.edit {
-      border-color: #00ff88;
-      background: linear-gradient(135deg, #00ff88, #00cc66);
-      color: #000000;
-    }
-
-    .dynamic-promo-btn.edit:hover {
-      background: linear-gradient(135deg, #00ffaa, #00ee77);
-      transform: translateY(-1px);
-      box-shadow: 0 3px 8px rgba(0,255,136,0.3);
-    }
-
-    .dynamic-promo-btn.clear {
-      border-color: #ff6b6b;
-      background: linear-gradient(135deg, #ff6b6b, #ff4444);
-      color: #000000;
-    }
-
-    .dynamic-promo-btn.clear:hover {
-      background: linear-gradient(135deg, #ff8888, #ff5555);
-      transform: translateY(-1px);
-      box-shadow: 0 3px 8px rgba(255,107,107,0.3);
-    }
-
-    /* MODAL ÉDITION TEXTE DYNAMIQUE */
-    .edit-text-modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.95);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 2500;
-      padding: 20px;
-      backdrop-filter: blur(20px);
-    }
-
-    .edit-text-modal-overlay.open {
-      display: flex;
-    }
-
-    .edit-text-modal {
-      width: 100%;
-      max-width: 500px;
-      background: linear-gradient(135deg, var(--bg0) 0%, var(--bg1) 100%);
-      border-radius: 20px;
-      border: 3px solid var(--accent);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      max-height: 90vh;
-    }
-
-    .edit-text-header {
-      padding: 20px;
-      background: rgba(0, 255, 136, 0.1);
-      border-bottom: 1px solid var(--accent);
-      text-align: center;
-    }
-
-    .edit-text-header h3 {
-      margin: 0;
-      font-size: 18px;
-      color: var(--accent);
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .edit-text-body {
-      padding: 20px;
-      flex: 1;
-      overflow-y: auto;
-    }
-
-    .edit-text-area {
-      width: 100%;
-      min-height: 200px;
-      padding: 15px;
-      border-radius: 10px;
-      border: 2px solid var(--accent);
-      background: rgba(255,255,255,0.1);
-      color: var(--text);
-      font-size: 16px;
-      line-height: 1.5;
-      font-family: inherit;
-      resize: vertical;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-
-    .edit-text-area:focus {
-      background: rgba(255,255,255,0.15);
-      border-color: var(--accent2);
-    }
-
-    .edit-text-instructions {
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    .edit-text-footer {
-      padding: 20px;
-      border-top: 1px solid var(--line);
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-    }
-
-    /* SECTION ADMIN DANS LE PANIER */
-    .admin-section {
-      background: var(--card2);
-      border-radius: var(--radius);
-      border: 2px solid var(--warning);
-      padding: 15px;
-      box-shadow: var(--shadow);
-      margin-bottom: 15px;
-      display: none;
-    }
-
-    .admin-section.visible {
-      display: block;
-    }
-
-    .admin-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--warning);
-    }
-
-    .admin-header h4 {
-      margin: 0;
-      font-size: 14px;
-      color: var(--warning);
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .admin-badge {
-      background: rgba(255, 167, 38, 0.2);
-      color: var(--warning);
-      padding: 3px 8px;
-      border-radius: 999px;
-      font-size: 10px;
-      font-weight: 900;
-    }
-
-    .admin-controls-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .admin-btn {
-      padding: 10px;
-      border-radius: 8px;
-      border: 2px solid;
-      background: rgba(255,255,255,0.1);
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      transition: all 0.2s ease;
-      text-align: center;
-      min-height: 70px;
-    }
-
-    .admin-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    .admin-btn.promo {
-      border-color: var(--accent);
-      background: rgba(0, 255, 136, 0.1);
-      color: var(--accent);
-    }
-
-    .admin-btn.stock {
-      border-color: var(--accent2);
-      background: rgba(0, 212, 255, 0.1);
-      color: var(--accent2);
-    }
-
-    .admin-btn.stats {
-      border-color: #ff6b6b;
-      background: rgba(255, 107, 107, 0.1);
-      color: #ff6b6b;
-    }
-
-    .admin-btn.settings {
-      border-color: #ffa726;
-      background: rgba(255, 167, 38, 0.1);
-      color: #ffa726;
-    }
-
-    .admin-icon {
-      font-size: 20px;
-    }
-
-    .admin-label {
-      font-size: 10px;
-      font-weight: 900;
-    }
-
     /* PAGINATION EN HAUT */
     .pagination-top {
       display: flex;
@@ -2025,6 +1655,113 @@
       gap: 20px;
     }
 
+    /* SECTION ADMIN (CACHÉE PAR DÉFAUT) */
+    .admin-section {
+      background: var(--card2);
+      border-radius: var(--radius);
+      border: 2px solid var(--warning);
+      padding: 15px;
+      box-shadow: var(--shadow);
+      margin-bottom: 15px;
+      display: none;
+    }
+
+    .admin-section.visible {
+      display: block;
+    }
+
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--warning);
+    }
+
+    .admin-header h4 {
+      margin: 0;
+      font-size: 14px;
+      color: var(--warning);
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .admin-badge {
+      background: rgba(255, 167, 38, 0.2);
+      color: var(--warning);
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .admin-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .admin-btn {
+      padding: 10px;
+      border-radius: 8px;
+      border: 2px solid;
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+      text-align: center;
+      min-height: 70px;
+    }
+
+    .admin-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .admin-btn.promo {
+      border-color: var(--accent);
+      background: rgba(0, 255, 136, 0.1);
+      color: var(--accent);
+    }
+
+    .admin-btn.stock {
+      border-color: var(--accent2);
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--accent2);
+    }
+
+    .admin-btn.stats {
+      border-color: #ff6b6b;
+      background: rgba(255, 107, 107, 0.1);
+      color: #ff6b6b;
+    }
+
+    .admin-btn.settings {
+      border-color: #ffa726;
+      background: rgba(255, 167, 38, 0.1);
+      color: #ffa726;
+    }
+
+    .admin-icon {
+      font-size: 20px;
+    }
+
+    .admin-label {
+      font-size: 10px;
+      font-weight: 900;
+    }
+
     /* SECTION COMPTE CLIENT */
     .account-section {
       background: var(--card2);
@@ -3000,10 +2737,6 @@
       .similar-products-grid {
         grid-template-columns: repeat(2, 1fr);
       }
-      
-      .dynamic-promo-text {
-        font-size: 12px;
-      }
     }
 
     @media (max-width: 480px) {
@@ -3093,14 +2826,6 @@
       .products-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
-      }
-      
-      .dynamic-promo-text {
-        font-size: 11px;
-      }
-      
-      .dynamic-promo-section.visible {
-        margin-bottom: 8px;
       }
       
       .admin-controls-grid {
@@ -3221,45 +2946,6 @@
     <!-- CATÉGORIES -->
     <div class="categories-scroll">
       <div class="cat-scroll-container" id="categoriesContainer"></div>
-    </div>
-
-    <!-- NOUVELLE SECTION TEXTE DYNAMIQUE POUR PROMOTIONS - VERSION COMPACTE -->
-    <div class="dynamic-promo-section" id="dynamicPromoSection">
-      <div class="dynamic-promo-header">
-        <div class="dynamic-promo-title">
-          📢 Offres promotionnelles
-          <span class="dynamic-promo-badge">MAXI JDC MARKET</span>
-        </div>
-      </div>
-      
-      <div class="dynamic-promo-content">
-        <p class="dynamic-promo-text" id="dynamicPromoText">
-          🎉 Cette semaine chez MAXI JDC MARKET ! 🎉<br>
-          Profitez de <span class="promo-percent">50%</span> de réduction sur CRUNCHIES PAPRIKA et CRUNCHIES CHEESE !<br>
-          Le CIUFFI CHIEN STRIP POLLO 200GR à <strong>6 dt</strong> au lieu de <del>8.50 dt</del><br>
-          <span class="promo-percent">25%</span> de rabais sur les produits 10 CAPSULES GOLDEN COFFEE EXTREME et CHIPS LAYS SEL 80GR<br>
-          ⚡ Offres limitées, faites vite ! ⚡
-        </p>
-      </div>
-      
-      <div class="dynamic-promo-controls">
-        <button class="dynamic-promo-toggle" id="togglePromoTextBtn">
-          🔽 Voir plus
-        </button>
-        <button class="dynamic-promo-toggle hide" id="hidePromoBtn">
-          🗨️ Masquer
-        </button>
-      </div>
-      
-      <!-- SECTION ADMIN (CACHÉE PAR DÉFAUT) -->
-      <div class="admin-controls" id="adminControls">
-        <button class="dynamic-promo-btn edit" id="editDynamicTextBtn">
-          ✏️ Modifier
-        </button>
-        <button class="dynamic-promo-btn clear" id="clearDynamicTextBtn">
-          🗑️ Effacer
-        </button>
-      </div>
     </div>
 
     <!-- CONTENU PRINCIPAL -->
@@ -3638,32 +3324,6 @@
     </div>
   </div>
 
-  <!-- MODAL ÉDITION TEXTE DYNAMIQUE -->
-  <div class="edit-text-modal-overlay" id="editTextModal">
-    <div class="edit-text-modal">
-      <div class="edit-text-header">
-        <h3>📝 Éditer les offres promotionnelles</h3>
-      </div>
-      
-      <div class="edit-text-body">
-        <textarea class="edit-text-area" id="editTextArea" placeholder="Saisissez vos offres promotionnelles ici..."></textarea>
-        <div class="edit-text-instructions">
-          <p><strong>💡 Conseils :</strong> Utilisez ce texte pour promouvoir vos meilleures offres, nouvelles arrivées ou événements spéciaux. Ce texte s'affichera uniquement dans la catégorie PROMOTIONS et sera visible par tous les clients.</p>
-          <p><strong>⚠️ Important :</strong> Les modifications seront immédiatement visibles par tous les utilisateurs de l'application.</p>
-        </div>
-      </div>
-      
-      <div class="edit-text-footer">
-        <button class="form-btn" id="cancelEditTextBtn">
-          Annuler
-        </button>
-        <button class="form-btn primary" id="saveEditTextBtn">
-          💾 Enregistrer pour tous
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- MODAL LOCALISATION MAP -->
   <div class="map-modal-overlay" id="mapModal">
     <div class="map-modal">
@@ -3727,20 +3387,19 @@ const CONFIG = {
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v17',
+  localStorageKey: 'maxi_jdc_market_app_v18',
   imagesBasePath: 'maxi-jdc-market/images/products/',
   historyRetentionYears: 2,
-  dynamicTextKey: 'maxi_jdc_dynamic_text',
   adminPasswordKey: 'maxi_jdc_admin_password'
 };
 
 // Catégories avec noms complets - PROMOTIONS EN PREMIER
 const CATEGORIES = [
   { key:"promotions", label:"🔥 PROMOTIONS", file:"data/PROMOTIONS.csv", isPromo: true },
+  { key:"cafe", label:"☕ Café & Thés", file:"data/cafe.csv" },
   { key:"animaux_compagnie", label:"🐶 Animaux de Compagnie", file:"data/animaux_compagnie.csv" },
   { key:"bebe_maman", label:"👶 Bébé & Maman", file:"data/bebe_maman.csv" },
   { key:"boulangerie_patisserie", label:"🥖 Boulangerie & Pâtisserie", file:"data/boulangerie_patisserie.csv" },
-  { key:"cafe", label:"☕ Café & Thés", file:"data/cafe.csv" },
   { key:"chips_snacks", label:"🥔 Chips & Snacks", file:"data/chips_snacks.csv" },
   { key:"chocolats_biscuits", label:"🍫 Chocolats & Biscuits", file:"data/chocolats_biscuits.csv" },
   { key:"conserves", label:"🥫 Conserves & Bocaux", file:"data/conserves.csv" },
@@ -3779,13 +3438,12 @@ const state = {
   promotions: [],
   tempMapCoords: null,
   globalStock: {}, // Stock global partagé entre tous les utilisateurs
-  dynamicText: "", // Texte dynamique pour les annonces
   // Mappage des produits par groupes d'utilisation
   productGroups: {},
   // État admin
   isAdmin: false,
   adminPassword: "admin123", // Mot de passe par défaut pour l'admin
-  showPromoSection: true // Par défaut, afficher la section promo
+  promotionItems: [] // Stocker les articles en promotion
 };
 
 // ===================== UTILITAIRES =====================
@@ -3848,241 +3506,12 @@ function toggleAdminMode() {
 
 function updateAdminUI() {
   const adminSection = $('adminSection');
-  const adminControls = $('adminControls');
   
   if (state.isAdmin) {
     adminSection.classList.add('visible');
-    adminControls.classList.add('visible');
   } else {
     adminSection.classList.remove('visible');
-    adminControls.classList.remove('visible');
   }
-}
-
-// ===================== GESTION DU TEXTE DYNAMIQUE =====================
-function loadDynamicText() {
-  const savedText = localStorage.getItem(CONFIG.dynamicTextKey);
-  if (savedText) {
-    state.dynamicText = savedText;
-    updateDynamicTextDisplay();
-  } else {
-    // Texte par défaut amélioré
-    const defaultText = "🎉 Cette semaine chez MAXI JDC MARKET ! 🎉<br>Profitez de <span class='promo-percent'>50%</span> de réduction sur CRUNCHIES PAPRIKA et CRUNCHIES CHEESE !<br>Le CIUFFI CHIEN STRIP POLLO 200GR à <strong>6 dt</strong> au lieu de <del>8.50 dt</del><br><span class='promo-percent'>25%</span> de rabais sur les produits 10 CAPSULES GOLDEN COFFEE EXTREME et CHIPS LAYS SEL 80GR<br>⚡ Offres limitées, faites vite ! ⚡";
-    state.dynamicText = defaultText;
-    updateDynamicTextDisplay();
-    localStorage.setItem(CONFIG.dynamicTextKey, defaultText);
-  }
-  
-  // Afficher/masquer la section selon la catégorie active
-  updateDynamicTextVisibility();
-}
-
-function updateDynamicTextDisplay() {
-  const dynamicTextElement = $('dynamicPromoText');
-  dynamicTextElement.innerHTML = state.dynamicText;
-}
-
-function updateDynamicTextVisibility() {
-  const promoSection = $('dynamicPromoSection');
-  if (state.activeCategory === 'promotions' && state.dynamicText && state.dynamicText.trim() && state.showPromoSection) {
-    promoSection.classList.add('visible');
-  } else {
-    promoSection.classList.remove('visible');
-  }
-}
-
-function togglePromoText() {
-  const promoSection = $('dynamicPromoSection');
-  const toggleBtn = $('togglePromoTextBtn');
-  
-  if (promoSection.classList.contains('expanded')) {
-    promoSection.classList.remove('expanded');
-    toggleBtn.innerHTML = '🔽 Voir plus';
-  } else {
-    promoSection.classList.add('expanded');
-    toggleBtn.innerHTML = '🔼 Réduire';
-  }
-}
-
-function hidePromoSection() {
-  state.showPromoSection = false;
-  updateDynamicTextVisibility();
-  
-  // Réinitialiser l'état du bouton "Voir plus"
-  const promoSection = $('dynamicPromoSection');
-  const toggleBtn = $('togglePromoTextBtn');
-  promoSection.classList.remove('expanded');
-  toggleBtn.innerHTML = '🔽 Voir plus';
-  
-  showToast('📢 Section promotions masquée', 'warning');
-}
-
-function showPromoSection() {
-  state.showPromoSection = true;
-  updateDynamicTextVisibility();
-  
-  // Réinitialiser l'état du bouton "Voir plus"
-  const promoSection = $('dynamicPromoSection');
-  const toggleBtn = $('togglePromoTextBtn');
-  promoSection.classList.remove('expanded');
-  toggleBtn.innerHTML = '🔽 Voir plus';
-  
-  showToast('📢 Section promotions affichée', 'success');
-}
-
-function openEditTextModal() {
-  if (!state.isAdmin) {
-    showToast('❌ Accès réservé à l\'administrateur', 'error');
-    return;
-  }
-  
-  // Supprimer les balises HTML pour l'édition
-  const plainText = state.dynamicText.replace(/<[^>]*>/g, '').replace(/<br>/g, '\n');
-  $('editTextArea').value = plainText;
-  $('editTextModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeEditTextModal() {
-  $('editTextModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function saveDynamicText() {
-  if (!state.isAdmin) {
-    showToast('❌ Accès réservé à l\'administrateur', 'error');
-    return;
-  }
-  
-  const text = $('editTextArea').value.trim();
-  if (text) {
-    // Formater le texte pour l'affichage HTML
-    const formattedText = text
-      .replace(/\n/g, '<br>')
-      .replace(/(\d+)%/g, "<span class='promo-percent'>$1%</span>")
-      .replace(/CRUNCHIES PAPRIKA|CRUNCHIES CHEESE|CIUFFI CHIEN STRIP POLLO|GOLDEN COFFEE EXTREME|CHIPS LAYS SEL/gi, '<strong>$&</strong>')
-      .replace(/MAXI JDC MARKET/gi, '<strong>$&</strong>');
-    
-    state.dynamicText = formattedText;
-    updateDynamicTextDisplay();
-    localStorage.setItem(CONFIG.dynamicTextKey, formattedText);
-    closeEditTextModal();
-    showToast('✅ Texte enregistré avec succès ! Visible par tous les clients.');
-    updateDynamicTextVisibility();
-  } else {
-    showToast('⚠️ Le texte ne peut pas être vide', 'warning');
-  }
-}
-
-function clearDynamicText() {
-  if (!state.isAdmin) {
-    showToast('❌ Accès réservé à l\'administrateur', 'error');
-    return;
-  }
-  
-  if (confirm('Voulez-vous vraiment effacer le texte dynamique ? Ce changement sera visible par tous les clients.')) {
-    state.dynamicText = '';
-    $('dynamicPromoText').textContent = '';
-    localStorage.removeItem(CONFIG.dynamicTextKey);
-    showToast('Texte effacé. Visible par tous les clients.', 'warning');
-    updateDynamicTextVisibility();
-  }
-}
-
-// ===================== GROUPES DE PRODUITS POUR ARTICLES SIMILAIRES =====================
-// Cette fonction catégorise les produits par groupe d'utilisation
-function categorizeProductByUsage(product) {
-  const name = product.name.toLowerCase();
-  const category = product.categoryKey.toLowerCase();
-  
-  // Groupes par type d'utilisation
-  const groups = {
-    // Boissons
-    'boissons_froides': ['eau', 'jus', 'soda', 'boisson gazeuse', 'limonade', 'cola', 'fanta', 'sprite', 'orangina'],
-    'boissons_chaudes': ['café', 'thé', 'infusion', 'chocolat chaud', 'cappuccino', 'expresso', 'nescafé'],
-    'boissons_energisantes': ['red bull', 'monster', 'burn', 'energy drink', 'boisson énergisante'],
-    
-    // Snacks
-    'snacks_sales': ['chips', 'cacahuètes', 'noix', 'amandes', 'biscuits salés', 'crackers', 'pretzels', 'crunchies'],
-    'snacks_sucres': ['chocolat', 'biscuit', 'gâteau', 'bonbon', 'sucre', 'chewing-gum', 'caramel'],
-    'glaces_desserts': ['glace', 'crème glacée', 'yaourt', 'dessert', 'mousse', 'pudding'],
-    
-    // Produits frais
-    'produits_laitiers': ['lait', 'yaourt', 'fromage', 'beurre', 'crème', 'yogourt', 'petit suisse'],
-    'viandes_charcuteries': ['jambon', 'saucisson', 'pâté', 'viande', 'poulet', 'bœuf', 'charcuterie'],
-    'fruits_legumes': ['pomme', 'banane', 'orange', 'fraise', 'salade', 'tomate', 'carotte', 'oignon'],
-    
-    // Épicerie
-    'conserves': ['conserve', 'boîte', 'haricots', 'maïs', 'thon', 'sardine', 'pâté'],
-    'pates_riz': ['pâtes', 'spaghetti', 'riz', 'couscous', 'semoule', 'nouilles'],
-    'huiles_condiments': ['huile', 'vinaigre', 'sel', 'poivre', 'épice', 'sauce', 'ketchup', 'mayonnaise'],
-    
-    // Hygiène & Soins
-    'hygiene_corporelle': ['savon', 'shampooing', 'dentifrice', 'déodorant', 'gel douche', 'rasoir'],
-    'produits_menage': ['lessive', 'détergent', 'nettoyant', 'javel', 'éponge', 'sac poubelle'],
-    'soins_beaute': ['crème', 'parfum', 'maquillage', 'vernis', 'lotion', 'solaire'],
-    
-    // Bébé & Animaux
-    'produits_bebe': ['couche', 'lait bébé', 'biberon', 'tétine', 'jouet bébé'],
-    'animaux': ['croquette', 'chien', 'chat', 'nourriture animale', 'litière', 'jouet animal', 'ciuffi'],
-    
-    // Spécialités
-    'produits_du_monde': ['couscous', 'tajine', 'sushi', 'pizza', 'hamburger', 'kebab'],
-    'produits_sans_gluten': ['sans gluten', 'gluten free'],
-    'produits_bio': ['bio', 'biologique', 'organic']
-  };
-  
-  // Trouver le groupe correspondant
-  for (const [group, keywords] of Object.entries(groups)) {
-    for (const keyword of keywords) {
-      if (name.includes(keyword) || category.includes(keyword)) {
-        return group;
-      }
-    }
-  }
-  
-  // Si aucun groupe trouvé, utiliser la catégorie principale
-  return category;
-}
-
-// Initialiser les groupes de produits
-function initializeProductGroups() {
-  state.productGroups = {};
-  
-  // Parcourir tous les produits
-  for (const [categoryKey, products] of state.products.entries()) {
-    for (const product of products) {
-      const group = categorizeProductByUsage(product);
-      
-      if (!state.productGroups[group]) {
-        state.productGroups[group] = [];
-      }
-      
-      // Ajouter une référence au produit
-      state.productGroups[group].push({
-        ...product,
-        categoryKey: categoryKey
-      });
-    }
-  }
-  
-  console.log('Groupes de produits initialisés:', Object.keys(state.productGroups).length, 'groupes');
-}
-
-// Obtenir les produits similaires par groupe d'utilisation
-function getSimilarProductsByUsage(currentProduct) {
-  if (!currentProduct) return [];
-  
-  const group = categorizeProductByUsage(currentProduct);
-  const similarProducts = state.productGroups[group] || [];
-  
-  // Filtrer le produit actuel
-  const filtered = similarProducts.filter(product => 
-    !(product.code === currentProduct.code && product.categoryKey === currentProduct.categoryKey)
-  );
-  
-  // Limiter à 6 produits maximum
-  return filtered.slice(0, 6);
 }
 
 // ===================== GESTION DU STOCK GLOBAL =====================
@@ -4141,8 +3570,7 @@ function saveState() {
     user: state.user,
     cart: state.cart,
     orderHistory: state.orderHistory,
-    showPromoSection: state.showPromoSection,
-    version: '17.0'
+    version: '18.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -4150,11 +3578,10 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '17.0') {
+    if (data && data.version === '18.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.orderHistory = data.orderHistory || [];
-      state.showPromoSection = data.showPromoSection !== undefined ? data.showPromoSection : true;
       
       updateUserUI();
       updateCartUI();
@@ -4601,7 +4028,7 @@ async function loadCategoryData(categoryKey) {
       const code = parts[0];
       const name = parts[1];
       let priceStr = parts[2];
-      let oldPriceStr = parts.length > 3 ? parts[3] : null;
+      let discountInfo = parts.length > 3 ? parts[3] : null;
       
       // Validation du prix
       priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
@@ -4613,11 +4040,26 @@ async function loadCategoryData(categoryKey) {
       }
       
       let oldPrice = null;
-      if (oldPriceStr) {
-        oldPriceStr = oldPriceStr.replace(',', '.').replace(/[^\d.]/g, '');
-        oldPrice = parseFloat(oldPriceStr);
-        if (!validatePrice(oldPrice)) {
-          oldPrice = null;
+      let isPromotion = false;
+      
+      // Vérifier si c'est une promotion
+      if (discountInfo) {
+        if (discountInfo.includes('%')) {
+          // Pourcentage de réduction (ex: 50%)
+          const percent = parseFloat(discountInfo.replace('%', '').trim());
+          if (!isNaN(percent) && percent > 0) {
+            // Calculer l'ancien prix
+            oldPrice = price / (1 - percent / 100);
+            oldPrice = Math.round(oldPrice * 100) / 100;
+            isPromotion = true;
+          }
+        } else if (discountInfo.includes('dt')) {
+          // Prix original (ex: 1 dt)
+          const originalPriceStr = discountInfo.replace('dt', '').replace(',', '.').replace(/[^\d.]/g, '');
+          oldPrice = parseFloat(originalPriceStr);
+          if (!isNaN(oldPrice) && oldPrice > price) {
+            isPromotion = true;
+          }
         }
       }
       
@@ -4625,15 +4067,26 @@ async function loadCategoryData(categoryKey) {
       
       const productKey = `${code}_${name}`;
       if (!productsMap.has(productKey)) {
-        productsMap.set(productKey, {
+        const product = {
           code,
           name,
           price: price,
           oldPrice: oldPrice,
           category: category.label,
           categoryKey: category.key,
-          isPromotion: category.key === 'promotions' || oldPrice !== null
-        });
+          isPromotion: category.key === 'promotions' || isPromotion
+        };
+        
+        productsMap.set(productKey, product);
+        
+        // Si c'est une promotion, l'ajouter à la liste des promotions
+        if (isPromotion && category.key !== 'promotions') {
+          state.promotionItems.push({
+            ...product,
+            originalCategory: category.label,
+            discountInfo: discountInfo
+          });
+        }
       }
     });
     
@@ -4646,53 +4099,57 @@ async function loadCategoryData(categoryKey) {
 
 async function loadAllProducts() {
   state.products.clear();
+  state.promotionItems = []; // Réinitialiser la liste des promotions
   
   // Charger le stock global
   await loadGlobalStock();
   
-  // Charger le texte dynamique
-  loadDynamicText();
-  
   // Vérifier le statut admin
   checkAdminStatus();
   
-  // Charger les PROMOTIONS en premier
+  // Charger d'abord les PROMOTIONS pour avoir la base
   const promotions = await loadCategoryData('promotions');
   
-  // Ajouter les nouveaux produits aux promotions
-  const crunchiesPaprika = {
-    code: '4350',
-    name: 'CRUNCHIES PAPRIKA',
-    price: 0.5, // Prix après 50% de réduction (1 dt * 0.5)
-    oldPrice: 1,
-    category: '🔥 PROMOTIONS',
-    categoryKey: 'promotions',
-    isPromotion: true
-  };
+  // Charger toutes les autres catégories
+  const categoryPromises = CATEGORIES.map(async category => {
+    if (category.key !== 'promotions') {
+      const products = await loadCategoryData(category.key);
+      if (products.length > 0) {
+        state.products.set(category.key, products);
+      }
+    }
+  });
   
-  const crunchiesCheese = {
-    code: '4349',
-    name: 'CRUNCHIES CHEESE',
-    price: 0.5, // Prix après 50% de réduction (1 dt * 0.5)
-    oldPrice: 1,
-    category: '🔥 PROMOTIONS',
-    categoryKey: 'promotions',
-    isPromotion: true
-  };
+  await Promise.all(categoryPromises);
   
-  // Ajouter les nouveaux produits au début de la liste des promotions
-  promotions.unshift(crunchiesPaprika, crunchiesCheese);
-  
-  if (promotions.length > 0) {
-    state.products.set('promotions', promotions);
-    state.promotions = promotions;
+  // Maintenant, ajouter les articles en promotion détectés dans les autres catégories
+  // à la catégorie PROMOTIONS
+  if (state.promotionItems.length > 0) {
+    const allPromotions = [...promotions];
+    
+    // Ajouter les promotions détectées
+    state.promotionItems.forEach(promoItem => {
+      // Vérifier si l'article n'est pas déjà dans les promotions
+      const exists = allPromotions.some(p => p.code === promoItem.code && p.name === promoItem.name);
+      if (!exists) {
+        allPromotions.push({
+          ...promoItem,
+          category: '🔥 PROMOTIONS',
+          categoryKey: 'promotions'
+        });
+      }
+    });
+    
+    // Mettre à jour les promotions
+    state.products.set('promotions', allPromotions);
+    state.promotions = allPromotions;
     
     // Afficher la bannière des promotions
+    showPromoBanner(allPromotions);
+  } else if (promotions.length > 0) {
+    state.products.set('promotions', promotions);
+    state.promotions = promotions;
     showPromoBanner(promotions);
-    
-    // Définir les promotions comme catégorie active par défaut
-    state.activeCategory = 'promotions';
-    state.showAllCategories = false;
   } else {
     // Si pas de promotions, charger la catégorie café par défaut
     const defaultProducts = await loadCategoryData('cafe');
@@ -4703,22 +4160,10 @@ async function loadAllProducts() {
   renderCategories();
   renderProducts();
   
-  // Charger les autres catégories en arrière-plan
-  setTimeout(async () => {
-    for (const category of CATEGORIES) {
-      if (category.key !== 'promotions' && category.key !== 'cafe') {
-        const products = await loadCategoryData(category.key);
-        state.products.set(category.key, products);
-      }
-    }
-    
-    // Initialiser les groupes de produits après avoir chargé toutes les catégories
-    initializeProductGroups();
-    
-    renderCategories();
-    renderProducts();
-    showToast('✅ Tous les produits sont chargés');
-  }, 1000);
+  // Initialiser les groupes de produits après avoir chargé toutes les catégories
+  initializeProductGroups();
+  
+  showToast('✅ Tous les produits sont chargés');
 }
 
 // ===================== PROMOTIONS =====================
@@ -4729,8 +4174,14 @@ function showPromoBanner(promotions) {
   }
   
   const crunchiesCount = promotions.filter(p => p.name.includes('CRUNCHIES')).length;
-  const promoTitle = `🔥 ${crunchiesCount} PRODUITS À -50%`;
-  const promoDesc = `Dont CRUNCHIES PAPRIKA & CHEESE à 0.50 dt seulement !`;
+  const promoCount = promotions.length;
+  
+  const promoTitle = `🔥 ${promoCount} PRODUITS EN PROMOTION`;
+  let promoDesc = `Dont CRUNCHIES PAPRIKA & CHEESE à 0.50 dt seulement !`;
+  
+  if (promoCount > 2) {
+    promoDesc = `Profitez de ${promoCount} articles en promotion dont -50% sur CRUNCHIES !`;
+  }
   
   $('promoTitle').textContent = promoTitle;
   $('promoDesc').textContent = promoDesc;
@@ -4752,7 +4203,6 @@ function renderCategories() {
     state.currentPage = 1;
     renderProducts();
     updateCategoriesUI();
-    updateDynamicTextVisibility();
   };
   container.appendChild(allButton);
   
@@ -4772,7 +4222,6 @@ function renderCategories() {
       state.currentPage = 1;
       renderProducts();
       updateCategoriesUI();
-      updateDynamicTextVisibility();
     };
     container.appendChild(button);
   });
@@ -4797,15 +4246,10 @@ function updateCategoriesUI() {
       }
       $('activeCategoryLabel').textContent = category.label;
       
-      // Afficher le texte dynamique pour les promotions
       if (category.isPromo) {
-        if (state.dynamicText && state.dynamicText.trim()) {
-          // Extraire le texte sans les balises HTML pour l'affichage
-          const textWithoutTags = state.dynamicText.replace(/<[^>]*>/g, '');
-          const shortText = textWithoutTags.length > 80 
-            ? textWithoutTags.substring(0, 80) + '...' 
-            : textWithoutTags;
-          $('activeCategoryMeta').innerHTML = `<span style="color:var(--warning);font-weight:700;">📢 ${shortText}</span>`;
+        const promoCount = state.products.get('promotions')?.length || 0;
+        if (promoCount > 0) {
+          $('activeCategoryMeta').innerHTML = `<span style="color:#ffcc00;font-weight:700;">🔥 ${promoCount} articles en promotion !</span>`;
         } else {
           $('activeCategoryMeta').textContent = `${category.key}.csv`;
         }
@@ -4898,9 +4342,11 @@ function renderProducts() {
     card.className = `product-card ${product.isPromotion ? 'promo-card' : ''}`;
     
     // Ajouter un badge de promotion sur l'image si nécessaire
-    const imagePromoBadge = product.isPromotion && product.oldPrice 
-      ? `<div class="image-promo-badge">-${Math.round((1 - product.price / product.oldPrice) * 100)}%</div>`
-      : '';
+    let imagePromoBadge = '';
+    if (product.isPromotion && product.oldPrice) {
+      const discountPercent = Math.round((1 - product.price / product.oldPrice) * 100);
+      imagePromoBadge = `<div class="image-promo-badge">-${discountPercent}%</div>`;
+    }
     
     // Afficher l'ancien prix si en promotion
     const oldPriceDisplay = product.isPromotion && product.oldPrice 
@@ -4946,8 +4392,20 @@ function renderProducts() {
 function getSimilarProducts(currentProduct) {
   if (!currentProduct) return [];
   
-  // Utiliser la nouvelle méthode basée sur les groupes d'utilisation
-  return getSimilarProductsByUsage(currentProduct);
+  // Si c'est une promotion, montrer d'autres promotions
+  if (currentProduct.categoryKey === 'promotions') {
+    const otherPromotions = state.promotions.filter(p => 
+      p.code !== currentProduct.code && 
+      p.name !== currentProduct.name
+    );
+    return otherPromotions.slice(0, 6);
+  }
+  
+  // Sinon, chercher dans la même catégorie
+  const sameCategoryProducts = state.products.get(currentProduct.categoryKey) || [];
+  return sameCategoryProducts
+    .filter(p => p.code !== currentProduct.code && p.name !== currentProduct.name)
+    .slice(0, 6);
 }
 
 function renderSimilarProducts(currentProduct) {
@@ -5057,7 +4515,7 @@ function openProductModal(product) {
     $('modalProductDiscount').style.display = 'block';
     
     // Afficher le badge promo sur l'image
-    if (discountPercent === 50) {
+    if (discountPercent > 0) {
       $('modalPromoBadge').style.display = 'block';
       $('modalPromoBadge').textContent = `${discountPercent}% OFF`;
     } else {
@@ -5493,16 +4951,7 @@ function init() {
     state.currentPage = 1;
     renderProducts();
     updateCategoriesUI();
-    updateDynamicTextVisibility();
   };
-  
-  // Texte dynamique
-  $('togglePromoTextBtn').onclick = togglePromoText;
-  $('hidePromoBtn').onclick = hidePromoSection;
-  $('editDynamicTextBtn').onclick = openEditTextModal;
-  $('clearDynamicTextBtn').onclick = clearDynamicText;
-  $('saveEditTextBtn').onclick = saveDynamicText;
-  $('cancelEditTextBtn').onclick = closeEditTextModal;
   
   // QR Code
   $('qrInfoBtn').onclick = openQrModal;
@@ -5516,7 +4965,6 @@ function init() {
     state.currentPage = 1;
     renderProducts();
     updateCategoriesUI();
-    updateDynamicTextVisibility();
     closeDrawer();
   };
   
@@ -5538,7 +4986,7 @@ function init() {
       toggleAdminMode();
       return;
     }
-    openEditTextModal();
+    showToast('📢 Gestion des promotions - Fonctionnalité à venir', 'warning');
   };
   
   $('adminStockBtn').onclick = () => {
@@ -5739,8 +5187,6 @@ function init() {
         closeProductModal();
       } else if ($('qrModal').classList.contains('open')) {
         closeQrModal();
-      } else if ($('editTextModal').classList.contains('open')) {
-        closeEditTextModal();
       } else if ($('mapModal').classList.contains('open')) {
         closeMapModal();
       } else if ($('orderModal').classList.contains('open')) {
@@ -5790,6 +5236,59 @@ function registerServiceWorker() {
         });
     });
   }
+}
+
+// ===================== GROUPES DE PRODUITS =====================
+function categorizeProductByUsage(product) {
+  const name = product.name.toLowerCase();
+  const category = product.categoryKey.toLowerCase();
+  
+  const groups = {
+    'boissons_froides': ['eau', 'jus', 'soda', 'boisson gazeuse', 'limonade', 'cola', 'fanta', 'sprite', 'orangina'],
+    'boissons_chaudes': ['café', 'thé', 'infusion', 'chocolat chaud', 'cappuccino', 'expresso', 'nescafé'],
+    'snacks_sales': ['chips', 'cacahuètes', 'noix', 'amandes', 'biscuits salés', 'crackers', 'pretzels', 'crunchies'],
+    'snacks_sucres': ['chocolat', 'biscuit', 'gâteau', 'bonbon', 'sucre', 'chewing-gum', 'caramel'],
+    'produits_laitiers': ['lait', 'yaourt', 'fromage', 'beurre', 'crème', 'yogourt', 'petit suisse'],
+    'viandes_charcuteries': ['jambon', 'saucisson', 'pâté', 'viande', 'poulet', 'bœuf', 'charcuterie'],
+    'fruits_legumes': ['pomme', 'banane', 'orange', 'fraise', 'salade', 'tomate', 'carotte', 'oignon'],
+    'conserves': ['conserve', 'boîte', 'haricots', 'maïs', 'thon', 'sardine', 'pâté'],
+    'pates_riz': ['pâtes', 'spaghetti', 'riz', 'couscous', 'semoule', 'nouilles'],
+    'hygiene_corporelle': ['savon', 'shampooing', 'dentifrice', 'déodorant', 'gel douche', 'rasoir'],
+    'produits_menage': ['lessive', 'détergent', 'nettoyant', 'javel', 'éponge', 'sac poubelle'],
+    'produits_bebe': ['couche', 'lait bébé', 'biberon', 'tétine', 'jouet bébé'],
+    'animaux': ['croquette', 'chien', 'chat', 'nourriture animale', 'litière', 'jouet animal', 'ciuffi']
+  };
+  
+  for (const [group, keywords] of Object.entries(groups)) {
+    for (const keyword of keywords) {
+      if (name.includes(keyword) || category.includes(keyword)) {
+        return group;
+      }
+    }
+  }
+  
+  return category;
+}
+
+function initializeProductGroups() {
+  state.productGroups = {};
+  
+  for (const [categoryKey, products] of state.products.entries()) {
+    for (const product of products) {
+      const group = categorizeProductByUsage(product);
+      
+      if (!state.productGroups[group]) {
+        state.productGroups[group] = [];
+      }
+      
+      state.productGroups[group].push({
+        ...product,
+        categoryKey: categoryKey
+      });
+    }
+  }
+  
+  console.log('Groupes de produits initialisés:', Object.keys(state.productGroups).length, 'groupes');
 }
 
 // Démarrer l'application
