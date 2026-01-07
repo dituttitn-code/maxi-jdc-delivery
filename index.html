@@ -3387,7 +3387,7 @@ const CONFIG = {
   shippingFee: 3,
   whatsappNumber: "21625600978",
   itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v18',
+  localStorageKey: 'maxi_jdc_market_app_v19',
   imagesBasePath: 'maxi-jdc-market/images/products/',
   historyRetentionYears: 2,
   adminPasswordKey: 'maxi_jdc_admin_password'
@@ -3426,7 +3426,7 @@ const state = {
   cart: {},
   stock: {},
   searchQuery: '',
-  activeCategory: 'promotions', // Commencer par les promotions
+  activeCategory: 'promotions',
   showAllCategories: false,
   currentPage: 1,
   currentModalProduct: null,
@@ -3437,13 +3437,12 @@ const state = {
   orderHistory: [],
   promotions: [],
   tempMapCoords: null,
-  globalStock: {}, // Stock global partagé entre tous les utilisateurs
-  // Mappage des produits par groupes d'utilisation
+  globalStock: {},
   productGroups: {},
-  // État admin
   isAdmin: false,
-  adminPassword: "admin123", // Mot de passe par défaut pour l'admin
-  promotionItems: [] // Stocker les articles en promotion
+  adminPassword: "admin123",
+  promotionItems: [],
+  stockData: new Map() // Nouveau: stock par code produit
 };
 
 // ===================== UTILITAIRES =====================
@@ -3468,7 +3467,6 @@ function showToast(message, type = 'success') {
   }, 3000);
 }
 
-// Fonction pour valider les prix
 function validatePrice(price) {
   if (typeof price !== 'number' || isNaN(price) || price <= 0) {
     return false;
@@ -3485,13 +3483,11 @@ function checkAdminStatus() {
 
 function toggleAdminMode() {
   if (state.isAdmin) {
-    // Si déjà admin, désactiver
     state.isAdmin = false;
     localStorage.removeItem(CONFIG.adminPasswordKey);
     updateAdminUI();
     showToast('🔐 Mode administrateur désactivé', 'warning');
   } else {
-    // Sinon, demander le mot de passe
     const password = prompt("Entrez le mot de passe administrateur:");
     if (password === state.adminPassword) {
       state.isAdmin = true;
@@ -3506,61 +3502,93 @@ function toggleAdminMode() {
 
 function updateAdminUI() {
   const adminSection = $('adminSection');
-  
-  if (state.isAdmin) {
-    adminSection.classList.add('visible');
-  } else {
-    adminSection.classList.remove('visible');
-  }
+  adminSection.classList.toggle('visible', state.isAdmin);
 }
 
-// ===================== GESTION DU STOCK GLOBAL =====================
-async function loadGlobalStock() {
+// ===================== GESTION DU STOCK =====================
+async function loadStockData() {
   try {
-    // Stock global avec les nouveaux produits
-    state.globalStock = {
-      'CAF001': { inStock: true, quantity: 50 },
-      'CAF002': { inStock: true, quantity: 30 },
-      'CAF003': { inStock: false, quantity: 0 },
-      'CHO001': { inStock: true, quantity: 25 },
-      'CHO002': { inStock: true, quantity: 40 },
-      'BIS001': { inStock: true, quantity: 60 },
-      'BIS002': { inStock: false, quantity: 0 },
-      'EAU001': { inStock: true, quantity: 100 },
-      'EAU002': { inStock: true, quantity: 80 },
-      'JUS001': { inStock: true, quantity: 45 },
-      'JUS002': { inStock: true, quantity: 35 },
-      'LAI001': { inStock: true, quantity: 20 },
-      'LAI002': { inStock: false, quantity: 0 },
-      'FRI001': { inStock: true, quantity: 70 },
-      'FRI002': { inStock: true, quantity: 55 },
-      '4350': { inStock: true, quantity: 40 }, // CRUNCHIES PAPRIKA
-      '4349': { inStock: true, quantity: 35 }  // CRUNCHIES CHEESE
-    };
+    // Charger le stock depuis le fichier PROMOTIONS.csv
+    const response = await fetch('data/PROMOTIONS.csv');
+    if (!response.ok) {
+      console.warn('Fichier PROMOTIONS.csv non trouvé');
+      return;
+    }
     
-    console.log('Stock global chargé:', Object.keys(state.globalStock).length, 'produits');
+    const text = await response.text();
+    const lines = text.split('\n').filter(line => line.trim());
+    
+    if (lines.length === 0) return;
+    
+    const firstLine = lines[0];
+    const separator = firstLine.includes('\t') ? '\t' : ';';
+    
+    state.stockData.clear();
+    
+    lines.slice(1).forEach(line => {
+      const parts = line.split(separator).map(field => field.trim());
+      if (parts.length < 4) return;
+      
+      const code = parts[0];
+      const name = parts[1];
+      const priceStr = parts[2];
+      const stockStr = parts[3];
+      
+      const stock = parseInt(stockStr) || 0;
+      
+      if (code && name) {
+        state.stockData.set(code, {
+          code,
+          name,
+          stock,
+          inStock: stock > 0
+        });
+      }
+    });
+    
+    console.log('Stock chargé:', state.stockData.size, 'produits');
   } catch (error) {
-    console.error('Erreur chargement stock global:', error);
-    state.globalStock = {};
+    console.error('Erreur chargement stock:', error);
+    state.stockData = new Map();
   }
 }
 
-function isInStockGlobal(productCode) {
-  const stockInfo = state.globalStock[productCode];
-  return stockInfo ? stockInfo.inStock : true;
+function isInStock(productCode) {
+  const stockInfo = state.stockData.get(productCode);
+  if (stockInfo) {
+    return stockInfo.inStock;
+  }
+  
+  // Si pas trouvé dans stockData, vérifier dans globalStock pour rétrocompatibilité
+  if (state.globalStock[productCode]) {
+    return state.globalStock[productCode].inStock;
+  }
+  
+  return true; // Par défaut en stock
 }
 
 function getStockQuantity(productCode) {
-  const stockInfo = state.globalStock[productCode];
-  return stockInfo ? stockInfo.quantity : 999;
+  const stockInfo = state.stockData.get(productCode);
+  if (stockInfo) {
+    return stockInfo.stock;
+  }
+  
+  // Si pas trouvé dans stockData, vérifier dans globalStock
+  if (state.globalStock[productCode]) {
+    return state.globalStock[productCode].quantity;
+  }
+  
+  return 999;
 }
 
-function updateGlobalStock(productCode, quantity) {
-  if (state.globalStock[productCode]) {
+function updateStock(productCode, quantity) {
+  const stockInfo = state.stockData.get(productCode);
+  if (stockInfo) {
+    stockInfo.stock = Math.max(0, stockInfo.stock - quantity);
+    stockInfo.inStock = stockInfo.stock > 0;
+  } else if (state.globalStock[productCode]) {
     state.globalStock[productCode].quantity = Math.max(0, state.globalStock[productCode].quantity - quantity);
-    if (state.globalStock[productCode].quantity <= 0) {
-      state.globalStock[productCode].inStock = false;
-    }
+    state.globalStock[productCode].inStock = state.globalStock[productCode].quantity > 0;
   }
 }
 
@@ -3570,7 +3598,7 @@ function saveState() {
     user: state.user,
     cart: state.cart,
     orderHistory: state.orderHistory,
-    version: '18.0'
+    version: '19.0'
   };
   localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
 }
@@ -3578,7 +3606,7 @@ function saveState() {
 function loadState() {
   try {
     const data = JSON.parse(localStorage.getItem(CONFIG.localStorageKey));
-    if (data && data.version === '18.0') {
+    if (data && data.version === '19.0') {
       state.user = data.user || null;
       state.cart = data.cart || {};
       state.orderHistory = data.orderHistory || [];
@@ -3797,7 +3825,7 @@ function viewOrderDetails(order) {
   order.items.forEach(item => {
     const lineTotal = item.price * item.quantity;
     details += `• ${item.name}\n`;
-    details += `  Qté: ${item.quantity} | Prix: ${formatPrice(item.price)}\n`;
+    details += `  Code: ${item.code} | Qté: ${item.quantity} | Prix: ${formatPrice(item.price)}\n`;
     details += `  Total: ${formatPrice(lineTotal)}\n\n`;
   });
   
@@ -3868,7 +3896,6 @@ function updateCartUI() {
   
   $('cartSubtotal').textContent = formatPrice(subtotal);
   
-  // CALCUL CORRIGÉ POUR LA GRATUITÉ
   let shippingFee = CONFIG.shippingFee;
   let shippingText = formatPrice(shippingFee);
   
@@ -3930,8 +3957,7 @@ function updateCartUI() {
 function addToCart(productId, product, quantity = 1) {
   if (!product || quantity <= 0) return;
   
-  // Vérifier le stock avant d'ajouter
-  if (!isInStockGlobal(product.code)) {
+  if (!isInStock(product.code)) {
     showToast('❌ Ce produit n\'est plus en stock', 'error');
     return;
   }
@@ -3955,8 +3981,7 @@ function addToCart(productId, product, quantity = 1) {
   
   state.quantityPicks[productId] = 0;
   
-  // Mettre à jour le stock global
-  updateGlobalStock(product.code, quantity);
+  updateStock(product.code, quantity);
   
   updateCartUI();
   
@@ -3973,9 +3998,8 @@ function removeFromCart(productId, quantity = 1) {
   
   state.cart[productId].quantity -= quantity;
   
-  // Restaurer le stock
   const product = state.cart[productId];
-  updateGlobalStock(product.code, -quantity);
+  updateStock(product.code, -quantity);
   
   if (state.cart[productId].quantity <= 0) {
     delete state.cart[productId];
@@ -3988,9 +4012,8 @@ function clearCart() {
   if (Object.keys(state.cart).length === 0) return;
   
   if (confirm('Voulez-vous vraiment vider tout votre panier ?')) {
-    // Restaurer tout le stock
     Object.values(state.cart).forEach(item => {
-      updateGlobalStock(item.code, -item.quantity);
+      updateStock(item.code, -item.quantity);
     });
     
     state.cart = {};
@@ -4030,7 +4053,6 @@ async function loadCategoryData(categoryKey) {
       let priceStr = parts[2];
       let discountInfo = parts.length > 3 ? parts[3] : null;
       
-      // Validation du prix
       priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
       const price = parseFloat(priceStr);
       
@@ -4042,19 +4064,15 @@ async function loadCategoryData(categoryKey) {
       let oldPrice = null;
       let isPromotion = false;
       
-      // Vérifier si c'est une promotion
       if (discountInfo) {
         if (discountInfo.includes('%')) {
-          // Pourcentage de réduction (ex: 50%)
           const percent = parseFloat(discountInfo.replace('%', '').trim());
           if (!isNaN(percent) && percent > 0) {
-            // Calculer l'ancien prix
             oldPrice = price / (1 - percent / 100);
             oldPrice = Math.round(oldPrice * 100) / 100;
             isPromotion = true;
           }
         } else if (discountInfo.includes('dt')) {
-          // Prix original (ex: 1 dt)
           const originalPriceStr = discountInfo.replace('dt', '').replace(',', '.').replace(/[^\d.]/g, '');
           oldPrice = parseFloat(originalPriceStr);
           if (!isNaN(oldPrice) && oldPrice > price) {
@@ -4079,7 +4097,6 @@ async function loadCategoryData(categoryKey) {
         
         productsMap.set(productKey, product);
         
-        // Si c'est une promotion, l'ajouter à la liste des promotions
         if (isPromotion && category.key !== 'promotions') {
           state.promotionItems.push({
             ...product,
@@ -4097,20 +4114,88 @@ async function loadCategoryData(categoryKey) {
   }
 }
 
+// NOUVELLE FONCTION: Charger les promotions avec stock
+async function loadPromotionsWithStock() {
+  try {
+    const response = await fetch('data/PROMOTIONS.csv');
+    if (!response.ok) {
+      console.warn('Fichier PROMOTIONS.csv non trouvé');
+      return [];
+    }
+    
+    const text = await response.text();
+    const lines = text.split('\n').filter(line => line.trim());
+    
+    if (lines.length === 0) return [];
+    
+    const firstLine = lines[0];
+    const separator = firstLine.includes('\t') ? '\t' : ';';
+    
+    const promotions = [];
+    
+    lines.slice(1).forEach(line => {
+      const parts = line.split(separator).map(field => field.trim());
+      if (parts.length < 4) return null;
+      
+      const code = parts[0];
+      const name = parts[1];
+      let priceStr = parts[2];
+      const stockStr = parts[3];
+      
+      priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
+      const price = parseFloat(priceStr);
+      const stock = parseInt(stockStr) || 0;
+      
+      if (!validatePrice(price) || !code || !name) return null;
+      
+      // Chercher l'ancien prix dans les autres catégories
+      let oldPrice = null;
+      let foundInOtherCategory = false;
+      let originalCategory = '';
+      
+      for (const [catKey, products] of state.products.entries()) {
+        if (catKey === 'promotions') continue;
+        
+        const originalProduct = products.find(p => p.code === code);
+        if (originalProduct && originalProduct.price !== price) {
+          oldPrice = originalProduct.price;
+          originalCategory = CATEGORIES.find(c => c.key === catKey)?.label || catKey;
+          foundInOtherCategory = true;
+          break;
+        }
+      }
+      
+      promotions.push({
+        code,
+        name,
+        price: price,
+        oldPrice: oldPrice,
+        stock: stock,
+        category: '🔥 PROMOTIONS',
+        categoryKey: 'promotions',
+        isPromotion: true,
+        originalCategory: foundInOtherCategory ? originalCategory : '',
+        foundInOtherCategory: foundInOtherCategory
+      });
+    });
+    
+    return promotions;
+  } catch (error) {
+    console.error('Erreur chargement promotions:', error);
+    return [];
+  }
+}
+
 async function loadAllProducts() {
   state.products.clear();
-  state.promotionItems = []; // Réinitialiser la liste des promotions
+  state.promotionItems = [];
   
-  // Charger le stock global
-  await loadGlobalStock();
+  // Charger le stock
+  await loadStockData();
   
-  // Vérifier le statut admin
   checkAdminStatus();
   
-  // Charger d'abord les PROMOTIONS pour avoir la base
-  const promotions = await loadCategoryData('promotions');
-  
-  // Charger toutes les autres catégories
+  // Charger toutes les catégories normales d'abord
   const categoryPromises = CATEGORIES.map(async category => {
     if (category.key !== 'promotions') {
       const products = await loadCategoryData(category.key);
@@ -4122,36 +4207,37 @@ async function loadAllProducts() {
   
   await Promise.all(categoryPromises);
   
-  // Maintenant, ajouter les articles en promotion détectés dans les autres catégories
-  // à la catégorie PROMOTIONS
-  if (state.promotionItems.length > 0) {
-    const allPromotions = [...promotions];
+  // Maintenant charger les promotions avec stock
+  const promotions = await loadPromotionsWithStock();
+  
+  if (promotions.length > 0) {
+    state.products.set('promotions', promotions);
+    state.promotions = promotions;
     
-    // Ajouter les promotions détectées
-    state.promotionItems.forEach(promoItem => {
-      // Vérifier si l'article n'est pas déjà dans les promotions
-      const exists = allPromotions.some(p => p.code === promoItem.code && p.name === promoItem.name);
-      if (!exists) {
-        allPromotions.push({
-          ...promoItem,
-          category: '🔥 PROMOTIONS',
-          categoryKey: 'promotions'
-        });
+    // Mettre à jour les produits dans les autres catégories avec les prix promotionnels
+    promotions.forEach(promo => {
+      if (promo.foundInOtherCategory) {
+        // Trouver et mettre à jour le produit dans sa catégorie d'origine
+        for (const [catKey, products] of state.products.entries()) {
+          if (catKey !== 'promotions') {
+            const index = products.findIndex(p => p.code === promo.code);
+            if (index !== -1) {
+              // Mettre à jour le produit avec le prix promotionnel
+              products[index] = {
+                ...products[index],
+                oldPrice: promo.oldPrice,
+                isPromotion: true,
+                promotionPrice: promo.price
+              };
+              break;
+            }
+          }
+        }
       }
     });
     
-    // Mettre à jour les promotions
-    state.products.set('promotions', allPromotions);
-    state.promotions = allPromotions;
-    
-    // Afficher la bannière des promotions
-    showPromoBanner(allPromotions);
-  } else if (promotions.length > 0) {
-    state.products.set('promotions', promotions);
-    state.promotions = promotions;
     showPromoBanner(promotions);
   } else {
-    // Si pas de promotions, charger la catégorie café par défaut
     const defaultProducts = await loadCategoryData('cafe');
     state.products.set('cafe', defaultProducts);
     state.activeCategory = 'cafe';
@@ -4160,7 +4246,6 @@ async function loadAllProducts() {
   renderCategories();
   renderProducts();
   
-  // Initialiser les groupes de produits après avoir chargé toutes les catégories
   initializeProductGroups();
   
   showToast('✅ Tous les produits sont chargés');
@@ -4332,23 +4417,20 @@ function renderProducts() {
   
   productsToShow.forEach(product => {
     const productId = generateProductId(product);
-    const inStock = isInStockGlobal(product.code);
+    const inStock = isInStock(product.code);
     const stockQuantity = getStockQuantity(product.code);
     
-    // Génération de l'URL de l'image
     const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
     
     const card = document.createElement('div');
     card.className = `product-card ${product.isPromotion ? 'promo-card' : ''}`;
     
-    // Ajouter un badge de promotion sur l'image si nécessaire
     let imagePromoBadge = '';
     if (product.isPromotion && product.oldPrice) {
       const discountPercent = Math.round((1 - product.price / product.oldPrice) * 100);
       imagePromoBadge = `<div class="image-promo-badge">-${discountPercent}%</div>`;
     }
     
-    // Afficher l'ancien prix si en promotion
     const oldPriceDisplay = product.isPromotion && product.oldPrice 
       ? `<div class="product-old-price">${formatPrice(product.oldPrice)}</div>`
       : '';
@@ -4388,11 +4470,10 @@ function renderProducts() {
   });
 }
 
-// ===================== ARTICLES SIMILAIRES (AMÉLIORÉ) =====================
+// ===================== ARTICLES SIMILAIRES =====================
 function getSimilarProducts(currentProduct) {
   if (!currentProduct) return [];
   
-  // Si c'est une promotion, montrer d'autres promotions
   if (currentProduct.categoryKey === 'promotions') {
     const otherPromotions = state.promotions.filter(p => 
       p.code !== currentProduct.code && 
@@ -4401,7 +4482,6 @@ function getSimilarProducts(currentProduct) {
     return otherPromotions.slice(0, 6);
   }
   
-  // Sinon, chercher dans la même catégorie
   const sameCategoryProducts = state.products.get(currentProduct.categoryKey) || [];
   return sameCategoryProducts
     .filter(p => p.code !== currentProduct.code && p.name !== currentProduct.name)
@@ -4425,7 +4505,7 @@ function renderSimilarProducts(currentProduct) {
   similarGrid.innerHTML = '';
   
   similarProducts.forEach(product => {
-    const inStock = isInStockGlobal(product.code);
+    const inStock = isInStock(product.code);
     const stockQuantity = getStockQuantity(product.code);
     
     const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
@@ -4494,7 +4574,7 @@ function openProductModal(product) {
   state.currentModalProduct = product;
   const productId = generateProductId(product);
   const quantity = state.quantityPicks[productId] || 0;
-  const inStock = isInStockGlobal(product.code);
+  const inStock = isInStock(product.code);
   const stockQuantity = getStockQuantity(product.code);
   
   $('modalProductName').textContent = product.name;
@@ -4506,7 +4586,6 @@ function openProductModal(product) {
   $('modalProductStock').style.color = inStock ? 'var(--accent)' : 'var(--danger)';
   $('modalProductQuantity').textContent = quantity;
   
-  // Gestion des promotions dans le modal
   if (product.isPromotion && product.oldPrice) {
     $('modalProductOldPrice').textContent = formatPrice(product.oldPrice);
     $('modalProductOldPrice').style.display = 'block';
@@ -4514,7 +4593,6 @@ function openProductModal(product) {
     $('modalProductDiscount').textContent = `-${discountPercent}%`;
     $('modalProductDiscount').style.display = 'block';
     
-    // Afficher le badge promo sur l'image
     if (discountPercent > 0) {
       $('modalPromoBadge').style.display = 'block';
       $('modalPromoBadge').textContent = `${discountPercent}% OFF`;
@@ -4557,7 +4635,6 @@ function openProductModal(product) {
   $('modalPrevImageBtn').disabled = currentIndex === 0;
   $('modalNextImageBtn').disabled = currentIndex === productsList.length - 1;
   
-  // Afficher les articles similaires (améliorés)
   renderSimilarProducts(product);
   
   $('productModal').classList.add('open');
@@ -4614,7 +4691,7 @@ function updateModalQuantity() {
   $('modalProductQuantity').textContent = quantity;
   
   const addBtn = $('modalAddToCartBtn');
-  const inStock = isInStockGlobal(state.currentModalProduct.code);
+  const inStock = isInStock(state.currentModalProduct.code);
   
   addBtn.disabled = !inStock || quantity === 0;
   addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
@@ -4912,7 +4989,6 @@ function navigateToNextPage() {
 function init() {
   loadState();
   
-  // Vérifier le statut admin
   checkAdminStatus();
   
   // Header
@@ -5122,7 +5198,7 @@ function init() {
         }
         
         state.cart[id].quantity++;
-        updateGlobalStock(product.code, 1);
+        updateStock(product.code, 1);
         updateCartUI();
       }
     } else if (action === 'decrease') {
