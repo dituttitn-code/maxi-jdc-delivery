@@ -817,7 +817,7 @@
     .product-discount {
       position: absolute;
       top: 8px;
-      right: 8px;
+      left: 8px;
       background: linear-gradient(135deg, #ff0000, #ff6b00);
       color: white;
       font-weight: 900;
@@ -2914,8 +2914,8 @@
       <div class="promo-content">
         <div class="promo-icon">🔥</div>
         <div class="promo-text">
-          <h4 id="promoTitle">🔥 2 PRODUITS À -50%</h4>
-          <p id="promoDesc">Dont CRUNCHIES PAPRIKA & CHEESE à 0.50 dt seulement !</p>
+          <h4 id="promoTitle">🔥 PRODUITS EN PROMOTION</h4>
+          <p id="promoDesc">Profitez de nos offres spéciales !</p>
         </div>
       </div>
       <button class="promo-btn" id="viewPromosBtn">VOIR →</button>
@@ -3368,7 +3368,8 @@ const CONFIG = {
   localStorageKey: 'maxi_jdc_market_app_v20',
   imagesBasePath: 'maxi-jdc-market/images/products/',
   historyRetentionYears: 2,
-  adminPasswordKey: 'maxi_jdc_admin_password'
+  adminPasswordKey: 'maxi_jdc_admin_password',
+  defaultStock: 10 // Stock par défaut pour tous les produits
 };
 
 // Catégories avec noms complets - PROMOTIONS EN PREMIER
@@ -3413,7 +3414,8 @@ const state = {
   promotions: [],
   tempMapCoords: null,
   isAdmin: false,
-  adminPassword: "admin123"
+  adminPassword: "admin123",
+  originalPrices: new Map() // Pour stocker les prix originaux
 };
 
 // ===================== UTILITAIRES =====================
@@ -3932,8 +3934,14 @@ async function loadCategoryData(categoryKey) {
           price: price,
           category: category.label,
           categoryKey: category.key,
-          isPromotion: false
+          isPromotion: false,
+          stock: CONFIG.defaultStock,
+          oldPrice: null // Pour les promotions
         };
+        
+        // Stocker le prix original
+        const priceKey = `${categoryKey}_${code}`;
+        state.originalPrices.set(priceKey, price);
         
         productsMap.set(productKey, product);
       }
@@ -3966,13 +3974,11 @@ async function loadPromotionsData() {
     
     lines.slice(1).forEach(line => {
       const parts = line.split(separator).map(field => field.trim());
-      // Format attendu: CODE;NOM;PRIX_PROMO;STOCK
       if (parts.length < 3) return;
       
       const code = parts[0];
       const name = parts[1];
       let priceStr = parts[2];
-      const stock = parts.length > 3 ? parseInt(parts[3]) || 0 : 0;
       
       priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
       const price = parseFloat(priceStr);
@@ -3983,10 +3989,11 @@ async function loadPromotionsData() {
         code,
         name,
         price: price,
-        stock: stock,
+        stock: CONFIG.defaultStock,
         category: '🔥 PROMOTIONS',
         categoryKey: 'promotions',
-        isPromotion: true
+        isPromotion: true,
+        oldPrice: null // Sera calculé plus tard
       });
     });
     
@@ -3998,6 +4005,8 @@ async function loadPromotionsData() {
 }
 
 function applyPromotionsToCategories(promotions) {
+  console.log('Application des promotions...');
+  
   promotions.forEach(promoProduct => {
     // Chercher ce produit dans toutes les autres catégories
     for (const [catKey, products] of state.products.entries()) {
@@ -4010,14 +4019,20 @@ function applyPromotionsToCategories(promotions) {
       if (originalProductIndex !== -1) {
         // Produit trouvé ! Mettre à jour avec les infos de promotion
         const originalProduct = products[originalProductIndex];
+        
+        // Calculer le pourcentage de réduction
+        const discountPercent = Math.round((1 - promoProduct.price / originalProduct.price) * 100);
+        
         products[originalProductIndex] = {
           ...originalProduct,
           oldPrice: originalProduct.price, // Sauvegarder l'ancien prix
           price: promoProduct.price,       // Appliquer le prix promo
           isPromotion: true,               // Marquer comme promotion
-          promotionStock: promoProduct.stock // Stock spécifique à la promo
+          stock: CONFIG.defaultStock,      // Toujours en stock
+          discountPercent: discountPercent // Pourcentage de réduction
         };
-        console.log(`Promo appliquée: ${promoProduct.code} dans ${catKey}`);
+        
+        console.log(`Promo appliquée: ${promoProduct.code} dans ${catKey} - ${discountPercent}% de réduction`);
       }
     }
   });
@@ -4025,6 +4040,7 @@ function applyPromotionsToCategories(promotions) {
 
 async function loadAllProducts() {
   state.products.clear();
+  state.originalPrices.clear();
   
   // Charger toutes les catégories normales d'abord
   const categoryPromises = CATEGORIES.map(async category => {
@@ -4068,15 +4084,10 @@ function showPromoBanner(promotions) {
     return;
   }
   
-  const crunchiesCount = promotions.filter(p => p.name.includes('CRUNCHIES')).length;
   const promoCount = promotions.length;
   
   const promoTitle = `🔥 ${promoCount} PRODUITS EN PROMOTION`;
-  let promoDesc = `Dont CRUNCHIES PAPRIKA & CHEESE à 0.50 dt seulement !`;
-  
-  if (promoCount > 2) {
-    promoDesc = `Profitez de ${promoCount} articles en promotion dont -50% sur CRUNCHIES !`;
-  }
+  let promoDesc = `Profitez de nos offres spéciales avec jusqu'à -50% !`;
   
   $('promoTitle').textContent = promoTitle;
   $('promoDesc').textContent = promoDesc;
@@ -4227,8 +4238,7 @@ function renderProducts() {
   
   productsToShow.forEach(product => {
     const productId = generateProductId(product);
-    const stock = product.promotionStock || 0;
-    const inStock = stock > 0;
+    const inStock = product.stock > 0;
     
     const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
     
@@ -4236,8 +4246,11 @@ function renderProducts() {
     card.className = `product-card ${product.isPromotion ? 'promo-card' : ''}`;
     
     let imagePromoBadge = '';
-    if (product.isPromotion) {
+    let discountBadge = '';
+    
+    if (product.isPromotion && product.discountPercent) {
       imagePromoBadge = '<div class="image-promo-badge">PROMO</div>';
+      discountBadge = `<div class="product-discount">-${product.discountPercent}%</div>`;
     }
     
     const oldPriceDisplay = product.isPromotion && product.oldPrice 
@@ -4249,8 +4262,10 @@ function renderProducts() {
         <img src="${imgSrc}" 
              alt="${product.name}"
              onload="this.style.display='block';"
-             onerror="this.onerror=null; this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23112340%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%238b949e%22 font-size=%2210%22>${product.code}</text></svg>';">
+             onerror="this.onerror=null; this.style.display='none';">
+        <div class="no-photo">${product.code}</div>
         ${imagePromoBadge}
+        ${discountBadge}
       </div>
       
       <div class="product-info">
@@ -4266,7 +4281,7 @@ function renderProducts() {
       </div>
       
       <div class="product-stock-tag ${inStock ? 'ok' : 'no'}">
-        ${inStock ? `✓ ${stock} en stock` : '✗ Rupture'}
+        ${inStock ? `✓ ${product.stock} en stock` : '✓ En stock'}
       </div>
     `;
     
@@ -4313,8 +4328,7 @@ function renderSimilarProducts(currentProduct) {
   similarGrid.innerHTML = '';
   
   similarProducts.forEach(product => {
-    const stock = product.promotionStock || 0;
-    const inStock = stock > 0;
+    const inStock = product.stock > 0;
     
     const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
     
@@ -4330,7 +4344,7 @@ function renderSimilarProducts(currentProduct) {
         <div class="similar-product-name">${product.name}</div>
         <div class="similar-product-price">${formatPrice(product.price)}</div>
         <div class="similar-product-stock ${inStock ? '' : 'out'}">
-          ${inStock ? `${stock} en stock` : 'Rupture'}
+          ${inStock ? 'En stock' : 'En stock'}
         </div>
       </div>
     `;
@@ -4382,16 +4396,15 @@ function openProductModal(product) {
   state.currentModalProduct = product;
   const productId = generateProductId(product);
   const quantity = state.quantityPicks[productId] || 0;
-  const stock = product.promotionStock || 0;
-  const inStock = stock > 0;
+  const inStock = product.stock > 0;
   
   $('modalProductName').textContent = product.name;
   $('modalProductNameFull').textContent = product.name;
   $('modalProductPrice').textContent = formatPrice(product.price);
   $('modalProductCode').textContent = product.code;
   $('modalProductCategory').textContent = product.category;
-  $('modalProductStock').textContent = inStock ? `✅ ${stock} en stock` : '❌ Rupture de stock';
-  $('modalProductStock').style.color = inStock ? 'var(--accent)' : 'var(--danger)';
+  $('modalProductStock').textContent = inStock ? `✓ ${product.stock} en stock` : '✓ En stock';
+  $('modalProductStock').style.color = inStock ? 'var(--accent)' : 'var(--accent)';
   $('modalProductQuantity').textContent = quantity;
   
   if (product.isPromotion && product.oldPrice) {
@@ -4498,8 +4511,7 @@ function updateModalQuantity() {
   $('modalProductQuantity').textContent = quantity;
   
   const addBtn = $('modalAddToCartBtn');
-  const stock = state.currentModalProduct.promotionStock || 0;
-  const inStock = stock > 0;
+  const inStock = state.currentModalProduct.stock > 0;
   
   addBtn.disabled = !inStock || quantity === 0;
   addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
