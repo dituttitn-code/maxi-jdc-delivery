@@ -14,7 +14,6 @@
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   
   <style>
-    /* Tous les styles CSS restent exactement les mêmes */
     :root{
       --bg0:#0a1929;
       --bg1:#112240;
@@ -132,7 +131,7 @@
       font-size:10px;
     }
 
-    /* BOUTON PANIER DANS HEADER */
+    /* BOUTON PANIER */
     .cart-btn-header {
       position: relative;
       width: 50px;
@@ -255,7 +254,7 @@
       background: rgba(0, 255, 136, 0.25);
     }
 
-    /* Bouton Entrer dans la recherche */
+    /* Bouton Entrer */
     .search-enter-btn {
       position: absolute;
       right: 6px;
@@ -279,7 +278,7 @@
       background: rgba(0, 255, 136, 0.25);
     }
 
-    /* INFO BAR DYNAMIQUE HORIZONTALE */
+    /* INFO BAR */
     .info-bar {
       margin-top: 8px;
       padding: 8px;
@@ -328,7 +327,7 @@
       background: rgba(0, 212, 255, 0.2);
     }
 
-    /* NOUVELLE BANNIÈRE PROMOTIONNELLE AMÉLIORÉE */
+    /* BANNIÈRE PROMOTIONNELLE */
     .promo-banner {
       background: linear-gradient(135deg, #ff0000 0%, #ff6b00 50%, #ffd000 100%);
       border-radius: var(--radius);
@@ -400,7 +399,7 @@
       transform: scale(1.05);
     }
 
-    /* CATÉGORIES HORIZONTALES */
+    /* CATÉGORIES */
     .categories-scroll {
       margin-top: 12px;
       padding: 8px 8px 4px;
@@ -452,7 +451,6 @@
       color: var(--accent);
     }
 
-    /* Style spécial pour le bouton PROMOTIONS */
     .cat-btn.promo {
       background: linear-gradient(135deg, #ff0000, #ff6b00);
       color: #ffffff;
@@ -507,7 +505,7 @@
       font-size: 11px;
     }
 
-    /* PAGINATION EN HAUT */
+    /* PAGINATION */
     .pagination-top {
       display: flex;
       justify-content: space-between;
@@ -621,7 +619,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* GRID PRODUITS - ESPACÉ POUR PROMOTIONS */
+    /* GRID PRODUITS */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -650,7 +648,7 @@
       }
     }
 
-    /* CARTE PRODUIT AVEC BADGE PROMO SUR L'IMAGE */
+    /* CARTE PRODUIT */
     .product-card {
       border-radius: 10px;
       border: 1px solid var(--line);
@@ -794,7 +792,7 @@
       color: var(--muted);
       text-decoration: line-through;
       margin-right: 3px;
-      display: block;
+      display: inline;
     }
 
     .product-card.promo-card .product-old-price {
@@ -972,7 +970,7 @@
       padding: 30px;
     }
 
-    /* BADGE PROMO SUR L'IMAGE MODALE */
+    /* BADGE PROMO */
     .modal-promo-badge {
       position: absolute;
       top: 15px;
@@ -1272,7 +1270,7 @@
       border-color: var(--accent2);
     }
 
-    /* SECTION ARTICLES SIMILAIRES */
+    /* ARTICLES SIMILAIRES */
     .similar-products-section {
       margin-top: 15px;
       padding-top: 15px;
@@ -1489,7 +1487,7 @@
       justify-content: center;
     }
 
-    /* BOUTON QR CODE DIRECT */
+    /* BOUTON QR CODE */
     .qr-direct-btn {
       position: fixed;
       bottom: 80px;
@@ -1517,7 +1515,7 @@
       box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
     }
 
-    /* PANIER (DRAWER) */
+    /* PANIER */
     .drawer-overlay {
       position: fixed;
       inset: 0;
@@ -1609,7 +1607,7 @@
       gap: 20px;
     }
 
-    /* SECTION ADMIN (CACHÉE PAR DÉFAUT) */
+    /* SECTION ADMIN */
     .admin-section {
       background: var(--card2);
       border-radius: var(--radius);
@@ -1716,7 +1714,7 @@
       font-weight: 900;
     }
 
-    /* SECTION COMPTE CLIENT */
+    /* SECTION COMPTE */
     .account-section {
       background: var(--card2);
       border-radius: var(--radius);
@@ -1881,7 +1879,7 @@
       background: rgba(0,255,136,0.05);
     }
 
-    /* NOUVELLE SECTION POUR CHERCHER HISTORIQUE */
+    /* SECTION HISTORIQUE */
     .history-search-section {
       background: var(--card2);
       border-radius: var(--radius);
@@ -1970,7 +1968,7 @@
       background: rgba(255, 107, 107, 0.25);
     }
 
-    /* SECTION HISTORIQUE DES COMMANDES */
+    /* HISTORIQUE COMMANDES */
     .order-history-section {
       background: var(--card2);
       border-radius: var(--radius);
@@ -2033,7 +2031,7 @@
       font-size: 12px;
     }
 
-    /* BOUTON LOCALISATION */
+    /* LOCALISATION */
     .gps-btn-wrapper {
       display: flex;
       align-items: center;
@@ -2332,7 +2330,7 @@
       box-shadow: none;
     }
 
-    /* MODAL CONFIRMATION COMMANDE */
+    /* MODAL CONFIRMATION */
     .order-modal-overlay {
       position: fixed;
       inset: 0;
@@ -2528,7 +2526,7 @@
       line-height: 1.5;
     }
 
-    /* BOUTON OK POUR MAP */
+    /* BOUTON OK MAP */
     .map-ok-btn {
       position: absolute;
       bottom: 20px;
@@ -2657,7 +2655,7 @@
       box-shadow: 0 6px 20px rgba(255, 167, 38, 0.4);
     }
 
-    /* RESPONSIVE ADJUSTMENTS */
+    /* RESPONSIVE */
     @media (max-width: 768px) {
       .drawer {
         width: 90vw;
@@ -2795,7 +2793,7 @@
       }
     }
 
-    /* SCROLLBAR STYLING */
+    /* SCROLLBAR */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -2815,7 +2813,7 @@
       background: var(--accent2);
     }
 
-    /* SAFE AREA SUPPORT FOR IOS */
+    /* SAFE AREA */
     @supports (padding-top: env(safe-area-inset-top)) {
       body {
         padding-top: env(safe-area-inset-top);
@@ -2829,7 +2827,7 @@
     }
   </style>
   
-  <!-- Leaflet CSS pour les cartes -->
+  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
    crossorigin=""/>
@@ -2837,7 +2835,7 @@
 
 <body>
   <div id="app">
-    <!-- HEADER FIXE -->
+    <!-- HEADER -->
     <header class="header">
       <div class="logo-brand">
         <div class="logo">
@@ -2855,7 +2853,7 @@
       </button>
     </header>
 
-    <!-- ZONE RECHERCHE -->
+    <!-- RECHERCHE -->
     <div class="search-section">
       <div class="search-container">
         <div class="search-input">
@@ -2869,7 +2867,7 @@
       </div>
     </div>
 
-    <!-- INFO BAR DYNAMIQUE HORIZONTALE -->
+    <!-- INFO BAR -->
     <div class="info-bar">
       <div class="info-bar-container">
         <div class="info-bar-item">📍 Jardins de Carthage</div>
@@ -2877,7 +2875,7 @@
         <div class="info-bar-item"><strong>WhatsApp:</strong> +216 25 600 978</div>
         <div class="info-bar-item qr-item" id="qrInfoBtn" title="Scanner le QR Code">📱 QR Code</div>
         
-        <!-- Doubler pour effet de boucle -->
+        <!-- Doubler pour boucle -->
         <div class="info-bar-item">📍 Jardins de Carthage</div>
         <div class="info-bar-item">🕒 7am – 1am</div>
         <div class="info-bar-item"><strong>WhatsApp:</strong> +216 25 600 978</div>
@@ -2885,7 +2883,7 @@
       </div>
     </div>
 
-    <!-- NOUVELLE BANNIÈRE PROMOTIONNELLE AMÉLIORÉE -->
+    <!-- BANNIÈRE PROMO -->
     <div class="promo-banner" id="promoBanner" style="display:none;">
       <div class="promo-content">
         <div class="promo-icon">🔥</div>
@@ -2909,7 +2907,7 @@
           <h2 id="activeCategoryLabel">Produits</h2>
           <div class="meta" id="activeCategoryMeta">Sélectionnez une catégorie</div>
           
-          <!-- PAGINATION EN HAUT -->
+          <!-- PAGINATION -->
           <div class="pagination-top">
             <div class="page-controls">
               <button class="page-btn" id="prevPageBtn" title="Page précédente">‹</button>
@@ -2920,10 +2918,10 @@
           </div>
         </div>
 
-        <!-- GRID PRODUITS -->
+        <!-- PRODUITS -->
         <div class="products-grid" id="productsGrid"></div>
 
-        <!-- PAGINATION EN BAS -->
+        <!-- PAGINATION BAS -->
         <div class="pagination-bottom" id="paginationBottom">
           <button class="page-btn" id="prevPageBottomBtn" title="Page précédente">
             ‹
@@ -2936,21 +2934,21 @@
       </div>
     </main>
     
-    <!-- BOUTON QR CODE DIRECT -->
+    <!-- BOUTON QR -->
     <button class="qr-direct-btn" id="qrDirectBtn" title="Scanner QR Code">
       📱
     </button>
 
-    <!-- BOUTON ADMIN SECRET -->
+    <!-- BOUTON ADMIN -->
     <button class="secret-admin-btn" id="secretAdminBtn" title="Activer/Désactiver mode admin">
       🔓
     </button>
   </div>
 
-  <!-- OVERLAY POUR DARK MODE -->
+  <!-- OVERLAY -->
   <div class="drawer-overlay" id="drawerOverlay"></div>
 
-  <!-- PANIER (DRAWER) -->
+  <!-- PANIER -->
   <aside class="drawer" id="drawer">
     <div class="drawer-header">
       <h3>🛒 Mon Panier & Compte</h3>
@@ -2958,7 +2956,7 @@
     </div>
 
     <div class="drawer-content">
-      <!-- SECTION ADMIN (CACHÉE PAR DÉFAUT) -->
+      <!-- ADMIN -->
       <section class="admin-section" id="adminSection">
         <div class="admin-header">
           <h4>🔧 Espace Administrateur</h4>
@@ -2988,7 +2986,7 @@
         </div>
       </section>
 
-      <!-- SECTION COMPTE CLIENT -->
+      <!-- COMPTE -->
       <section class="account-section">
         <div class="section-title">
           <h4>👤 Mon Compte</h4>
@@ -3032,7 +3030,7 @@
             </div>
           </div>
           
-          <!-- BOUTON LOCALISATION AVEC MAP -->
+          <!-- LOCALISATION -->
           <div class="gps-btn-wrapper">
             <button class="form-btn" id="getLocationBtn">
               📍 Localiser sur la carte
@@ -3053,7 +3051,7 @@
         </div>
       </section>
 
-      <!-- NOUVELLE SECTION CHERCHER HISTORIQUE -->
+      <!-- HISTORIQUE -->
       <section class="history-search-section">
         <div class="section-title">
           <h4>📋 Historique des commandes</h4>
@@ -3079,34 +3077,30 @@
         </div>
       </section>
 
-      <!-- SECTION HISTORIQUE DES COMMANDES -->
+      <!-- HISTORIQUE COMMANDES -->
       <section class="order-history-section" id="orderHistorySection" style="display:none">
         <div class="section-title">
           <h4>📜 Vos commandes</h4>
           <span class="account-status" id="historyCount">0 commande(s)</span>
         </div>
         
-        <div class="history-items" id="historyItemsList">
-          <!-- Les commandes historiques seront insérées ici -->
-        </div>
+        <div class="history-items" id="historyItemsList"></div>
         
         <div class="history-empty" id="historyEmptyMessage">
           Aucune commande passée dans les 2 dernières années
         </div>
       </section>
 
-      <!-- SECTION PANIER -->
+      <!-- PANIER -->
       <section class="cart-section">
         <div class="section-title">
           <h4>🧺 Mon Panier</h4>
           <span class="account-status" id="cartItemsCount">0 article(s)</span>
         </div>
         
-        <div class="cart-items" id="cartItemsList">
-          <!-- Les articles du panier seront insérés ici -->
-        </div>
+        <div class="cart-items" id="cartItemsList"></div>
         
-        <!-- MESSAGE PANIER VIDE -->
+        <!-- PANIER VIDE -->
         <div class="cart-empty" id="cartEmptyMessage" style="display:none">
           <div class="cart-empty-icon">🛒</div>
           <h4>Panier vide</h4>
@@ -3161,7 +3155,7 @@
     </div>
   </aside>
 
-  <!-- MODAL ARTICLE AGRANDI AVEC ARTICLES SIMILAIRES -->
+  <!-- MODAL PRODUIT -->
   <div class="product-modal-overlay" id="productModal">
     <div class="product-modal-container">
       <div class="modal-header">
@@ -3172,14 +3166,14 @@
       </div>
       
       <div class="modal-content">
-        <!-- IMAGE PRODUIT -->
+        <!-- IMAGE -->
         <div class="modal-image-container">
           <button class="image-nav-btn prev" id="modalPrevImageBtn">‹</button>
           
           <img class="modal-image" id="modalProductImage" alt="">
           <div class="modal-no-photo" id="modalNoPhoto">Aucune photo disponible</div>
           
-          <!-- BADGE PROMO SUR L'IMAGE -->
+          <!-- BADGE PROMO -->
           <div class="modal-promo-badge" id="modalPromoBadge" style="display:none">
             50% OFF
           </div>
@@ -3187,10 +3181,10 @@
           <button class="image-nav-btn next" id="modalNextImageBtn">›</button>
         </div>
         
-        <!-- BARRE DE NAVIGATION PRODUITS -->
+        <!-- NAVIGATION -->
         <div class="image-nav-bar" id="imageNavBar"></div>
         
-        <!-- INFOS PRODUIT -->
+        <!-- INFOS -->
         <div class="modal-product-info">
           <h2 class="modal-product-name" id="modalProductNameFull"></h2>
           
@@ -3233,18 +3227,16 @@
           </div>
         </div>
 
-        <!-- SECTION ARTICLES SIMILAIRES -->
+        <!-- ARTICLES SIMILAIRES -->
         <div class="similar-products-section" id="similarProductsSection">
           <div class="similar-products-header">
             <h4>🛍️ Articles similaires</h4>
             <span class="similar-products-count" id="similarProductsCount">0</span>
           </div>
-          <div class="similar-products-grid" id="similarProductsGrid">
-            <!-- Les articles similaires seront insérés ici -->
-          </div>
+          <div class="similar-products-grid" id="similarProductsGrid"></div>
         </div>
 
-        <!-- BOUTON FERMER EN BAS -->
+        <!-- FERMER -->
         <div class="modal-actions-bottom">
           <button class="modal-close-bottom-btn" id="modalCloseBottomBtn">
             ✕ Fermer
@@ -3278,7 +3270,7 @@
     </div>
   </div>
 
-  <!-- MODAL LOCALISATION MAP -->
+  <!-- MODAL MAP -->
   <div class="map-modal-overlay" id="mapModal">
     <div class="map-modal">
       <div class="map-modal-header">
@@ -3288,7 +3280,6 @@
       
       <div class="map-container">
         <div id="map"></div>
-        <!-- BOUTON OK POUR VALIDER LA LOCALISATION -->
         <button class="map-ok-btn" id="mapOkBtn">
           ✅ OK, utiliser cette position
         </button>
@@ -3300,7 +3291,7 @@
     </div>
   </div>
 
-  <!-- MODAL CONFIRMATION COMMANDE -->
+  <!-- MODAL COMMANDE -->
   <div class="order-modal-overlay" id="orderModal">
     <div class="order-modal">
       <div class="order-modal-header">
@@ -3333,893 +3324,1006 @@
    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
    crossorigin=""></script>
 
-<script>
-// ===================== CONFIGURATION SIMPLIFIÉE =====================
-const CONFIG = {
-  minOrder: 15,
-  freeShipping: 100,
-  shippingFee: 3,
-  whatsappNumber: "21625600978",
-  itemsPerPage: 24,
-  localStorageKey: 'maxi_jdc_market_app_v21',
-  imagesBasePath: 'images/products/',
-  historyRetentionYears: 2,
-  adminPasswordKey: 'maxi_jdc_admin_password',
-  defaultStock: 100
-};
+  <script>
+  // ===================== CONFIGURATION =====================
+  const CONFIG = {
+    minOrder: 15,
+    freeShipping: 100,
+    shippingFee: 3,
+    whatsappNumber: "21625600978",
+    itemsPerPage: 24,
+    localStorageKey: 'maxi_jdc_market_app_v22',
+    imagesBasePath: 'images/products/',
+    historyRetentionYears: 2,
+    adminPasswordKey: 'maxi_jdc_admin_password',
+    defaultStock: 100,
+    qrCodeUrl: 'https://maxi-jdc-market.com',
+    adminPassword: "admin123"
+  };
 
-// Catégories
-const CATEGORIES = [
-  { key:"promotions", label:"🔥 PROMOTIONS", file:"data/PROMOTIONS.csv", isPromo: true },
-  { key:"cafe", label:"☕ Café & Thés", file:"data/cafe.csv" },
-  { key:"animaux_compagnie", label:"🐶 Animaux de Compagnie", file:"data/animaux_compagnie.csv" },
-  { key:"bebe_maman", label:"👶 Bébé & Maman", file:"data/bebe_maman.csv" },
-  { key:"boulangerie_patisserie", label:"🥖 Boulangerie & Pâtisserie", file:"data/boulangerie_patisserie.csv" },
-  { key:"chips_snacks", label:"🥔 Chips & Snacks", file:"data/chips_snacks.csv" },
-  { key:"chocolats_biscuits", label:"🍫 Chocolats & Biscuits", file:"data/chocolats_biscuits.csv" },
-  { key:"conserves", label:"🥫 Conserves & Bocaux", file:"data/conserves.csv" },
-  { key:"cuisine_monde", label:"🌍 Cuisine du Monde", file:"data/cuisine_monde.csv" },
-  { key:"eaux", label:"💧 Eaux & Boissons", file:"data/eaux.csv" },
-  { key:"epicerie_salee", label:"🧂 Épicerie Salée", file:"data/epicerie_salee.csv" },
-  { key:"epicerie_sucree", label:"🍬 Épicerie Sucrée", file:"data/epicerie_sucree.csv" },
-  { key:"fromage_charcuterie", label:"🧀 Fromages & Charcuteries", file:"data/fromage_charcuterie.csv" },
-  { key:"fruits_legumes", label:"🍎 Fruits & Légumes", file:"data/fruits_legumes.csv" },
-  { key:"fruits_secs_noix", label:"🌰 Fruits Secs & Noix", file:"data/fruits_secs_noix.csv" },
-  { key:"hygiene_entretien", label:"🧼 Hygiène & Entretien", file:"data/hygiene_entretien.csv" },
-  { key:"hygiene_soins", label:"🧴 Soins & Beauté", file:"data/hygiene_soins.csv" },
-  { key:"jus_boissons", label:"🧃 Jus & Boissons", file:"data/jus_boissons.csv" },
-  { key:"lait_oeufs_produits_frais", label:"🥛 Lait & Œufs Frais", file:"data/lait_oeufs_produits_frais.csv" },
-  { key:"pates", label:"🍝 Pâtes & Riz", file:"data/pates.csv" },
-  { key:"produits_surgeles", label:"🧊 Produits Surgelés", file:"data/produits_surgeles.csv" },
-  { key:"vipa_selections", label:"⭐ Sélections VIP", file:"data/vipa_selections.csv" }
-];
+  // Catégories
+  const CATEGORIES = [
+    { key:"promotions", label:"🔥 PROMOTIONS", file:"data/PROMOTIONS.csv", isPromo: true },
+    { key:"cafe", label:"☕ Café & Thés", file:"data/cafe.csv" },
+    { key:"animaux_compagnie", label:"🐶 Animaux de Compagnie", file:"data/animaux_compagnie.csv" },
+    { key:"bebe_maman", label:"👶 Bébé & Maman", file:"data/bebe_maman.csv" },
+    { key:"boulangerie_patisserie", label:"🥖 Boulangerie & Pâtisserie", file:"data/boulangerie_patisserie.csv" },
+    { key:"chips_snacks", label:"🥔 Chips & Snacks", file:"data/chips_snacks.csv" },
+    { key:"chocolats_biscuits", label:"🍫 Chocolats & Biscuits", file:"data/chocolats_biscuits.csv" },
+    { key:"conserves", label:"🥫 Conserves & Bocaux", file:"data/conserves.csv" },
+    { key:"cuisine_monde", label:"🌍 Cuisine du Monde", file:"data/cuisine_monde.csv" },
+    { key:"eaux", label:"💧 Eaux & Boissons", file:"data/eaux.csv" },
+    { key:"epicerie_salee", label:"🧂 Épicerie Salée", file:"data/epicerie_salee.csv" },
+    { key:"epicerie_sucree", label:"🍬 Épicerie Sucrée", file:"data/epicerie_sucree.csv" },
+    { key:"fromage_charcuterie", label:"🧀 Fromages & Charcuteries", file:"data/fromage_charcuterie.csv" },
+    { key:"fruits_legumes", label:"🍎 Fruits & Légumes", file:"data/fruits_legumes.csv" },
+    { key:"fruits_secs_noix", label:"🌰 Fruits Secs & Noix", file:"data/fruits_secs_noix.csv" },
+    { key:"hygiene_entretien", label:"🧼 Hygiène & Entretien", file:"data/hygiene_entretien.csv" },
+    { key:"hygiene_soins", label:"🧴 Soins & Beauté", file:"data/hygiene_soins.csv" },
+    { key:"jus_boissons", label:"🧃 Jus & Boissons", file:"data/jus_boissons.csv" },
+    { key:"lait_oeufs_produits_frais", label:"🥛 Lait & Œufs Frais", file:"data/lait_oeufs_produits_frais.csv" },
+    { key:"pates", label:"🍝 Pâtes & Riz", file:"data/pates.csv" },
+    { key:"produits_surgeles", label:"🧊 Produits Surgelés", file:"data/produits_surgeles.csv" },
+    { key:"vipa_selections", label:"⭐ Sélections VIP", file:"data/vipa_selections.csv" }
+  ];
 
-// ===================== ÉTAT GLOBAL =====================
-const state = {
-  user: null,
-  products: new Map(),
-  cart: {},
-  searchQuery: '',
-  activeCategory: 'promotions',
-  showAllCategories: false,
-  currentPage: 1,
-  currentModalProduct: null,
-  quantityPicks: {},
-  filteredProducts: [],
-  orderHistory: [],
-  promotions: [],
-  tempMapCoords: null,
-  isAdmin: false,
-  adminPassword: "admin123"
-};
+  // ===================== ÉTAT GLOBAL =====================
+  const state = {
+    user: null,
+    products: new Map(),
+    cart: {},
+    searchQuery: '',
+    activeCategory: 'promotions',
+    showAllCategories: false,
+    currentPage: 1,
+    currentModalProduct: null,
+    quantityPicks: {},
+    filteredProducts: [],
+    orderHistory: [],
+    promotions: [],
+    tempMapCoords: null,
+    isAdmin: false,
+    adminPassword: "admin123"
+  };
 
-// ===================== UTILITAIRES =====================
-function $(id) { return document.getElementById(id); }
-function formatPrice(amount) {
-  return Number(amount).toFixed(2).replace('.', ',') + ' dt';
-}
-function generateProductId(product) {
-  return `${product.categoryKey}_${product.code}_${product.name}`.replace(/[^a-z0-9_]/gi, '_').toLowerCase();
-}
-function showToast(message, type = 'success') {
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  toast.innerHTML = `
-    <span>${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : '❌'}</span>
-    <span>${message}</span>
-  `;
-  document.body.appendChild(toast);
-  
-  setTimeout(() => {
-    toast.remove();
-  }, 3000);
-}
-
-// ===================== GESTION DES DONNÉES =====================
-async function loadCategoryData(categoryKey) {
-  try {
-    const category = CATEGORIES.find(c => c.key === categoryKey);
-    if (!category) return [];
+  // ===================== UTILITAIRES =====================
+  function $(id) { return document.getElementById(id); }
+  function formatPrice(amount) {
+    return Number(amount).toFixed(2).replace('.', ',') + ' dt';
+  }
+  function generateProductId(product) {
+    return `${product.categoryKey}_${product.code}_${product.name}`.replace(/[^a-z0-9_]/gi, '_').toLowerCase();
+  }
+  function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+      <span>${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : '❌'}</span>
+      <span>${message}</span>
+    `;
+    document.body.appendChild(toast);
     
-    const response = await fetch(category.file);
-    if (!response.ok) {
-      console.warn(`Fichier non trouvé: ${category.file}`);
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  }
+
+  // ===================== GESTION DES DONNÉES =====================
+  async function loadCategoryData(categoryKey) {
+    try {
+      const category = CATEGORIES.find(c => c.key === categoryKey);
+      if (!category) return [];
+      
+      const response = await fetch(category.file);
+      if (!response.ok) {
+        console.warn(`Fichier non trouvé: ${category.file}`);
+        return [];
+      }
+      
+      const text = await response.text();
+      const lines = text.split('\n').filter(line => line.trim());
+      if (lines.length === 0) return [];
+      
+      const separator = lines[0].includes('\t') ? '\t' : ';';
+      const products = [];
+      const seen = new Set();
+      
+      lines.slice(1).forEach(line => {
+        const parts = line.split(separator).map(field => field.trim());
+        if (parts.length < 3) return;
+        
+        const code = parts[0];
+        const name = parts[1];
+        let priceStr = parts[2];
+        
+        if (!code || !name) return;
+        
+        const productKey = `${code}_${name}`;
+        if (seen.has(productKey)) return;
+        seen.add(productKey);
+        
+        priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
+        const price = parseFloat(priceStr);
+        
+        if (isNaN(price) || price <= 0) return;
+        
+        products.push({
+          code,
+          name,
+          price: price,
+          category: category.label,
+          categoryKey: category.key,
+          isPromotion: false,
+          stock: CONFIG.defaultStock,
+          oldPrice: null,
+          discountPercent: 0
+        });
+      });
+      
+      return products;
+    } catch (error) {
+      console.error(`Erreur chargement ${categoryKey}:`, error);
       return [];
     }
-    
-    const text = await response.text();
-    const lines = text.split('\n').filter(line => line.trim());
-    if (lines.length === 0) return [];
-    
-    const separator = lines[0].includes('\t') ? '\t' : ';';
-    const products = [];
-    const seen = new Set();
-    
-    lines.slice(1).forEach(line => {
-      const parts = line.split(separator).map(field => field.trim());
-      if (parts.length < 3) return;
-      
-      const code = parts[0];
-      const name = parts[1];
-      let priceStr = parts[2];
-      
-      if (!code || !name) return;
-      
-      const productKey = `${code}_${name}`;
-      if (seen.has(productKey)) return;
-      seen.add(productKey);
-      
-      priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
-      const price = parseFloat(priceStr);
-      
-      if (isNaN(price) || price <= 0) return;
-      
-      products.push({
-        code,
-        name,
-        price: price,
-        category: category.label,
-        categoryKey: category.key,
-        isPromotion: false,
-        stock: CONFIG.defaultStock,
-        oldPrice: null,
-        discountPercent: 0
-      });
-    });
-    
-    return products;
-  } catch (error) {
-    console.error(`Erreur chargement ${categoryKey}:`, error);
-    return [];
   }
-}
 
-async function loadPromotionsData() {
-  try {
-    const response = await fetch('data/PROMOTIONS.csv');
-    if (!response.ok) return [];
-    
-    const text = await response.text();
-    const lines = text.split('\n').filter(line => line.trim());
-    if (lines.length === 0) return [];
-    
-    const separator = lines[0].includes('\t') ? '\t' : ';';
-    const promotions = [];
-    const seen = new Set();
-    
-    lines.slice(1).forEach(line => {
-      const parts = line.split(separator).map(field => field.trim());
-      if (parts.length < 3) return;
+  async function loadPromotionsData() {
+    try {
+      const response = await fetch('data/PROMOTIONS.csv');
+      if (!response.ok) return [];
       
-      const code = parts[0];
-      const name = parts[1];
-      let priceStr = parts[2];
+      const text = await response.text();
+      const lines = text.split('\n').filter(line => line.trim());
+      if (lines.length === 0) return [];
       
-      if (!code || !name) return;
+      const separator = lines[0].includes('\t') ? '\t' : ';';
+      const promotions = [];
+      const seen = new Set();
       
-      const productKey = `${code}_${name}`;
-      if (seen.has(productKey)) return;
-      seen.add(productKey);
-      
-      priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
-      const price = parseFloat(priceStr);
-      
-      if (isNaN(price) || price <= 0) return;
-      
-      promotions.push({
-        code,
-        name,
-        price: price,
-        stock: CONFIG.defaultStock,
-        category: '🔥 PROMOTIONS',
-        categoryKey: 'promotions',
-        isPromotion: true,
-        oldPrice: null,
-        discountPercent: 0
+      lines.slice(1).forEach(line => {
+        const parts = line.split(separator).map(field => field.trim());
+        if (parts.length < 3) return;
+        
+        const code = parts[0];
+        const name = parts[1];
+        let priceStr = parts[2];
+        
+        if (!code || !name) return;
+        
+        const productKey = `${code}_${name}`;
+        if (seen.has(productKey)) return;
+        seen.add(productKey);
+        
+        priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
+        const price = parseFloat(priceStr);
+        
+        if (isNaN(price) || price <= 0) return;
+        
+        promotions.push({
+          code,
+          name,
+          price: price,
+          stock: CONFIG.defaultStock,
+          category: '🔥 PROMOTIONS',
+          categoryKey: 'promotions',
+          isPromotion: true,
+          oldPrice: null,
+          discountPercent: 0
+        });
       });
-    });
-    
-    return promotions;
-  } catch (error) {
-    console.error('Erreur chargement promotions:', error);
-    return [];
-  }
-}
-
-// Trouver le prix original d'un produit dans les autres catégories
-function findOriginalPriceInCategories(code) {
-  for (const [catKey, products] of state.products.entries()) {
-    if (catKey === 'promotions') continue;
-    
-    const product = products.find(p => p.code === code);
-    if (product && !product.isPromotion) {
-      return product.price;
+      
+      return promotions;
+    } catch (error) {
+      console.error('Erreur chargement promotions:', error);
+      return [];
     }
   }
-  return null;
-}
 
-// Appliquer les promotions aux catégories
-function applyPromotions() {
-  console.log('Application des promotions...');
-  
-  const promotions = state.products.get('promotions') || [];
-  
-  // Pour chaque promotion
-  promotions.forEach(promo => {
-    // Chercher dans toutes les autres catégories
+  function findOriginalPriceInCategories(code) {
     for (const [catKey, products] of state.products.entries()) {
       if (catKey === 'promotions') continue;
       
-      // Mettre à jour les produits correspondants
-      products.forEach((product, index) => {
-        if (product.code === promo.code) {
-          const originalPrice = product.price;
-          const promoPrice = promo.price;
-          const discountPercent = Math.round((1 - promoPrice / originalPrice) * 100);
-          
-          // Mettre à jour le produit
-          products[index] = {
-            ...product,
-            oldPrice: originalPrice,
-            price: promoPrice,
-            isPromotion: true,
-            discountPercent: discountPercent
-          };
-          
-          console.log(`Promo appliquée: ${product.code} (${catKey}) - ${discountPercent}%`);
-        }
-      });
+      const product = products.find(p => p.code === code);
+      if (product && !product.isPromotion) {
+        return product.price;
+      }
     }
-  });
-}
+    return null;
+  }
 
-async function loadAllProducts() {
-  state.products.clear();
-  
-  // Charger toutes les catégories
-  for (const category of CATEGORIES) {
-    if (category.key === 'promotions') continue;
+  function applyPromotions() {
+    console.log('Application des promotions...');
     
-    const products = await loadCategoryData(category.key);
-    if (products.length > 0) {
-      state.products.set(category.key, products);
+    const promotions = state.products.get('promotions') || [];
+    
+    promotions.forEach(promo => {
+      for (const [catKey, products] of state.products.entries()) {
+        if (catKey === 'promotions') continue;
+        
+        products.forEach((product, index) => {
+          if (product.code === promo.code) {
+            const originalPrice = product.price;
+            const promoPrice = promo.price;
+            const discountPercent = Math.round((1 - promoPrice / originalPrice) * 100);
+            
+            products[index] = {
+              ...product,
+              oldPrice: originalPrice,
+              price: promoPrice,
+              isPromotion: true,
+              discountPercent: discountPercent
+            };
+            
+            console.log(`Promo appliquée: ${product.code} (${catKey}) - ${discountPercent}%`);
+          }
+        });
+      }
+    });
+  }
+
+  async function loadAllProducts() {
+    state.products.clear();
+    
+    // Charger toutes les catégories sauf promotions
+    for (const category of CATEGORIES) {
+      if (category.key === 'promotions') continue;
+      
+      const products = await loadCategoryData(category.key);
+      if (products.length > 0) {
+        state.products.set(category.key, products);
+      }
     }
-  }
-  
-  // Charger les promotions
-  const promotions = await loadPromotionsData();
-  if (promotions.length > 0) {
-    state.products.set('promotions', promotions);
-    state.promotions = promotions;
     
-    // Appliquer les promotions aux autres catégories
-    applyPromotions();
+    // Charger les promotions
+    const promotions = await loadPromotionsData();
+    if (promotions.length > 0) {
+      state.products.set('promotions', promotions);
+      state.promotions = promotions;
+      
+      // Appliquer les promotions
+      applyPromotions();
+      
+      // Afficher la bannière promo
+      showPromoBanner(promotions);
+    }
     
-    // Afficher la bannière promo
-    showPromoBanner(promotions);
-  }
-  
-  renderCategories();
-  renderProducts();
-  
-  showToast('✅ Produits chargés avec succès');
-}
-
-// ===================== AFFICHAGE =====================
-function showPromoBanner(promotions) {
-  if (promotions.length === 0) {
-    $('promoBanner').style.display = 'none';
-    return;
-  }
-  
-  $('promoTitle').textContent = `🔥 ${promotions.length} PRODUITS EN PROMOTION`;
-  $('promoDesc').textContent = 'Profitez de nos offres spéciales !';
-  $('promoBanner').style.display = 'flex';
-}
-
-function renderCategories() {
-  const container = $('categoriesContainer');
-  container.innerHTML = '';
-  
-  const allButton = document.createElement('button');
-  allButton.className = `cat-btn ${state.showAllCategories ? 'active' : ''}`;
-  const allProductsCount = [...state.products.values()].flat().length;
-  allButton.innerHTML = `🌐 Tous <span class="cat-count">${allProductsCount}</span>`;
-  allButton.onclick = () => {
-    state.showAllCategories = true;
-    state.activeCategory = null;
-    state.currentPage = 1;
+    renderCategories();
     renderProducts();
-    updateCategoriesUI();
-  };
-  container.appendChild(allButton);
-  
-  CATEGORIES.forEach(category => {
-    const products = state.products.get(category.key) || [];
-    const button = document.createElement('button');
-    button.className = `cat-btn ${category.isPromo ? 'promo' : ''} ${
-      !state.showAllCategories && state.activeCategory === category.key ? 'active' : ''
-    }`;
     
-    button.innerHTML = `${category.label} <span class="cat-count">${products.length}</span>`;
-    button.onclick = () => {
-      state.showAllCategories = false;
-      state.activeCategory = category.key;
+    showToast('✅ Produits chargés avec succès');
+  }
+
+  // ===================== AFFICHAGE =====================
+  function showPromoBanner(promotions) {
+    if (promotions.length === 0) {
+      $('promoBanner').style.display = 'none';
+      return;
+    }
+    
+    $('promoTitle').textContent = `🔥 ${promotions.length} PRODUITS EN PROMOTION`;
+    $('promoDesc').textContent = 'Profitez de nos offres spéciales !';
+    $('promoBanner').style.display = 'flex';
+  }
+
+  function renderCategories() {
+    const container = $('categoriesContainer');
+    container.innerHTML = '';
+    
+    const allButton = document.createElement('button');
+    allButton.className = `cat-btn ${state.showAllCategories ? 'active' : ''}`;
+    const allProductsCount = [...state.products.values()].flat().length;
+    allButton.innerHTML = `🌐 Tous <span class="cat-count">${allProductsCount}</span>`;
+    allButton.onclick = () => {
+      state.showAllCategories = true;
+      state.activeCategory = null;
       state.currentPage = 1;
       renderProducts();
       updateCategoriesUI();
     };
-    container.appendChild(button);
-  });
-}
-
-function updateCategoriesUI() {
-  const buttons = $('categoriesContainer').querySelectorAll('.cat-btn');
-  buttons.forEach(button => button.classList.remove('active'));
-  
-  if (state.showAllCategories) {
-    buttons[0].classList.add('active');
-    $('activeCategoryLabel').textContent = 'Tous les produits';
-    $('activeCategoryMeta').textContent = 'Toutes catégories';
-  } else {
-    const category = CATEGORIES.find(c => c.key === state.activeCategory);
-    if (category) {
-      const index = CATEGORIES.findIndex(c => c.key === state.activeCategory) + 1;
-      if (buttons[index]) buttons[index].classList.add('active');
-      $('activeCategoryLabel').textContent = category.label;
+    container.appendChild(allButton);
+    
+    CATEGORIES.forEach(category => {
+      const products = state.products.get(category.key) || [];
+      const button = document.createElement('button');
+      button.className = `cat-btn ${category.isPromo ? 'promo' : ''} ${
+        !state.showAllCategories && state.activeCategory === category.key ? 'active' : ''
+      }`;
       
-      if (category.isPromo) {
-        const promoCount = state.products.get('promotions')?.length || 0;
-        $('activeCategoryMeta').innerHTML = promoCount > 0 
-          ? `<span style="color:#ffcc00;font-weight:700;">🔥 ${promoCount} articles en promotion !</span>`
-          : `${category.key}.csv`;
-      } else {
-        $('activeCategoryMeta').textContent = `${category.key}.csv`;
+      button.innerHTML = `${category.label} <span class="cat-count">${products.length}</span>`;
+      button.onclick = () => {
+        state.showAllCategories = false;
+        state.activeCategory = category.key;
+        state.currentPage = 1;
+        renderProducts();
+        updateCategoriesUI();
+      };
+      container.appendChild(button);
+    });
+  }
+
+  function updateCategoriesUI() {
+    const buttons = $('categoriesContainer').querySelectorAll('.cat-btn');
+    buttons.forEach(button => button.classList.remove('active'));
+    
+    if (state.showAllCategories) {
+      buttons[0].classList.add('active');
+      $('activeCategoryLabel').textContent = 'Tous les produits';
+      $('activeCategoryMeta').textContent = 'Toutes catégories';
+    } else {
+      const category = CATEGORIES.find(c => c.key === state.activeCategory);
+      if (category) {
+        const index = CATEGORIES.findIndex(c => c.key === state.activeCategory) + 1;
+        if (buttons[index]) buttons[index].classList.add('active');
+        $('activeCategoryLabel').textContent = category.label;
+        
+        if (category.isPromo) {
+          const promoCount = state.products.get('promotions')?.length || 0;
+          $('activeCategoryMeta').innerHTML = promoCount > 0 
+            ? `<span style="color:#ffcc00;font-weight:700;">🔥 ${promoCount} articles en promotion !</span>`
+            : `${category.key}.csv`;
+        } else {
+          $('activeCategoryMeta').textContent = `${category.key}.csv`;
+        }
       }
     }
   }
-}
 
-function getFilteredProducts() {
-  let products = [];
-  
-  if (state.showAllCategories) {
-    products = [...state.products.values()].flat();
-  } else {
-    products = state.products.get(state.activeCategory) || [];
-  }
-  
-  if (state.searchQuery) {
-    const query = state.searchQuery.toLowerCase();
-    products = products.filter(p =>
-      p.name.toLowerCase().includes(query) ||
-      p.code.toLowerCase().includes(query) ||
-      p.category.toLowerCase().includes(query)
-    );
-  }
-  
-  const seen = new Set();
-  return products.filter(p => {
-    const key = `${p.code}_${p.name}`;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  }).sort((a, b) => a.name.localeCompare(b.name));
-}
-
-function renderProducts() {
-  const products = getFilteredProducts();
-  const totalPages = Math.ceil(products.length / CONFIG.itemsPerPage) || 1;
-  
-  if (state.currentPage > totalPages) state.currentPage = totalPages || 1;
-  
-  $('pageInfo').textContent = `Page ${state.currentPage}/${totalPages}`;
-  $('pageInfoBottom').textContent = `Page ${state.currentPage}/${totalPages}`;
-  $('itemCount').textContent = `${products.length} article(s)`;
-  
-  $('prevPageBtn').disabled = state.currentPage === 1;
-  $('nextPageBtn').disabled = state.currentPage === totalPages;
-  $('prevPageBottomBtn').disabled = state.currentPage === 1;
-  $('nextPageBottomBtn').disabled = state.currentPage === totalPages;
-  
-  $('paginationBottom').style.display = totalPages > 1 ? 'flex' : 'none';
-  
-  const start = (state.currentPage - 1) * CONFIG.itemsPerPage;
-  const end = start + CONFIG.itemsPerPage;
-  const productsToShow = products.slice(start, end);
-  
-  const grid = $('productsGrid');
-  grid.innerHTML = '';
-  
-  if (productsToShow.length === 0) {
-    grid.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);">
-        <div style="font-size:48px;margin-bottom:15px;">🔍</div>
-        <h3 style="margin-bottom:10px;color:var(--text);">Aucun produit trouvé</h3>
-        <p>Essayez de modifier votre recherche ou sélectionnez une autre catégorie</p>
-      </div>
-    `;
-    return;
-  }
-  
-  productsToShow.forEach(product => {
-    const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
+  function getFilteredProducts() {
+    let products = [];
     
-    const card = document.createElement('div');
-    card.className = `product-card ${product.isPromotion ? 'promo-card' : ''}`;
-    
-    let imagePromoBadge = '';
-    let discountBadge = '';
-    
-    if (product.isPromotion && product.discountPercent > 0) {
-      imagePromoBadge = '<div class="image-promo-badge">PROMO</div>';
-      discountBadge = `<div class="product-discount">-${product.discountPercent}%</div>`;
+    if (state.showAllCategories) {
+      products = [...state.products.values()].flat();
+    } else {
+      products = state.products.get(state.activeCategory) || [];
     }
     
-    const oldPriceDisplay = product.isPromotion && product.oldPrice && product.oldPrice > product.price
-      ? `<div class="product-old-price">${formatPrice(product.oldPrice)}</div>`
-      : '';
+    if (state.searchQuery) {
+      const query = state.searchQuery.toLowerCase();
+      products = products.filter(p =>
+        p.name.toLowerCase().includes(query) ||
+        p.code.toLowerCase().includes(query) ||
+        p.category.toLowerCase().includes(query)
+      );
+    }
     
-    card.innerHTML = `
-      <div class="product-image">
-        <img src="${imgSrc}" 
-             alt="${product.name}"
-             loading="lazy"
-             onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="no-photo">${product.code}</div>
-        ${imagePromoBadge}
-        ${discountBadge}
-      </div>
-      
-      <div class="product-info">
-        <div class="product-name">${product.name}</div>
-        <div class="product-meta">
-          <div>Code: ${product.code}</div>
-          <div>${product.category}</div>
-        </div>
-        <div class="product-price">
-          ${oldPriceDisplay}
-          ${formatPrice(product.price)}
-        </div>
-      </div>
-      
-      <div class="product-stock-tag ok">
-        ✓ ${product.stock} en stock
-      </div>
-    `;
-    
-    card.addEventListener('click', () => openProductModal(product));
-    grid.appendChild(card);
-  });
-}
+    const seen = new Set();
+    return products.filter(p => {
+      const key = `${p.code}_${p.name}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }).sort((a, b) => a.name.localeCompare(b.name));
+  }
 
-// ===================== MODAL PRODUIT =====================
-function openProductModal(product) {
-  if (!product) return;
-  
-  state.currentModalProduct = product;
-  const productId = generateProductId(product);
-  const quantity = state.quantityPicks[productId] || 0;
-  
-  $('modalProductName').textContent = product.name;
-  $('modalProductNameFull').textContent = product.name;
-  $('modalProductPrice').textContent = formatPrice(product.price);
-  $('modalProductCode').textContent = product.code;
-  $('modalProductCategory').textContent = product.category;
-  $('modalProductStock').textContent = `✓ ${product.stock} en stock`;
-  $('modalProductStock').style.color = 'var(--accent)';
-  $('modalProductQuantity').textContent = quantity;
-  
-  // Gestion des promotions
-  if (product.isPromotion && product.oldPrice && product.oldPrice > product.price) {
-    $('modalProductOldPrice').textContent = formatPrice(product.oldPrice);
-    $('modalProductOldPrice').style.display = 'block';
+  function renderProducts() {
+    const products = getFilteredProducts();
+    const totalPages = Math.ceil(products.length / CONFIG.itemsPerPage) || 1;
     
-    const discountPercent = Math.round((1 - product.price / product.oldPrice) * 100);
-    if (discountPercent > 0) {
-      $('modalProductDiscount').textContent = `-${discountPercent}%`;
-      $('modalProductDiscount').style.display = 'block';
+    if (state.currentPage > totalPages) state.currentPage = totalPages || 1;
+    
+    $('pageInfo').textContent = `Page ${state.currentPage}/${totalPages}`;
+    $('pageInfoBottom').textContent = `Page ${state.currentPage}/${totalPages}`;
+    $('itemCount').textContent = `${products.length} article(s)`;
+    
+    $('prevPageBtn').disabled = state.currentPage === 1;
+    $('nextPageBtn').disabled = state.currentPage === totalPages;
+    $('prevPageBottomBtn').disabled = state.currentPage === 1;
+    $('nextPageBottomBtn').disabled = state.currentPage === totalPages;
+    
+    $('paginationBottom').style.display = totalPages > 1 ? 'flex' : 'none';
+    
+    const start = (state.currentPage - 1) * CONFIG.itemsPerPage;
+    const end = start + CONFIG.itemsPerPage;
+    const productsToShow = products.slice(start, end);
+    
+    const grid = $('productsGrid');
+    grid.innerHTML = '';
+    
+    if (productsToShow.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);">
+          <div style="font-size:48px;margin-bottom:15px;">🔍</div>
+          <h3 style="margin-bottom:10px;color:var(--text);">Aucun produit trouvé</h3>
+          <p>Essayez de modifier votre recherche ou sélectionnez une autre catégorie</p>
+        </div>
+      `;
+      return;
+    }
+    
+    productsToShow.forEach(product => {
+      const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
       
-      $('modalPromoBadge').style.display = 'block';
-      $('modalPromoBadge').textContent = `${discountPercent}% OFF`;
+      const card = document.createElement('div');
+      card.className = `product-card ${product.isPromotion ? 'promo-card' : ''}`;
+      
+      let imagePromoBadge = '';
+      let discountBadge = '';
+      
+      if (product.isPromotion && product.discountPercent > 0) {
+        imagePromoBadge = '<div class="image-promo-badge">PROMO</div>';
+        discountBadge = `<div class="product-discount">-${product.discountPercent}%</div>`;
+      }
+      
+      const oldPriceDisplay = product.isPromotion && product.oldPrice && product.oldPrice > product.price
+        ? `<span class="product-old-price">${formatPrice(product.oldPrice)}</span> `
+        : '';
+      
+      card.innerHTML = `
+        <div class="product-image">
+          <img src="${imgSrc}" 
+               alt="${product.name}"
+               loading="lazy"
+               onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="no-photo">${product.code}</div>
+          ${imagePromoBadge}
+          ${discountBadge}
+        </div>
+        
+        <div class="product-info">
+          <div class="product-name">${product.name}</div>
+          <div class="product-meta">
+            <div>Code: ${product.code}</div>
+            <div>${product.category}</div>
+          </div>
+          <div class="product-price">
+            ${oldPriceDisplay}
+            ${formatPrice(product.price)}
+          </div>
+        </div>
+        
+        <div class="product-stock-tag ok">
+          ✓ ${product.stock} en stock
+        </div>
+      `;
+      
+      card.addEventListener('click', () => openProductModal(product));
+      grid.appendChild(card);
+    });
+  }
+
+  // ===================== MODAL PRODUIT =====================
+  function openProductModal(product) {
+    if (!product) return;
+    
+    state.currentModalProduct = product;
+    const productId = generateProductId(product);
+    const quantity = state.quantityPicks[productId] || 0;
+    
+    $('modalProductName').textContent = product.name;
+    $('modalProductNameFull').textContent = product.name;
+    $('modalProductPrice').textContent = formatPrice(product.price);
+    $('modalProductCode').textContent = product.code;
+    $('modalProductCategory').textContent = product.category;
+    $('modalProductStock').textContent = `✓ ${product.stock} en stock`;
+    $('modalProductStock').style.color = 'var(--accent)';
+    $('modalProductQuantity').textContent = quantity;
+    
+    // Gestion des promotions
+    if (product.isPromotion && product.oldPrice && product.oldPrice > product.price) {
+      $('modalProductOldPrice').textContent = formatPrice(product.oldPrice);
+      $('modalProductOldPrice').style.display = 'block';
+      
+      const discountPercent = Math.round((1 - product.price / product.oldPrice) * 100);
+      if (discountPercent > 0) {
+        $('modalProductDiscount').textContent = `-${discountPercent}%`;
+        $('modalProductDiscount').style.display = 'block';
+        
+        $('modalPromoBadge').style.display = 'block';
+        $('modalPromoBadge').textContent = `${discountPercent}% OFF`;
+      } else {
+        $('modalProductDiscount').style.display = 'none';
+        $('modalPromoBadge').style.display = 'none';
+      }
     } else {
+      $('modalProductOldPrice').style.display = 'none';
       $('modalProductDiscount').style.display = 'none';
       $('modalPromoBadge').style.display = 'none';
     }
-  } else {
-    $('modalProductOldPrice').style.display = 'none';
-    $('modalProductDiscount').style.display = 'none';
-    $('modalPromoBadge').style.display = 'none';
-  }
-  
-  const addBtn = $('modalAddToCartBtn');
-  addBtn.disabled = quantity === 0;
-  addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
-  
-  // Image
-  const img = $('modalProductImage');
-  const noPhoto = $('modalNoPhoto');
-  const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
-  
-  img.src = imgSrc;
-  img.onload = () => {
-    img.style.display = 'block';
-    noPhoto.style.display = 'none';
-  };
-  img.onerror = () => {
-    img.style.display = 'none';
-    noPhoto.style.display = 'flex';
-    noPhoto.textContent = `Aucune photo pour ${product.code}`;
-  };
-  
-  updateImageNavBar();
-  renderSimilarProducts(product);
-  
-  $('productModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function updateImageNavBar() {
-  const products = state.filteredProducts;
-  const currentIndex = products.findIndex(p => 
-    p.code === state.currentModalProduct.code && 
-    p.categoryKey === state.currentModalProduct.categoryKey
-  );
-  
-  const navBar = $('imageNavBar');
-  navBar.innerHTML = '';
-  
-  const maxDots = Math.min(products.length, 20);
-  for (let i = 0; i < maxDots; i++) {
-    const dot = document.createElement('div');
-    dot.className = `image-nav-dot ${i === currentIndex ? 'active' : ''}`;
-    dot.title = `Produit ${i + 1} sur ${products.length}`;
-    dot.onclick = () => {
-      if (i !== currentIndex) openProductModal(products[i]);
-    };
-    navBar.appendChild(dot);
-  }
-}
-
-function closeProductModal() {
-  $('productModal').classList.remove('open');
-  document.body.style.overflow = '';
-  state.currentModalProduct = null;
-}
-
-function updateModalQuantity() {
-  if (!state.currentModalProduct) return;
-  
-  const productId = generateProductId(state.currentModalProduct);
-  const quantity = state.quantityPicks[productId] || 0;
-  
-  $('modalProductQuantity').textContent = quantity;
-  
-  const addBtn = $('modalAddToCartBtn');
-  addBtn.disabled = quantity === 0;
-  addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
-}
-
-// ===================== ARTICLES SIMILAIRES =====================
-function getSimilarProducts(currentProduct) {
-  if (!currentProduct) return [];
-  
-  if (currentProduct.categoryKey === 'promotions') {
-    return state.promotions.filter(p => 
-      p.code !== currentProduct.code
-    ).slice(0, 6);
-  }
-  
-  const sameCategory = state.products.get(currentProduct.categoryKey) || [];
-  return sameCategory.filter(p => 
-    p.code !== currentProduct.code
-  ).slice(0, 6);
-}
-
-function renderSimilarProducts(currentProduct) {
-  const similar = getSimilarProducts(currentProduct);
-  const grid = $('similarProductsGrid');
-  const count = $('similarProductsCount');
-  const section = $('similarProductsSection');
-  
-  count.textContent = similar.length;
-  
-  if (similar.length === 0) {
-    section.style.display = 'none';
-    return;
-  }
-  
-  section.style.display = 'block';
-  grid.innerHTML = '';
-  
-  similar.forEach(product => {
+    
+    const addBtn = $('modalAddToCartBtn');
+    addBtn.disabled = quantity === 0;
+    addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
+    
+    // Image
+    const img = $('modalProductImage');
+    const noPhoto = $('modalNoPhoto');
     const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
     
-    const card = document.createElement('div');
-    card.className = 'similar-product-card';
-    card.innerHTML = `
-      <div class="similar-product-image">
-        <img src="${imgSrc}" alt="${product.name}" loading="lazy" onerror="this.style.display='none'">
-      </div>
-      <div class="similar-product-info">
-        <div class="similar-product-name">${product.name}</div>
-        <div class="similar-product-price">${formatPrice(product.price)}</div>
-        <div class="similar-product-stock">✓ ${product.stock} en stock</div>
-      </div>
-    `;
-    
-    card.addEventListener('click', () => {
-      closeProductModal();
-      setTimeout(() => openProductModal(product), 300);
-    });
-    
-    grid.appendChild(card);
-  });
-}
-
-// ===================== PANIER =====================
-function updateCartUI() {
-  const cartCount = Object.values(state.cart).reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  
-  $('cartTopCount').textContent = cartCount;
-  $('cartItemsCount').textContent = `${cartCount} article(s)`;
-  
-  const cartItemsList = $('cartItemsList');
-  const cartEmptyMessage = $('cartEmptyMessage');
-  
-  if (cartCount === 0) {
-    cartItemsList.style.display = 'none';
-    cartEmptyMessage.style.display = 'block';
-  } else {
-    cartItemsList.style.display = 'flex';
-    cartEmptyMessage.style.display = 'none';
-    
-    cartItemsList.innerHTML = '';
-    Object.entries(state.cart).forEach(([id, item]) => {
-      const itemElement = document.createElement('div');
-      itemElement.className = 'cart-item';
-      itemElement.innerHTML = `
-        <div class="cart-item-info">
-          <div class="cart-item-name">${item.name}</div>
-          <div class="cart-item-details">
-            <span>Code: ${item.code}</span>
-            <span>Prix: ${formatPrice(item.price)}</span>
-            <span>Cat: ${item.category}</span>
-          </div>
-          <div class="cart-item-controls">
-            <div class="cart-item-stepper">
-              <button class="cart-item-qty-btn" data-action="decrease" data-id="${id}">−</button>
-              <span class="cart-item-qty">${item.quantity}</span>
-              <button class="cart-item-qty-btn" data-action="increase" data-id="${id}">+</button>
-            </div>
-          </div>
-        </div>
-        <div class="cart-item-price">${formatPrice(item.price * item.quantity)}</div>
-      `;
-      cartItemsList.appendChild(itemElement);
-    });
-  }
-  
-  $('cartSubtotal').textContent = formatPrice(subtotal);
-  
-  let shippingFee = CONFIG.shippingFee;
-  let shippingText = formatPrice(shippingFee);
-  
-  if (subtotal >= CONFIG.freeShipping) {
-    shippingFee = 0;
-    shippingText = '<span class="total-value free">GRATUIT</span>';
-  } else if (subtotal < CONFIG.minOrder) {
-    shippingFee = null;
-    shippingText = '—';
-  }
-  
-  $('cartShipping').innerHTML = shippingText;
-  
-  const total = shippingFee !== null ? subtotal + shippingFee : null;
-  if (total !== null) {
-    $('cartTotal').textContent = formatPrice(total);
-    $('placeOrderBtn').disabled = false;
-  } else {
-    $('cartTotal').textContent = `Minimum: ${formatPrice(CONFIG.minOrder)}`;
-    $('cartTotal').style.color = 'var(--danger)';
-    $('placeOrderBtn').disabled = true;
-  }
-  
-  // Sauvegarder l'état
-  saveState();
-}
-
-function addToCart(productId, product, quantity = 1) {
-  if (!product || quantity <= 0) return;
-  
-  if (state.cart[productId]) {
-    state.cart[productId].quantity += quantity;
-  } else {
-    state.cart[productId] = {
-      ...product,
-      quantity: quantity
+    img.src = imgSrc;
+    img.onload = () => {
+      img.style.display = 'block';
+      noPhoto.style.display = 'none';
     };
-  }
-  
-  state.quantityPicks[productId] = 0;
-  
-  updateCartUI();
-  showToast(`✅ ${quantity} × ${product.name} ajouté au panier !`);
-  
-  if (state.currentModalProduct && generateProductId(state.currentModalProduct) === productId) {
-    state.quantityPicks[productId] = 0;
-    updateModalQuantity();
-  }
-}
-
-// ===================== INITIALISATION =====================
-function init() {
-  // Charger l'état
-  try {
-    const saved = localStorage.getItem(CONFIG.localStorageKey);
-    if (saved) {
-      const data = JSON.parse(saved);
-      state.user = data.user || null;
-      state.cart = data.cart || {};
-      state.orderHistory = data.orderHistory || [];
-      updateUserUI();
-      updateCartUI();
-    }
-  } catch (e) {
-    console.warn('Erreur chargement état:', e);
-  }
-  
-  // Événements
-  $('cartTopBtn').onclick = () => {
-    $('drawer').classList.add('open');
-    $('drawerOverlay').classList.add('open');
-    document.body.classList.add('drawer-open');
+    img.onerror = () => {
+      img.style.display = 'none';
+      noPhoto.style.display = 'flex';
+      noPhoto.textContent = `Aucune photo pour ${product.code}`;
+    };
+    
+    // Mettre à jour les produits similaires
+    renderSimilarProducts(product);
+    
+    $('productModal').classList.add('open');
     document.body.style.overflow = 'hidden';
-  };
-  
-  $('closeDrawerBtn').onclick = () => {
-    $('drawer').classList.remove('open');
-    $('drawerOverlay').classList.remove('open');
-    document.body.classList.remove('drawer-open');
+  }
+
+  function closeProductModal() {
+    $('productModal').classList.remove('open');
     document.body.style.overflow = '';
-  };
-  
-  $('drawerOverlay').onclick = $('closeDrawerBtn').onclick;
-  
-  $('searchInput').addEventListener('input', (e) => {
-    state.searchQuery = e.target.value;
-    state.currentPage = 1;
-    renderProducts();
-  });
-  
-  $('searchEnterBtn').onclick = () => {
-    state.currentPage = 1;
-    renderProducts();
-    $('searchInput').focus();
-  };
-  
-  $('clearSearchBtn').onclick = () => {
-    $('searchInput').value = '';
-    state.searchQuery = '';
-    state.currentPage = 1;
-    renderProducts();
-    $('searchInput').focus();
-  };
-  
-  $('showAllBtn').onclick = () => {
-    state.showAllCategories = true;
-    state.activeCategory = null;
-    state.currentPage = 1;
-    renderProducts();
-    updateCategoriesUI();
-  };
-  
-  $('viewPromosBtn').onclick = () => {
-    state.showAllCategories = false;
-    state.activeCategory = 'promotions';
-    state.currentPage = 1;
-    renderProducts();
-    updateCategoriesUI();
-    $('closeDrawerBtn').click();
-  };
-  
-  $('prevPageBtn').onclick = $('prevPageBottomBtn').onclick = () => {
-    if (state.currentPage > 1) {
-      state.currentPage--;
-      renderProducts();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-  
-  $('nextPageBtn').onclick = $('nextPageBottomBtn').onclick = () => {
-    const products = getFilteredProducts();
-    const totalPages = Math.ceil(products.length / CONFIG.itemsPerPage) || 1;
-    if (state.currentPage < totalPages) {
-      state.currentPage++;
-      renderProducts();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-  
-  $('closeProductModalBtn').onclick = $('modalCloseBottomBtn').onclick = closeProductModal;
-  
-  $('modalDecreaseBtn').onclick = () => {
+    state.currentModalProduct = null;
+  }
+
+  function updateModalQuantity() {
     if (!state.currentModalProduct) return;
-    const productId = generateProductId(state.currentModalProduct);
-    state.quantityPicks[productId] = Math.max(0, (state.quantityPicks[productId] || 0) - 1);
-    updateModalQuantity();
-  };
-  
-  $('modalIncreaseBtn').onclick = () => {
-    if (!state.currentModalProduct) return;
-    const productId = generateProductId(state.currentModalProduct);
-    state.quantityPicks[productId] = (state.quantityPicks[productId] || 0) + 1;
-    updateModalQuantity();
-  };
-  
-  $('modalAddToCartBtn').onclick = () => {
-    if (!state.currentModalProduct) return;
+    
     const productId = generateProductId(state.currentModalProduct);
     const quantity = state.quantityPicks[productId] || 0;
     
-    if (quantity > 0) {
-      addToCart(productId, state.currentModalProduct, quantity);
-      closeProductModal();
+    $('modalProductQuantity').textContent = quantity;
+    
+    const addBtn = $('modalAddToCartBtn');
+    addBtn.disabled = quantity === 0;
+    addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
+  }
+
+  // ===================== ARTICLES SIMILAIRES =====================
+  function getSimilarProducts(currentProduct) {
+    if (!currentProduct) return [];
+    
+    if (currentProduct.categoryKey === 'promotions') {
+      return state.promotions.filter(p => 
+        p.code !== currentProduct.code
+      ).slice(0, 6);
     }
-  };
-  
-  $('clearCartBtn').onclick = () => {
-    if (Object.keys(state.cart).length === 0) return;
     
-    if (confirm('Voulez-vous vraiment vider tout votre panier ?')) {
-      state.cart = {};
-      updateCartUI();
-      showToast('Panier vidé', 'warning');
+    const sameCategory = state.products.get(currentProduct.categoryKey) || [];
+    return sameCategory.filter(p => 
+      p.code !== currentProduct.code
+    ).slice(0, 6);
+  }
+
+  function renderSimilarProducts(currentProduct) {
+    const similar = getSimilarProducts(currentProduct);
+    const grid = $('similarProductsGrid');
+    const count = $('similarProductsCount');
+    const section = $('similarProductsSection');
+    
+    count.textContent = similar.length;
+    
+    if (similar.length === 0) {
+      section.style.display = 'none';
+      return;
     }
-  };
-  
-  // Gestionnaire pour les boutons de quantité dans le panier
-  $('cartItemsList').addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-action]');
-    if (!btn) return;
     
-    const action = btn.dataset.action;
-    const id = btn.dataset.id;
+    section.style.display = 'block';
+    grid.innerHTML = '';
     
-    if (action === 'increase' && state.cart[id]) {
-      state.cart[id].quantity++;
-      updateCartUI();
-    } else if (action === 'decrease' && state.cart[id]) {
-      state.cart[id].quantity--;
-      if (state.cart[id].quantity <= 0) {
-        delete state.cart[id];
+    similar.forEach(product => {
+      const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
+      
+      const card = document.createElement('div');
+      card.className = 'similar-product-card';
+      card.innerHTML = `
+        <div class="similar-product-image">
+          <img src="${imgSrc}" alt="${product.name}" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div class="similar-product-info">
+          <div class="similar-product-name">${product.name}</div>
+          <div class="similar-product-price">${formatPrice(product.price)}</div>
+          <div class="similar-product-stock">✓ ${product.stock} en stock</div>
+        </div>
+      `;
+      
+      card.addEventListener('click', () => {
+        closeProductModal();
+        setTimeout(() => openProductModal(product), 300);
+      });
+      
+      grid.appendChild(card);
+    });
+  }
+
+  // ===================== PANIER =====================
+  function updateCartUI() {
+    const cartCount = Object.values(state.cart).reduce((sum, item) => sum + item.quantity, 0);
+    const subtotal = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    $('cartTopCount').textContent = cartCount;
+    $('cartItemsCount').textContent = `${cartCount} article(s)`;
+    
+    const cartItemsList = $('cartItemsList');
+    const cartEmptyMessage = $('cartEmptyMessage');
+    
+    if (cartCount === 0) {
+      cartItemsList.style.display = 'none';
+      cartEmptyMessage.style.display = 'block';
+    } else {
+      cartItemsList.style.display = 'flex';
+      cartEmptyMessage.style.display = 'none';
+      
+      cartItemsList.innerHTML = '';
+      Object.entries(state.cart).forEach(([id, item]) => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'cart-item';
+        itemElement.innerHTML = `
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-details">
+              <span>Code: ${item.code}</span>
+              <span>Prix: ${formatPrice(item.price)}</span>
+              <span>Cat: ${item.category}</span>
+            </div>
+            <div class="cart-item-controls">
+              <div class="cart-item-stepper">
+                <button class="cart-item-qty-btn" data-action="decrease" data-id="${id}">−</button>
+                <span class="cart-item-qty">${item.quantity}</span>
+                <button class="cart-item-qty-btn" data-action="increase" data-id="${id}">+</button>
+              </div>
+            </div>
+          </div>
+          <div class="cart-item-price">${formatPrice(item.price * item.quantity)}</div>
+        `;
+        cartItemsList.appendChild(itemElement);
+      });
+    }
+    
+    $('cartSubtotal').textContent = formatPrice(subtotal);
+    
+    let shippingFee = CONFIG.shippingFee;
+    let shippingText = formatPrice(shippingFee);
+    
+    if (subtotal >= CONFIG.freeShipping) {
+      shippingFee = 0;
+      shippingText = '<span class="total-value free">GRATUIT</span>';
+    } else if (subtotal < CONFIG.minOrder) {
+      shippingFee = null;
+      shippingText = '—';
+    }
+    
+    $('cartShipping').innerHTML = shippingText;
+    
+    const total = shippingFee !== null ? subtotal + shippingFee : null;
+    if (total !== null) {
+      $('cartTotal').textContent = formatPrice(total);
+      $('placeOrderBtn').disabled = false;
+    } else {
+      $('cartTotal').textContent = `Minimum: ${formatPrice(CONFIG.minOrder)}`;
+      $('cartTotal').style.color = 'var(--danger)';
+      $('placeOrderBtn').disabled = true;
+    }
+    
+    saveState();
+  }
+
+  function addToCart(productId, product, quantity = 1) {
+    if (!product || quantity <= 0) return;
+    
+    if (state.cart[productId]) {
+      state.cart[productId].quantity += quantity;
+    } else {
+      state.cart[productId] = {
+        ...product,
+        quantity: quantity
+      };
+    }
+    
+    state.quantityPicks[productId] = 0;
+    
+    updateCartUI();
+    showToast(`✅ ${quantity} × ${product.name} ajouté au panier !`);
+    
+    if (state.currentModalProduct && generateProductId(state.currentModalProduct) === productId) {
+      state.quantityPicks[productId] = 0;
+      updateModalQuantity();
+    }
+  }
+
+  // ===================== QR CODE =====================
+  function generateQRCode() {
+    const qrContainer = $('qrCodeContainer');
+    const qrUrl = $('qrUrl');
+    
+    // URL du QR code
+    const url = CONFIG.qrCodeUrl || window.location.href;
+    qrUrl.textContent = url;
+    
+    // Créer un canvas pour le QR code (simplifié pour l'exemple)
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 200;
+    canvas.height = 200;
+    
+    // Fond blanc
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, 200, 200);
+    
+    // Dessiner un QR code simple
+    ctx.fillStyle = '#000000';
+    
+    // Carrés de position
+    ctx.fillRect(10, 10, 40, 40);
+    ctx.fillRect(150, 10, 40, 40);
+    ctx.fillRect(10, 150, 40, 40);
+    
+    // Texte
+    ctx.fillStyle = '#00ff88';
+    ctx.font = 'bold 16px Arial';
+    ctx.fillText('MAXI JDC', 60, 100);
+    ctx.font = '12px Arial';
+    ctx.fillText('MARKET', 70, 120);
+    
+    // Ajouter l'image au conteneur
+    qrContainer.innerHTML = '';
+    qrContainer.appendChild(canvas);
+  }
+
+  function openQRModal() {
+    generateQRCode();
+    $('qrModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeQRModal() {
+    $('qrModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ===================== ADMIN =====================
+  function toggleAdminMode() {
+    const password = prompt("Entrez le mot de passe administrateur:");
+    if (password === CONFIG.adminPassword) {
+      state.isAdmin = !state.isAdmin;
+      $('adminSection').classList.toggle('visible', state.isAdmin);
+      showToast(state.isAdmin ? '🔓 Mode admin activé' : '🔒 Mode admin désactivé');
+      localStorage.setItem(CONFIG.adminPasswordKey, state.isAdmin ? 'true' : 'false');
+    } else if (password !== null) {
+      showToast('❌ Mot de passe incorrect', 'error');
+    }
+  }
+
+  // ===================== GESTION UTILISATEUR =====================
+  function updateUserUI() {
+    if (state.user) {
+      $('clientName').value = state.user.name || '';
+      $('clientPhone').value = state.user.phone || '';
+      $('clientAddress').value = state.user.address || '';
+      $('clientLat').value = state.user.lat || '';
+      $('clientLng').value = state.user.lng || '';
+      
+      $('accountStatus').textContent = 'Enregistré';
+      $('accountStatus').style.color = 'var(--accent)';
+      
+      $('saveAccountBtn').style.display = 'none';
+      $('editAccountBtn').style.display = 'block';
+    } else {
+      $('accountStatus').textContent = 'Nouveau';
+      $('accountStatus').style.color = 'var(--muted)';
+      
+      $('saveAccountBtn').style.display = 'block';
+      $('editAccountBtn').style.display = 'none';
+    }
+  }
+
+  function saveUser() {
+    const name = $('clientName').value.trim();
+    const phone = $('clientPhone').value.trim();
+    const address = $('clientAddress').value.trim();
+    const lat = $('clientLat').value.trim();
+    const lng = $('clientLng').value.trim();
+    
+    if (!name || !phone || !address) {
+      showToast('❌ Veuillez remplir tous les champs obligatoires (*)', 'error');
+      return;
+    }
+    
+    state.user = {
+      name,
+      phone,
+      address,
+      lat: lat || null,
+      lng: lng || null,
+      createdAt: new Date().toISOString()
+    };
+    
+    updateUserUI();
+    saveState();
+    showToast('✅ Compte enregistré avec succès !');
+  }
+
+  function editUser() {
+    $('saveAccountBtn').style.display = 'block';
+    $('editAccountBtn').style.display = 'none';
+    $('accountStatus').textContent = 'Modification';
+  }
+
+  // ===================== INITIALISATION =====================
+  function init() {
+    // Charger l'état
+    try {
+      const saved = localStorage.getItem(CONFIG.localStorageKey);
+      if (saved) {
+        const data = JSON.parse(saved);
+        state.user = data.user || null;
+        state.cart = data.cart || {};
+        state.orderHistory = data.orderHistory || [];
+        updateUserUI();
+        updateCartUI();
       }
-      updateCartUI();
+      
+      // Charger l'état admin
+      const adminState = localStorage.getItem(CONFIG.adminPasswordKey);
+      state.isAdmin = adminState === 'true';
+      $('adminSection').classList.toggle('visible', state.isAdmin);
+    } catch (e) {
+      console.warn('Erreur chargement état:', e);
     }
-  });
-  
-  // Charger les produits
-  loadAllProducts();
-  
-  showToast('👋 Bienvenue sur MAXI JDC MARKET !');
-}
+    
+    // Événements
+    $('cartTopBtn').onclick = () => {
+      $('drawer').classList.add('open');
+      $('drawerOverlay').classList.add('open');
+      document.body.classList.add('drawer-open');
+      document.body.style.overflow = 'hidden';
+    };
+    
+    $('closeDrawerBtn').onclick = () => {
+      $('drawer').classList.remove('open');
+      $('drawerOverlay').classList.remove('open');
+      document.body.classList.remove('drawer-open');
+      document.body.style.overflow = '';
+    };
+    
+    $('drawerOverlay').onclick = $('closeDrawerBtn').onclick;
+    
+    $('searchInput').addEventListener('input', (e) => {
+      state.searchQuery = e.target.value;
+      state.currentPage = 1;
+      renderProducts();
+    });
+    
+    $('searchEnterBtn').onclick = () => {
+      state.currentPage = 1;
+      renderProducts();
+      $('searchInput').focus();
+    };
+    
+    $('clearSearchBtn').onclick = () => {
+      $('searchInput').value = '';
+      state.searchQuery = '';
+      state.currentPage = 1;
+      renderProducts();
+      $('searchInput').focus();
+    };
+    
+    $('showAllBtn').onclick = () => {
+      state.showAllCategories = true;
+      state.activeCategory = null;
+      state.currentPage = 1;
+      renderProducts();
+      updateCategoriesUI();
+    };
+    
+    $('viewPromosBtn').onclick = () => {
+      state.showAllCategories = false;
+      state.activeCategory = 'promotions';
+      state.currentPage = 1;
+      renderProducts();
+      updateCategoriesUI();
+      $('closeDrawerBtn').click();
+    };
+    
+    $('prevPageBtn').onclick = $('prevPageBottomBtn').onclick = () => {
+      if (state.currentPage > 1) {
+        state.currentPage--;
+        renderProducts();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+    
+    $('nextPageBtn').onclick = $('nextPageBottomBtn').onclick = () => {
+      const products = getFilteredProducts();
+      const totalPages = Math.ceil(products.length / CONFIG.itemsPerPage) || 1;
+      if (state.currentPage < totalPages) {
+        state.currentPage++;
+        renderProducts();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+    
+    $('closeProductModalBtn').onclick = $('modalCloseBottomBtn').onclick = closeProductModal;
+    
+    $('modalDecreaseBtn').onclick = () => {
+      if (!state.currentModalProduct) return;
+      const productId = generateProductId(state.currentModalProduct);
+      state.quantityPicks[productId] = Math.max(0, (state.quantityPicks[productId] || 0) - 1);
+      updateModalQuantity();
+    };
+    
+    $('modalIncreaseBtn').onclick = () => {
+      if (!state.currentModalProduct) return;
+      const productId = generateProductId(state.currentModalProduct);
+      state.quantityPicks[productId] = (state.quantityPicks[productId] || 0) + 1;
+      updateModalQuantity();
+    };
+    
+    $('modalAddToCartBtn').onclick = () => {
+      if (!state.currentModalProduct) return;
+      const productId = generateProductId(state.currentModalProduct);
+      const quantity = state.quantityPicks[productId] || 0;
+      
+      if (quantity > 0) {
+        addToCart(productId, state.currentModalProduct, quantity);
+        closeProductModal();
+      }
+    };
+    
+    // QR Code
+    $('qrInfoBtn').onclick = openQRModal;
+    $('qrDirectBtn').onclick = openQRModal;
+    $('closeQrModalBtn').onclick = closeQRModal;
+    
+    // Admin
+    $('secretAdminBtn').onclick = toggleAdminMode;
+    
+    // Gestion du panier
+    $('clearCartBtn').onclick = () => {
+      if (Object.keys(state.cart).length === 0) return;
+      
+      if (confirm('Voulez-vous vraiment vider tout votre panier ?')) {
+        state.cart = {};
+        updateCartUI();
+        showToast('Panier vidé', 'warning');
+      }
+    };
+    
+    // Gestion des boutons de quantité dans le panier
+    $('cartItemsList').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      
+      const action = btn.dataset.action;
+      const id = btn.dataset.id;
+      
+      if (action === 'increase' && state.cart[id]) {
+        state.cart[id].quantity++;
+        updateCartUI();
+      } else if (action === 'decrease' && state.cart[id]) {
+        state.cart[id].quantity--;
+        if (state.cart[id].quantity <= 0) {
+          delete state.cart[id];
+        }
+        updateCartUI();
+      }
+    });
+    
+    // Gestion utilisateur
+    $('saveAccountBtn').onclick = saveUser;
+    $('editAccountBtn').onclick = editUser;
+    $('clearPhoneBtn').onclick = () => {
+      $('clientPhone').value = '';
+      $('clientPhone').focus();
+    };
+    
+    // Charger les produits
+    loadAllProducts();
+    
+    showToast('👋 Bienvenue sur MAXI JDC MARKET !');
+  }
 
-// Sauvegarder l'état
-function saveState() {
-  const data = {
-    user: state.user,
-    cart: state.cart,
-    orderHistory: state.orderHistory,
-    version: '21.0'
-  };
-  localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
-}
+  // Sauvegarder l'état
+  function saveState() {
+    const data = {
+      user: state.user,
+      cart: state.cart,
+      orderHistory: state.orderHistory,
+      version: '22.0'
+    };
+    localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
+  }
 
-// Démarrer l'application
-document.addEventListener('DOMContentLoaded', init);
-</script>
+  // Démarrer l'application
+  document.addEventListener('DOMContentLoaded', init);
+  </script>
 </body>
 </html>
