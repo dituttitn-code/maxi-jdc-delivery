@@ -768,6 +768,14 @@
       color: var(--text);
     }
 
+    .product-price-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      margin-top: auto;
+    }
+
     .product-price {
       font-weight: 900;
       padding: 5px 8px;
@@ -778,7 +786,7 @@
       font-size: 12px;
       white-space: nowrap;
       text-align: center;
-      margin-top: auto;
+      width: 100%;
     }
 
     .product-card.promo-card .product-price {
@@ -792,7 +800,6 @@
       color: var(--muted);
       text-decoration: line-through;
       margin-right: 3px;
-      display: inline;
     }
 
     .product-card.promo-card .product-old-price {
@@ -3254,11 +3261,17 @@
       </div>
       
       <div class="qr-modal-body">
-        <div class="qr-code-container" id="qrCodeContainer"></div>
+        <div class="qr-code-container" id="qrCodeContainer">
+          <div style="text-align: center; padding: 20px;">
+            <div style="font-size: 48px; margin-bottom: 10px;">📱</div>
+            <div style="font-weight: bold; color: #000;">MAXI JDC MARKET</div>
+            <div style="font-size: 12px; color: #666; margin-top: 5px;">Scannez-moi !</div>
+          </div>
+        </div>
         
         <div class="qr-instructions">
           <p>Scannez ce code avec votre téléphone pour accéder à l'application MAXI JDC MARKET.</p>
-          <p>Ou utilisez ce lien : <strong id="qrUrl"></strong></p>
+          <p>Ou utilisez ce lien : <strong id="qrUrl">https://maxi-jdc-market.com</strong></p>
         </div>
       </div>
       
@@ -3332,7 +3345,7 @@
     shippingFee: 3,
     whatsappNumber: "21625600978",
     itemsPerPage: 24,
-    localStorageKey: 'maxi_jdc_market_app_v22',
+    localStorageKey: 'maxi_jdc_market_app_v23',
     imagesBasePath: 'images/products/',
     historyRetentionYears: 2,
     adminPasswordKey: 'maxi_jdc_admin_password',
@@ -3382,8 +3395,7 @@
     orderHistory: [],
     promotions: [],
     tempMapCoords: null,
-    isAdmin: false,
-    adminPassword: "admin123"
+    isAdmin: false
   };
 
   // ===================== UTILITAIRES =====================
@@ -3519,48 +3531,6 @@
     }
   }
 
-  function findOriginalPriceInCategories(code) {
-    for (const [catKey, products] of state.products.entries()) {
-      if (catKey === 'promotions') continue;
-      
-      const product = products.find(p => p.code === code);
-      if (product && !product.isPromotion) {
-        return product.price;
-      }
-    }
-    return null;
-  }
-
-  function applyPromotions() {
-    console.log('Application des promotions...');
-    
-    const promotions = state.products.get('promotions') || [];
-    
-    promotions.forEach(promo => {
-      for (const [catKey, products] of state.products.entries()) {
-        if (catKey === 'promotions') continue;
-        
-        products.forEach((product, index) => {
-          if (product.code === promo.code) {
-            const originalPrice = product.price;
-            const promoPrice = promo.price;
-            const discountPercent = Math.round((1 - promoPrice / originalPrice) * 100);
-            
-            products[index] = {
-              ...product,
-              oldPrice: originalPrice,
-              price: promoPrice,
-              isPromotion: true,
-              discountPercent: discountPercent
-            };
-            
-            console.log(`Promo appliquée: ${product.code} (${catKey}) - ${discountPercent}%`);
-          }
-        });
-      }
-    });
-  }
-
   async function loadAllProducts() {
     state.products.clear();
     
@@ -3580,7 +3550,7 @@
       state.products.set('promotions', promotions);
       state.promotions = promotions;
       
-      // Appliquer les promotions
+      // Appliquer les promotions aux produits
       applyPromotions();
       
       // Afficher la bannière promo
@@ -3591,6 +3561,40 @@
     renderProducts();
     
     showToast('✅ Produits chargés avec succès');
+  }
+
+  function applyPromotions() {
+    console.log('Application des promotions...');
+    
+    const promotions = state.products.get('promotions') || [];
+    
+    // Pour chaque produit en promotion
+    promotions.forEach(promo => {
+      // Chercher dans toutes les catégories
+      for (const [catKey, products] of state.products.entries()) {
+        if (catKey === 'promotions') continue;
+        
+        // Mettre à jour les produits correspondants
+        products.forEach((product, index) => {
+          if (product.code === promo.code) {
+            const originalPrice = product.price;
+            const promoPrice = promo.price;
+            const discountPercent = Math.round((1 - promoPrice / originalPrice) * 100);
+            
+            // Mettre à jour le produit
+            products[index] = {
+              ...product,
+              oldPrice: originalPrice,
+              price: promoPrice,
+              isPromotion: true,
+              discountPercent: discountPercent
+            };
+            
+            console.log(`Promo appliquée: ${product.code} (${catKey}) - ${discountPercent}%`);
+          }
+        });
+      }
+    });
   }
 
   // ===================== AFFICHAGE =====================
@@ -3744,9 +3748,14 @@
         discountBadge = `<div class="product-discount">-${product.discountPercent}%</div>`;
       }
       
-      const oldPriceDisplay = product.isPromotion && product.oldPrice && product.oldPrice > product.price
-        ? `<span class="product-old-price">${formatPrice(product.oldPrice)}</span> `
-        : '';
+      const priceDisplay = product.isPromotion && product.oldPrice && product.oldPrice > product.price
+        ? `<div class="product-price-container">
+            <div class="product-old-price">${formatPrice(product.oldPrice)}</div>
+            <div class="product-price">${formatPrice(product.price)}</div>
+          </div>`
+        : `<div class="product-price-container">
+            <div class="product-price">${formatPrice(product.price)}</div>
+          </div>`;
       
       card.innerHTML = `
         <div class="product-image">
@@ -3766,10 +3775,7 @@
             <div>Code: ${product.code}</div>
             <div>${product.category}</div>
           </div>
-          <div class="product-price">
-            ${oldPriceDisplay}
-            ${formatPrice(product.price)}
-          </div>
+          ${priceDisplay}
         </div>
         
         <div class="product-stock-tag ok">
@@ -3792,15 +3798,10 @@
     
     $('modalProductName').textContent = product.name;
     $('modalProductNameFull').textContent = product.name;
-    $('modalProductPrice').textContent = formatPrice(product.price);
-    $('modalProductCode').textContent = product.code;
-    $('modalProductCategory').textContent = product.category;
-    $('modalProductStock').textContent = `✓ ${product.stock} en stock`;
-    $('modalProductStock').style.color = 'var(--accent)';
-    $('modalProductQuantity').textContent = quantity;
     
-    // Gestion des promotions
+    // Prix et promotion
     if (product.isPromotion && product.oldPrice && product.oldPrice > product.price) {
+      $('modalProductPrice').textContent = formatPrice(product.price);
       $('modalProductOldPrice').textContent = formatPrice(product.oldPrice);
       $('modalProductOldPrice').style.display = 'block';
       
@@ -3816,10 +3817,17 @@
         $('modalPromoBadge').style.display = 'none';
       }
     } else {
+      $('modalProductPrice').textContent = formatPrice(product.price);
       $('modalProductOldPrice').style.display = 'none';
       $('modalProductDiscount').style.display = 'none';
       $('modalPromoBadge').style.display = 'none';
     }
+    
+    $('modalProductCode').textContent = product.code;
+    $('modalProductCategory').textContent = product.category;
+    $('modalProductStock').textContent = `✓ ${product.stock} en stock`;
+    $('modalProductStock').style.color = 'var(--accent)';
+    $('modalProductQuantity').textContent = quantity;
     
     const addBtn = $('modalAddToCartBtn');
     addBtn.disabled = quantity === 0;
@@ -4020,46 +4028,8 @@
   }
 
   // ===================== QR CODE =====================
-  function generateQRCode() {
-    const qrContainer = $('qrCodeContainer');
-    const qrUrl = $('qrUrl');
-    
-    // URL du QR code
-    const url = CONFIG.qrCodeUrl || window.location.href;
-    qrUrl.textContent = url;
-    
-    // Créer un canvas pour le QR code (simplifié pour l'exemple)
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = 200;
-    canvas.height = 200;
-    
-    // Fond blanc
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, 200, 200);
-    
-    // Dessiner un QR code simple
-    ctx.fillStyle = '#000000';
-    
-    // Carrés de position
-    ctx.fillRect(10, 10, 40, 40);
-    ctx.fillRect(150, 10, 40, 40);
-    ctx.fillRect(10, 150, 40, 40);
-    
-    // Texte
-    ctx.fillStyle = '#00ff88';
-    ctx.font = 'bold 16px Arial';
-    ctx.fillText('MAXI JDC', 60, 100);
-    ctx.font = '12px Arial';
-    ctx.fillText('MARKET', 70, 120);
-    
-    // Ajouter l'image au conteneur
-    qrContainer.innerHTML = '';
-    qrContainer.appendChild(canvas);
-  }
-
   function openQRModal() {
-    generateQRCode();
+    $('qrUrl').textContent = CONFIG.qrCodeUrl;
     $('qrModal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -4317,7 +4287,7 @@
       user: state.user,
       cart: state.cart,
       orderHistory: state.orderHistory,
-      version: '22.0'
+      version: '23.0'
     };
     localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
   }
