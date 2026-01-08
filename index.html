@@ -799,7 +799,7 @@
       font-size: 9px;
       color: var(--muted);
       text-decoration: line-through;
-      margin-right: 3px;
+      margin-bottom: 2px;
     }
 
     .product-card.promo-card .product-old-price {
@@ -1091,7 +1091,7 @@
       flex-wrap: wrap;
     }
 
-    .modal-product-price {
+    .modal-current-price {
       font-size: 24px;
       font-weight: 900;
       color: var(--accent);
@@ -1103,14 +1103,24 @@
       min-width: 150px;
     }
 
-    .modal-product-old-price {
+    .modal-product-card.promo-card .modal-current-price {
+      border-color: #ff9900;
+      background: rgba(255, 153, 0, 0.15);
+      color: #ffcc00;
+    }
+
+    .modal-old-price {
       font-size: 16px;
       color: var(--muted);
       text-decoration: line-through;
       display: block;
     }
 
-    .modal-product-discount {
+    .modal-product-card.promo-card .modal-old-price {
+      color: #ff8888;
+    }
+
+    .modal-discount {
       background: linear-gradient(135deg, #ff0000, #ff6b00);
       color: white;
       font-weight: 900;
@@ -2677,7 +2687,7 @@
         font-size: 18px;
       }
       
-      .modal-product-price {
+      .modal-current-price {
         font-size: 20px;
       }
       
@@ -3196,9 +3206,9 @@
           <h2 class="modal-product-name" id="modalProductNameFull"></h2>
           
           <div class="modal-price-container">
-            <div class="modal-product-price" id="modalProductPrice"></div>
-            <div class="modal-product-old-price" id="modalProductOldPrice" style="display:none"></div>
-            <div class="modal-product-discount" id="modalProductDiscount" style="display:none"></div>
+            <div class="modal-current-price" id="modalCurrentPrice"></div>
+            <div class="modal-old-price" id="modalOldPrice" style="display:none"></div>
+            <div class="modal-discount" id="modalDiscount" style="display:none"></div>
           </div>
           
           <div class="modal-product-meta">
@@ -3345,7 +3355,7 @@
     shippingFee: 3,
     whatsappNumber: "21625600978",
     itemsPerPage: 24,
-    localStorageKey: 'maxi_jdc_market_app_v23',
+    localStorageKey: 'maxi_jdc_market_app_v24',
     imagesBasePath: 'images/products/',
     historyRetentionYears: 2,
     adminPasswordKey: 'maxi_jdc_admin_password',
@@ -3534,24 +3544,27 @@
   async function loadAllProducts() {
     state.products.clear();
     
-    // Charger toutes les catégories sauf promotions
+    // D'abord charger toutes les catégories
+    const allProducts = [];
+    
     for (const category of CATEGORIES) {
       if (category.key === 'promotions') continue;
       
       const products = await loadCategoryData(category.key);
       if (products.length > 0) {
         state.products.set(category.key, products);
+        allProducts.push(...products);
       }
     }
     
-    // Charger les promotions
+    // Ensuite charger les promotions
     const promotions = await loadPromotionsData();
     if (promotions.length > 0) {
       state.products.set('promotions', promotions);
       state.promotions = promotions;
       
-      // Appliquer les promotions aux produits
-      applyPromotions();
+      // Appliquer les promotions aux produits correspondants
+      applyPromotions(allProducts, promotions);
       
       // Afficher la bannière promo
       showPromoBanner(promotions);
@@ -3563,38 +3576,41 @@
     showToast('✅ Produits chargés avec succès');
   }
 
-  function applyPromotions() {
+  function applyPromotions(allProducts, promotions) {
     console.log('Application des promotions...');
     
-    const promotions = state.products.get('promotions') || [];
-    
-    // Pour chaque produit en promotion
+    // Créer une map pour les promotions par code
+    const promoMap = new Map();
     promotions.forEach(promo => {
-      // Chercher dans toutes les catégories
-      for (const [catKey, products] of state.products.entries()) {
-        if (catKey === 'promotions') continue;
-        
-        // Mettre à jour les produits correspondants
-        products.forEach((product, index) => {
-          if (product.code === promo.code) {
-            const originalPrice = product.price;
-            const promoPrice = promo.price;
-            const discountPercent = Math.round((1 - promoPrice / originalPrice) * 100);
-            
-            // Mettre à jour le produit
-            products[index] = {
-              ...product,
-              oldPrice: originalPrice,
-              price: promoPrice,
-              isPromotion: true,
-              discountPercent: discountPercent
-            };
-            
-            console.log(`Promo appliquée: ${product.code} (${catKey}) - ${discountPercent}%`);
-          }
-        });
-      }
+      promoMap.set(promo.code, promo);
     });
+    
+    // Appliquer les promotions à chaque catégorie
+    for (const [catKey, products] of state.products.entries()) {
+      if (catKey === 'promotions') continue;
+      
+      const updatedProducts = products.map(product => {
+        const promo = promoMap.get(product.code);
+        if (promo) {
+          // Calculer le pourcentage de réduction
+          const discountPercent = Math.round((1 - promo.price / product.price) * 100);
+          
+          return {
+            ...product,
+            oldPrice: product.price,
+            price: promo.price,
+            isPromotion: true,
+            discountPercent: discountPercent
+          };
+        }
+        return product;
+      });
+      
+      // Mettre à jour la catégorie
+      state.products.set(catKey, updatedProducts);
+    }
+    
+    console.log('Promotions appliquées avec succès');
   }
 
   // ===================== AFFICHAGE =====================
@@ -3801,25 +3817,25 @@
     
     // Prix et promotion
     if (product.isPromotion && product.oldPrice && product.oldPrice > product.price) {
-      $('modalProductPrice').textContent = formatPrice(product.price);
-      $('modalProductOldPrice').textContent = formatPrice(product.oldPrice);
-      $('modalProductOldPrice').style.display = 'block';
+      $('modalCurrentPrice').textContent = formatPrice(product.price);
+      $('modalOldPrice').textContent = formatPrice(product.oldPrice);
+      $('modalOldPrice').style.display = 'block';
       
-      const discountPercent = Math.round((1 - product.price / product.oldPrice) * 100);
+      const discountPercent = product.discountPercent || Math.round((1 - product.price / product.oldPrice) * 100);
       if (discountPercent > 0) {
-        $('modalProductDiscount').textContent = `-${discountPercent}%`;
-        $('modalProductDiscount').style.display = 'block';
+        $('modalDiscount').textContent = `-${discountPercent}%`;
+        $('modalDiscount').style.display = 'block';
         
         $('modalPromoBadge').style.display = 'block';
         $('modalPromoBadge').textContent = `${discountPercent}% OFF`;
       } else {
-        $('modalProductDiscount').style.display = 'none';
+        $('modalDiscount').style.display = 'none';
         $('modalPromoBadge').style.display = 'none';
       }
     } else {
-      $('modalProductPrice').textContent = formatPrice(product.price);
-      $('modalProductOldPrice').style.display = 'none';
-      $('modalProductDiscount').style.display = 'none';
+      $('modalCurrentPrice').textContent = formatPrice(product.price);
+      $('modalOldPrice').style.display = 'none';
+      $('modalDiscount').style.display = 'none';
       $('modalPromoBadge').style.display = 'none';
     }
     
@@ -4287,7 +4303,7 @@
       user: state.user,
       cart: state.cart,
       orderHistory: state.orderHistory,
-      version: '23.0'
+      version: '24.0'
     };
     localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
   }
