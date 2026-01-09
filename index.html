@@ -2431,7 +2431,7 @@
       font-size: 12px;
     }
 
-    /* CONDITIONS LIVRAISON */
+    /* CONDITIONS LIVRAISON - MODIFIÉ */
     .delivery-info {
       margin-top: 15px;
       padding: 15px;
@@ -2460,6 +2460,7 @@
       align-items: center;
       gap: 8px;
       font-size: 12px;
+      position: relative;
     }
 
     .rule-icon {
@@ -2483,6 +2484,35 @@
       color: var(--accent);
       font-weight: 900;
       margin-left: 4px;
+    }
+
+    /* NOUVEAU: Message de livraison */
+    .delivery-message {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      animation: pulse 2s infinite;
+    }
+
+    .delivery-message.minimum {
+      background: rgba(255, 167, 38, 0.1);
+      border: 1px solid var(--warning);
+      color: var(--warning);
+    }
+
+    .delivery-message.free {
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .delivery-message.remaining {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid var(--accent2);
+      color: var(--accent2);
     }
 
     /* FOOTER DRAWER */
@@ -3001,6 +3031,33 @@
       gap: 4px;
     }
 
+    /* NOUVEAU: Notification d'ajout au panier */
+    .cart-notification {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 20px;
+      background: rgba(0, 255, 136, 0.9);
+      color: var(--bg0);
+      border-radius: 25px;
+      font-weight: 900;
+      z-index: 5000;
+      box-shadow: 0 5px 25px rgba(0,255,136,0.3);
+      animation: slideUp 0.3s ease, fadeOut 0.3s ease 2s forwards;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .cart-notification.promo {
+      background: rgba(255, 153, 0, 0.9);
+      color: #fff;
+      box-shadow: 0 5px 25px rgba(255, 153, 0, 0.3);
+    }
+
     /* ANIMATIONS */
     @keyframes scrollHorizontal {
       0% {
@@ -3018,6 +3075,17 @@
       }
       to {
         transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateX(-50%) translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(-50%) translateY(0);
         opacity: 1;
       }
     }
@@ -3245,6 +3313,13 @@
         width: 50px;
         font-size: 12px;
         padding: 4px 8px;
+      }
+      
+      .cart-notification {
+        width: 90%;
+        font-size: 13px;
+        padding: 10px 15px;
+        bottom: 70px;
       }
     }
 
@@ -3599,6 +3674,9 @@
           </div>
         </div>
         
+        <!-- NOUVEAU: MESSAGES DE LIVRAISON -->
+        <div class="delivery-message" id="deliveryMessage" style="display:none"></div>
+        
         <!-- CONDITIONS LIVRAISON -->
         <div class="delivery-info">
           <h5>📦 Conditions de livraison</h5>
@@ -3924,6 +4002,49 @@
     return `${product.categoryKey}_${product.code}_${product.name}`.replace(/[^a-z0-9_]/gi, '_').toLowerCase();
   }
   
+  // ===================== NOUVEAU: NOTIFICATION D'AJOUT AU PANIER =====================
+  function showCartNotification(productDetails) {
+    const notification = document.createElement('div');
+    notification.className = `cart-notification ${productDetails.isPromotion ? 'promo' : ''}`;
+    
+    const saving = productDetails.saving || 0;
+    const savingPercent = productDetails.savingPercent || 0;
+    
+    let notificationContent = '';
+    
+    if (saving > 0) {
+      notificationContent = `
+        <span style="font-size:20px;">✅</span>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <div style="font-weight:900;">${productDetails.name}</div>
+          <div style="font-size:11px;">
+            ${productDetails.quantity} × ${formatPrice(productDetails.price)} ajouté(s)
+          </div>
+          <div style="font-size:10px;font-weight:700;color:#fff;background:rgba(0,0,0,0.2);padding:2px 6px;border-radius:10px;">
+            💰 Économie: ${formatPrice(saving)} (${savingPercent}%)
+          </div>
+        </div>
+      `;
+    } else {
+      notificationContent = `
+        <span style="font-size:20px;">✅</span>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <div style="font-weight:900;">${productDetails.name}</div>
+          <div style="font-size:11px;">
+            ${productDetails.quantity} × ${formatPrice(productDetails.price)} ajouté(s) au panier
+          </div>
+        </div>
+      `;
+    }
+    
+    notification.innerHTML = notificationContent;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.remove();
+    }, 2000);
+  }
+
   // ===================== MESSAGE PERSONNALISÉ POUR AJOUT AU PANIER =====================
   function showToast(message, type = 'success', productDetails = null) {
     const toast = document.createElement('div');
@@ -3962,6 +4083,44 @@
     setTimeout(() => {
       toast.remove();
     }, 3500);
+  }
+
+  // ===================== NOUVEAU: MESSAGES DE LIVRAISON =====================
+  function updateDeliveryMessage() {
+    const subtotal = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const deliveryMessage = $('deliveryMessage');
+    
+    if (subtotal === 0) {
+      deliveryMessage.style.display = 'none';
+      return;
+    }
+    
+    if (subtotal < CONFIG.minOrder) {
+      const remaining = CONFIG.minOrder - subtotal;
+      deliveryMessage.innerHTML = `
+        <span>⚠️</span>
+        <span>Il manque <strong>${formatPrice(remaining)}</strong> pour atteindre le minimum de commande (15 dt)</span>
+      `;
+      deliveryMessage.className = 'delivery-message minimum';
+      deliveryMessage.style.display = 'block';
+    } else if (subtotal >= CONFIG.freeShipping) {
+      deliveryMessage.innerHTML = `
+        <span>🎉</span>
+        <span>FÉLICITATIONS ! Livraison gratuite obtenue !</span>
+      `;
+      deliveryMessage.className = 'delivery-message free';
+      deliveryMessage.style.display = 'block';
+    } else if (subtotal >= CONFIG.minOrder) {
+      const remaining = CONFIG.freeShipping - subtotal;
+      deliveryMessage.innerHTML = `
+        <span>🚚</span>
+        <span>Il reste <strong>${formatPrice(remaining)}</strong> pour obtenir la livraison gratuite (à partir de 100 dt)</span>
+      `;
+      deliveryMessage.className = 'delivery-message remaining';
+      deliveryMessage.style.display = 'block';
+    } else {
+      deliveryMessage.style.display = 'none';
+    }
   }
 
   // ===================== STATISTIQUES =====================
@@ -4843,9 +5002,14 @@
       quantity: quantity,
       price: product.price,
       saving: saving,
-      savingPercent: savingPercent
+      savingPercent: savingPercent,
+      isPromotion: product.isPromotion || false
     };
     
+    // Afficher la notification d'ajout au panier
+    showCartNotification(productDetails);
+    
+    // Afficher aussi le toast détaillé
     showToast('', 'success', productDetails);
     
     if (state.currentModalProduct && generateProductId(state.currentModalProduct) === productId) {
@@ -4869,6 +5033,7 @@
       cartEmptyMessage.style.display = 'block';
       $('cartSavingsSection').classList.remove('visible');
       $('#remainingAmountContainer').style.display = 'none';
+      $('deliveryMessage').style.display = 'none';
     } else {
       cartItemsList.style.display = 'flex';
       cartEmptyMessage.style.display = 'none';
@@ -4988,6 +5153,7 @@
       });
       
       updateSavingsDisplay();
+      updateDeliveryMessage(); // NOUVEAU: Mettre à jour le message de livraison
     }
     
     $('cartSubtotal').textContent = formatPrice(subtotal);
@@ -5003,6 +5169,7 @@
       $('#remainingAmountContainer').style.display = 'none';
       $('#freeShippingRule').className = 'rule ok';
       $('#shippingRule').className = 'rule ok';
+      $('#minOrderRule').className = 'rule ok';
     } else if (subtotal < CONFIG.minOrder) {
       shippingFee = null;
       shippingText = '—';
