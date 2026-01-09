@@ -865,6 +865,78 @@
       background: rgba(255,107,107,.08);
     }
 
+    /* NOUVELLE NOTIFICATION D'AJOUT AU PANIER */
+    .cart-notification-main {
+      position: fixed;
+      top: 120px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.95), rgba(0, 212, 255, 0.95));
+      color: var(--bg0);
+      border-radius: 15px;
+      padding: 15px 20px;
+      z-index: 2000;
+      box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      min-width: 300px;
+      max-width: 90vw;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .cart-notification-main.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .cart-notification-main.promo {
+      background: linear-gradient(135deg, rgba(255, 107, 0, 0.95), rgba(255, 153, 0, 0.95));
+      box-shadow: 0 10px 30px rgba(255, 107, 0, 0.4);
+    }
+
+    .cart-notification-icon {
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+
+    .cart-notification-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .cart-notification-title {
+      font-weight: 900;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cart-notification-details {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .cart-notification-saving {
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-top: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     /* MODAL ARTICLE */
     .product-modal-overlay {
       position: fixed;
@@ -3188,6 +3260,11 @@
         width: 100px;
         margin: 10px 0;
       }
+      
+      .cart-notification-main {
+        min-width: 250px;
+        padding: 12px 15px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -3321,6 +3398,20 @@
         padding: 10px 15px;
         bottom: 70px;
       }
+      
+      .cart-notification-main {
+        min-width: 200px;
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+      
+      .cart-notification-icon {
+        font-size: 28px;
+      }
+      
+      .cart-notification-title {
+        font-size: 14px;
+      }
     }
 
     /* SCROLLBAR */
@@ -3377,6 +3468,24 @@
         <span class="count" id="cartTopCount">0</span>
       </button>
     </header>
+
+    <!-- NOTIFICATION D'AJOUT AU PANIER -->
+    <div class="cart-notification-main" id="cartNotificationMain">
+      <div class="cart-notification-icon">✅</div>
+      <div class="cart-notification-content">
+        <div class="cart-notification-title">
+          <span id="cartNotificationProductName">Produit</span>
+          <span id="cartNotificationQuantity">(0)</span>
+        </div>
+        <div class="cart-notification-details">
+          Ajouté au panier pour <span id="cartNotificationPrice">0,00 dt</span>
+        </div>
+        <div class="cart-notification-saving" id="cartNotificationSaving" style="display:none">
+          <span>💰</span>
+          <span id="cartNotificationSavingText">Économie: 0,00 dt</span>
+        </div>
+      </div>
+    </div>
 
     <!-- RECHERCHE -->
     <div class="search-section">
@@ -3929,13 +4038,13 @@
     shippingFee: 3,
     whatsappNumber: "21625600978",
     itemsPerPage: 24,
-    localStorageKey: 'maxi_jdc_market_app_v31',
-    stockStorageKey: 'maxi_jdc_market_stock_v31',
+    localStorageKey: 'maxi_jdc_market_app_v32',
+    stockStorageKey: 'maxi_jdc_market_stock_v32',
     imagesBasePath: 'images/products/',
     historyRetentionYears: 2,
     adminPasswordKey: 'maxi_jdc_admin_password',
-    statsStorageKey: 'maxi_jdc_market_stats_v31',
-    ordersStatsStorageKey: 'maxi_jdc_market_orders_stats_v31',
+    statsStorageKey: 'maxi_jdc_market_stats_v32',
+    ordersStatsStorageKey: 'maxi_jdc_market_orders_stats_v32',
     defaultStock: 100,
     adminPassword: "admin123",
     storeLocation: {
@@ -4002,47 +4111,36 @@
     return `${product.categoryKey}_${product.code}_${product.name}`.replace(/[^a-z0-9_]/gi, '_').toLowerCase();
   }
   
-  // ===================== NOTIFICATION D'AJOUT AU PANIER =====================
-  function showCartNotification(productDetails) {
-    const notification = document.createElement('div');
-    notification.className = `cart-notification ${productDetails.isPromotion ? 'promo' : ''}`;
+  // ===================== NOUVELLE NOTIFICATION D'AJOUT AU PANIER =====================
+  function showCartNotificationMain(productDetails) {
+    const notification = $('cartNotificationMain');
+    const productName = $('cartNotificationProductName');
+    const quantity = $('cartNotificationQuantity');
+    const price = $('cartNotificationPrice');
+    const savingElement = $('cartNotificationSaving');
+    const savingText = $('cartNotificationSavingText');
     
-    const saving = productDetails.saving || 0;
-    const savingPercent = productDetails.savingPercent || 0;
+    productName.textContent = productDetails.name;
+    quantity.textContent = `(${productDetails.quantity})`;
     
-    let notificationContent = '';
+    const totalPrice = productDetails.price * productDetails.quantity;
+    price.textContent = formatPrice(totalPrice);
     
-    if (saving > 0) {
-      notificationContent = `
-        <span style="font-size:20px;">✅</span>
-        <div style="display:flex;flex-direction:column;gap:2px;">
-          <div style="font-weight:900;">${productDetails.name}</div>
-          <div style="font-size:11px;">
-            ${productDetails.quantity} × ${formatPrice(productDetails.price)} ajouté(s)
-          </div>
-          <div style="font-size:10px;font-weight:700;color:#fff;background:rgba(0,0,0,0.2);padding:2px 6px;border-radius:10px;">
-            💰 Économie: ${formatPrice(saving)} (${savingPercent}%)
-          </div>
-        </div>
-      `;
+    if (productDetails.saving && productDetails.saving > 0) {
+      savingElement.style.display = 'flex';
+      savingText.textContent = `Économie: ${formatPrice(productDetails.saving)} (${productDetails.savingPercent}%)`;
+      notification.classList.add('promo');
     } else {
-      notificationContent = `
-        <span style="font-size:20px;">✅</span>
-        <div style="display:flex;flex-direction:column;gap:2px;">
-          <div style="font-weight:900;">${productDetails.name}</div>
-          <div style="font-size:11px;">
-            ${productDetails.quantity} × ${formatPrice(productDetails.price)} ajouté(s) au panier
-          </div>
-        </div>
-      `;
+      savingElement.style.display = 'none';
+      notification.classList.remove('promo');
     }
     
-    notification.innerHTML = notificationContent;
-    document.body.appendChild(notification);
+    notification.classList.add('show');
     
+    // Masquer après 3 secondes
     setTimeout(() => {
-      notification.remove();
-    }, 2000);
+      notification.classList.remove('show');
+    }, 3000);
   }
 
   function showToast(message, type = 'success', productDetails = null) {
@@ -5002,7 +5100,8 @@
       isPromotion: product.isPromotion || false
     };
     
-    showCartNotification(productDetails);
+    // Afficher la notification dans la page principale
+    showCartNotificationMain(productDetails);
     showToast('', 'success', productDetails);
     
     if (state.currentModalProduct && generateProductId(state.currentModalProduct) === productId) {
@@ -6138,7 +6237,7 @@
       cart: state.cart,
       orderHistory: state.orderHistory,
       quantityPicks: state.quantityPicks,
-      version: '31.0'
+      version: '32.0'
     };
     localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
   }
