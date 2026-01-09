@@ -3272,16 +3272,11 @@
       
       <div class="qr-modal-body">
         <div class="qr-code-container" id="qrCodeContainer">
-          <div style="text-align: center; padding: 20px;">
-            <div style="font-size: 48px; margin-bottom: 10px;">📱</div>
-            <div style="font-weight: bold; color: #000;">MAXI JDC MARKET</div>
-            <div style="font-size: 12px; color: #666; margin-top: 5px;">Scannez-moi !</div>
-          </div>
+          <img src="tools/image-qr.jpg" alt="QR Code MAXI JDC MARKET" style="width:100%;height:100%;object-fit:contain;">
         </div>
         
         <div class="qr-instructions">
           <p>Scannez ce code avec votre téléphone pour accéder à l'application MAXI JDC MARKET.</p>
-          <p>Ou utilisez ce lien : <strong id="qrUrl">https://maxi-jdc-market.com</strong></p>
         </div>
       </div>
       
@@ -3934,6 +3929,11 @@
       noPhoto.textContent = `Aucune photo pour ${product.code}`;
     };
     
+    // Réinitialiser les boutons de navigation d'image
+    $('modalPrevImageBtn').style.display = 'none';
+    $('modalNextImageBtn').style.display = 'none';
+    $('imageNavBar').innerHTML = '';
+    
     // Mettre à jour les produits similaires
     renderSimilarProducts(product);
     
@@ -4114,7 +4114,6 @@
 
   // ===================== QR CODE =====================
   function openQRModal() {
-    $('qrUrl').textContent = CONFIG.qrCodeUrl;
     $('qrModal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
