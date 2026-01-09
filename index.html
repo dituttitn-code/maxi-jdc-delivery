@@ -853,6 +853,18 @@
       background: rgba(0,255,136,.08);
     }
 
+    .product-stock-tag.low {
+      border-color: rgba(255,167,38,.3);
+      color: var(--warning);
+      background: rgba(255,167,38,.08);
+    }
+
+    .product-stock-tag.out {
+      border-color: rgba(255,107,107,.3);
+      color: var(--danger);
+      background: rgba(255,107,107,.08);
+    }
+
     /* MODAL ARTICLE */
     .product-modal-overlay {
       position: fixed;
@@ -1255,12 +1267,39 @@
       background: rgba(255,255,255,0.2);
     }
 
+    .modal-stepper-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      border-color: var(--muted);
+    }
+
     .modal-quantity {
       font-size: 20px;
       font-weight: 900;
       color: var(--accent);
       min-width: 40px;
       text-align: center;
+    }
+
+    /* NOUVEAU: Champ de saisie directe pour la quantité */
+    .modal-quantity-input {
+      width: 120px;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 2px solid var(--accent);
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 900;
+      text-align: center;
+      outline: none;
+      margin: 0 10px;
+    }
+
+    .modal-quantity-input:focus {
+      background: rgba(255,255,255,0.15);
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 3px rgba(0,212,255,0.1);
     }
 
     .modal-action-buttons {
@@ -1768,6 +1807,13 @@
     .admin-label {
       font-size: 10px;
       font-weight: 900;
+    }
+
+    /* NOUVEAU: Bouton Tableau de Bord */
+    .admin-btn.dashboard {
+      border-color: #00d4ff;
+      background: rgba(0, 212, 255, 0.1);
+      color: #00d4ff;
     }
 
     /* SECTION COMPTE */
@@ -2295,6 +2341,27 @@
       color: var(--accent);
     }
 
+    /* NOUVEAU: Champ de saisie directe pour la quantité dans le panier */
+    .cart-item-qty-input {
+      width: 60px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 2px solid var(--accent);
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+      margin: 0 5px;
+    }
+
+    .cart-item-qty-input:focus {
+      background: rgba(255,255,255,0.15);
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 2px rgba(0,212,255,0.1);
+    }
+
     .cart-item-price {
       font-weight: 900;
       font-size: 14px;
@@ -2410,6 +2477,12 @@
 
     .rule.danger {
       color: var(--danger);
+    }
+
+    .remaining-amount {
+      color: var(--accent);
+      font-weight: 900;
+      margin-left: 4px;
     }
 
     /* FOOTER DRAWER */
@@ -2698,33 +2771,234 @@
       box-shadow: 0 8px 25px rgba(0,255,136,0.4);
     }
 
-    /* TOAST NOTIFICATIONS */
-    .toast {
+    /* MODAL GESTION STOCK */
+    .stock-modal-overlay {
       position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 15px 20px;
-      background: var(--accent);
-      color: var(--bg0);
-      border-radius: 10px;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3500;
+      padding: 20px;
+      backdrop-filter: blur(20px);
+    }
+
+    .stock-modal-overlay.open {
+      display: flex;
+    }
+
+    .stock-modal {
+      width: 100%;
+      max-width: 800px;
+      height: 80vh;
+      background: linear-gradient(135deg, var(--bg0) 0%, var(--bg1) 100%);
+      border-radius: var(--radius);
+      border: 3px solid var(--accent2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stock-modal-header {
+      padding: 20px;
+      background: rgba(0, 212, 255, 0.1);
+      border-bottom: 1px solid var(--accent2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stock-modal-header h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--accent2);
       font-weight: 900;
-      z-index: 5000;
-      box-shadow: 0 5px 20px rgba(0,255,136,0.3);
-      animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.5s forwards;
-      max-width: 300px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stock-modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .stock-search {
+      margin-bottom: 20px;
+    }
+
+    .stock-search input {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 2px solid var(--accent2);
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .stock-search input:focus {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .stock-products-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+
+    .stock-product-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .stock-product-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .stock-product-name {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .stock-product-details {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .stock-controls {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
+    .stock-input {
+      width: 80px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 2px solid var(--accent2);
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+    }
+
+    .stock-input:focus {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .stock-save-btn {
+      padding: 8px 15px;
+      border-radius: 6px;
+      border: 2px solid var(--accent);
+      background: rgba(0, 255, 136, 0.15);
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .stock-save-btn:hover {
+      background: rgba(0, 255, 136, 0.25);
+    }
+
+    .stock-current {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .stock-current-value {
+      font-weight: 900;
+      color: var(--accent);
+      margin-left: 5px;
+    }
+
+    .stock-modal-footer {
+      padding: 20px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    /* TOAST NOTIFICATIONS - MODIFIÉ POUR AFFICHER LES ARTICLES */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      background: var(--card2);
+      color: var(--text);
+      border-radius: 10px;
+      font-weight: 900;
+      z-index: 5000;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      animation: slideInRight 0.3s ease, fadeOut 0.3s ease 3.5s forwards;
+      max-width: 320px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 4px solid var(--accent);
+    }
+
     .toast.warning {
-      background: var(--warning);
-      color: #000;
+      background: var(--card2);
+      border-left-color: var(--warning);
     }
 
     .toast.error {
-      background: var(--danger);
-      color: #fff;
+      background: var(--card2);
+      border-left-color: var(--danger);
+    }
+
+    .toast-content {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .toast-product-name {
+      font-weight: 900;
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .toast-details {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .toast-saving {
+      color: #ffcc00;
+      font-weight: 700;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
     /* ANIMATIONS */
@@ -2830,6 +3104,22 @@
       .similar-products-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+      
+      .stock-modal {
+        width: 95vw;
+        height: 85vh;
+      }
+      
+      .modal-stepper {
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+      }
+      
+      .modal-quantity-input {
+        width: 100px;
+        margin: 10px 0;
+      }
     }
 
     @media (max-width: 480px) {
@@ -2853,6 +3143,7 @@
       
       .modal-stepper {
         min-width: 140px;
+        flex-direction: row;
       }
       
       .modal-stepper-btn {
@@ -2863,6 +3154,12 @@
       
       .modal-quantity {
         font-size: 18px;
+      }
+      
+      .modal-quantity-input {
+        width: 80px;
+        font-size: 16px;
+        padding: 10px;
       }
       
       .modal-add-btn {
@@ -2931,6 +3228,23 @@
         width: 45px;
         height: 45px;
         font-size: 20px;
+      }
+      
+      .stock-product-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .stock-controls {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .cart-item-qty-input {
+        width: 50px;
+        font-size: 12px;
+        padding: 4px 8px;
       }
     }
 
@@ -3115,6 +3429,11 @@
             <span class="admin-label">Statistiques</span>
           </button>
           
+          <button class="admin-btn dashboard" id="adminDashboardBtn">
+            <span class="admin-icon">📈</span>
+            <span class="admin-label">Tableau de bord</span>
+          </button>
+          
           <button class="admin-btn settings" id="adminSettingsBtn">
             <span class="admin-icon">⚙️</span>
             <span class="admin-label">Paramètres</span>
@@ -3291,6 +3610,9 @@
             <div class="rule" id="shippingRule">
               <span class="rule-icon">🚚</span>
               <span>Frais livraison: <strong>3 dt</strong></span>
+              <span id="remainingAmountContainer" style="display:none">
+                - Reste <span id="remainingAmount" class="remaining-amount">0,00 dt</span> pour livraison gratuite
+              </span>
             </div>
             <div class="rule" id="freeShippingRule">
               <span class="rule-icon">🎁</span>
@@ -3371,12 +3693,14 @@
           </div>
         </div>
         
-        <!-- ACTIONS -->
+        <!-- ACTIONS - MODIFIÉ POUR AJOUTER LE CHAMP DE SAISIE -->
         <div class="modal-actions">
           <div class="modal-quantity-controls">
             <div class="modal-stepper">
               <button class="modal-stepper-btn" id="modalDecreaseBtn">−</button>
-              <span class="modal-quantity" id="modalProductQuantity">0</span>
+              <input type="number" class="modal-quantity-input" id="modalQuantityInput" 
+                     value="0" min="0" max="999" step="1" 
+                     placeholder="Quantité">
               <button class="modal-stepper-btn" id="modalIncreaseBtn">+</button>
             </div>
           </div>
@@ -3417,20 +3741,49 @@
       <div class="qr-modal-body">
         <div class="qr-code-container" id="qrCodeContainer">
           <!-- QR Code dynamique qui pointe vers l'URL de l'application -->
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://votre-domaine.com/maxi-jdc-market" 
+          <img src="" 
                alt="QR Code MAXI JDC MARKET" 
+               id="qrCodeImage"
                style="width:100%;height:100%;object-fit:contain;">
         </div>
         
         <div class="qr-instructions">
           <p>Scannez ce code avec votre téléphone pour accéder à l'application MAXI JDC MARKET.</p>
-          <p><strong>URL:</strong> https://votre-domaine.com/maxi-jdc-market</p>
         </div>
       </div>
       
       <div class="qr-modal-footer">
         <button class="form-btn" id="closeQrModalBtn">
           ✕ Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL GESTION STOCK -->
+  <div class="stock-modal-overlay" id="stockModal">
+    <div class="stock-modal">
+      <div class="stock-modal-header">
+        <h3>📦 Gestion des stocks</h3>
+        <button class="drawer-close" id="closeStockModalBtn">×</button>
+      </div>
+      
+      <div class="stock-modal-body">
+        <div class="stock-search">
+          <input type="text" id="stockSearchInput" placeholder="🔍 Rechercher un produit par nom ou code...">
+        </div>
+        
+        <div class="stock-products-list" id="stockProductsList">
+          <!-- Les produits seront ajoutés dynamiquement ici -->
+        </div>
+      </div>
+      
+      <div class="stock-modal-footer">
+        <button class="form-btn" id="closeStockModalBtn2">
+          ✕ Fermer
+        </button>
+        <button class="form-btn primary" id="refreshStockBtn">
+          🔄 Actualiser
         </button>
       </div>
     </div>
@@ -3498,17 +3851,20 @@
     shippingFee: 3,
     whatsappNumber: "21625600978",
     itemsPerPage: 24,
-    localStorageKey: 'maxi_jdc_market_app_v26',
+    localStorageKey: 'maxi_jdc_market_app_v30',
+    stockStorageKey: 'maxi_jdc_market_stock_v30',
     imagesBasePath: 'images/products/',
     historyRetentionYears: 2,
     adminPasswordKey: 'maxi_jdc_admin_password',
+    statsStorageKey: 'maxi_jdc_market_stats_v30',
+    ordersStatsStorageKey: 'maxi_jdc_market_orders_stats_v30',
     defaultStock: 100,
-    qrCodeUrl: 'https://votre-domaine.com/maxi-jdc-market',
     adminPassword: "admin123",
     storeLocation: {
       lat: 36.851234,
       lng: 10.301234
-    }
+    },
+    currentUrl: window.location.href
   };
 
   // Catégories
@@ -3555,7 +3911,8 @@
     tempMapCoords: null,
     isAdmin: false,
     map: null,
-    mapMarker: null
+    mapMarker: null,
+    globalStock: {}
   };
 
   // ===================== UTILITAIRES =====================
@@ -3566,18 +3923,187 @@
   function generateProductId(product) {
     return `${product.categoryKey}_${product.code}_${product.name}`.replace(/[^a-z0-9_]/gi, '_').toLowerCase();
   }
-  function showToast(message, type = 'success') {
+  
+  // ===================== MESSAGE PERSONNALISÉ POUR AJOUT AU PANIER =====================
+  function showToast(message, type = 'success', productDetails = null) {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
-    toast.innerHTML = `
-      <span>${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : '❌'}</span>
-      <span>${message}</span>
-    `;
+    
+    if (productDetails && type === 'success') {
+      // Message détaillé avec produit
+      const saving = productDetails.saving || 0;
+      const savingPercent = productDetails.savingPercent || 0;
+      
+      toast.innerHTML = `
+        <div style="font-size: 24px;">🛒</div>
+        <div class="toast-content">
+          <div class="toast-product-name">${productDetails.name}</div>
+          <div class="toast-details">
+            <div>${productDetails.quantity} × ${formatPrice(productDetails.price)} ajouté(s) au panier</div>
+            ${saving > 0 ? `
+              <div class="toast-saving">
+                <span>💰</span>
+                <span>Économie: ${formatPrice(saving)} (${savingPercent}%)</span>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    } else {
+      // Message normal
+      toast.innerHTML = `
+        <span>${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : '❌'}</span>
+        <span>${message}</span>
+      `;
+    }
+    
     document.body.appendChild(toast);
     
     setTimeout(() => {
       toast.remove();
-    }, 3000);
+    }, 3500);
+  }
+
+  // ===================== STATISTIQUES =====================
+  function saveOrderForStats(orderData) {
+    try {
+      const existingStats = localStorage.getItem(CONFIG.ordersStatsStorageKey);
+      let allOrders = existingStats ? JSON.parse(existingStats) : [];
+      
+      allOrders.push({
+        ...orderData,
+        id: Date.now(),
+        timestamp: new Date().toISOString()
+      });
+      
+      if (allOrders.length > 1000) {
+        allOrders = allOrders.slice(-1000);
+      }
+      
+      localStorage.setItem(CONFIG.ordersStatsStorageKey, JSON.stringify(allOrders));
+      updateGlobalStats(orderData);
+    } catch (error) {
+      console.error('Erreur sauvegarde stats:', error);
+    }
+  }
+
+  function updateGlobalStats(orderData) {
+    try {
+      const existingStats = localStorage.getItem(CONFIG.statsStorageKey);
+      let stats = existingStats ? JSON.parse(existingStats) : {
+        totalOrders: 0,
+        totalRevenue: 0,
+        totalItemsSold: 0,
+        totalSavings: 0,
+        topProducts: {},
+        categoryStats: {},
+        dailyStats: {},
+        monthlyStats: {}
+      };
+      
+      stats.totalOrders += 1;
+      stats.totalRevenue += orderData.total;
+      stats.totalSavings += orderData.savings || 0;
+      
+      orderData.items.forEach(item => {
+        stats.totalItemsSold += item.quantity;
+        
+        const productKey = `${item.code}_${item.name}`;
+        if (!stats.topProducts[productKey]) {
+          stats.topProducts[productKey] = {
+            name: item.name,
+            code: item.code,
+            quantity: 0,
+            revenue: 0,
+            lastSold: null
+          };
+        }
+        
+        stats.topProducts[productKey].quantity += item.quantity;
+        stats.topProducts[productKey].revenue += item.total;
+        stats.topProducts[productKey].lastSold = new Date().toISOString();
+        
+        const category = item.category || 'Non catégorisé';
+        if (!stats.categoryStats[category]) {
+          stats.categoryStats[category] = {
+            quantity: 0,
+            revenue: 0
+          };
+        }
+        
+        stats.categoryStats[category].quantity += item.quantity;
+        stats.categoryStats[category].revenue += item.total;
+      });
+      
+      const today = new Date().toLocaleDateString('fr-FR');
+      if (!stats.dailyStats[today]) {
+        stats.dailyStats[today] = {
+          orders: 0,
+          revenue: 0,
+          items: 0
+        };
+      }
+      
+      stats.dailyStats[today].orders += 1;
+      stats.dailyStats[today].revenue += orderData.total;
+      stats.dailyStats[today].items += orderData.items.reduce((sum, item) => sum + item.quantity, 0);
+      
+      localStorage.setItem(CONFIG.statsStorageKey, JSON.stringify(stats));
+    } catch (error) {
+      console.error('Erreur mise à jour stats:', error);
+    }
+  }
+
+  // ===================== GESTION DU STOCK GLOBAL =====================
+  function loadGlobalStock() {
+    try {
+      const savedStock = localStorage.getItem(CONFIG.stockStorageKey);
+      if (savedStock) {
+        state.globalStock = JSON.parse(savedStock);
+        console.log('Stock global chargé:', Object.keys(state.globalStock).length, 'produits');
+      } else {
+        state.globalStock = {};
+      }
+    } catch (e) {
+      console.error('Erreur chargement stock global:', e);
+      state.globalStock = {};
+    }
+  }
+
+  function saveGlobalStock() {
+    try {
+      localStorage.setItem(CONFIG.stockStorageKey, JSON.stringify(state.globalStock));
+    } catch (e) {
+      console.error('Erreur sauvegarde stock global:', e);
+    }
+  }
+
+  function getProductStock(product) {
+    const stockKey = `${product.code}_${product.name}`;
+    if (state.globalStock[stockKey] !== undefined) {
+      return state.globalStock[stockKey];
+    }
+    return product.stock || CONFIG.defaultStock;
+  }
+
+  function updateProductStock(product, newStock) {
+    const stockKey = `${product.code}_${product.name}`;
+    state.globalStock[stockKey] = Math.max(0, newStock);
+    saveGlobalStock();
+    renderProducts();
+    return state.globalStock[stockKey];
+  }
+
+  function decreaseProductStock(product, quantity) {
+    const currentStock = getProductStock(product);
+    const newStock = Math.max(0, currentStock - quantity);
+    return updateProductStock(product, newStock);
+  }
+
+  function increaseProductStock(product, quantity) {
+    const currentStock = getProductStock(product);
+    const newStock = currentStock + quantity;
+    return updateProductStock(product, newStock);
   }
 
   // ===================== CALCUL DES ÉCONOMIES =====================
@@ -3585,7 +4111,6 @@
     if (!item.isPromotion || !item.oldPrice || item.oldPrice <= item.price) {
       return 0;
     }
-    
     const savingPerUnit = item.oldPrice - item.price;
     return savingPerUnit * item.quantity;
   }
@@ -3593,21 +4118,18 @@
   function calculateTotalSavings() {
     let totalSavings = 0;
     let totalOriginalPrice = 0;
-    let totalCurrentPrice = 0;
     
     Object.values(state.cart).forEach(item => {
       if (item.isPromotion && item.oldPrice && item.oldPrice > item.price) {
         const saving = calculateItemSavings(item);
         totalSavings += saving;
         totalOriginalPrice += item.oldPrice * item.quantity;
-        totalCurrentPrice += item.price * item.quantity;
       }
     });
     
     return {
       totalSavings,
       totalOriginalPrice,
-      totalCurrentPrice,
       percentage: totalOriginalPrice > 0 ? Math.round((totalSavings / totalOriginalPrice) * 100) : 0
     };
   }
@@ -3617,30 +4139,20 @@
     const savingsSection = $('cartSavingsSection');
     const totalSavingsElement = $('totalSavings');
     const savingsPercentageElement = $('savingsPercentage');
-    const savingsPercentageTextElement = $('savingsPercentageText');
     
     if (savings.totalSavings > 0) {
-      // Afficher la section des économies
       savingsSection.classList.add('visible');
-      
-      // Mettre à jour les montants
       totalSavingsElement.textContent = formatPrice(savings.totalSavings);
       savingsPercentageElement.textContent = `${savings.percentage}%`;
       
-      // Ajouter un texte descriptif
       let percentageText = '';
-      if (savings.percentage >= 50) {
-        percentageText = 'ÉNORME ÉCONOMIE !';
-      } else if (savings.percentage >= 30) {
-        percentageText = 'Super affaire !';
-      } else if (savings.percentage >= 15) {
-        percentageText = 'Bonne affaire';
-      } else {
-        percentageText = 'Économie';
-      }
-      savingsPercentageTextElement.textContent = percentageText;
+      if (savings.percentage >= 50) percentageText = 'ÉNORME ÉCONOMIE !';
+      else if (savings.percentage >= 30) percentageText = 'Super affaire !';
+      else if (savings.percentage >= 15) percentageText = 'Bonne affaire';
+      else percentageText = 'Économie';
+      
+      $('savingsPercentageText').textContent = percentageText;
     } else {
-      // Cacher la section des économies
       savingsSection.classList.remove('visible');
     }
   }
@@ -3652,10 +4164,7 @@
       if (!category) return [];
       
       const response = await fetch(category.file);
-      if (!response.ok) {
-        console.warn(`Fichier non trouvé: ${category.file}`);
-        return [];
-      }
+      if (!response.ok) return [];
       
       const text = await response.text();
       const lines = text.split('\n').filter(line => line.trim());
@@ -3667,10 +4176,7 @@
       
       lines.slice(1).forEach((line, index) => {
         const parts = line.split(separator).map(field => field.trim());
-        if (parts.length < 3) {
-          console.warn(`Ligne ${index + 2} incomplète dans ${categoryKey}: ${line}`);
-          return;
-        }
+        if (parts.length < 3) return;
         
         const code = parts[0];
         const name = parts[1];
@@ -3685,10 +4191,9 @@
         priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
         const price = parseFloat(priceStr);
         
-        if (isNaN(price) || price <= 0) {
-          console.warn(`Prix invalide dans ${categoryKey}: ${code} - ${name} - ${priceStr}`);
-          return;
-        }
+        if (isNaN(price) || price <= 0) return;
+        
+        const currentStock = getProductStock({ code, name });
         
         products.push({
           code,
@@ -3697,13 +4202,12 @@
           category: category.label,
           categoryKey: category.key,
           isPromotion: false,
-          stock: CONFIG.defaultStock,
+          stock: currentStock,
           oldPrice: null,
           discountPercent: 0
         });
       });
       
-      console.log(`${categoryKey}: ${products.length} produits chargés`);
       return products;
     } catch (error) {
       console.error(`Erreur chargement ${categoryKey}:`, error);
@@ -3714,17 +4218,11 @@
   async function loadPromotionsData() {
     try {
       const response = await fetch('data/PROMOTIONS.csv');
-      if (!response.ok) {
-        console.warn('Fichier PROMOTIONS.csv non trouvé');
-        return [];
-      }
+      if (!response.ok) return [];
       
       const text = await response.text();
       const lines = text.split('\n').filter(line => line.trim());
-      if (lines.length === 0) {
-        console.warn('Fichier PROMOTIONS.csv vide');
-        return [];
-      }
+      if (lines.length === 0) return [];
       
       const separator = lines[0].includes(';') ? ';' : (lines[0].includes('\t') ? '\t' : ',');
       const promotions = [];
@@ -3732,10 +4230,7 @@
       
       lines.slice(1).forEach((line, index) => {
         const parts = line.split(separator).map(field => field.trim());
-        if (parts.length < 5) {
-          console.warn(`Ligne ${index + 2} incomplète dans PROMOTIONS: ${line}`);
-          return;
-        }
+        if (parts.length < 5) return;
         
         const code = parts[0];
         const name = parts[1];
@@ -3756,10 +4251,7 @@
         const originalPrice = cleanPrice(originalPriceStr);
         const promoPrice = cleanPrice(promoPriceStr);
         
-        if (isNaN(originalPrice) || originalPrice <= 0) {
-          console.warn(`Prix origine invalide: ${code} - ${name} - ${originalPriceStr}`);
-          return;
-        }
+        if (isNaN(originalPrice) || originalPrice <= 0) return;
         
         let finalPrice = promoPrice;
         let discountPercent = 0;
@@ -3771,22 +4263,22 @@
           finalPrice = promoPrice;
           discountPercent = Math.round((1 - finalPrice / originalPrice) * 100);
         } else {
-          console.warn(`Type de promotion non reconnu: ${promoType} pour ${code}`);
           finalPrice = originalPrice;
           discountPercent = 0;
         }
         
         if (isNaN(finalPrice) || finalPrice <= 0) {
-          console.warn(`Prix final invalide: ${code} - ${name} - ${finalPrice}`);
           finalPrice = originalPrice;
           discountPercent = 0;
         }
+        
+        const currentStock = getProductStock({ code, name });
         
         promotions.push({
           code,
           name,
           price: finalPrice,
-          stock: CONFIG.defaultStock,
+          stock: currentStock,
           category: '🔥 PROMOTIONS',
           categoryKey: 'promotions',
           isPromotion: true,
@@ -3797,7 +4289,6 @@
         });
       });
       
-      console.log(`${promotions.length} promotions chargées`);
       return promotions;
     } catch (error) {
       console.error('Erreur chargement promotions:', error);
@@ -3807,12 +4298,10 @@
 
   async function loadAllProducts() {
     state.products.clear();
-    
     const allProducts = [];
     
     for (const category of CATEGORIES) {
       if (category.key === 'promotions') continue;
-      
       const products = await loadCategoryData(category.key);
       if (products.length > 0) {
         state.products.set(category.key, products);
@@ -3824,20 +4313,16 @@
     if (promotions.length > 0) {
       state.products.set('promotions', promotions);
       state.promotions = promotions;
-      
       applyPromotions(allProducts, promotions);
       showPromoBanner(promotions);
     }
     
     renderCategories();
     renderProducts();
-    
     showToast('✅ Produits chargés avec succès');
   }
 
   function applyPromotions(allProducts, promotions) {
-    console.log('Application des promotions...');
-    
     const promoMap = new Map();
     promotions.forEach(promo => {
       promoMap.set(promo.code, promo);
@@ -3867,8 +4352,6 @@
       
       state.products.set(catKey, updatedProducts);
     }
-    
-    console.log('Promotions appliquées avec succès');
   }
 
   // ===================== AFFICHAGE =====================
@@ -4019,14 +4502,12 @@
       
       if (product.isPromotion && product.discountPercent > 0) {
         imagePromoBadge = '<div class="image-promo-badge">PROMO</div>';
-        
         let discountText = `-${product.discountPercent}%`;
         if (product.promoType === 'prix') {
           discountText = `-${product.discountPercent}%`;
         } else if (product.promoType === 'pourcentage') {
           discountText = `${product.discountPercent}% OFF`;
         }
-        
         discountBadge = `<div class="product-discount">${discountText}</div>`;
       }
       
@@ -4038,6 +4519,18 @@
         : `<div class="product-price-container">
             <div class="product-price">${formatPrice(product.price)}</div>
           </div>`;
+      
+      const currentStock = getProductStock(product);
+      let stockTagClass = 'ok';
+      let stockText = `✓ ${currentStock} en stock`;
+      
+      if (currentStock === 0) {
+        stockTagClass = 'out';
+        stockText = '✗ Rupture de stock';
+      } else if (currentStock < 10) {
+        stockTagClass = 'low';
+        stockText = `⚠️ ${currentStock} restant(s)`;
+      }
       
       card.innerHTML = `
         <div class="product-image">
@@ -4061,8 +4554,8 @@
           ${priceDisplay}
         </div>
         
-        <div class="product-stock-tag ok">
-          ✓ ${product.stock} en stock
+        <div class="product-stock-tag ${stockTagClass}">
+          ${stockText}
         </div>
       `;
       
@@ -4121,7 +4614,6 @@
     $('modalProductName').textContent = product.name;
     $('modalProductNameFull').textContent = product.name;
     
-    // Prix et promotion
     if (product.isPromotion && product.oldPrice && product.oldPrice > product.price) {
       $('modalCurrentPrice').textContent = formatPrice(product.price);
       $('modalOldPrice').textContent = formatPrice(product.oldPrice);
@@ -4131,7 +4623,6 @@
       if (discountPercent > 0) {
         $('modalDiscount').textContent = `-${discountPercent}%`;
         $('modalDiscount').style.display = 'block';
-        
         $('modalPromoBadge').style.display = 'block';
         $('modalPromoBadge').textContent = `${discountPercent}% OFF`;
       } else {
@@ -4147,15 +4638,35 @@
     
     $('modalProductCode').textContent = product.code;
     $('modalProductCategory').textContent = product.category;
-    $('modalProductStock').textContent = `✓ ${product.stock} en stock`;
-    $('modalProductStock').style.color = 'var(--accent)';
-    $('modalProductQuantity').textContent = quantity;
+    
+    const currentStock = getProductStock(product);
+    let stockText = `✓ ${currentStock} en stock`;
+    let stockColor = 'var(--accent)';
+    
+    if (currentStock === 0) {
+      stockText = '✗ Rupture de stock';
+      stockColor = 'var(--danger)';
+    } else if (currentStock < 10) {
+      stockText = `⚠️ ${currentStock} restant(s)`;
+      stockColor = 'var(--warning)';
+    }
+    
+    $('modalProductStock').textContent = stockText;
+    $('modalProductStock').style.color = stockColor;
+    
+    $('modalQuantityInput').value = quantity;
     
     const addBtn = $('modalAddToCartBtn');
-    addBtn.disabled = quantity === 0;
+    const decreaseBtn = $('modalDecreaseBtn');
+    const increaseBtn = $('modalIncreaseBtn');
+    
+    const maxAvailable = Math.min(currentStock, 999);
+    addBtn.disabled = quantity === 0 || currentStock === 0;
+    decreaseBtn.disabled = quantity === 0;
+    increaseBtn.disabled = quantity >= maxAvailable;
+    
     addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
     
-    // Image
     const img = $('modalProductImage');
     const noPhoto = $('modalNoPhoto');
     const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
@@ -4171,19 +4682,21 @@
       noPhoto.textContent = `Aucune photo pour ${product.code}`;
     };
     
-    // Navigation
     updateModalNavigationButtons();
     
-    // Réinitialiser les boutons de navigation d'image
     $('modalPrevImageBtn').style.display = 'none';
     $('modalNextImageBtn').style.display = 'none';
     $('imageNavBar').innerHTML = '';
     
-    // Mettre à jour les produits similaires
     renderSimilarProducts(product);
     
     $('productModal').classList.add('open');
     document.body.style.overflow = 'hidden';
+    
+    setTimeout(() => {
+      $('modalQuantityInput').focus();
+      $('modalQuantityInput').select();
+    }, 300);
   }
 
   function closeProductModal() {
@@ -4196,12 +4709,32 @@
     if (!state.currentModalProduct) return;
     
     const productId = generateProductId(state.currentModalProduct);
-    const quantity = state.quantityPicks[productId] || 0;
+    let quantity = parseInt($('modalQuantityInput').value) || 0;
     
-    $('modalProductQuantity').textContent = quantity;
+    const currentStock = getProductStock(state.currentModalProduct);
+    const maxAvailable = Math.min(currentStock, 999);
+    
+    if (quantity > maxAvailable) {
+      quantity = maxAvailable;
+      $('modalQuantityInput').value = quantity;
+      showToast(`⚠️ Quantité limitée à ${maxAvailable} (stock disponible)`, 'warning');
+    }
+    
+    if (quantity < 0) {
+      quantity = 0;
+      $('modalQuantityInput').value = quantity;
+    }
+    
+    state.quantityPicks[productId] = quantity;
     
     const addBtn = $('modalAddToCartBtn');
-    addBtn.disabled = quantity === 0;
+    const decreaseBtn = $('modalDecreaseBtn');
+    const increaseBtn = $('modalIncreaseBtn');
+    
+    addBtn.disabled = quantity === 0 || currentStock === 0;
+    decreaseBtn.disabled = quantity === 0;
+    increaseBtn.disabled = quantity >= maxAvailable;
+    
     addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
   }
 
@@ -4239,6 +4772,7 @@
     
     similar.forEach(product => {
       const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
+      const currentStock = getProductStock(product);
       
       const card = document.createElement('div');
       card.className = 'similar-product-card';
@@ -4249,7 +4783,7 @@
         <div class="similar-product-info">
           <div class="similar-product-name">${product.name}</div>
           <div class="similar-product-price">${formatPrice(product.price)}</div>
-          <div class="similar-product-stock">✓ ${product.stock} en stock</div>
+          <div class="similar-product-stock">${currentStock > 0 ? '✓' : '✗'} ${currentStock} en stock</div>
         </div>
       `;
       
@@ -4262,7 +4796,64 @@
     });
   }
 
-  // ===================== PANIER =====================
+  // ===================== PANIER AVEC MESSAGE PERSONNALISÉ =====================
+  function addToCart(productId, product, quantity = 1) {
+    if (!product || quantity <= 0) return;
+    
+    const currentStock = getProductStock(product);
+    if (currentStock === 0) {
+      showToast('❌ Ce produit est en rupture de stock', 'error');
+      return;
+    }
+    
+    const currentInCart = state.cart[productId] ? state.cart[productId].quantity : 0;
+    const totalRequested = currentInCart + quantity;
+    
+    if (totalRequested > currentStock) {
+      showToast(`❌ Stock insuffisant. Il reste ${currentStock} unité(s) disponible(s)`, 'error');
+      return;
+    }
+    
+    decreaseProductStock(product, quantity);
+    
+    if (state.cart[productId]) {
+      state.cart[productId].quantity += quantity;
+    } else {
+      state.cart[productId] = {
+        ...product,
+        quantity: quantity
+      };
+    }
+    
+    state.quantityPicks[productId] = 0;
+    
+    updateCartUI();
+    
+    // NOUVEAU: Message personnalisé avec détails du produit
+    const saving = product.isPromotion && product.oldPrice && product.oldPrice > product.price 
+      ? (product.oldPrice - product.price) * quantity 
+      : 0;
+    
+    const savingPercent = product.isPromotion && product.oldPrice && product.oldPrice > product.price
+      ? Math.round((1 - product.price / product.oldPrice) * 100)
+      : 0;
+    
+    const productDetails = {
+      name: product.name,
+      quantity: quantity,
+      price: product.price,
+      saving: saving,
+      savingPercent: savingPercent
+    };
+    
+    showToast('', 'success', productDetails);
+    
+    if (state.currentModalProduct && generateProductId(state.currentModalProduct) === productId) {
+      state.quantityPicks[productId] = 0;
+      $('modalQuantityInput').value = 0;
+    }
+  }
+
   function updateCartUI() {
     const cartCount = Object.values(state.cart).reduce((sum, item) => sum + item.quantity, 0);
     const subtotal = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -4276,9 +4867,8 @@
     if (cartCount === 0) {
       cartItemsList.style.display = 'none';
       cartEmptyMessage.style.display = 'block';
-      
-      // Cacher la section des économies
       $('cartSavingsSection').classList.remove('visible');
+      $('#remainingAmountContainer').style.display = 'none';
     } else {
       cartItemsList.style.display = 'flex';
       cartEmptyMessage.style.display = 'none';
@@ -4291,6 +4881,7 @@
         
         const itemElement = document.createElement('div');
         itemElement.className = 'cart-item';
+        itemElement.id = `cart-item-${id}`;
         
         let savingsBadge = '';
         if (itemSaving > 0) {
@@ -4322,7 +4913,9 @@
             <div class="cart-item-controls">
               <div class="cart-item-stepper">
                 <button class="cart-item-qty-btn" data-action="decrease" data-id="${id}">−</button>
-                <span class="cart-item-qty">${item.quantity}</span>
+                <input type="number" class="cart-item-qty-input" id="cart-qty-input-${id}" 
+                       value="${item.quantity}" min="0" max="999" step="1"
+                       placeholder="Qty" data-id="${id}">
                 <button class="cart-item-qty-btn" data-action="increase" data-id="${id}">+</button>
               </div>
             </div>
@@ -4339,7 +4932,61 @@
         cartItemsList.appendChild(itemElement);
       });
       
-      // Mettre à jour l'affichage des économies
+      document.querySelectorAll('.cart-item-qty-input').forEach(input => {
+        input.addEventListener('change', function() {
+          const id = this.getAttribute('data-id');
+          const newQuantity = parseInt(this.value) || 0;
+          const item = state.cart[id];
+          
+          if (!item) return;
+          
+          if (newQuantity < 0) {
+            this.value = 0;
+            return;
+          }
+          
+          const currentStock = getProductStock(item);
+          if (newQuantity > currentStock) {
+            showToast(`❌ Stock insuffisant. Il reste ${currentStock} unité(s)`, 'error');
+            this.value = Math.min(item.quantity, currentStock);
+            return;
+          }
+          
+          const diff = newQuantity - item.quantity;
+          
+          if (diff === 0) return;
+          
+          if (diff > 0) {
+            decreaseProductStock(item, diff);
+            state.cart[id].quantity = newQuantity;
+          } else {
+            const decreaseAmount = Math.abs(diff);
+            increaseProductStock(item, decreaseAmount);
+            state.cart[id].quantity = newQuantity;
+            
+            if (newQuantity <= 0) {
+              delete state.cart[id];
+            }
+          }
+          
+          updateCartUI();
+          showToast(`✅ Quantité mise à jour pour ${item.name}: ${newQuantity}`);
+        });
+        
+        input.addEventListener('blur', function() {
+          if (!this.value || parseInt(this.value) === 0) {
+            const id = this.getAttribute('data-id');
+            const item = state.cart[id];
+            if (item) {
+              increaseProductStock(item, item.quantity);
+              delete state.cart[id];
+              updateCartUI();
+              showToast(`🗑️ ${item.name} retiré du panier`);
+            }
+          }
+        });
+      });
+      
       updateSavingsDisplay();
     }
     
@@ -4348,12 +4995,27 @@
     let shippingFee = CONFIG.shippingFee;
     let shippingText = formatPrice(shippingFee);
     
+    const remainingAmount = Math.max(0, CONFIG.freeShipping - subtotal);
+    
     if (subtotal >= CONFIG.freeShipping) {
       shippingFee = 0;
       shippingText = '<span class="total-value free">GRATUIT</span>';
+      $('#remainingAmountContainer').style.display = 'none';
+      $('#freeShippingRule').className = 'rule ok';
+      $('#shippingRule').className = 'rule ok';
     } else if (subtotal < CONFIG.minOrder) {
       shippingFee = null;
       shippingText = '—';
+      $('#remainingAmountContainer').style.display = 'none';
+      $('#minOrderRule').className = 'rule danger';
+      $('#shippingRule').className = 'rule warning';
+      $('#freeShippingRule').className = 'rule warning';
+    } else {
+      $('#remainingAmount').textContent = formatPrice(remainingAmount);
+      $('#remainingAmountContainer').style.display = 'inline';
+      $('#shippingRule').className = 'rule warning';
+      $('#freeShippingRule').className = 'rule warning';
+      $('#minOrderRule').className = 'rule ok';
     }
     
     $('cartShipping').innerHTML = shippingText;
@@ -4371,53 +5033,20 @@
     saveState();
   }
 
-  function addToCart(productId, product, quantity = 1) {
-    if (!product || quantity <= 0) return;
-    
-    if (state.cart[productId]) {
-      state.cart[productId].quantity += quantity;
-    } else {
-      state.cart[productId] = {
-        ...product,
-        quantity: quantity
-      };
-    }
-    
-    state.quantityPicks[productId] = 0;
-    
-    updateCartUI();
-    
-    // Message spécial si promotion
-    if (product.isPromotion && product.oldPrice && product.oldPrice > product.price) {
-      const saving = (product.oldPrice - product.price) * quantity;
-      showToast(`✅ ${quantity} × ${product.name} ajouté ! Économie: ${formatPrice(saving)}`);
-    } else {
-      showToast(`✅ ${quantity} × ${product.name} ajouté au panier !`);
-    }
-    
-    if (state.currentModalProduct && generateProductId(state.currentModalProduct) === productId) {
-      state.quantityPicks[productId] = 0;
-      updateModalQuantity();
-    }
-  }
-
   // ===================== CARTE ET LOCALISATION =====================
   function openMapModal() {
     $('mapModal').classList.add('open');
     document.body.style.overflow = 'hidden';
     
-    // Initialiser la carte si ce n'est pas déjà fait
     if (!state.map) {
       setTimeout(() => {
         initMap();
       }, 100);
     } else {
-      // Recentrer sur la dernière position
       if (state.tempMapCoords) {
         state.map.setView([state.tempMapCoords.lat, state.tempMapCoords.lng], 15);
         state.mapMarker.setLatLng([state.tempMapCoords.lat, state.tempMapCoords.lng]);
       } else {
-        // Par défaut: centre sur Tunis
         state.map.setView([36.8065, 10.1815], 12);
       }
     }
@@ -4427,25 +5056,21 @@
     const mapElement = document.getElementById('map');
     if (!mapElement) return;
     
-    // Centre par défaut: Tunis
     const defaultLat = state.tempMapCoords?.lat || 36.8065;
     const defaultLng = state.tempMapCoords?.lng || 10.1815;
     
     state.map = L.map('map').setView([defaultLat, defaultLng], 14);
     
-    // Ajouter les tuiles OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',
       maxZoom: 19
     }).addTo(state.map);
     
-    // Créer un marqueur
     state.mapMarker = L.marker([defaultLat, defaultLng], {
       draggable: true,
       autoPan: true
     }).addTo(state.map);
     
-    // Mettre à jour les coordonnées quand le marqueur est déplacé
     state.mapMarker.on('dragend', function(event) {
       const marker = event.target;
       const position = marker.getLatLng();
@@ -4454,11 +5079,9 @@
         lng: position.lng
       };
       
-      // Mettre à jour l'aperçu de la carte
       updateMapPreview(position.lat, position.lng);
     });
     
-    // Ajouter un événement de clic sur la carte pour déplacer le marqueur
     state.map.on('click', function(event) {
       state.mapMarker.setLatLng(event.latlng);
       state.tempMapCoords = {
@@ -4469,7 +5092,6 @@
       updateMapPreview(event.latlng.lat, event.latlng.lng);
     });
     
-    // Ajouter un marqueur pour le magasin
     L.marker([CONFIG.storeLocation.lat, CONFIG.storeLocation.lng], {
       icon: L.icon({
         iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
@@ -4489,7 +5111,6 @@
       </div>
     `;
     
-    // Mettre à jour les champs de formulaire
     $('clientLat').value = lat.toFixed(6);
     $('clientLng').value = lng.toFixed(6);
   }
@@ -4510,22 +5131,19 @@
         
         state.tempMapCoords = { lat, lng };
         
-        // Mettre à jour les champs
         $('clientLat').value = lat.toFixed(6);
         $('clientLng').value = lng.toFixed(6);
         
-        // Mettre à jour l'aperçu
         updateMapPreview(lat, lng);
         
         showToast('✅ Position détectée avec succès !');
         
-        // Ouvrir la carte pour confirmation
         openMapModal();
       },
       (error) => {
         console.error('Erreur géolocalisation:', error);
         showToast('❌ Impossible de détecter votre position', 'error');
-        openMapModal(); // Ouvrir la carte pour sélection manuelle
+        openMapModal();
       },
       {
         enableHighAccuracy: true,
@@ -4542,7 +5160,6 @@
       return;
     }
     
-    // Calculer les économies par article
     const itemsWithSavings = Object.values(state.cart).map(item => {
       const itemSaving = calculateItemSavings(item);
       return {
@@ -4578,7 +5195,6 @@
     
     state.orderHistory.unshift(historyEntry);
     
-    // Limiter l'historique aux 2 dernières années
     const twoYearsAgo = new Date();
     twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
     
@@ -4588,7 +5204,29 @@
     
     saveState();
     
-    // Afficher un message spécial si économies importantes
+    // SAUVEGARDER POUR LES STATISTIQUES
+    const statsData = {
+      clientPhone: state.user.phone,
+      items: Object.values(state.cart).map(item => ({
+        name: item.name,
+        code: item.code,
+        quantity: item.quantity,
+        price: item.price,
+        oldPrice: item.oldPrice || item.price,
+        total: item.price * item.quantity,
+        category: item.category,
+        isPromotion: item.isPromotion || false
+      })),
+      subtotal: orderDetails.subtotal,
+      shipping: orderDetails.shipping,
+      total: orderDetails.total,
+      savings: orderDetails.savings || 0,
+      address: state.user.address,
+      timestamp: new Date().toISOString()
+    };
+    
+    saveOrderForStats(statsData);
+    
     if (orderDetails.savings && orderDetails.savings > 0) {
       showToast(`🎉 FÉLICITATIONS ! Vous avez économisé ${formatPrice(orderDetails.savings)} !`);
     } else {
@@ -4635,8 +5273,6 @@
       });
       
       const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
-      
-      // Calculer les économies pour cette commande
       const orderSavings = order.items.reduce((sum, item) => sum + (item.saving || 0), 0);
       
       const historyItem = document.createElement('div');
@@ -4707,7 +5343,6 @@
     detailsText += '─'.repeat(50) + '\n';
     detailsText += `Sous-total: ${formatPrice(order.subtotal)}\n`;
     
-    // Afficher les économies totales si > 0
     if (totalSavingsInOrder > 0) {
       const savingsPercentage = totalOriginalInOrder > 0 ? 
         Math.round((totalSavingsInOrder / totalOriginalInOrder) * 100) : 0;
@@ -4717,7 +5352,6 @@
     detailsText += `Livraison: ${order.shipping === 0 ? 'GRATUIT' : formatPrice(order.shipping)}\n`;
     detailsText += `TOTAL: ${formatPrice(order.total)}\n`;
     
-    // Message spécial si économies importantes
     if (totalSavingsInOrder > 0) {
       detailsText += `\n🎉 Vous avez économisé ${formatPrice(totalSavingsInOrder)} sur cette commande !`;
     }
@@ -4728,12 +5362,11 @@
 
   // ===================== QR CODE =====================
   function openQRModal() {
-    // Mettre à jour l'URL du QR code dynamique
-    const qrCodeImg = document.querySelector('#qrCodeContainer img');
+    const qrCodeImg = $('qrCodeImage');
     if (qrCodeImg) {
-      // Utiliser une URL dynamique basée sur la configuration
-      const qrUrl = CONFIG.qrCodeUrl || window.location.href;
+      const qrUrl = CONFIG.currentUrl;
       qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrUrl)}`;
+      qrCodeImg.alt = `QR Code pour ${qrUrl}`;
     }
     
     $('qrModal').classList.add('open');
@@ -4743,6 +5376,117 @@
   function closeQRModal() {
     $('qrModal').classList.remove('open');
     document.body.style.overflow = '';
+  }
+
+  // ===================== GESTION DU STOCK (ADMIN) =====================
+  function openStockModal() {
+    if (!state.isAdmin) {
+      showToast('❌ Vous devez être en mode administrateur', 'error');
+      return;
+    }
+    
+    renderStockProducts();
+    $('stockModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function renderStockProducts(searchQuery = '') {
+    const stockProductsList = $('stockProductsList');
+    stockProductsList.innerHTML = '';
+    
+    let allProducts = [];
+    for (const [categoryKey, products] of state.products.entries()) {
+      allProducts.push(...products);
+    }
+    
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      allProducts = allProducts.filter(p =>
+        p.name.toLowerCase().includes(query) ||
+        p.code.toLowerCase().includes(query)
+      );
+    }
+    
+    allProducts = allProducts.slice(0, 50);
+    
+    if (allProducts.length === 0) {
+      stockProductsList.innerHTML = `
+        <div style="text-align:center;padding:40px;color:var(--muted);">
+          <div style="font-size:48px;margin-bottom:15px;">🔍</div>
+          <h4 style="margin-bottom:10px;color:var(--text);">Aucun produit trouvé</h4>
+          <p>Essayez une autre recherche</p>
+        </div>
+      `;
+      return;
+    }
+    
+    allProducts.forEach(product => {
+      const currentStock = getProductStock(product);
+      const stockKey = `${product.code}_${product.name}`;
+      
+      const stockItem = document.createElement('div');
+      stockItem.className = 'stock-product-item';
+      stockItem.innerHTML = `
+        <div class="stock-product-info">
+          <div class="stock-product-name">${product.name}</div>
+          <div class="stock-product-details">
+            <span>Code: ${product.code}</span>
+            <span>Catégorie: ${product.category}</span>
+            <span>Prix: ${formatPrice(product.price)}</span>
+          </div>
+          <div class="stock-current">
+            Stock actuel: 
+            <span class="stock-current-value">${currentStock}</span>
+          </div>
+        </div>
+        <div class="stock-controls">
+          <input type="number" 
+                 class="stock-input" 
+                 id="stock-input-${stockKey}"
+                 value="${currentStock}"
+                 min="0"
+                 max="9999">
+          <button class="stock-save-btn" data-product-key="${stockKey}">
+            💾 Sauvegarder
+          </button>
+        </div>
+      `;
+      
+      stockProductsList.appendChild(stockItem);
+    });
+    
+    document.querySelectorAll('.stock-save-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const productKey = this.getAttribute('data-product-key');
+        const input = document.getElementById(`stock-input-${productKey}`);
+        const newStock = parseInt(input.value);
+        
+        if (isNaN(newStock) || newStock < 0) {
+          showToast('❌ Veuillez entrer une valeur valide', 'error');
+          return;
+        }
+        
+        const [code, ...nameParts] = productKey.split('_');
+        const name = nameParts.join('_');
+        
+        let productToUpdate = null;
+        for (const [categoryKey, products] of state.products.entries()) {
+          const found = products.find(p => p.code === code && p.name === name);
+          if (found) {
+            productToUpdate = found;
+            break;
+          }
+        }
+        
+        if (productToUpdate) {
+          updateProductStock(productToUpdate, newStock);
+          showToast(`✅ Stock mis à jour pour ${productToUpdate.name}: ${newStock} unités`);
+          
+          const stockCurrent = this.closest('.stock-product-item').querySelector('.stock-current-value');
+          stockCurrent.textContent = newStock;
+        }
+      });
+    });
   }
 
   // ===================== ADMIN =====================
@@ -4833,13 +5577,10 @@
       return;
     }
     
-    // Calculer les économies totales
     const savings = calculateTotalSavings();
-    
     let shippingFee = subtotal >= CONFIG.freeShipping ? 0 : CONFIG.shippingFee;
     const total = subtotal + shippingFee;
     
-    // Générer le résumé de commande avec les économies
     let orderText = `📦 NOUVELLE COMMANDE - MAXI JDC MARKET\n`;
     orderText += `📅 ${new Date().toLocaleDateString('fr-FR', { 
       day: '2-digit', 
@@ -4862,7 +5603,6 @@
     orderText += `\n🛒 ARTICLES\n`;
     orderText += '─'.repeat(50) + '\n';
     
-    // Ajouter les économies par article
     Object.values(state.cart).forEach(item => {
       const itemTotal = item.price * item.quantity;
       const itemSaving = calculateItemSavings(item);
@@ -4884,7 +5624,6 @@
     orderText += '─'.repeat(50) + '\n';
     orderText += `Sous-total: ${formatPrice(subtotal)}\n`;
     
-    // Afficher les économies totales si > 0
     if (savings.totalSavings > 0) {
       orderText += `💰 ÉCONOMIES TOTALES: ${formatPrice(savings.totalSavings)} (${savings.percentage}%)\n`;
     }
@@ -4892,7 +5631,6 @@
     orderText += `Livraison: ${shippingFee === 0 ? 'GRATUIT' : formatPrice(shippingFee)}\n`;
     orderText += `TOTAL: ${formatPrice(total)}\n\n`;
     
-    // Message de félicitations si économies importantes
     if (savings.totalSavings > 0) {
       orderText += `🎉 FÉLICITATIONS ! Vous avez économisé ${formatPrice(savings.totalSavings)} sur cette commande !\n\n`;
     }
@@ -4900,11 +5638,9 @@
     orderText += `🕒 Heures: 7h - 1h\n`;
     orderText += `📱 WhatsApp: +216 25 600 978`;
     
-    // Afficher le modal de commande
     $('orderDetails').textContent = orderText;
     $('orderModal').classList.add('open');
     
-    // Sauvegarder dans l'historique avec les économies
     saveOrderToHistory({
       subtotal,
       shipping: shippingFee,
@@ -4914,14 +5650,14 @@
       savingsPercentage: savings.percentage
     });
     
-    // Vider le panier après commande
     state.cart = {};
     updateCartUI();
   }
 
   // ===================== INITIALISATION =====================
   function init() {
-    // Charger l'état
+    loadGlobalStock();
+    
     try {
       const saved = localStorage.getItem(CONFIG.localStorageKey);
       if (saved) {
@@ -4933,7 +5669,6 @@
         updateCartUI();
       }
       
-      // Charger l'état admin
       const adminState = localStorage.getItem(CONFIG.adminPasswordKey);
       state.isAdmin = adminState === 'true';
       $('adminSection').classList.toggle('visible', state.isAdmin);
@@ -5013,7 +5748,6 @@
       }
     };
     
-    // Navigation produits
     $('modalPrevProduct').onclick = showPrevProduct;
     $('modalNextProduct').onclick = showNextProduct;
     
@@ -5021,26 +5755,39 @@
     
     $('modalDecreaseBtn').onclick = () => {
       if (!state.currentModalProduct) return;
-      const productId = generateProductId(state.currentModalProduct);
-      state.quantityPicks[productId] = Math.max(0, (state.quantityPicks[productId] || 0) - 1);
-      updateModalQuantity();
+      const input = $('modalQuantityInput');
+      let value = parseInt(input.value) || 0;
+      if (value > 0) {
+        input.value = value - 1;
+        updateModalQuantity();
+      }
     };
     
     $('modalIncreaseBtn').onclick = () => {
       if (!state.currentModalProduct) return;
-      const productId = generateProductId(state.currentModalProduct);
-      state.quantityPicks[productId] = (state.quantityPicks[productId] || 0) + 1;
-      updateModalQuantity();
+      const input = $('modalQuantityInput');
+      let value = parseInt(input.value) || 0;
+      const currentStock = getProductStock(state.currentModalProduct);
+      const maxAvailable = Math.min(currentStock, 999);
+      if (value < maxAvailable) {
+        input.value = value + 1;
+        updateModalQuantity();
+      }
     };
+    
+    $('modalQuantityInput').addEventListener('input', updateModalQuantity);
+    $('modalQuantityInput').addEventListener('change', updateModalQuantity);
     
     $('modalAddToCartBtn').onclick = () => {
       if (!state.currentModalProduct) return;
       const productId = generateProductId(state.currentModalProduct);
-      const quantity = state.quantityPicks[productId] || 0;
+      const quantity = parseInt($('modalQuantityInput').value) || 0;
       
       if (quantity > 0) {
         addToCart(productId, state.currentModalProduct, quantity);
         closeProductModal();
+      } else {
+        showToast('❌ Veuillez entrer une quantité valide', 'error');
       }
     };
     
@@ -5048,6 +5795,35 @@
     $('qrInfoBtn').onclick = openQRModal;
     $('qrDirectBtn').onclick = openQRModal;
     $('closeQrModalBtn').onclick = closeQRModal;
+    
+    // Admin - Tableau de bord
+    $('adminDashboardBtn').onclick = () => {
+      if (!state.isAdmin) {
+        showToast('❌ Vous devez être en mode administrateur', 'error');
+        return;
+      }
+      window.open('tools/tableau-de-bord.html', '_blank');
+    };
+    
+    // Admin - Gestion stock
+    $('adminStockBtn').onclick = openStockModal;
+    
+    // Recherche dans le modal stock
+    $('stockSearchInput').addEventListener('input', (e) => {
+      renderStockProducts(e.target.value);
+    });
+    
+    // Fermeture modal stock
+    $('closeStockModalBtn').onclick = $('closeStockModalBtn2').onclick = () => {
+      $('stockModal').classList.remove('open');
+      document.body.style.overflow = '';
+    };
+    
+    // Actualiser le stock
+    $('refreshStockBtn').onclick = () => {
+      renderStockProducts($('stockSearchInput').value);
+      showToast('🔄 Stock actualisé');
+    };
     
     // Admin
     $('secretAdminBtn').onclick = toggleAdminMode;
@@ -5057,6 +5833,10 @@
       if (Object.keys(state.cart).length === 0) return;
       
       if (confirm('Voulez-vous vraiment vider tout votre panier ?')) {
+        Object.values(state.cart).forEach(item => {
+          increaseProductStock(item, item.quantity);
+        });
+        
         state.cart = {};
         updateCartUI();
         showToast('Panier vidé', 'warning');
@@ -5070,16 +5850,29 @@
       
       const action = btn.dataset.action;
       const id = btn.dataset.id;
+      const item = state.cart[id];
       
-      if (action === 'increase' && state.cart[id]) {
-        state.cart[id].quantity++;
-        updateCartUI();
-      } else if (action === 'decrease' && state.cart[id]) {
+      if (!item) return;
+      
+      if (action === 'increase') {
+        const currentStock = getProductStock(item);
+        if (currentStock > 0) {
+          decreaseProductStock(item, 1);
+          state.cart[id].quantity++;
+          updateCartUI();
+          showToast(`✅ ${item.name} quantité augmentée`);
+        } else {
+          showToast('❌ Stock insuffisant', 'error');
+        }
+      } else if (action === 'decrease') {
         state.cart[id].quantity--;
+        increaseProductStock(item, 1);
+        
         if (state.cart[id].quantity <= 0) {
           delete state.cart[id];
         }
         updateCartUI();
+        showToast(`✅ ${item.name} quantité diminuée`);
       }
     });
     
@@ -5179,7 +5972,7 @@
       user: state.user,
       cart: state.cart,
       orderHistory: state.orderHistory,
-      version: '26.0'
+      version: '30.0'
     };
     localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
   }
