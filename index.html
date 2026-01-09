@@ -1281,6 +1281,27 @@
       text-align: center;
     }
 
+    /* NOUVEAU: Champ de saisie directe pour la quantité */
+    .modal-quantity-input {
+      width: 120px;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 2px solid var(--accent);
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 900;
+      text-align: center;
+      outline: none;
+      margin: 0 10px;
+    }
+
+    .modal-quantity-input:focus {
+      background: rgba(255,255,255,0.15);
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 3px rgba(0,212,255,0.1);
+    }
+
     .modal-action-buttons {
       display: flex;
       gap: 10px;
@@ -1786,6 +1807,13 @@
     .admin-label {
       font-size: 10px;
       font-weight: 900;
+    }
+
+    /* NOUVEAU: Bouton Statistiques */
+    .admin-btn.statistics {
+      border-color: #00d4ff;
+      background: rgba(0, 212, 255, 0.1);
+      color: #00d4ff;
     }
 
     /* SECTION COMPTE */
@@ -2311,6 +2339,27 @@
       font-weight: 700;
       font-size: 14px;
       color: var(--accent);
+    }
+
+    /* NOUVEAU: Champ de saisie directe pour la quantité dans le panier */
+    .cart-item-qty-input {
+      width: 60px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 2px solid var(--accent);
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+      margin: 0 5px;
+    }
+
+    .cart-item-qty-input:focus {
+      background: rgba(255,255,255,0.15);
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 2px rgba(0,212,255,0.1);
     }
 
     .cart-item-price {
@@ -3030,6 +3079,17 @@
         width: 95vw;
         height: 85vh;
       }
+      
+      .modal-stepper {
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+      }
+      
+      .modal-quantity-input {
+        width: 100px;
+        margin: 10px 0;
+      }
     }
 
     @media (max-width: 480px) {
@@ -3053,6 +3113,7 @@
       
       .modal-stepper {
         min-width: 140px;
+        flex-direction: row;
       }
       
       .modal-stepper-btn {
@@ -3063,6 +3124,12 @@
       
       .modal-quantity {
         font-size: 18px;
+      }
+      
+      .modal-quantity-input {
+        width: 80px;
+        font-size: 16px;
+        padding: 10px;
       }
       
       .modal-add-btn {
@@ -3142,6 +3209,12 @@
       .stock-controls {
         width: 100%;
         justify-content: space-between;
+      }
+      
+      .cart-item-qty-input {
+        width: 50px;
+        font-size: 12px;
+        padding: 4px 8px;
       }
     }
 
@@ -3329,6 +3402,12 @@
           <button class="admin-btn settings" id="adminSettingsBtn">
             <span class="admin-icon">⚙️</span>
             <span class="admin-label">Paramètres</span>
+          </button>
+          
+          <!-- NOUVEAU: Bouton pour accéder aux statistiques -->
+          <button class="admin-btn statistics" id="adminStatisticsBtn">
+            <span class="admin-icon">📈</span>
+            <span class="admin-label">Statistiques avancées</span>
           </button>
         </div>
       </section>
@@ -3585,12 +3664,14 @@
           </div>
         </div>
         
-        <!-- ACTIONS -->
+        <!-- ACTIONS - MODIFIÉ POUR AJOUTER LE CHAMP DE SAISIE -->
         <div class="modal-actions">
           <div class="modal-quantity-controls">
             <div class="modal-stepper">
               <button class="modal-stepper-btn" id="modalDecreaseBtn">−</button>
-              <span class="modal-quantity" id="modalProductQuantity">0</span>
+              <input type="number" class="modal-quantity-input" id="modalQuantityInput" 
+                     value="0" min="0" max="999" step="1" 
+                     placeholder="Quantité">
               <button class="modal-stepper-btn" id="modalIncreaseBtn">+</button>
             </div>
           </div>
@@ -3741,8 +3822,8 @@
     shippingFee: 3,
     whatsappNumber: "21625600978",
     itemsPerPage: 24,
-    localStorageKey: 'maxi_jdc_market_app_v27',
-    stockStorageKey: 'maxi_jdc_market_stock_v27',
+    localStorageKey: 'maxi_jdc_market_app_v28',
+    stockStorageKey: 'maxi_jdc_market_stock_v28',
     imagesBasePath: 'images/products/',
     historyRetentionYears: 2,
     adminPasswordKey: 'maxi_jdc_admin_password',
@@ -4433,7 +4514,7 @@
     }
   }
 
-  // ===================== MODAL PRODUIT =====================
+  // ===================== MODAL PRODUIT - MODIFIÉ POUR AJOUTER LE CHAMP DE SAISIE =====================
   function openProductModal(product) {
     if (!product) return;
     
@@ -4487,14 +4568,15 @@
     $('modalProductStock').textContent = stockText;
     $('modalProductStock').style.color = stockColor;
     
-    $('modalProductQuantity').textContent = quantity;
+    // Mettre à jour le champ de saisie de quantité
+    $('modalQuantityInput').value = quantity;
     
     const addBtn = $('modalAddToCartBtn');
     const decreaseBtn = $('modalDecreaseBtn');
     const increaseBtn = $('modalIncreaseBtn');
     
     // Désactiver les boutons si stock insuffisant
-    const maxAvailable = Math.min(currentStock, 99);
+    const maxAvailable = Math.min(currentStock, 999);
     addBtn.disabled = quantity === 0 || currentStock === 0;
     decreaseBtn.disabled = quantity === 0;
     increaseBtn.disabled = quantity >= maxAvailable;
@@ -4530,6 +4612,12 @@
     
     $('productModal').classList.add('open');
     document.body.style.overflow = 'hidden';
+    
+    // Focus sur le champ de saisie
+    setTimeout(() => {
+      $('modalQuantityInput').focus();
+      $('modalQuantityInput').select();
+    }, 300);
   }
 
   function closeProductModal() {
@@ -4542,16 +4630,29 @@
     if (!state.currentModalProduct) return;
     
     const productId = generateProductId(state.currentModalProduct);
-    const quantity = state.quantityPicks[productId] || 0;
+    let quantity = parseInt($('modalQuantityInput').value) || 0;
     
-    $('modalProductQuantity').textContent = quantity;
+    // Vérifier les limites
+    const currentStock = getProductStock(state.currentModalProduct);
+    const maxAvailable = Math.min(currentStock, 999);
+    
+    if (quantity > maxAvailable) {
+      quantity = maxAvailable;
+      $('modalQuantityInput').value = quantity;
+      showToast(`⚠️ Quantité limitée à ${maxAvailable} (stock disponible)`, 'warning');
+    }
+    
+    if (quantity < 0) {
+      quantity = 0;
+      $('modalQuantityInput').value = quantity;
+    }
+    
+    // Mettre à jour l'état
+    state.quantityPicks[productId] = quantity;
     
     const addBtn = $('modalAddToCartBtn');
     const decreaseBtn = $('modalDecreaseBtn');
     const increaseBtn = $('modalIncreaseBtn');
-    
-    const currentStock = getProductStock(state.currentModalProduct);
-    const maxAvailable = Math.min(currentStock, 99);
     
     addBtn.disabled = quantity === 0 || currentStock === 0;
     decreaseBtn.disabled = quantity === 0;
@@ -4618,7 +4719,7 @@
     });
   }
 
-  // ===================== PANIER =====================
+  // ===================== PANIER - MODIFIÉ POUR AJOUTER LE CHAMP DE SAISIE =====================
   function updateCartUI() {
     const cartCount = Object.values(state.cart).reduce((sum, item) => sum + item.quantity, 0);
     const subtotal = Object.values(state.cart).reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -4650,6 +4751,7 @@
         
         const itemElement = document.createElement('div');
         itemElement.className = 'cart-item';
+        itemElement.id = `cart-item-${id}`;
         
         let savingsBadge = '';
         if (itemSaving > 0) {
@@ -4681,7 +4783,9 @@
             <div class="cart-item-controls">
               <div class="cart-item-stepper">
                 <button class="cart-item-qty-btn" data-action="decrease" data-id="${id}">−</button>
-                <span class="cart-item-qty">${item.quantity}</span>
+                <input type="number" class="cart-item-qty-input" id="cart-qty-input-${id}" 
+                       value="${item.quantity}" min="0" max="999" step="1"
+                       placeholder="Qty" data-id="${id}">
                 <button class="cart-item-qty-btn" data-action="increase" data-id="${id}">+</button>
               </div>
             </div>
@@ -4696,6 +4800,66 @@
           </div>
         `;
         cartItemsList.appendChild(itemElement);
+      });
+      
+      // Ajouter les événements pour les champs de saisie de quantité
+      document.querySelectorAll('.cart-item-qty-input').forEach(input => {
+        input.addEventListener('change', function() {
+          const id = this.getAttribute('data-id');
+          const newQuantity = parseInt(this.value) || 0;
+          const item = state.cart[id];
+          
+          if (!item) return;
+          
+          if (newQuantity < 0) {
+            this.value = 0;
+            return;
+          }
+          
+          const currentStock = getProductStock(item);
+          if (newQuantity > currentStock) {
+            showToast(`❌ Stock insuffisant. Il reste ${currentStock} unité(s)`, 'error');
+            this.value = Math.min(item.quantity, currentStock);
+            return;
+          }
+          
+          // Calculer la différence de quantité
+          const diff = newQuantity - item.quantity;
+          
+          if (diff === 0) return;
+          
+          if (diff > 0) {
+            // Augmenter la quantité
+            decreaseProductStock(item, diff);
+            state.cart[id].quantity = newQuantity;
+          } else {
+            // Diminuer la quantité
+            const decreaseAmount = Math.abs(diff);
+            increaseProductStock(item, decreaseAmount);
+            state.cart[id].quantity = newQuantity;
+            
+            if (newQuantity <= 0) {
+              delete state.cart[id];
+            }
+          }
+          
+          updateCartUI();
+          showToast(`✅ Quantité mise à jour pour ${item.name}: ${newQuantity}`);
+        });
+        
+        input.addEventListener('blur', function() {
+          if (!this.value || parseInt(this.value) === 0) {
+            const id = this.getAttribute('data-id');
+            const item = state.cart[id];
+            if (item) {
+              // Restaurer le stock
+              increaseProductStock(item, item.quantity);
+              delete state.cart[id];
+              updateCartUI();
+              showToast(`🗑️ ${item.name} retiré du panier`);
+            }
+          }
+        });
       });
       
       // Mettre à jour l'affichage des économies
@@ -4782,17 +4946,17 @@
     
     updateCartUI();
     
-    // Message spécial si promotion
+    // Message spécial si promotion - MODIFIÉ POUR ÊTRE PLUS VISIBLE
     if (product.isPromotion && product.oldPrice && product.oldPrice > product.price) {
       const saving = (product.oldPrice - product.price) * quantity;
-      showToast(`✅ ${quantity} × ${product.name} ajouté ! Économie: ${formatPrice(saving)}`);
+      showToast(`✅ ${quantity} × ${product.name} ajouté au panier ! 💰 Économie: ${formatPrice(saving)}`);
     } else {
       showToast(`✅ ${quantity} × ${product.name} ajouté au panier !`);
     }
     
     if (state.currentModalProduct && generateProductId(state.currentModalProduct) === productId) {
       state.quantityPicks[productId] = 0;
-      updateModalQuantity();
+      $('modalQuantityInput').value = 0;
     }
   }
 
@@ -5537,28 +5701,40 @@
     
     $('modalDecreaseBtn').onclick = () => {
       if (!state.currentModalProduct) return;
-      const productId = generateProductId(state.currentModalProduct);
-      state.quantityPicks[productId] = Math.max(0, (state.quantityPicks[productId] || 0) - 1);
-      updateModalQuantity();
+      const input = $('modalQuantityInput');
+      let value = parseInt(input.value) || 0;
+      if (value > 0) {
+        input.value = value - 1;
+        updateModalQuantity();
+      }
     };
     
     $('modalIncreaseBtn').onclick = () => {
       if (!state.currentModalProduct) return;
-      const productId = generateProductId(state.currentModalProduct);
+      const input = $('modalQuantityInput');
+      let value = parseInt(input.value) || 0;
       const currentStock = getProductStock(state.currentModalProduct);
-      const maxAvailable = Math.min(currentStock, 99);
-      state.quantityPicks[productId] = Math.min(maxAvailable, (state.quantityPicks[productId] || 0) + 1);
-      updateModalQuantity();
+      const maxAvailable = Math.min(currentStock, 999);
+      if (value < maxAvailable) {
+        input.value = value + 1;
+        updateModalQuantity();
+      }
     };
+    
+    // Événement pour le champ de saisie de quantité
+    $('modalQuantityInput').addEventListener('input', updateModalQuantity);
+    $('modalQuantityInput').addEventListener('change', updateModalQuantity);
     
     $('modalAddToCartBtn').onclick = () => {
       if (!state.currentModalProduct) return;
       const productId = generateProductId(state.currentModalProduct);
-      const quantity = state.quantityPicks[productId] || 0;
+      const quantity = parseInt($('modalQuantityInput').value) || 0;
       
       if (quantity > 0) {
         addToCart(productId, state.currentModalProduct, quantity);
         closeProductModal();
+      } else {
+        showToast('❌ Veuillez entrer une quantité valide', 'error');
       }
     };
     
@@ -5569,6 +5745,12 @@
     
     // Admin - Gestion stock
     $('adminStockBtn').onclick = openStockModal;
+    
+    // NOUVEAU: Bouton pour accéder aux statistiques
+    $('adminStatisticsBtn').onclick = () => {
+      // Ouvrir la page des statistiques dans un nouvel onglet
+      window.open('tools/statistique.html', '_blank');
+    };
     
     // Recherche dans le modal stock
     $('stockSearchInput').addEventListener('input', (e) => {
@@ -5739,7 +5921,7 @@
       user: state.user,
       cart: state.cart,
       orderHistory: state.orderHistory,
-      version: '27.0'
+      version: '28.0'
     };
     localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
   }
