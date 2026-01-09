@@ -48,7 +48,7 @@
     }
     
     body{
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoi UI', Roboto, Oxygen, Ubuntu, sans-serif;
       color:var(--text);
       background: linear-gradient(135deg, var(--bg0) 0%, var(--bg1) 100%);
       line-height:1.6;
@@ -2168,6 +2168,91 @@
       gap: 8px;
     }
 
+    /* STYLES POUR LES ÉCONOMIES */
+    .cart-item-saving {
+      font-size: 10px;
+      color: var(--accent);
+      background: rgba(0, 255, 136, 0.1);
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      margin-top: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-weight: 700;
+    }
+
+    .cart-item-saving.promo {
+      background: rgba(255, 153, 0, 0.15);
+      border-color: rgba(255, 153, 0, 0.5);
+      color: #ffcc00;
+    }
+
+    .savings-badge {
+      background: linear-gradient(135deg, #00ff88, #00d4ff);
+      color: var(--bg0);
+      font-weight: 900;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 8px;
+      animation: pulse 2s infinite;
+    }
+
+    .cart-savings-section {
+      background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-top: 15px;
+      display: none;
+    }
+
+    .cart-savings-section.visible {
+      display: block;
+    }
+
+    .savings-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .savings-label {
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .savings-value {
+      font-weight: 900;
+      font-size: 16px;
+      color: var(--accent);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 2px solid var(--accent);
+    }
+
+    .savings-percentage {
+      font-size: 11px;
+      color: var(--accent2);
+      font-weight: 700;
+      margin-left: 5px;
+    }
+
+    .promo-icon-small {
+      font-size: 12px;
+    }
+
     .cart-item-controls {
       display: flex;
       align-items: center;
@@ -3158,6 +3243,27 @@
           <p>Ajoutez des articles pour commencer votre commande</p>
         </div>
         
+        <!-- SECTION ÉCONOMIES -->
+        <div class="cart-savings-section" id="cartSavingsSection">
+          <div class="savings-row">
+            <span class="savings-label">
+              <span class="promo-icon-small">💰</span>
+              ÉCONOMIES TOTALES
+            </span>
+            <span class="savings-value" id="totalSavings">0,00 dt</span>
+          </div>
+          <div class="savings-row" style="margin-bottom: 0;">
+            <span class="savings-label">
+              <span class="promo-icon-small">📊</span>
+              Pourcentage économisé
+            </span>
+            <span class="savings-value">
+              <span id="savingsPercentage">0%</span>
+              <span class="savings-percentage" id="savingsPercentageText"></span>
+            </span>
+          </div>
+        </div>
+        
         <!-- TOTAUX -->
         <div class="cart-totals">
           <div class="total-row">
@@ -3392,7 +3498,7 @@
     shippingFee: 3,
     whatsappNumber: "21625600978",
     itemsPerPage: 24,
-    localStorageKey: 'maxi_jdc_market_app_v25',
+    localStorageKey: 'maxi_jdc_market_app_v26',
     imagesBasePath: 'images/products/',
     historyRetentionYears: 2,
     adminPasswordKey: 'maxi_jdc_admin_password',
@@ -3472,6 +3578,71 @@
     setTimeout(() => {
       toast.remove();
     }, 3000);
+  }
+
+  // ===================== CALCUL DES ÉCONOMIES =====================
+  function calculateItemSavings(item) {
+    if (!item.isPromotion || !item.oldPrice || item.oldPrice <= item.price) {
+      return 0;
+    }
+    
+    const savingPerUnit = item.oldPrice - item.price;
+    return savingPerUnit * item.quantity;
+  }
+
+  function calculateTotalSavings() {
+    let totalSavings = 0;
+    let totalOriginalPrice = 0;
+    let totalCurrentPrice = 0;
+    
+    Object.values(state.cart).forEach(item => {
+      if (item.isPromotion && item.oldPrice && item.oldPrice > item.price) {
+        const saving = calculateItemSavings(item);
+        totalSavings += saving;
+        totalOriginalPrice += item.oldPrice * item.quantity;
+        totalCurrentPrice += item.price * item.quantity;
+      }
+    });
+    
+    return {
+      totalSavings,
+      totalOriginalPrice,
+      totalCurrentPrice,
+      percentage: totalOriginalPrice > 0 ? Math.round((totalSavings / totalOriginalPrice) * 100) : 0
+    };
+  }
+
+  function updateSavingsDisplay() {
+    const savings = calculateTotalSavings();
+    const savingsSection = $('cartSavingsSection');
+    const totalSavingsElement = $('totalSavings');
+    const savingsPercentageElement = $('savingsPercentage');
+    const savingsPercentageTextElement = $('savingsPercentageText');
+    
+    if (savings.totalSavings > 0) {
+      // Afficher la section des économies
+      savingsSection.classList.add('visible');
+      
+      // Mettre à jour les montants
+      totalSavingsElement.textContent = formatPrice(savings.totalSavings);
+      savingsPercentageElement.textContent = `${savings.percentage}%`;
+      
+      // Ajouter un texte descriptif
+      let percentageText = '';
+      if (savings.percentage >= 50) {
+        percentageText = 'ÉNORME ÉCONOMIE !';
+      } else if (savings.percentage >= 30) {
+        percentageText = 'Super affaire !';
+      } else if (savings.percentage >= 15) {
+        percentageText = 'Bonne affaire';
+      } else {
+        percentageText = 'Économie';
+      }
+      savingsPercentageTextElement.textContent = percentageText;
+    } else {
+      // Cacher la section des économies
+      savingsSection.classList.remove('visible');
+    }
   }
 
   // ===================== GESTION DES DONNÉES =====================
@@ -4105,22 +4276,49 @@
     if (cartCount === 0) {
       cartItemsList.style.display = 'none';
       cartEmptyMessage.style.display = 'block';
+      
+      // Cacher la section des économies
+      $('cartSavingsSection').classList.remove('visible');
     } else {
       cartItemsList.style.display = 'flex';
       cartEmptyMessage.style.display = 'none';
       
       cartItemsList.innerHTML = '';
       Object.entries(state.cart).forEach(([id, item]) => {
+        const itemSaving = calculateItemSavings(item);
+        const itemTotal = item.price * item.quantity;
+        const originalTotal = item.oldPrice ? item.oldPrice * item.quantity : itemTotal;
+        
         const itemElement = document.createElement('div');
         itemElement.className = 'cart-item';
+        
+        let savingsBadge = '';
+        if (itemSaving > 0) {
+          savingsBadge = `
+            <div class="cart-item-saving ${item.isPromotion ? 'promo' : ''}">
+              <span>💰</span>
+              <span>Économie: ${formatPrice(itemSaving)}</span>
+              ${item.discountPercent ? `<span class="savings-percentage">(-${item.discountPercent}%)</span>` : ''}
+            </div>
+          `;
+        }
+        
         itemElement.innerHTML = `
           <div class="cart-item-info">
-            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-name">
+              ${item.name}
+              ${item.isPromotion ? '<span class="savings-badge">PROMO</span>' : ''}
+            </div>
             <div class="cart-item-details">
               <span>Code: ${item.code}</span>
               <span>Prix: ${formatPrice(item.price)}</span>
+              ${item.oldPrice && item.oldPrice > item.price ? 
+                `<span style="color:#ffcc00;font-weight:700;">
+                  Ancien: <del>${formatPrice(item.oldPrice)}</del>
+                </span>` : ''}
               <span>Cat: ${item.category}</span>
             </div>
+            ${savingsBadge}
             <div class="cart-item-controls">
               <div class="cart-item-stepper">
                 <button class="cart-item-qty-btn" data-action="decrease" data-id="${id}">−</button>
@@ -4129,10 +4327,20 @@
               </div>
             </div>
           </div>
-          <div class="cart-item-price">${formatPrice(item.price * item.quantity)}</div>
+          <div class="cart-item-price">
+            ${formatPrice(itemTotal)}
+            ${itemSaving > 0 ? `
+              <div style="font-size:9px;color:#ffcc00;margin-top:2px;">
+                <del style="opacity:0.7;">${formatPrice(originalTotal)}</del>
+              </div>
+            ` : ''}
+          </div>
         `;
         cartItemsList.appendChild(itemElement);
       });
+      
+      // Mettre à jour l'affichage des économies
+      updateSavingsDisplay();
     }
     
     $('cartSubtotal').textContent = formatPrice(subtotal);
@@ -4178,7 +4386,14 @@
     state.quantityPicks[productId] = 0;
     
     updateCartUI();
-    showToast(`✅ ${quantity} × ${product.name} ajouté au panier !`);
+    
+    // Message spécial si promotion
+    if (product.isPromotion && product.oldPrice && product.oldPrice > product.price) {
+      const saving = (product.oldPrice - product.price) * quantity;
+      showToast(`✅ ${quantity} × ${product.name} ajouté ! Économie: ${formatPrice(saving)}`);
+    } else {
+      showToast(`✅ ${quantity} × ${product.name} ajouté au panier !`);
+    }
     
     if (state.currentModalProduct && generateProductId(state.currentModalProduct) === productId) {
       state.quantityPicks[productId] = 0;
@@ -4327,21 +4542,33 @@
       return;
     }
     
+    // Calculer les économies par article
+    const itemsWithSavings = Object.values(state.cart).map(item => {
+      const itemSaving = calculateItemSavings(item);
+      return {
+        name: item.name,
+        code: item.code,
+        quantity: item.quantity,
+        price: item.price,
+        oldPrice: item.oldPrice || item.price,
+        total: item.price * item.quantity,
+        saving: itemSaving,
+        isPromotion: item.isPromotion || false,
+        discountPercent: item.discountPercent || 0
+      };
+    });
+    
     const historyEntry = {
       id: Date.now(),
       date: new Date().toISOString(),
       clientPhone: state.user.phone,
       clientName: state.user.name,
-      items: Object.values(state.cart).map(item => ({
-        name: item.name,
-        code: item.code,
-        quantity: item.quantity,
-        price: item.price,
-        total: item.price * item.quantity
-      })),
+      items: itemsWithSavings,
       subtotal: orderDetails.subtotal,
       shipping: orderDetails.shipping,
       total: orderDetails.total,
+      savings: orderDetails.savings || 0,
+      savingsPercentage: orderDetails.savingsPercentage || 0,
       address: state.user.address,
       coords: state.user.lat && state.user.lng ? {
         lat: state.user.lat,
@@ -4360,7 +4587,13 @@
     );
     
     saveState();
-    showToast('📝 Commande ajoutée à votre historique');
+    
+    // Afficher un message spécial si économies importantes
+    if (orderDetails.savings && orderDetails.savings > 0) {
+      showToast(`🎉 FÉLICITATIONS ! Vous avez économisé ${formatPrice(orderDetails.savings)} !`);
+    } else {
+      showToast('📝 Commande ajoutée à votre historique');
+    }
   }
 
   function loadHistoryForPhone(phone) {
@@ -4403,6 +4636,9 @@
       
       const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
       
+      // Calculer les économies pour cette commande
+      const orderSavings = order.items.reduce((sum, item) => sum + (item.saving || 0), 0);
+      
       const historyItem = document.createElement('div');
       historyItem.className = 'history-item';
       historyItem.innerHTML = `
@@ -4411,6 +4647,11 @@
           <span class="history-items-count">${itemCount} article(s)</span>
           <span class="history-total">${formatPrice(order.total)}</span>
         </div>
+        ${orderSavings > 0 ? `
+          <div style="font-size:10px;color:#00ff88;margin-top:4px;font-weight:700;">
+            💰 Économies: ${formatPrice(orderSavings)}
+          </div>
+        ` : ''}
       `;
       
       historyItem.addEventListener('click', () => {
@@ -4425,22 +4666,61 @@
     const orderDetails = $('orderDetails');
     
     let detailsText = `📦 COMMANDE #${order.id}\n`;
-    detailsText += `📅 ${new Date(order.date).toLocaleDateString('fr-FR')}\n`;
+    detailsText += `📅 ${new Date(order.date).toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })}\n`;
     detailsText += `👤 ${order.clientName}\n`;
     detailsText += `📱 ${order.clientPhone}\n`;
     detailsText += `📍 ${order.address}\n\n`;
     detailsText += `🛒 ARTICLES :\n`;
-    detailsText += '─'.repeat(30) + '\n';
+    detailsText += '─'.repeat(50) + '\n';
+    
+    let totalSavingsInOrder = 0;
+    let totalOriginalInOrder = 0;
     
     order.items.forEach(item => {
+      const itemTotal = item.price * item.quantity;
+      const originalTotal = item.oldPrice * item.quantity;
+      const itemSaving = item.saving || 0;
+      
+      totalSavingsInOrder += itemSaving;
+      totalOriginalInOrder += originalTotal;
+      
       detailsText += `${item.quantity}x ${item.name} (${item.code})\n`;
-      detailsText += `  ${formatPrice(item.price)} × ${item.quantity} = ${formatPrice(item.total)}\n`;
+      
+      if (itemSaving > 0) {
+        detailsText += `  ${formatPrice(item.price)} × ${item.quantity} = ${formatPrice(itemTotal)}\n`;
+        detailsText += `  💰 ÉCONOMIE: ${formatPrice(itemSaving)}`;
+        if (item.discountPercent) {
+          detailsText += ` (-${item.discountPercent}%)`;
+        }
+        detailsText += `\n  ⚡ Ancien: ${formatPrice(originalTotal)}\n`;
+      } else {
+        detailsText += `  ${formatPrice(item.price)} × ${item.quantity} = ${formatPrice(itemTotal)}\n`;
+      }
     });
     
-    detailsText += '─'.repeat(30) + '\n';
+    detailsText += '─'.repeat(50) + '\n';
     detailsText += `Sous-total: ${formatPrice(order.subtotal)}\n`;
+    
+    // Afficher les économies totales si > 0
+    if (totalSavingsInOrder > 0) {
+      const savingsPercentage = totalOriginalInOrder > 0 ? 
+        Math.round((totalSavingsInOrder / totalOriginalInOrder) * 100) : 0;
+      detailsText += `💰 ÉCONOMIES TOTALES: ${formatPrice(totalSavingsInOrder)} (${savingsPercentage}%)\n`;
+    }
+    
     detailsText += `Livraison: ${order.shipping === 0 ? 'GRATUIT' : formatPrice(order.shipping)}\n`;
     detailsText += `TOTAL: ${formatPrice(order.total)}\n`;
+    
+    // Message spécial si économies importantes
+    if (totalSavingsInOrder > 0) {
+      detailsText += `\n🎉 Vous avez économisé ${formatPrice(totalSavingsInOrder)} sur cette commande !`;
+    }
     
     orderDetails.textContent = detailsText;
     $('orderModal').classList.add('open');
@@ -4553,10 +4833,13 @@
       return;
     }
     
+    // Calculer les économies totales
+    const savings = calculateTotalSavings();
+    
     let shippingFee = subtotal >= CONFIG.freeShipping ? 0 : CONFIG.shippingFee;
     const total = subtotal + shippingFee;
     
-    // Générer le résumé de commande
+    // Générer le résumé de commande avec les économies
     let orderText = `📦 NOUVELLE COMMANDE - MAXI JDC MARKET\n`;
     orderText += `📅 ${new Date().toLocaleDateString('fr-FR', { 
       day: '2-digit', 
@@ -4577,18 +4860,43 @@
     }
     
     orderText += `\n🛒 ARTICLES\n`;
-    orderText += '─'.repeat(40) + '\n';
+    orderText += '─'.repeat(50) + '\n';
     
+    // Ajouter les économies par article
     Object.values(state.cart).forEach(item => {
       const itemTotal = item.price * item.quantity;
+      const itemSaving = calculateItemSavings(item);
+      const originalTotal = item.oldPrice ? item.oldPrice * item.quantity : itemTotal;
+      
       orderText += `${item.quantity}x ${item.name} (${item.code})\n`;
-      orderText += `  ${formatPrice(item.price)} × ${item.quantity} = ${formatPrice(itemTotal)}\n`;
+      orderText += `  ${formatPrice(item.price)} × ${item.quantity} = ${formatPrice(itemTotal)}`;
+      
+      if (itemSaving > 0) {
+        orderText += `  💰 ÉCONOMIE: ${formatPrice(itemSaving)}`;
+        if (item.discountPercent) {
+          orderText += ` (-${item.discountPercent}%)`;
+        }
+        orderText += `\n  ⚡ Ancien prix: ${formatPrice(originalTotal)}`;
+      }
+      orderText += '\n';
     });
     
-    orderText += '─'.repeat(40) + '\n';
+    orderText += '─'.repeat(50) + '\n';
     orderText += `Sous-total: ${formatPrice(subtotal)}\n`;
+    
+    // Afficher les économies totales si > 0
+    if (savings.totalSavings > 0) {
+      orderText += `💰 ÉCONOMIES TOTALES: ${formatPrice(savings.totalSavings)} (${savings.percentage}%)\n`;
+    }
+    
     orderText += `Livraison: ${shippingFee === 0 ? 'GRATUIT' : formatPrice(shippingFee)}\n`;
     orderText += `TOTAL: ${formatPrice(total)}\n\n`;
+    
+    // Message de félicitations si économies importantes
+    if (savings.totalSavings > 0) {
+      orderText += `🎉 FÉLICITATIONS ! Vous avez économisé ${formatPrice(savings.totalSavings)} sur cette commande !\n\n`;
+    }
+    
     orderText += `🕒 Heures: 7h - 1h\n`;
     orderText += `📱 WhatsApp: +216 25 600 978`;
     
@@ -4596,12 +4904,14 @@
     $('orderDetails').textContent = orderText;
     $('orderModal').classList.add('open');
     
-    // Sauvegarder dans l'historique
+    // Sauvegarder dans l'historique avec les économies
     saveOrderToHistory({
       subtotal,
       shipping: shippingFee,
       total,
-      address: state.user.address
+      address: state.user.address,
+      savings: savings.totalSavings,
+      savingsPercentage: savings.percentage
     });
     
     // Vider le panier après commande
@@ -4869,7 +5179,7 @@
       user: state.user,
       cart: state.cart,
       orderHistory: state.orderHistory,
-      version: '25.0'
+      version: '26.0'
     };
     localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
   }
