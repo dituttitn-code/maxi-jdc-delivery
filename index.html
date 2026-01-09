@@ -853,6 +853,18 @@
       background: rgba(0,255,136,.08);
     }
 
+    .product-stock-tag.low {
+      border-color: rgba(255,167,38,.3);
+      color: var(--warning);
+      background: rgba(255,167,38,.08);
+    }
+
+    .product-stock-tag.out {
+      border-color: rgba(255,107,107,.3);
+      color: var(--danger);
+      background: rgba(255,107,107,.08);
+    }
+
     /* MODAL ARTICLE */
     .product-modal-overlay {
       position: fixed;
@@ -1253,6 +1265,12 @@
     .modal-stepper-btn:hover {
       border-color: var(--accent);
       background: rgba(255,255,255,0.2);
+    }
+
+    .modal-stepper-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      border-color: var(--muted);
     }
 
     .modal-quantity {
@@ -2412,6 +2430,12 @@
       color: var(--danger);
     }
 
+    .remaining-amount {
+      color: var(--accent);
+      font-weight: 900;
+      margin-left: 4px;
+    }
+
     /* FOOTER DRAWER */
     .drawer-footer {
       padding: 20px;
@@ -2698,6 +2722,177 @@
       box-shadow: 0 8px 25px rgba(0,255,136,0.4);
     }
 
+    /* MODAL GESTION STOCK */
+    .stock-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3500;
+      padding: 20px;
+      backdrop-filter: blur(20px);
+    }
+
+    .stock-modal-overlay.open {
+      display: flex;
+    }
+
+    .stock-modal {
+      width: 100%;
+      max-width: 800px;
+      height: 80vh;
+      background: linear-gradient(135deg, var(--bg0) 0%, var(--bg1) 100%);
+      border-radius: var(--radius);
+      border: 3px solid var(--accent2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stock-modal-header {
+      padding: 20px;
+      background: rgba(0, 212, 255, 0.1);
+      border-bottom: 1px solid var(--accent2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stock-modal-header h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--accent2);
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stock-modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .stock-search {
+      margin-bottom: 20px;
+    }
+
+    .stock-search input {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 2px solid var(--accent2);
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .stock-search input:focus {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .stock-products-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+
+    .stock-product-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .stock-product-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .stock-product-name {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .stock-product-details {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .stock-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stock-input {
+      width: 80px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 2px solid var(--accent2);
+      background: rgba(255,255,255,0.1);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+    }
+
+    .stock-input:focus {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .stock-save-btn {
+      padding: 8px 15px;
+      border-radius: 6px;
+      border: 2px solid var(--accent);
+      background: rgba(0, 255, 136, 0.15);
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .stock-save-btn:hover {
+      background: rgba(0, 255, 136, 0.25);
+    }
+
+    .stock-current {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .stock-current-value {
+      font-weight: 900;
+      color: var(--accent);
+      margin-left: 5px;
+    }
+
+    .stock-modal-footer {
+      padding: 20px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
     /* TOAST NOTIFICATIONS */
     .toast {
       position: fixed;
@@ -2830,6 +3025,11 @@
       .similar-products-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+      
+      .stock-modal {
+        width: 95vw;
+        height: 85vh;
+      }
     }
 
     @media (max-width: 480px) {
@@ -2931,6 +3131,17 @@
         width: 45px;
         height: 45px;
         font-size: 20px;
+      }
+      
+      .stock-product-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .stock-controls {
+        width: 100%;
+        justify-content: space-between;
       }
     }
 
@@ -3291,6 +3502,9 @@
             <div class="rule" id="shippingRule">
               <span class="rule-icon">🚚</span>
               <span>Frais livraison: <strong>3 dt</strong></span>
+              <span id="remainingAmountContainer" style="display:none">
+                - Reste <span id="remainingAmount" class="remaining-amount">0,00 dt</span> pour livraison gratuite
+              </span>
             </div>
             <div class="rule" id="freeShippingRule">
               <span class="rule-icon">🎁</span>
@@ -3417,20 +3631,49 @@
       <div class="qr-modal-body">
         <div class="qr-code-container" id="qrCodeContainer">
           <!-- QR Code dynamique qui pointe vers l'URL de l'application -->
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://votre-domaine.com/maxi-jdc-market" 
+          <img src="" 
                alt="QR Code MAXI JDC MARKET" 
+               id="qrCodeImage"
                style="width:100%;height:100%;object-fit:contain;">
         </div>
         
         <div class="qr-instructions">
           <p>Scannez ce code avec votre téléphone pour accéder à l'application MAXI JDC MARKET.</p>
-          <p><strong>URL:</strong> https://votre-domaine.com/maxi-jdc-market</p>
         </div>
       </div>
       
       <div class="qr-modal-footer">
         <button class="form-btn" id="closeQrModalBtn">
           ✕ Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL GESTION STOCK -->
+  <div class="stock-modal-overlay" id="stockModal">
+    <div class="stock-modal">
+      <div class="stock-modal-header">
+        <h3>📦 Gestion des stocks</h3>
+        <button class="drawer-close" id="closeStockModalBtn">×</button>
+      </div>
+      
+      <div class="stock-modal-body">
+        <div class="stock-search">
+          <input type="text" id="stockSearchInput" placeholder="🔍 Rechercher un produit par nom ou code...">
+        </div>
+        
+        <div class="stock-products-list" id="stockProductsList">
+          <!-- Les produits seront ajoutés dynamiquement ici -->
+        </div>
+      </div>
+      
+      <div class="stock-modal-footer">
+        <button class="form-btn" id="closeStockModalBtn2">
+          ✕ Fermer
+        </button>
+        <button class="form-btn primary" id="refreshStockBtn">
+          🔄 Actualiser
         </button>
       </div>
     </div>
@@ -3498,17 +3741,19 @@
     shippingFee: 3,
     whatsappNumber: "21625600978",
     itemsPerPage: 24,
-    localStorageKey: 'maxi_jdc_market_app_v26',
+    localStorageKey: 'maxi_jdc_market_app_v27',
+    stockStorageKey: 'maxi_jdc_market_stock_v27',
     imagesBasePath: 'images/products/',
     historyRetentionYears: 2,
     adminPasswordKey: 'maxi_jdc_admin_password',
     defaultStock: 100,
-    qrCodeUrl: 'https://votre-domaine.com/maxi-jdc-market',
     adminPassword: "admin123",
     storeLocation: {
       lat: 36.851234,
       lng: 10.301234
-    }
+    },
+    // URL pour le QR Code - utiliser l'URL actuelle
+    currentUrl: window.location.href
   };
 
   // Catégories
@@ -3555,7 +3800,8 @@
     tempMapCoords: null,
     isAdmin: false,
     map: null,
-    mapMarker: null
+    mapMarker: null,
+    globalStock: {} // Stock global partagé entre tous les utilisateurs
   };
 
   // ===================== UTILITAIRES =====================
@@ -3578,6 +3824,64 @@
     setTimeout(() => {
       toast.remove();
     }, 3000);
+  }
+
+  // ===================== GESTION DU STOCK GLOBAL =====================
+  function loadGlobalStock() {
+    try {
+      const savedStock = localStorage.getItem(CONFIG.stockStorageKey);
+      if (savedStock) {
+        state.globalStock = JSON.parse(savedStock);
+        console.log('Stock global chargé:', Object.keys(state.globalStock).length, 'produits');
+      } else {
+        state.globalStock = {};
+        console.log('Aucun stock global trouvé, initialisation...');
+      }
+    } catch (e) {
+      console.error('Erreur chargement stock global:', e);
+      state.globalStock = {};
+    }
+  }
+
+  function saveGlobalStock() {
+    try {
+      localStorage.setItem(CONFIG.stockStorageKey, JSON.stringify(state.globalStock));
+      console.log('Stock global sauvegardé');
+    } catch (e) {
+      console.error('Erreur sauvegarde stock global:', e);
+    }
+  }
+
+  function getProductStock(product) {
+    const stockKey = `${product.code}_${product.name}`;
+    if (state.globalStock[stockKey] !== undefined) {
+      return state.globalStock[stockKey];
+    }
+    // Si pas de stock spécifique, utiliser le stock par défaut du produit
+    return product.stock || CONFIG.defaultStock;
+  }
+
+  function updateProductStock(product, newStock) {
+    const stockKey = `${product.code}_${product.name}`;
+    state.globalStock[stockKey] = Math.max(0, newStock);
+    saveGlobalStock();
+    
+    // Mettre à jour l'affichage des produits
+    renderProducts();
+    
+    return state.globalStock[stockKey];
+  }
+
+  function decreaseProductStock(product, quantity) {
+    const currentStock = getProductStock(product);
+    const newStock = Math.max(0, currentStock - quantity);
+    return updateProductStock(product, newStock);
+  }
+
+  function increaseProductStock(product, quantity) {
+    const currentStock = getProductStock(product);
+    const newStock = currentStock + quantity;
+    return updateProductStock(product, newStock);
   }
 
   // ===================== CALCUL DES ÉCONOMIES =====================
@@ -3690,6 +3994,9 @@
           return;
         }
         
+        // Récupérer le stock actuel
+        const currentStock = getProductStock({ code, name });
+        
         products.push({
           code,
           name,
@@ -3697,7 +4004,7 @@
           category: category.label,
           categoryKey: category.key,
           isPromotion: false,
-          stock: CONFIG.defaultStock,
+          stock: currentStock,
           oldPrice: null,
           discountPercent: 0
         });
@@ -3782,11 +4089,14 @@
           discountPercent = 0;
         }
         
+        // Récupérer le stock actuel
+        const currentStock = getProductStock({ code, name });
+        
         promotions.push({
           code,
           name,
           price: finalPrice,
-          stock: CONFIG.defaultStock,
+          stock: currentStock,
           category: '🔥 PROMOTIONS',
           categoryKey: 'promotions',
           isPromotion: true,
@@ -4039,6 +4349,19 @@
             <div class="product-price">${formatPrice(product.price)}</div>
           </div>`;
       
+      // Déterminer le style du tag de stock
+      const currentStock = getProductStock(product);
+      let stockTagClass = 'ok';
+      let stockText = `✓ ${currentStock} en stock`;
+      
+      if (currentStock === 0) {
+        stockTagClass = 'out';
+        stockText = '✗ Rupture de stock';
+      } else if (currentStock < 10) {
+        stockTagClass = 'low';
+        stockText = `⚠️ ${currentStock} restant(s)`;
+      }
+      
       card.innerHTML = `
         <div class="product-image">
           <img src="${imgSrc}" 
@@ -4061,8 +4384,8 @@
           ${priceDisplay}
         </div>
         
-        <div class="product-stock-tag ok">
-          ✓ ${product.stock} en stock
+        <div class="product-stock-tag ${stockTagClass}">
+          ${stockText}
         </div>
       `;
       
@@ -4147,12 +4470,35 @@
     
     $('modalProductCode').textContent = product.code;
     $('modalProductCategory').textContent = product.category;
-    $('modalProductStock').textContent = `✓ ${product.stock} en stock`;
-    $('modalProductStock').style.color = 'var(--accent)';
+    
+    // Afficher le stock actuel
+    const currentStock = getProductStock(product);
+    let stockText = `✓ ${currentStock} en stock`;
+    let stockColor = 'var(--accent)';
+    
+    if (currentStock === 0) {
+      stockText = '✗ Rupture de stock';
+      stockColor = 'var(--danger)';
+    } else if (currentStock < 10) {
+      stockText = `⚠️ ${currentStock} restant(s)`;
+      stockColor = 'var(--warning)';
+    }
+    
+    $('modalProductStock').textContent = stockText;
+    $('modalProductStock').style.color = stockColor;
+    
     $('modalProductQuantity').textContent = quantity;
     
     const addBtn = $('modalAddToCartBtn');
-    addBtn.disabled = quantity === 0;
+    const decreaseBtn = $('modalDecreaseBtn');
+    const increaseBtn = $('modalIncreaseBtn');
+    
+    // Désactiver les boutons si stock insuffisant
+    const maxAvailable = Math.min(currentStock, 99);
+    addBtn.disabled = quantity === 0 || currentStock === 0;
+    decreaseBtn.disabled = quantity === 0;
+    increaseBtn.disabled = quantity >= maxAvailable;
+    
     addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
     
     // Image
@@ -4201,7 +4547,16 @@
     $('modalProductQuantity').textContent = quantity;
     
     const addBtn = $('modalAddToCartBtn');
-    addBtn.disabled = quantity === 0;
+    const decreaseBtn = $('modalDecreaseBtn');
+    const increaseBtn = $('modalIncreaseBtn');
+    
+    const currentStock = getProductStock(state.currentModalProduct);
+    const maxAvailable = Math.min(currentStock, 99);
+    
+    addBtn.disabled = quantity === 0 || currentStock === 0;
+    decreaseBtn.disabled = quantity === 0;
+    increaseBtn.disabled = quantity >= maxAvailable;
+    
     addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
   }
 
@@ -4239,6 +4594,7 @@
     
     similar.forEach(product => {
       const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
+      const currentStock = getProductStock(product);
       
       const card = document.createElement('div');
       card.className = 'similar-product-card';
@@ -4249,7 +4605,7 @@
         <div class="similar-product-info">
           <div class="similar-product-name">${product.name}</div>
           <div class="similar-product-price">${formatPrice(product.price)}</div>
-          <div class="similar-product-stock">✓ ${product.stock} en stock</div>
+          <div class="similar-product-stock">${currentStock > 0 ? '✓' : '✗'} ${currentStock} en stock</div>
         </div>
       `;
       
@@ -4279,6 +4635,9 @@
       
       // Cacher la section des économies
       $('cartSavingsSection').classList.remove('visible');
+      
+      // Cacher le montant restant
+      $('#remainingAmountContainer').style.display = 'none';
     } else {
       cartItemsList.style.display = 'flex';
       cartEmptyMessage.style.display = 'none';
@@ -4348,12 +4707,29 @@
     let shippingFee = CONFIG.shippingFee;
     let shippingText = formatPrice(shippingFee);
     
+    // Calculer le montant restant pour la livraison gratuite
+    const remainingAmount = Math.max(0, CONFIG.freeShipping - subtotal);
+    
     if (subtotal >= CONFIG.freeShipping) {
       shippingFee = 0;
       shippingText = '<span class="total-value free">GRATUIT</span>';
+      $('#remainingAmountContainer').style.display = 'none';
+      $('#freeShippingRule').className = 'rule ok';
+      $('#shippingRule').className = 'rule ok';
     } else if (subtotal < CONFIG.minOrder) {
       shippingFee = null;
       shippingText = '—';
+      $('#remainingAmountContainer').style.display = 'none';
+      $('#minOrderRule').className = 'rule danger';
+      $('#shippingRule').className = 'rule warning';
+      $('#freeShippingRule').className = 'rule warning';
+    } else {
+      // Afficher le montant restant pour la livraison gratuite
+      $('#remainingAmount').textContent = formatPrice(remainingAmount);
+      $('#remainingAmountContainer').style.display = 'inline';
+      $('#shippingRule').className = 'rule warning';
+      $('#freeShippingRule').className = 'rule warning';
+      $('#minOrderRule').className = 'rule ok';
     }
     
     $('cartShipping').innerHTML = shippingText;
@@ -4373,6 +4749,25 @@
 
   function addToCart(productId, product, quantity = 1) {
     if (!product || quantity <= 0) return;
+    
+    // Vérifier le stock disponible
+    const currentStock = getProductStock(product);
+    if (currentStock === 0) {
+      showToast('❌ Ce produit est en rupture de stock', 'error');
+      return;
+    }
+    
+    // Calculer la quantité totale dans le panier
+    const currentInCart = state.cart[productId] ? state.cart[productId].quantity : 0;
+    const totalRequested = currentInCart + quantity;
+    
+    if (totalRequested > currentStock) {
+      showToast(`❌ Stock insuffisant. Il reste ${currentStock} unité(s) disponible(s)`, 'error');
+      return;
+    }
+    
+    // Diminuer le stock
+    decreaseProductStock(product, quantity);
     
     if (state.cart[productId]) {
       state.cart[productId].quantity += quantity;
@@ -4728,12 +5123,13 @@
 
   // ===================== QR CODE =====================
   function openQRModal() {
-    // Mettre à jour l'URL du QR code dynamique
-    const qrCodeImg = document.querySelector('#qrCodeContainer img');
+    // Mettre à jour l'URL du QR code dynamique avec l'URL actuelle
+    const qrCodeImg = $('qrCodeImage');
     if (qrCodeImg) {
-      // Utiliser une URL dynamique basée sur la configuration
-      const qrUrl = CONFIG.qrCodeUrl || window.location.href;
+      // Utiliser l'URL actuelle de la page
+      const qrUrl = CONFIG.currentUrl;
       qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrUrl)}`;
+      qrCodeImg.alt = `QR Code pour ${qrUrl}`;
     }
     
     $('qrModal').classList.add('open');
@@ -4743,6 +5139,123 @@
   function closeQRModal() {
     $('qrModal').classList.remove('open');
     document.body.style.overflow = '';
+  }
+
+  // ===================== GESTION DU STOCK (ADMIN) =====================
+  function openStockModal() {
+    if (!state.isAdmin) {
+      showToast('❌ Vous devez être en mode administrateur', 'error');
+      return;
+    }
+    
+    renderStockProducts();
+    $('stockModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function renderStockProducts(searchQuery = '') {
+    const stockProductsList = $('stockProductsList');
+    stockProductsList.innerHTML = '';
+    
+    // Récupérer tous les produits
+    let allProducts = [];
+    for (const [categoryKey, products] of state.products.entries()) {
+      allProducts.push(...products);
+    }
+    
+    // Filtrer par recherche si nécessaire
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      allProducts = allProducts.filter(p =>
+        p.name.toLowerCase().includes(query) ||
+        p.code.toLowerCase().includes(query)
+      );
+    }
+    
+    // Limiter à 50 produits pour des raisons de performance
+    allProducts = allProducts.slice(0, 50);
+    
+    if (allProducts.length === 0) {
+      stockProductsList.innerHTML = `
+        <div style="text-align:center;padding:40px;color:var(--muted);">
+          <div style="font-size:48px;margin-bottom:15px;">🔍</div>
+          <h4 style="margin-bottom:10px;color:var(--text);">Aucun produit trouvé</h4>
+          <p>Essayez une autre recherche</p>
+        </div>
+      `;
+      return;
+    }
+    
+    allProducts.forEach(product => {
+      const currentStock = getProductStock(product);
+      const stockKey = `${product.code}_${product.name}`;
+      
+      const stockItem = document.createElement('div');
+      stockItem.className = 'stock-product-item';
+      stockItem.innerHTML = `
+        <div class="stock-product-info">
+          <div class="stock-product-name">${product.name}</div>
+          <div class="stock-product-details">
+            <span>Code: ${product.code}</span>
+            <span>Catégorie: ${product.category}</span>
+            <span>Prix: ${formatPrice(product.price)}</span>
+          </div>
+          <div class="stock-current">
+            Stock actuel: 
+            <span class="stock-current-value">${currentStock}</span>
+          </div>
+        </div>
+        <div class="stock-controls">
+          <input type="number" 
+                 class="stock-input" 
+                 id="stock-input-${stockKey}"
+                 value="${currentStock}"
+                 min="0"
+                 max="9999">
+          <button class="stock-save-btn" data-product-key="${stockKey}">
+            💾 Sauvegarder
+          </button>
+        </div>
+      `;
+      
+      stockProductsList.appendChild(stockItem);
+    });
+    
+    // Ajouter les événements pour les boutons de sauvegarde
+    document.querySelectorAll('.stock-save-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const productKey = this.getAttribute('data-product-key');
+        const input = document.getElementById(`stock-input-${productKey}`);
+        const newStock = parseInt(input.value);
+        
+        if (isNaN(newStock) || newStock < 0) {
+          showToast('❌ Veuillez entrer une valeur valide', 'error');
+          return;
+        }
+        
+        // Trouver le produit correspondant
+        const [code, ...nameParts] = productKey.split('_');
+        const name = nameParts.join('_');
+        
+        let productToUpdate = null;
+        for (const [categoryKey, products] of state.products.entries()) {
+          const found = products.find(p => p.code === code && p.name === name);
+          if (found) {
+            productToUpdate = found;
+            break;
+          }
+        }
+        
+        if (productToUpdate) {
+          updateProductStock(productToUpdate, newStock);
+          showToast(`✅ Stock mis à jour pour ${productToUpdate.name}: ${newStock} unités`);
+          
+          // Mettre à jour l'affichage du stock actuel
+          const stockCurrent = this.closest('.stock-product-item').querySelector('.stock-current-value');
+          stockCurrent.textContent = newStock;
+        }
+      });
+    });
   }
 
   // ===================== ADMIN =====================
@@ -4921,7 +5434,10 @@
 
   // ===================== INITIALISATION =====================
   function init() {
-    // Charger l'état
+    // Charger le stock global
+    loadGlobalStock();
+    
+    // Charger l'état utilisateur
     try {
       const saved = localStorage.getItem(CONFIG.localStorageKey);
       if (saved) {
@@ -5029,7 +5545,9 @@
     $('modalIncreaseBtn').onclick = () => {
       if (!state.currentModalProduct) return;
       const productId = generateProductId(state.currentModalProduct);
-      state.quantityPicks[productId] = (state.quantityPicks[productId] || 0) + 1;
+      const currentStock = getProductStock(state.currentModalProduct);
+      const maxAvailable = Math.min(currentStock, 99);
+      state.quantityPicks[productId] = Math.min(maxAvailable, (state.quantityPicks[productId] || 0) + 1);
       updateModalQuantity();
     };
     
@@ -5049,6 +5567,26 @@
     $('qrDirectBtn').onclick = openQRModal;
     $('closeQrModalBtn').onclick = closeQRModal;
     
+    // Admin - Gestion stock
+    $('adminStockBtn').onclick = openStockModal;
+    
+    // Recherche dans le modal stock
+    $('stockSearchInput').addEventListener('input', (e) => {
+      renderStockProducts(e.target.value);
+    });
+    
+    // Fermeture modal stock
+    $('closeStockModalBtn').onclick = $('closeStockModalBtn2').onclick = () => {
+      $('stockModal').classList.remove('open');
+      document.body.style.overflow = '';
+    };
+    
+    // Actualiser le stock
+    $('refreshStockBtn').onclick = () => {
+      renderStockProducts($('stockSearchInput').value);
+      showToast('🔄 Stock actualisé');
+    };
+    
     // Admin
     $('secretAdminBtn').onclick = toggleAdminMode;
     
@@ -5057,6 +5595,11 @@
       if (Object.keys(state.cart).length === 0) return;
       
       if (confirm('Voulez-vous vraiment vider tout votre panier ?')) {
+        // Restaurer le stock pour tous les articles du panier
+        Object.values(state.cart).forEach(item => {
+          increaseProductStock(item, item.quantity);
+        });
+        
         state.cart = {};
         updateCartUI();
         showToast('Panier vidé', 'warning');
@@ -5070,16 +5613,33 @@
       
       const action = btn.dataset.action;
       const id = btn.dataset.id;
+      const item = state.cart[id];
       
-      if (action === 'increase' && state.cart[id]) {
-        state.cart[id].quantity++;
-        updateCartUI();
-      } else if (action === 'decrease' && state.cart[id]) {
+      if (!item) return;
+      
+      if (action === 'increase') {
+        // Vérifier le stock disponible
+        const currentStock = getProductStock(item);
+        if (currentStock > 0) {
+          // Diminuer le stock
+          decreaseProductStock(item, 1);
+          state.cart[id].quantity++;
+          updateCartUI();
+          showToast(`✅ ${item.name} quantité augmentée`);
+        } else {
+          showToast('❌ Stock insuffisant', 'error');
+        }
+      } else if (action === 'decrease') {
         state.cart[id].quantity--;
+        
+        // Restaurer le stock
+        increaseProductStock(item, 1);
+        
         if (state.cart[id].quantity <= 0) {
           delete state.cart[id];
         }
         updateCartUI();
+        showToast(`✅ ${item.name} quantité diminuée`);
       }
     });
     
@@ -5179,7 +5739,7 @@
       user: state.user,
       cart: state.cart,
       orderHistory: state.orderHistory,
-      version: '26.0'
+      version: '27.0'
     };
     localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
   }
