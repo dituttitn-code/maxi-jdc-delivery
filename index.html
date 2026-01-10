@@ -3762,7 +3762,7 @@
       lat: 36.851234,
       lng: 10.301234
     },
-    syncInterval: 30000,
+    syncInterval: 30000, // 30 secondes
     dashboardUrl: 'tools/tableau-de-bord.html'
   };
 
@@ -3849,339 +3849,200 @@
     }
   }
 
-  // ===================== DONNÉES DE TEST =====================
-  const TEST_PRODUCTS = [
-    // PROMOTIONS
-    {
-      code: "PROMO001",
-      name: "Café Arabica Premium -50%",
-      price: 12.75,
-      oldPrice: 25.50,
-      category: "🔥 PROMOTIONS",
-      categoryKey: "promotions",
-      stock: 30,
-      isPromotion: true,
-      discountPercent: 50
-    },
-    {
-      code: "PROMO002",
-      name: "Lait UHT 1L Promotion",
-      price: 2.40,
-      oldPrice: 3.20,
-      category: "🔥 PROMOTIONS",
-      categoryKey: "promotions",
-      stock: 45,
-      isPromotion: true,
-      discountPercent: 25
-    },
-    {
-      code: "PROMO003",
-      name: "Chocolat Noir 200g -30%",
-      price: 5.60,
-      oldPrice: 8.00,
-      category: "🔥 PROMOTIONS",
-      categoryKey: "promotions",
-      stock: 25,
-      isPromotion: true,
-      discountPercent: 30
-    },
-    // CAFÉ & THÉS
-    {
-      code: "CAF001",
-      name: "Café Noir 250g",
-      price: 25.50,
-      category: "☕ Café & Thés",
-      categoryKey: "cafe",
-      stock: 100,
-      isPromotion: false
-    },
-    {
-      code: "CAF002",
-      name: "Thé Vert 100g",
-      price: 8.75,
-      category: "☕ Café & Thés",
-      categoryKey: "cafe",
-      stock: 60,
-      isPromotion: false
-    },
-    {
-      code: "CAF003",
-      name: "Café Moulu 500g",
-      price: 35.00,
-      category: "☕ Café & Thés",
-      categoryKey: "cafe",
-      stock: 40,
-      isPromotion: false
-    },
-    // LAIT & ŒUFS
-    {
-      code: "LAI001",
-      name: "Lait UHT 1L",
-      price: 3.20,
-      category: "🥛 Lait & Œufs Frais",
-      categoryKey: "lait_oeufs_produits_frais",
-      stock: 150,
-      isPromotion: false
-    },
-    {
-      code: "LAI002",
-      name: "Œufs Bio 12 unités",
-      price: 7.50,
-      category: "🥛 Lait & Œufs Frais",
-      categoryKey: "lait_oeufs_produits_frais",
-      stock: 80,
-      isPromotion: false
-    },
-    {
-      code: "LAI003",
-      name: "Yaourt Nature 4x125g",
-      price: 4.80,
-      category: "🥛 Lait & Œufs Frais",
-      categoryKey: "lait_oeufs_produits_frais",
-      stock: 60,
-      isPromotion: false
-    },
-    // EAUX & BOISSONS
-    {
-      code: "EAU001",
-      name: "Eau Minérale 1.5L",
-      price: 1.20,
-      category: "💧 Eaux & Boissons",
-      categoryKey: "eaux",
-      stock: 200,
-      isPromotion: false
-    },
-    {
-      code: "EAU002",
-      name: "Eau Gazeuse 1L",
-      price: 1.50,
-      category: "💧 Eaux & Boissons",
-      categoryKey: "eaux",
-      stock: 150,
-      isPromotion: false
-    },
-    {
-      code: "EAU003",
-      name: "Soda Orange 2L",
-      price: 3.80,
-      category: "💧 Eaux & Boissons",
-      categoryKey: "eaux",
-      stock: 90,
-      isPromotion: false
-    },
-    // BOULANGERIE
-    {
-      code: "BOU001",
-      name: "Pain Complet 400g",
-      price: 2.50,
-      category: "🥖 Boulangerie & Pâtisserie",
-      categoryKey: "boulangerie_patisserie",
-      stock: 70,
-      isPromotion: false
-    },
-    {
-      code: "BOU002",
-      name: "Croissants 4 unités",
-      price: 6.20,
-      category: "🥖 Boulangerie & Pâtisserie",
-      categoryKey: "boulangerie_patisserie",
-      stock: 40,
-      isPromotion: false
-    },
-    {
-      code: "BOU003",
-      name: "Baguette Tradition",
-      price: 1.80,
-      category: "🥖 Boulangerie & Pâtisserie",
-      categoryKey: "boulangerie_patisserie",
-      stock: 120,
-      isPromotion: false
-    },
-    // CHIPS & SNACKS
-    {
-      code: "CHI001",
-      name: "Chips Nature 150g",
-      price: 2.30,
-      category: "🥔 Chips & Snacks",
-      categoryKey: "chips_snacks",
-      stock: 85,
-      isPromotion: false
-    },
-    {
-      code: "CHI002",
-      name: "Biscuits Apéritif 200g",
-      price: 3.50,
-      category: "🥔 Chips & Snacks",
-      categoryKey: "chips_snacks",
-      stock: 65,
-      isPromotion: false
-    },
-    {
-      code: "CHI003",
-      name: "Noix de Cajou 250g",
-      price: 8.90,
-      category: "🥔 Chips & Snacks",
-      categoryKey: "chips_snacks",
-      stock: 35,
-      isPromotion: false
-    },
-    // HYGIÈNE & ENTRETIEN
-    {
-      code: "HYG001",
-      name: "Savon Liquide 500ml",
-      price: 4.20,
-      category: "🧼 Hygiène & Entretien",
-      categoryKey: "hygiene_entretien",
-      stock: 110,
-      isPromotion: false
-    },
-    {
-      code: "HYG002",
-      name: "Lessive 2L",
-      price: 12.50,
-      category: "🧼 Hygiène & Entretien",
-      categoryKey: "hygiene_entretien",
-      stock: 55,
-      isPromotion: false
-    },
-    {
-      code: "HYG003",
-      name: "Papier Toilette 12 rouleaux",
-      price: 8.70,
-      category: "🧼 Hygiène & Entretien",
-      categoryKey: "hygiene_entretien",
-      stock: 75,
-      isPromotion: false
-    },
-    // CHOCOLATS & BISCUITS
-    {
-      code: "CHO001",
-      name: "Chocolat au Lait 200g",
-      price: 6.50,
-      category: "🍫 Chocolats & Biscuits",
-      categoryKey: "chocolats_biscuits",
-      stock: 95,
-      isPromotion: false
-    },
-    {
-      code: "CHO002",
-      name: "Biscuits Chocolat 300g",
-      price: 4.80,
-      category: "🍫 Chocolats & Biscuits",
-      categoryKey: "chocolats_biscuits",
-      stock: 70,
-      isPromotion: false
-    },
-    {
-      code: "CHO003",
-      name: "Bonbons Assortis 500g",
-      price: 9.20,
-      category: "🍫 Chocolats & Biscuits",
-      categoryKey: "chocolats_biscuits",
-      stock: 45,
-      isPromotion: false
-    },
-    // CONSERVES
-    {
-      code: "CON001",
-      name: "Thon à l'Huile 200g",
-      price: 3.90,
-      category: "🥫 Conserves & Bocaux",
-      categoryKey: "conserves",
-      stock: 130,
-      isPromotion: false
-    },
-    {
-      code: "CON002",
-      name: "Haricots Verts 400g",
-      price: 2.60,
-      category: "🥫 Conserves & Bocaux",
-      categoryKey: "conserves",
-      stock: 95,
-      isPromotion: false
-    },
-    {
-      code: "CON003",
-      name: "Sauce Tomate 500g",
-      price: 2.30,
-      category: "🥫 Conserves & Bocaux",
-      categoryKey: "conserves",
-      stock: 110,
-      isPromotion: false
-    }
-  ];
-
-  // ===================== CHARGEMENT DES DONNÉES =====================
-  async function loadAllProducts() {
-    state.products.clear();
+  // ===================== SYNCHRONISATION DES STOCKS =====================
+  function initializeSync() {
+    // Charger les données de synchronisation
+    loadSyncData();
     
-    // Organiser les produits par catégorie
-    const categoriesMap = new Map();
-    CATEGORIES.forEach(cat => {
-      categoriesMap.set(cat.key, []);
-    });
+    // Démarrer le timer de synchronisation
+    state.syncTimer = setInterval(syncStocks, CONFIG.syncInterval);
     
-    TEST_PRODUCTS.forEach(product => {
-      const categoryProducts = categoriesMap.get(product.categoryKey) || [];
-      categoryProducts.push(product);
-      categoriesMap.set(product.categoryKey, categoryProducts);
-    });
+    // Synchroniser au démarrage
+    setTimeout(syncStocks, 2000);
     
-    // Mettre à jour state.products
-    categoriesMap.forEach((products, key) => {
-      if (products.length > 0) {
-        state.products.set(key, products);
+    // Synchroniser aussi quand la page devient visible
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        syncStocks();
       }
     });
-    
-    // Mettre les promotions dans un tableau séparé
-    state.promotions = state.products.get('promotions') || [];
-    
-    // Initialiser les stocks
-    TEST_PRODUCTS.forEach(product => {
-      const stockKey = `${product.categoryKey}_${product.code}`;
-      if (!state.productStocks.has(stockKey)) {
-        state.productStocks.set(stockKey, product.stock);
-      }
-    });
-    
-    // Afficher la bannière promo si il y a des promotions
-    showPromoBanner(state.promotions);
-    
-    // Afficher les catégories et produits
-    renderCategories();
-    renderProducts();
-    
-    showToast('✅ Données de démonstration chargées');
-    
-    // Essayer de charger les fichiers CSV réels si disponibles
-    setTimeout(() => {
-      loadRealCSVData();
-    }, 1000);
   }
 
-  // Fonction pour essayer de charger les vrais fichiers CSV
-  async function loadRealCSVData() {
+  function loadSyncData() {
     try {
-      // Essayer de charger les promotions
-      const promotions = await loadPromotionsData();
-      if (promotions && promotions.length > 0) {
-        state.products.set('promotions', promotions);
-        state.promotions = promotions;
-        showPromoBanner(promotions);
-        renderCategories();
-        renderProducts();
-        showToast('✅ Fichiers CSV chargés avec succès');
+      const syncData = localStorage.getItem(CONFIG.syncStorageKey);
+      if (syncData) {
+        const data = JSON.parse(syncData);
+        
+        // Charger les stocks synchronisés
+        if (data.productStocks) {
+          Object.entries(data.productStocks).forEach(([key, stock]) => {
+            state.productStocks.set(key, stock);
+          });
+        }
+        
+        // Charger l'historique des ventes
+        if (data.salesHistory) {
+          // Fusionner avec l'historique local
+          state.orderHistory = [...state.orderHistory, ...data.salesHistory]
+            .filter((order, index, self) =>
+              index === self.findIndex(o => o.id === order.id)
+            )
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+        
+        state.lastSyncTime = data.lastSyncTime || null;
+        console.log('Données de synchronisation chargées');
       }
     } catch (error) {
-      console.log('Utilisation des données de démonstration');
+      console.error('Erreur chargement données sync:', error);
     }
   }
 
-  async function loadPromotionsData() {
+  function saveSyncData() {
     try {
-      const response = await fetch('data/PROMOTIONS.csv');
+      const syncData = {
+        productStocks: Object.fromEntries(state.productStocks),
+        salesHistory: state.orderHistory,
+        lastSyncTime: new Date().toISOString(),
+        version: '1.0'
+      };
+      
+      localStorage.setItem(CONFIG.syncStorageKey, JSON.stringify(syncData));
+    } catch (error) {
+      console.error('Erreur sauvegarde données sync:', error);
+    }
+  }
+
+  function syncStocks() {
+    try {
+      // Récupérer les données de synchronisation partagées
+      const syncData = localStorage.getItem(CONFIG.syncStorageKey);
+      if (!syncData) return;
+      
+      const sharedData = JSON.parse(syncData);
+      
+      // Mettre à jour les stocks avec les données partagées
+      if (sharedData.productStocks) {
+        Object.entries(sharedData.productStocks).forEach(([key, stock]) => {
+          const currentStock = state.productStocks.get(key) || 0;
+          
+          // Prendre la valeur la plus basse (stock réel)
+          if (stock < currentStock) {
+            state.productStocks.set(key, stock);
+          }
+        });
+        
+        // Appliquer les stocks mis à jour aux produits
+        updateAllProductStocks();
+        
+        // Rafraîchir l'affichage
+        renderProducts();
+        
+        state.lastSyncTime = sharedData.lastSyncTime;
+        console.log('Stocks synchronisés:', new Date().toLocaleTimeString());
+      }
+      
+      // Sauvegarder nos propres modifications
+      if (state.pendingStockUpdates.size > 0) {
+        saveSyncData();
+        state.pendingStockUpdates.clear();
+      }
+      
+    } catch (error) {
+      console.error('Erreur synchronisation:', error);
+    }
+  }
+
+  function updateAllProductStocks() {
+    // Mettre à jour les stocks dans tous les produits
+    for (const [catKey, products] of state.products.entries()) {
+      const updatedProducts = products.map(product => {
+        const stockKey = `${product.categoryKey}_${product.code}`;
+        const currentStock = state.productStocks.get(stockKey);
+        
+        if (currentStock !== undefined) {
+          return {
+            ...product,
+            stock: currentStock
+          };
+        }
+        return product;
+      });
+      
+      state.products.set(catKey, updatedProducts);
+    }
+  }
+
+  // ===================== CALCUL DES ÉCONOMIES =====================
+  function calculateItemSavings(item) {
+    if (!item.isPromotion || !item.oldPrice || item.oldPrice <= item.price) {
+      return 0;
+    }
+    
+    const savingPerUnit = item.oldPrice - item.price;
+    return savingPerUnit * item.quantity;
+  }
+
+  function calculateTotalSavings() {
+    let totalSavings = 0;
+    let totalOriginalPrice = 0;
+    let totalCurrentPrice = 0;
+    
+    Object.values(state.cart).forEach(item => {
+      if (item.isPromotion && item.oldPrice && item.oldPrice > item.price) {
+        const saving = calculateItemSavings(item);
+        totalSavings += saving;
+        totalOriginalPrice += item.oldPrice * item.quantity;
+        totalCurrentPrice += item.price * item.quantity;
+      }
+    });
+    
+    return {
+      totalSavings,
+      totalOriginalPrice,
+      totalCurrentPrice,
+      percentage: totalOriginalPrice > 0 ? Math.round((totalSavings / totalOriginalPrice) * 100) : 0
+    };
+  }
+
+  function updateSavingsDisplay() {
+    const savings = calculateTotalSavings();
+    const savingsSection = $('cartSavingsSection');
+    const totalSavingsElement = $('totalSavings');
+    const savingsPercentageElement = $('savingsPercentage');
+    const savingsPercentageTextElement = $('savingsPercentageText');
+    
+    if (savings.totalSavings > 0) {
+      savingsSection.classList.add('visible');
+      totalSavingsElement.textContent = formatPrice(savings.totalSavings);
+      savingsPercentageElement.textContent = `${savings.percentage}%`;
+      
+      let percentageText = '';
+      if (savings.percentage >= 50) {
+        percentageText = 'ÉNORME ÉCONOMIE !';
+      } else if (savings.percentage >= 30) {
+        percentageText = 'Super affaire !';
+      } else if (savings.percentage >= 15) {
+        percentageText = 'Bonne affaire';
+      } else {
+        percentageText = 'Économie';
+      }
+      savingsPercentageTextElement.textContent = percentageText;
+    } else {
+      savingsSection.classList.remove('visible');
+    }
+  }
+
+  // ===================== GESTION DES DONNÉES =====================
+  async function loadCategoryData(categoryKey) {
+    try {
+      const category = CATEGORIES.find(c => c.key === categoryKey);
+      if (!category) return [];
+      
+      const response = await fetch(category.file);
       if (!response.ok) {
+        console.warn(`Fichier non trouvé: ${category.file}`);
         return [];
       }
       
@@ -4190,12 +4051,94 @@
       if (lines.length === 0) return [];
       
       const separator = lines[0].includes(';') ? ';' : '\t';
+      const products = [];
+      const seen = new Set();
+      
+      lines.slice(1).forEach((line, index) => {
+        const parts = line.split(separator).map(field => field.trim());
+        if (parts.length < 3) {
+          console.warn(`Ligne ${index + 2} incomplète dans ${categoryKey}: ${line}`);
+          return;
+        }
+        
+        const code = parts[0];
+        const name = parts[1];
+        let priceStr = parts[2];
+        let stock = 100;
+        
+        if (parts.length >= 4) {
+          const stockStr = parts[3];
+          stock = parseInt(stockStr) || 100;
+        }
+        
+        if (!code || !name) return;
+        
+        const productKey = `${code}_${name}`;
+        if (seen.has(productKey)) return;
+        seen.add(productKey);
+        
+        priceStr = priceStr.replace(',', '.').replace(/[^\d.]/g, '');
+        const price = parseFloat(priceStr);
+        
+        if (isNaN(price) || price <= 0) {
+          console.warn(`Prix invalide dans ${categoryKey}: ${code} - ${name} - ${priceStr}`);
+          return;
+        }
+        
+        const product = {
+          code,
+          name,
+          price: price,
+          category: category.label,
+          categoryKey: category.key,
+          isPromotion: false,
+          stock: stock,
+          originalStock: stock,
+          oldPrice: null,
+          discountPercent: 0
+        };
+        
+        products.push(product);
+        
+        const stockKey = `${category.key}_${code}`;
+        if (!state.productStocks.has(stockKey)) {
+          state.productStocks.set(stockKey, stock);
+        }
+      });
+      
+      console.log(`${categoryKey}: ${products.length} produits chargés`);
+      return products;
+    } catch (error) {
+      console.error(`Erreur chargement ${categoryKey}:`, error);
+      return [];
+    }
+  }
+
+  async function loadPromotionsData() {
+    try {
+      const response = await fetch('data/PROMOTIONS.csv');
+      if (!response.ok) {
+        console.warn('Fichier PROMOTIONS.csv non trouvé');
+        return [];
+      }
+      
+      const text = await response.text();
+      const lines = text.split('\n').filter(line => line.trim());
+      if (lines.length === 0) {
+        console.warn('Fichier PROMOTIONS.csv vide');
+        return [];
+      }
+      
+      const separator = lines[0].includes(';') ? ';' : (lines[0].includes('\t') ? '\t' : ',');
       const promotions = [];
       const seen = new Set();
       
       lines.slice(1).forEach((line, index) => {
         const parts = line.split(separator).map(field => field.trim());
-        if (parts.length < 5) return;
+        if (parts.length < 5) {
+          console.warn(`Ligne ${index + 2} incomplète dans PROMOTIONS: ${line}`);
+          return;
+        }
         
         const code = parts[0];
         const name = parts[1];
@@ -4222,7 +4165,10 @@
         const originalPrice = cleanPrice(originalPriceStr);
         const promoPrice = cleanPrice(promoPriceStr);
         
-        if (isNaN(originalPrice) || originalPrice <= 0) return;
+        if (isNaN(originalPrice) || originalPrice <= 0) {
+          console.warn(`Prix origine invalide: ${code} - ${name} - ${originalPriceStr}`);
+          return;
+        }
         
         let finalPrice = promoPrice;
         let discountPercent = 0;
@@ -4234,11 +4180,13 @@
           finalPrice = promoPrice;
           discountPercent = Math.round((1 - finalPrice / originalPrice) * 100);
         } else {
+          console.warn(`Type de promotion non reconnu: ${promoType} pour ${code}`);
           finalPrice = originalPrice;
           discountPercent = 0;
         }
         
         if (isNaN(finalPrice) || finalPrice <= 0) {
+          console.warn(`Prix final invalide: ${code} - ${name} - ${finalPrice}`);
           finalPrice = originalPrice;
           discountPercent = 0;
         }
@@ -4248,6 +4196,7 @@
           name,
           price: finalPrice,
           stock: stock,
+          originalStock: stock,
           category: '🔥 PROMOTIONS',
           categoryKey: 'promotions',
           isPromotion: true,
@@ -4265,11 +4214,108 @@
         }
       });
       
+      console.log(`${promotions.length} promotions chargées`);
       return promotions;
     } catch (error) {
       console.error('Erreur chargement promotions:', error);
       return [];
     }
+  }
+
+  async function loadAllProducts() {
+    state.products.clear();
+    
+    const allProducts = [];
+    
+    for (const category of CATEGORIES) {
+      if (category.key === 'promotions') continue;
+      
+      const products = await loadCategoryData(category.key);
+      if (products.length > 0) {
+        state.products.set(category.key, products);
+        allProducts.push(...products);
+      }
+    }
+    
+    const promotions = await loadPromotionsData();
+    if (promotions.length > 0) {
+      state.products.set('promotions', promotions);
+      state.promotions = promotions;
+      
+      applyPromotions(allProducts, promotions);
+      showPromoBanner(promotions);
+    }
+    
+    renderCategories();
+    renderProducts();
+    
+    showToast('✅ Produits chargés avec succès');
+  }
+
+  function applyPromotions(allProducts, promotions) {
+    console.log('Application des promotions...');
+    
+    const promoMap = new Map();
+    promotions.forEach(promo => {
+      promoMap.set(promo.code, promo);
+    });
+    
+    for (const [catKey, products] of state.products.entries()) {
+      if (catKey === 'promotions') continue;
+      
+      const updatedProducts = products.map(product => {
+        const promo = promoMap.get(product.code);
+        if (promo) {
+          if (product.name.toLowerCase().includes(promo.name.toLowerCase()) || 
+              promo.name.toLowerCase().includes(product.name.toLowerCase())) {
+            
+            return {
+              ...product,
+              oldPrice: promo.originalPrice || product.price,
+              price: promo.price,
+              isPromotion: true,
+              discountPercent: promo.discountPercent,
+              promoType: promo.promoType
+            };
+          }
+        }
+        return product;
+      });
+      
+      state.products.set(catKey, updatedProducts);
+    }
+    
+    console.log('Promotions appliquées avec succès');
+  }
+
+  // ===================== GESTION DU STOCK =====================
+  function updateProductStock(product, quantity) {
+    const stockKey = `${product.categoryKey}_${product.code}`;
+    const currentStock = state.productStocks.get(stockKey) || product.stock;
+    
+    const newStock = Math.max(0, currentStock - quantity);
+    state.productStocks.set(stockKey, newStock);
+    
+    // Marquer comme modification en attente
+    state.pendingStockUpdates.set(stockKey, newStock);
+    
+    // Mettre à jour le produit dans toutes les catégories
+    for (const [catKey, products] of state.products.entries()) {
+      const index = products.findIndex(p => p.code === product.code);
+      if (index !== -1) {
+        state.products.get(catKey)[index].stock = newStock;
+      }
+    }
+    
+    // Sauvegarder les changements de stock
+    saveSyncData();
+    
+    return newStock;
+  }
+
+  function getAvailableStock(product) {
+    const stockKey = `${product.categoryKey}_${product.code}`;
+    return state.productStocks.get(stockKey) || product.stock || 0;
   }
 
   // ===================== AFFICHAGE =====================
@@ -4303,8 +4349,6 @@
     
     CATEGORIES.forEach(category => {
       const products = state.products.get(category.key) || [];
-      if (products.length === 0 && category.key !== 'promotions') return;
-      
       const button = document.createElement('button');
       button.className = `cat-btn ${category.isPromo ? 'promo' : ''} ${
         !state.showAllCategories && state.activeCategory === category.key ? 'active' : ''
@@ -4413,8 +4457,7 @@
     
     productsToShow.forEach(product => {
       const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
-      const stock = getAvailableStock(product);
-      const stockStatus = getStockStatus(stock);
+      const stockStatus = getStockStatus(product.stock);
       
       const card = document.createElement('div');
       card.className = `product-card ${product.isPromotion ? 'promo-card' : ''}`;
@@ -4424,7 +4467,15 @@
       
       if (product.isPromotion && product.discountPercent > 0) {
         imagePromoBadge = '<div class="image-promo-badge">PROMO</div>';
-        discountBadge = `<div class="product-discount">-${product.discountPercent}%</div>`;
+        
+        let discountText = `-${product.discountPercent}%`;
+        if (product.promoType === 'prix') {
+          discountText = `-${product.discountPercent}%`;
+        } else if (product.promoType === 'pourcentage') {
+          discountText = `${product.discountPercent}% OFF`;
+        }
+        
+        discountBadge = `<div class="product-discount">${discountText}</div>`;
       }
       
       const priceDisplay = product.isPromotion && product.oldPrice && product.oldPrice > product.price
@@ -4472,30 +4523,6 @@
       });
       grid.appendChild(card);
     });
-  }
-
-  // ===================== GESTION DU STOCK =====================
-  function getAvailableStock(product) {
-    const stockKey = `${product.categoryKey}_${product.code}`;
-    return state.productStocks.get(stockKey) || product.stock || 0;
-  }
-
-  function updateProductStock(product, quantity) {
-    const stockKey = `${product.categoryKey}_${product.code}`;
-    const currentStock = state.productStocks.get(stockKey) || product.stock;
-    
-    const newStock = Math.max(0, currentStock - quantity);
-    state.productStocks.set(stockKey, newStock);
-    
-    // Mettre à jour le produit dans toutes les catégories
-    for (const [catKey, products] of state.products.entries()) {
-      const index = products.findIndex(p => p.code === product.code);
-      if (index !== -1) {
-        state.products.get(catKey)[index].stock = newStock;
-      }
-    }
-    
-    return newStock;
   }
 
   // ===================== NAVIGATION ARTICLES =====================
@@ -4722,8 +4749,7 @@
     
     similar.forEach(product => {
       const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
-      const stock = getAvailableStock(product);
-      const stockStatus = getStockStatus(stock);
+      const stockStatus = getStockStatus(product.stock);
       
       const card = document.createElement('div');
       card.className = 'similar-product-card';
@@ -4771,9 +4797,9 @@
       
       cartItemsList.innerHTML = '';
       Object.entries(state.cart).forEach(([id, item]) => {
+        const itemSaving = calculateItemSavings(item);
         const itemTotal = item.price * item.quantity;
         const originalTotal = item.oldPrice ? item.oldPrice * item.quantity : itemTotal;
-        const itemSaving = originalTotal - itemTotal;
         
         const itemElement = document.createElement('div');
         itemElement.className = 'cart-item';
@@ -4856,65 +4882,6 @@
     saveState();
   }
 
-  function calculateItemSavings(item) {
-    if (!item.isPromotion || !item.oldPrice || item.oldPrice <= item.price) {
-      return 0;
-    }
-    
-    const savingPerUnit = item.oldPrice - item.price;
-    return savingPerUnit * item.quantity;
-  }
-
-  function calculateTotalSavings() {
-    let totalSavings = 0;
-    let totalOriginalPrice = 0;
-    let totalCurrentPrice = 0;
-    
-    Object.values(state.cart).forEach(item => {
-      if (item.isPromotion && item.oldPrice && item.oldPrice > item.price) {
-        const saving = calculateItemSavings(item);
-        totalSavings += saving;
-        totalOriginalPrice += item.oldPrice * item.quantity;
-        totalCurrentPrice += item.price * item.quantity;
-      }
-    });
-    
-    return {
-      totalSavings,
-      totalOriginalPrice,
-      totalCurrentPrice,
-      percentage: totalOriginalPrice > 0 ? Math.round((totalSavings / totalOriginalPrice) * 100) : 0
-    };
-  }
-
-  function updateSavingsDisplay() {
-    const savings = calculateTotalSavings();
-    const savingsSection = $('cartSavingsSection');
-    const totalSavingsElement = $('totalSavings');
-    const savingsPercentageElement = $('savingsPercentage');
-    const savingsPercentageTextElement = $('savingsPercentageText');
-    
-    if (savings.totalSavings > 0) {
-      savingsSection.classList.add('visible');
-      totalSavingsElement.textContent = formatPrice(savings.totalSavings);
-      savingsPercentageElement.textContent = `${savings.percentage}%`;
-      
-      let percentageText = '';
-      if (savings.percentage >= 50) {
-        percentageText = 'ÉNORME ÉCONOMIE !';
-      } else if (savings.percentage >= 30) {
-        percentageText = 'Super affaire !';
-      } else if (savings.percentage >= 15) {
-        percentageText = 'Bonne affaire';
-      } else {
-        percentageText = 'Économie';
-      }
-      savingsPercentageTextElement.textContent = percentageText;
-    } else {
-      savingsSection.classList.remove('visible');
-    }
-  }
-
   function addToCart(productId, product, quantity = 1) {
     if (!product || quantity <= 0) return;
     
@@ -4925,7 +4892,7 @@
     }
     
     // Mettre à jour le stock
-    updateProductStock(product, quantity);
+    const newStock = updateProductStock(product, quantity);
     
     if (state.cart[productId]) {
       state.cart[productId].quantity += quantity;
@@ -5067,6 +5034,12 @@
         state.products.get(catKey)[index].stock = newStock;
       }
     }
+    
+    // Marquer comme modification
+    state.pendingStockUpdates.set(productKey, newStock);
+    
+    // Sauvegarder
+    saveSyncData();
     
     // Rafraîchir l'affichage
     renderProducts();
@@ -5245,6 +5218,7 @@
     );
     
     saveState();
+    saveSyncData(); // Sauvegarder aussi dans les données de synchronisation
     
     if (orderDetails.savings && orderDetails.savings > 0) {
       showToast(`🎉 FÉLICITATIONS ! Vous avez économisé ${formatPrice(orderDetails.savings)} !`);
@@ -5292,6 +5266,7 @@
       });
       
       const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
+      
       const orderSavings = order.items.reduce((sum, item) => sum + (item.saving || 0), 0);
       
       const historyItem = document.createElement('div');
@@ -5410,13 +5385,19 @@
   }
 
   function openDashboard() {
-    if (!state.isAdmin) {
-      showToast('❌ Accès administrateur requis', 'error');
-      return;
-    }
-    
-    window.open(CONFIG.dashboardUrl, '_blank');
+  if (!state.isAdmin) {
+    showToast('❌ Accès administrateur requis', 'error');
+    return;
   }
+  
+  // Ouvrir le tableau de bord dans un nouvel onglet
+  window.open(CONFIG.dashboardUrl, '_blank');
+} // <-- Ce } ferme la fonction openDashboard()
+
+// Dans la section des événements, ajoutez :
+$('adminDashboardBtn').onclick = openDashboard;
+$('adminStockBtn').onclick = openStockManagement;
+  
 
   // ===================== GESTION UTILISATEUR =====================
   function updateUserUI() {
@@ -5880,6 +5861,9 @@
     // Charger les produits
     loadAllProducts();
     
+    // Initialiser la synchronisation
+    initializeSync();
+    
     showToast('👋 Bienvenue sur MAXI JDC MARKET !');
   }
 
@@ -5896,6 +5880,15 @@
 
   // Démarrer l'application
   document.addEventListener('DOMContentLoaded', init);
+  
+  // Nettoyer le timer à la fermeture
+  window.addEventListener('beforeunload', () => {
+    if (state.syncTimer) {
+      clearInterval(state.syncTimer);
+    }
+  });
   </script>
 </body>
 </html>
+
+
