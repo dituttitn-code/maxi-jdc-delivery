@@ -3763,7 +3763,7 @@
       lng: 10.301234
     },
     syncInterval: 30000, // 30 secondes
-    dashboardUrl: 'tools/tableau-de-bord.html'  // ✅ CHEMIN CORRECT
+    dashboardUrl: 'tools/tableau-de-bord.html'
   };
 
   // Catégories
@@ -5385,15 +5385,19 @@
   }
 
   function openDashboard() {
-    if (!state.isAdmin) {
-      showToast('❌ Accès administrateur requis', 'error');
-      return;
-    }
-    
-    // Ouvrir le tableau de bord dans un nouvel onglet
-    console.log("Ouvrir tableau de bord:", CONFIG.dashboardUrl);
-    window.open(CONFIG.dashboardUrl, '_blank');
+  if (!state.isAdmin) {
+    showToast('❌ Accès administrateur requis', 'error');
+    return;
   }
+  
+  // Ouvrir le tableau de bord dans un nouvel onglet
+  window.open(CONFIG.dashboardUrl, '_blank');
+} // <-- Ce } ferme la fonction openDashboard()
+
+// Dans la section des événements, ajoutez :
+$('adminDashboardBtn').onclick = openDashboard;
+$('adminStockBtn').onclick = openStockManagement;
+  
 
   // ===================== GESTION UTILISATEUR =====================
   function updateUserUI() {
@@ -5830,7 +5834,7 @@
           updateStock(productKey, input.value);
         }
       }
-    };
+    });
     
     $('saveAllStockBtn').onclick = () => {
       const inputs = document.querySelectorAll('.stock-input');
@@ -5886,3 +5890,5 @@
   </script>
 </body>
 </html>
+
+
