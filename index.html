@@ -853,6 +853,18 @@
       background: rgba(0,255,136,.08);
     }
 
+    .product-stock-tag.low {
+      border-color: rgba(255,167,38,.3);
+      color: var(--warning);
+      background: rgba(255,167,38,.08);
+    }
+
+    .product-stock-tag.out {
+      border-color: rgba(255,107,107,.3);
+      color: var(--danger);
+      background: rgba(255,107,107,.08);
+    }
+
     /* MODAL ARTICLE */
     .product-modal-overlay {
       position: fixed;
@@ -3447,7 +3459,6 @@
         
         <div class="qr-instructions">
           <p>Scannez ce code avec votre téléphone pour accéder à l'application MAXI JDC MARKET.</p>
-          <p><strong>Tableau de bord:</strong> <a href="tools/tableau-de-bord.html" style="color:var(--accent2);text-decoration:underline;">Accéder au tableau de bord</a></p>
         </div>
       </div>
       
@@ -3521,12 +3532,11 @@
     shippingFee: 3,
     whatsappNumber: "21625600978",
     itemsPerPage: 24,
-    localStorageKey: 'maxi_jdc_market_app_v27',
+    localStorageKey: 'maxi_jdc_market_app_v28',
     imagesBasePath: 'images/products/',
     historyRetentionYears: 2,
     adminPasswordKey: 'maxi_jdc_admin_password',
-    defaultStock: 100,
-    qrCodeUrl: 'https://votre-domaine.com/maxi-jdc-market',
+    qrCodeUrl: window.location.href,
     adminPassword: "admin123",
     storeLocation: {
       lat: 36.851234,
@@ -3578,7 +3588,8 @@
     tempMapCoords: null,
     isAdmin: false,
     map: null,
-    mapMarker: null
+    mapMarker: null,
+    productStocks: new Map() // Nouveau: pour gérer les stocks en temps réel
   };
 
   // ===================== UTILITAIRES =====================
@@ -3601,6 +3612,16 @@
     setTimeout(() => {
       toast.remove();
     }, 3000);
+  }
+
+  function getStockStatus(stock) {
+    if (stock <= 0) {
+      return { class: 'out', text: 'Rupture de stock', available: false };
+    } else if (stock <= 5) {
+      return { class: 'low', text: `${stock} restant(s)`, available: true };
+    } else {
+      return { class: 'ok', text: `${stock} en stock`, available: true };
+    }
   }
 
   // ===================== CALCUL DES ÉCONOMIES =====================
@@ -3684,7 +3705,7 @@
       const lines = text.split('\n').filter(line => line.trim());
       if (lines.length === 0) return [];
       
-      const separator = lines[0].includes('\t') ? '\t' : ';';
+      const separator = lines[0].includes(';') ? ';' : '\t';
       const products = [];
       const seen = new Set();
       
@@ -3698,6 +3719,13 @@
         const code = parts[0];
         const name = parts[1];
         let priceStr = parts[2];
+        let stock = 100; // Valeur par défaut
+        
+        // Si on a une colonne stock (4ème colonne)
+        if (parts.length >= 4) {
+          const stockStr = parts[3];
+          stock = parseInt(stockStr) || 100;
+        }
         
         if (!code || !name) return;
         
@@ -3713,17 +3741,23 @@
           return;
         }
         
-        products.push({
+        const product = {
           code,
           name,
           price: price,
           category: category.label,
           categoryKey: category.key,
           isPromotion: false,
-          stock: CONFIG.defaultStock,
+          stock: stock,
+          originalStock: stock,
           oldPrice: null,
           discountPercent: 0
-        });
+        };
+        
+        products.push(product);
+        
+        // Stocker le stock original
+        state.productStocks.set(`${categoryKey}_${code}`, stock);
       });
       
       console.log(`${categoryKey}: ${products.length} produits chargés`);
@@ -3765,6 +3799,13 @@
         const originalPriceStr = parts[2];
         const promoPriceStr = parts[3];
         const promoType = parts[4];
+        let stock = 100;
+        
+        // Si on a une colonne stock (6ème colonne)
+        if (parts.length >= 6) {
+          const stockStr = parts[5];
+          stock = parseInt(stockStr) || 100;
+        }
         
         if (!code || !name) return;
         
@@ -3805,11 +3846,12 @@
           discountPercent = 0;
         }
         
-        promotions.push({
+        const product = {
           code,
           name,
           price: finalPrice,
-          stock: CONFIG.defaultStock,
+          stock: stock,
+          originalStock: stock,
           category: '🔥 PROMOTIONS',
           categoryKey: 'promotions',
           isPromotion: true,
@@ -3817,7 +3859,12 @@
           discountPercent: discountPercent,
           promoType: promoType,
           originalPrice: originalPrice
-        });
+        };
+        
+        promotions.push(product);
+        
+        // Stocker le stock original
+        state.productStocks.set(`promotions_${code}`, stock);
       });
       
       console.log(`${promotions.length} promotions chargées`);
@@ -3830,6 +3877,7 @@
 
   async function loadAllProducts() {
     state.products.clear();
+    state.productStocks.clear();
     
     const allProducts = [];
     
@@ -3892,6 +3940,30 @@
     }
     
     console.log('Promotions appliquées avec succès');
+  }
+
+  // ===================== GESTION DU STOCK =====================
+  function updateProductStock(product, quantity) {
+    const stockKey = `${product.categoryKey}_${product.code}`;
+    const currentStock = state.productStocks.get(stockKey) || product.stock;
+    
+    const newStock = Math.max(0, currentStock - quantity);
+    state.productStocks.set(stockKey, newStock);
+    
+    // Mettre à jour le produit dans toutes les catégories
+    for (const [catKey, products] of state.products.entries()) {
+      const index = products.findIndex(p => p.code === product.code);
+      if (index !== -1) {
+        state.products.get(catKey)[index].stock = newStock;
+      }
+    }
+    
+    return newStock;
+  }
+
+  function getAvailableStock(product) {
+    const stockKey = `${product.categoryKey}_${product.code}`;
+    return state.productStocks.get(stockKey) || product.stock || 0;
   }
 
   // ===================== AFFICHAGE =====================
@@ -4033,6 +4105,7 @@
     
     productsToShow.forEach(product => {
       const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
+      const stockStatus = getStockStatus(product.stock);
       
       const card = document.createElement('div');
       card.className = `product-card ${product.isPromotion ? 'promo-card' : ''}`;
@@ -4084,12 +4157,18 @@
           ${priceDisplay}
         </div>
         
-        <div class="product-stock-tag ok">
-          ✓ ${product.stock} en stock
+        <div class="product-stock-tag ${stockStatus.class}">
+          ${stockStatus.class === 'ok' ? '✓' : stockStatus.class === 'low' ? '⚠️' : '✗'} ${stockStatus.text}
         </div>
       `;
       
-      card.addEventListener('click', () => openProductModal(product));
+      card.addEventListener('click', () => {
+        if (stockStatus.available) {
+          openProductModal(product);
+        } else {
+          showToast('❌ Ce produit est en rupture de stock', 'error');
+        }
+      });
       grid.appendChild(card);
     });
   }
@@ -4133,13 +4212,15 @@
     }
   }
 
-  // ===================== MODAL PRODUIT - MODIFIÉ POUR L'ENTRÉE DIRECTE =====================
+  // ===================== MODAL PRODUIT =====================
   function openProductModal(product) {
     if (!product) return;
     
     state.currentModalProduct = product;
     const productId = generateProductId(product);
     const quantity = state.quantityPicks[productId] || 0;
+    const availableStock = getAvailableStock(product);
+    const stockStatus = getStockStatus(availableStock);
     
     $('modalProductName').textContent = product.name;
     $('modalProductNameFull').textContent = product.name;
@@ -4170,15 +4251,16 @@
     
     $('modalProductCode').textContent = product.code;
     $('modalProductCategory').textContent = product.category;
-    $('modalProductStock').textContent = `✓ ${product.stock} en stock`;
-    $('modalProductStock').style.color = 'var(--accent)';
+    $('modalProductStock').textContent = `${stockStatus.class === 'ok' ? '✓' : stockStatus.class === 'low' ? '⚠️' : '✗'} ${stockStatus.text}`;
+    $('modalProductStock').style.color = stockStatus.class === 'ok' ? 'var(--accent)' : stockStatus.class === 'low' ? 'var(--warning)' : 'var(--danger)';
     
-    // Utiliser l'input de quantité au lieu du span
+    // Utiliser l'input de quantité
     const quantityInput = $('modalQuantityInput');
     quantityInput.value = quantity;
+    quantityInput.max = Math.min(999, availableStock);
     
     const addBtn = $('modalAddToCartBtn');
-    addBtn.disabled = quantity === 0;
+    addBtn.disabled = quantity === 0 || !stockStatus.available;
     addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
     
     // Image
@@ -4229,13 +4311,21 @@
     
     const productId = generateProductId(state.currentModalProduct);
     const quantityInput = $('modalQuantityInput');
-    const quantity = parseInt(quantityInput.value) || 0;
+    let quantity = parseInt(quantityInput.value) || 0;
+    const availableStock = getAvailableStock(state.currentModalProduct);
+    
+    // Valider par rapport au stock disponible
+    if (quantity > availableStock) {
+      quantity = availableStock;
+      quantityInput.value = quantity;
+      showToast(`⚠️ Stock limité à ${availableStock} unités`, 'warning');
+    }
     
     // Sauvegarder la quantité
     state.quantityPicks[productId] = quantity;
     
     const addBtn = $('modalAddToCartBtn');
-    addBtn.disabled = quantity === 0;
+    addBtn.disabled = quantity === 0 || availableStock === 0;
     addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
   }
 
@@ -4258,7 +4348,9 @@
   function increaseQuantity() {
     const quantityInput = $('modalQuantityInput');
     let value = parseInt(quantityInput.value) || 0;
-    value = Math.min(999, value + 1);
+    const availableStock = getAvailableStock(state.currentModalProduct);
+    
+    value = Math.min(999, value + 1, availableStock);
     quantityInput.value = value;
     updateModalQuantity();
   }
@@ -4305,6 +4397,7 @@
     
     similar.forEach(product => {
       const imgSrc = `${CONFIG.imagesBasePath}${product.code}.jpg`;
+      const stockStatus = getStockStatus(product.stock);
       
       const card = document.createElement('div');
       card.className = 'similar-product-card';
@@ -4315,7 +4408,9 @@
         <div class="similar-product-info">
           <div class="similar-product-name">${product.name}</div>
           <div class="similar-product-price">${formatPrice(product.price)}</div>
-          <div class="similar-product-stock">✓ ${product.stock} en stock</div>
+          <div class="similar-product-stock ${stockStatus.class}">
+            ${stockStatus.class === 'ok' ? '✓' : stockStatus.class === 'low' ? '⚠️' : '✗'} ${stockStatus.text}
+          </div>
         </div>
       `;
       
@@ -4440,6 +4535,15 @@
   function addToCart(productId, product, quantity = 1) {
     if (!product || quantity <= 0) return;
     
+    const availableStock = getAvailableStock(product);
+    if (quantity > availableStock) {
+      showToast(`❌ Stock insuffisant. Il ne reste que ${availableStock} unités`, 'error');
+      return;
+    }
+    
+    // Mettre à jour le stock
+    const newStock = updateProductStock(product, quantity);
+    
     if (state.cart[productId]) {
       state.cart[productId].quantity += quantity;
     } else {
@@ -4453,6 +4557,9 @@
     
     updateCartUI();
     
+    // Mettre à jour l'affichage des produits
+    renderProducts();
+    
     // Message spécial si promotion
     if (product.isPromotion && product.oldPrice && product.oldPrice > product.price) {
       const saving = (product.oldPrice - product.price) * quantity;
@@ -4465,6 +4572,29 @@
       state.quantityPicks[productId] = 0;
       updateModalQuantity();
     }
+  }
+
+  function removeFromCart(productId, quantity = 1) {
+    if (!state.cart[productId]) return;
+    
+    const item = state.cart[productId];
+    const removeQuantity = Math.min(quantity, item.quantity);
+    
+    // Restaurer le stock
+    const stockKey = `${item.categoryKey}_${item.code}`;
+    const currentStock = state.productStocks.get(stockKey) || 0;
+    state.productStocks.set(stockKey, currentStock + removeQuantity);
+    
+    item.quantity -= removeQuantity;
+    
+    if (item.quantity <= 0) {
+      delete state.cart[productId];
+      delete state.quantityPicks[productId];
+    }
+    
+    // Mettre à jour l'affichage des produits
+    renderProducts();
+    updateCartUI();
   }
 
   // ===================== CARTE ET LOCALISATION =====================
@@ -4797,7 +4927,6 @@
     // Mettre à jour l'URL du QR code dynamique
     const qrCodeImg = document.querySelector('#qrCodeContainer img');
     if (qrCodeImg) {
-      // Utiliser une URL dynamique basée sur la configuration
       const qrUrl = CONFIG.qrCodeUrl || window.location.href;
       qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrUrl)}`;
     }
@@ -5085,7 +5214,7 @@
     
     $('closeProductModalBtn').onclick = $('modalCloseBottomBtn').onclick = closeProductModal;
     
-    // Gestion de la quantité - MODIFIÉ POUR L'ENTRÉE DIRECTE
+    // Gestion de la quantité
     $('modalDecreaseBtn').onclick = decreaseQuantity;
     $('modalIncreaseBtn').onclick = increaseQuantity;
     
@@ -5118,8 +5247,17 @@
       if (Object.keys(state.cart).length === 0) return;
       
       if (confirm('Voulez-vous vraiment vider tout votre panier ?')) {
+        // Restaurer tous les stocks
+        Object.values(state.cart).forEach(item => {
+          const stockKey = `${item.categoryKey}_${item.code}`;
+          const currentStock = state.productStocks.get(stockKey) || 0;
+          state.productStocks.set(stockKey, currentStock + item.quantity);
+        });
+        
         state.cart = {};
+        state.quantityPicks = {};
         updateCartUI();
+        renderProducts();
         showToast('Panier vidé', 'warning');
       }
     };
@@ -5133,14 +5271,22 @@
       const id = btn.dataset.id;
       
       if (action === 'increase' && state.cart[id]) {
-        state.cart[id].quantity++;
-        updateCartUI();
+        const availableStock = getAvailableStock(state.cart[id]);
+        if (state.cart[id].quantity < availableStock) {
+          state.cart[id].quantity++;
+          updateProductStock(state.cart[id], 1);
+          renderProducts();
+          updateCartUI();
+        } else {
+          showToast(`❌ Stock limité à ${availableStock} unités`, 'warning');
+        }
       } else if (action === 'decrease' && state.cart[id]) {
         state.cart[id].quantity--;
         if (state.cart[id].quantity <= 0) {
           delete state.cart[id];
+          delete state.quantityPicks[id];
         }
-        updateCartUI();
+        removeFromCart(id, 1);
       }
     });
     
@@ -5240,7 +5386,7 @@
       user: state.user,
       cart: state.cart,
       orderHistory: state.orderHistory,
-      version: '27.0'
+      version: '28.0'
     };
     localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
   }
