@@ -4947,18 +4947,31 @@
   }
 
   // ===================== ADMIN =====================
-  function toggleAdminMode() {
-    const password = prompt("Entrez le mot de passe administrateur:");
-    if (password === CONFIG.adminPassword) {
-      state.isAdmin = !state.isAdmin;
-      $('adminSection').classList.toggle('visible', state.isAdmin);
-      showToast(state.isAdmin ? '🔓 Mode admin activé' : '🔒 Mode admin désactivé');
-      localStorage.setItem(CONFIG.adminPasswordKey, state.isAdmin ? 'true' : 'false');
-    } else if (password !== null) {
-      showToast('❌ Mot de passe incorrect', 'error');
-    }
+function toggleAdminMode() {
+  const password = prompt("Entrez le mot de passe administrateur:");
+  if (password === CONFIG.adminPassword) {
+    state.isAdmin = !state.isAdmin;
+    $('adminSection').classList.toggle('visible', state.isAdmin);
+    showToast(state.isAdmin ? '🔓 Mode admin activé' : '🔒 Mode admin désactivé');
+    localStorage.setItem(CONFIG.adminPasswordKey, state.isAdmin ? 'true' : 'false');
+  } else if (password !== null) {
+    showToast('❌ Mot de passe incorrect', 'error');
   }
+}
 
+function openDashboard() {
+  if (!state.isAdmin) {
+    showToast('❌ Accès administrateur requis', 'error');
+    return;
+  }
+  
+  // Ouvrir le tableau de bord dans un nouvel onglet
+  window.open(CONFIG.dashboardUrl, '_blank');
+}
+
+// Dans la section des événements, ajoutez :
+$('adminDashboardBtn').onclick = openDashboard;
+$('adminStockBtn').onclick = openStockManagement;
   // ===================== GESTION UTILISATEUR =====================
   function updateUserUI() {
     if (state.user) {
@@ -5402,4 +5415,5 @@
   </script>
 </body>
 </html>
+
 
