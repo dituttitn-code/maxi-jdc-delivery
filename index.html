@@ -5385,13 +5385,18 @@
   }
 
   function openDashboard() {
-    if (!state.isAdmin) {
-      showToast('❌ Accès administrateur requis', 'error');
-      return;
-    }
-    
-    // Ouvrir le tableau de bord dans un nouvel onglet
-    window.open(CONFIG.dashboardUrl, '_blank');
+  if (!state.isAdmin) {
+    showToast('❌ Accès administrateur requis', 'error');
+    return;
+  }
+  
+  // Ouvrir le tableau de bord dans un nouvel onglet
+  window.open(CONFIG.dashboardUrl, '_blank');
+} // <-- Ce } ferme la fonction openDashboard()
+
+// Dans la section des événements, ajoutez :
+$('adminDashboardBtn').onclick = openDashboard;
+$('adminStockBtn').onclick = openStockManagement;
   }
 
   // ===================== GESTION UTILISATEUR =====================
@@ -5885,3 +5890,4 @@
   </script>
 </body>
 </html>
+
