@@ -1,1 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAXI JDC MARKET - Tableau de Bord Commandes</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { color: white; text-align: center; margin: 20px 0 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; border-top: 5px solid #667eea; }
+        .stat-card h3 { margin-top: 0; color: #764ba2; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-value { font-size: 32px; font-weight: bold; color: #333; margin: 10px 0; }
+        .stat-card.total { border-top-color: #2ecc71; }
+        .stat-card.total .stat-value { color: #27ae60; }
+        .controls { background: white; border-radius: 10px; padding: 20px; margin-bottom: 30px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .controls label { font-weight: bold; margin-right: 10px; }
+        .controls select, .controls input, .controls button { padding: 10px 15px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; }
+        .controls button { background: #3498db; color: white; border: none; cursor: pointer; font-weight: bold; transition: background 0.3s; }
+        .controls button:hover { background: #2980b9; }
+        .controls .btn-danger { background: #e74c3c; }
+        .controls .btn-danger:hover { background: #c0392b; }
+        .table-container { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; font-weight: bold; color: #2c3e50; position: sticky; top: 0; }
+        tr:hover { background-color: #f9f9f9; }
+        .statut { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; display: inline-block; }
+        .statut-nouvelle { background: #ffebee; color: #e74c3c; }
+        .statut-preparation { background: #fff3e0; color: #f39c12; }
+        .statut-pret { background: #e8f5e9; color: #27ae60; }
+        .statut-livree { background: #e3f2fd; color: #3498db; }
+        .btn-action { padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; margin: 0 2px; }
+        .btn-edit { background: #3498db; color: white; }
+        .btn-delete { background: #e74c3c; color: white; }
+        .details-row { background: #f8f9fa; }
+        .details-row td { padding: 15px; }
+        .articles-details { list-style: none; padding: 0; }
+        .articles-details li { padding: 5px 0; border-bottom: 1px dashed #ddd; }
+        .articles-details li:last-child { border-bottom: none; }
+        .nav-links { text-align: center; margin-top: 30px; }
+        .nav-links a { color: white; text-decoration: none; font-weight: bold; margin: 0 15px; padding: 12px 25px; border-radius: 6px; background: rgba(255,255,255,0.2); border: 2px solid white; transition: all 0.3s; }
+        .nav-links a:hover { background: white; color: #667eea; }
+        .empty-state { text-align: center; padding: 50px 20px; color: #7f8c8d; font-size: 18px; }
+        .empty-state img { max-width: 200px; opacity: 0.7; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Tableau de Bord - Suivi des Commandes</h1>
+        
+        <div class="stats" id="statsContainer">
+            <!-- Les cartes de statistiques seront générées par JavaScript -->
+        </div>
 
+        <div class="controls">
+            <label for="filterStatut">Filtrer par statut :</label>
+            <select id="filterStatut" onchange="chargerCommandes()">
+                <option value="tous">Tous les statuts</option>
+                <option value="nouvelle">Nouvelle</option>
+                <option value="preparation">En préparation</option>
+                <option value="pret">Prête</option>
+                <option value="livree">Livrée</option>
+            </select>
+            
+            <label for="searchClient">Rechercher un client :</label>
+            <input type="text" id="searchClient" placeholder="Nom ou téléphone..." oninput="chargerCommandes()">
+            
+            <label for="dateRange">Période :</label>
+            <input type="date" id="dateFrom" onchange="chargerCommandes()">
+            <input type="date" id="dateTo" onchange="chargerCommandes()">
+            
+            <div style="flex-grow: 1; text-align: right;">
+                <button onclick="exporterDonnees()">📥 Exporter les données</button>
+                <button onclick="viderStockage()" class="btn-danger">🗑️ Tout effacer</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="commandesTable">
+                <thead>
+                    <tr>
+                        <th width="50px">ID</th>
+                        <th width="150px">Date</th>
+                        <th>Client</th>
+                        <th width="120px">Téléphone</th>
+                        <th width="100px">Articles</th>
+                        <th width="100px">Total</th>
+                        <th width="120px">Statut</th>
+                        <th width="120px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="commandesBody">
+                    <!-- Les lignes de commandes seront ajoutées ici par JavaScript -->
+                </tbody>
+            </table>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div>📭 Aucune commande enregistrée</div>
+                <p>Utilisez la page <strong>"Enregistrer une Commande"</strong> pour commencer à suivre vos ventes.</p>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="commander.html">🛒 Nouvelle Commande</a>
+            <a href="gestion-stock.html">📦 Gérer le Stock</a>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour charger et afficher les commandes
+        function chargerCommandes() {
+            const commandes = JSON.parse(localStorage.getItem('commandesMaxiJDC')) || [];
+            const tbody = document.getElementById('commandesBody');
+            const emptyState = document.getElementById('emptyState');
+            
+            // Appliquer les filtres
+            const filtreStatut = document.getElementById('filterStatut').value;
+            const recherche = document.getElementById('searchClient').value.toLowerCase();
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+            
+            const commandesFiltrees = commandes.filter(commande => {
+                // Filtre par statut
+                if(filtreStatut !== 'tous' && commande.statut !== filtreStatut) return false;
+                
+                // Filtre par recherche (nom ou téléphone)
+                if(recherche && !commande.client.toLowerCase().includes(recherche) && 
+                   !commande.telephone.toLowerCase().includes(recherche)) return false;
+                
+                // Filtre par date
+                const dateCommande = new Date(commande.id); // Utilise l'ID comme timestamp
+                if(dateFrom && dateCommande < new Date(dateFrom)) return false;
+                if(dateTo && dateCommande > new Date(dateTo + 'T23:59:59')) return false;
+                
+                return true;
+            });
+            
+            // Afficher ou masquer l'état vide
+            if(commandesFiltrees.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            emptyState.style.display = 'none';
+            
+            // Trier par date (la plus récente en premier)
+            commandesFiltrees.sort((a, b) => b.id - a.id);
+            
+            // Générer les lignes du tableau
+            tbody.innerHTML = '';
+            commandesFiltrees.forEach(commande => {
+                const tr = document.createElement('tr');
+                
+                // Déterminer la classe CSS du statut
+                let statutClass = 'statut-nouvelle';
+                if(commande.statut === 'preparation') statutClass = 'statut-preparation';
+                else if(commande.statut === 'pret') statutClass = 'statut-pret';
+                else if(commande.statut === 'livree') statutClass = 'statut-livree';
+                
+                tr.innerHTML = `
+                    <td>${commande.id}</td>
+                    <td>${commande.date}</td>
+                    <td>${commande.client}</td>
+                    <td>${commande.telephone}</td>
+                    <td>${commande.articles.length} article(s)</td>
+                    <td><strong>${commande.total} DT</strong></td>
+                    <td><span class="statut ${statutClass}">${commande.statutLabel}</span></td>
+                    <td>
+                        <button class="btn-action btn-edit" onclick="changerStatut(${commande.id})">🔄</button>
+                        <button class="btn-action btn-delete" onclick="supprimerCommande(${commande.id})">🗑</button>
+                        <button class="btn-action" onclick="toggleDetails(${commande.id})" style="background: #9b59b6; color: white;">📋</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+            // Mettre à jour les statistiques
+            mettreAJourStatistiques(commandes, commandesFiltrees);
+        }
+        
+        // Fonction pour afficher/masquer les détails d'une commande
+        function toggleDetails(idCommande) {
+            const rows = document.querySelectorAll('#commandesBody tr');
+            rows.forEach(row => {
+                if(row.cells[0] && parseInt(row.cells[0].textContent) === idCommande) {
+                    // Vérifie si la ligne de détails existe déjà
+                    const nextRow = row.nextElementSibling;
+                    if(nextRow && nextRow.classList.contains('details-row')) {
+                        nextRow.remove();
+                    } else {
+                        // Crée une nouvelle ligne de détails
+                        const detailsRow = document.createElement('tr');
+                        detailsRow.className = 'details-row';
+                        const commandes = JSON.parse(localStorage.getItem('commandesMaxiJDC')) || [];
+                        const commande = commandes.find(c => c.id === idCommande);
+                        
+                        if(commande) {
+                            let detailsHTML = `<td colspan="8">`;
+                            detailsHTML += `<h4 style="margin-top: 0;">📦 Détail des articles :</h4>`;
+                            detailsHTML += `<ul class="articles-details">`;
+                            commande.articles.forEach(article => {
+                                detailsHTML += `<li>${article.qte}x ${article.nom} - ${article.prix} DT/u = <strong>${article.total} DT</strong></li>`;
+                            });
+                            detailsHTML += `</ul>`;
+                            detailsHTML += `</td>`;
+                            detailsRow.innerHTML = detailsHTML;
+                            row.parentNode.insertBefore(detailsRow, row.nextSibling);
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Fonction pour mettre à jour les statistiques
+        function mettreAJourStatistiques(toutesCommandes, commandesFiltrees) {
+            const statsContainer = document.getElementById('statsContainer');
+            
+            // Calculs des statistiques globales
+            const totalCA = toutesCommandes.reduce((sum, cmd) => sum + parseFloat(cmd.total), 0);
+            const nbNouvelles = toutesCommandes.filter(cmd => cmd.statut === 'nouvelle').length;
+            const nbEnPreparation = toutesCommandes.filter(cmd => cmd.statut === 'preparation').length;
+            const nbPretes = toutesCommandes.filter(cmd => cmd.statut === 'pret').length;
+            
+            // Calculs pour les commandes filtrées
+            const totalCAFiltre = commandesFiltrees.reduce((sum, cmd) => sum + parseFloat(cmd.total), 0);
+            const moyennePanier = commandesFiltrees.length > 0 ? totalCAFiltre / commandesFiltrees.length : 0;
+            
+            statsContainer.innerHTML = `
+                <div class="stat-card total">
+                    <h3>Chiffre d'Affaires Total</h3>
+                    <div class="stat-value">${totalCA.toFixed(2)} DT</div>
+                    <small>Filtré: ${totalCAFiltre.toFixed(2)} DT</small>
+                </div>
+                <div class="stat-card">
+                    <h3>Commandes en attente</h3>
+                    <div class="stat-value">${nbNouvelles}</div>
+                    <small>🆕 Nouvelles</small>
+                </div>
+                <div class="stat-card">
+                    <h3>En préparation</h3>
+                    <div class="stat-value">${nbEnPreparation}</div>
+                    <small>👨‍🍳 En cuisine</small>
+                </div>
+                <div class="stat-card">
+                    <h3>Prêtes à livrer</h3>
+                    <div class="stat-value">${nbPretes}</div>
+                    <small>✅ À distribuer</small>
+                </div>
+                <div class="stat-card">
+                    <h3>Moyenne par commande</h3>
+                    <div class="stat-value">${moyennePanier.toFixed(2)} DT</div>
+                    <small>${commandesFiltrees.length} commande(s)</small>
+                </div>
+            `;
+        }
+        
+        // Fonction pour changer le statut d'une commande
+        function changerStatut(idCommande) {
+            const commandes = JSON.parse(localStorage.getItem('commandesMaxiJDC')) || [];
+            const index = commandes.findIndex(cmd => cmd.id === idCommande);
+            
+            if(index !== -1) {
+                const statuts = ['nouvelle', 'preparation', 'pret', 'livree'];
+                const labels = ['🆕 Nouvelle', '👨‍🍳 En préparation', '✅ Prête', '🚚 Livrée'];
+                const currentIndex = statuts.indexOf(commandes[index].statut);
+                const nextIndex = (currentIndex + 1) % statuts.length;
+                
+                commandes[index].statut = statuts[nextIndex];
+                commandes[index].statutLabel = labels[nextIndex];
+                
+                localStorage.setItem('commandesMaxiJDC', JSON.stringify(commandes));
+                chargerCommandes();
+                alert(`Statut de la commande #${idCommande} mis à jour : ${labels[nextIndex]}`);
+            }
+        }
+        
+        // Fonction pour supprimer une commande
+        function supprimerCommande(idCommande) {
+            if(confirm(`Êtes-vous sûr de vouloir supprimer la commande #${idCommande} ?`)) {
+                let commandes = JSON.parse(localStorage.getItem('commandesMaxiJDC')) || [];
+                commandes = commandes.filter(cmd => cmd.id !== idCommande);
+                localStorage.setItem('commandesMaxiJDC', JSON.stringify(commandes));
+                chargerCommandes();
+                alert('Commande supprimée avec succès !');
+            }
+        }
+        
+        // Fonction pour exporter les données au format CSV
+        function exporterDonnees() {
+            const commandes = JSON.parse(localStorage.getItem('commandesMaxiJDC')) || [];
+            if(commandes.length === 0) {
+                alert("Aucune donnée à exporter !");
+                return;
+            }
+            
+            // Préparation des en-têtes CSV
+            let csv = 'ID;Date;Client;Telephone;Articles;Total;Statut\n';
+            
+            commandes.forEach(commande => {
+                const articlesText = commande.articles.map(a => `${a.qte}x ${a.nom}`).join(', ');
+                csv += `${commande.id};"${commande.date}";"${commande.client}";"${commande.telephone}";"${articlesText}";${commande.total};"${commande.statutLabel}"\n`;
+            });
+            
+            // Création du fichier de téléchargement
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `commandes-maxi-jdc-${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            
+            alert(`✅ ${commandes.length} commande(s) exportées avec succès !`);
+        }
+        
+        // Fonction pour vider tout le stockage local (avec confirmation)
+        function viderStockage() {
+            if(confirm('ATTENTION : Cette action va supprimer TOUTES vos commandes enregistrées. Cette opération est irréversible. Confirmez-vous ?')) {
+                localStorage.removeItem('commandesMaxiJDC');
+                chargerCommandes();
+                alert('✅ Toutes les données ont été effacées.');
+            }
+        }
+        
+        // Initialisation au chargement de la page
+        window.onload = function() {
+            // Définir la période par défaut (30 derniers jours)
+            const dateTo = new Date();
+            const dateFrom = new Date();
+            dateFrom.setDate(dateFrom.getDate() - 30);
+            
+            document.getElementById('dateFrom').valueAsDate = dateFrom;
+            document.getElementById('dateTo').valueAsDate = dateTo;
+            
+            chargerCommandes();
+        };
+    </script>
+</body>
+</html>
