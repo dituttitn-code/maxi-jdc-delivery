@@ -456,7 +456,7 @@
                     <span>🔧</span>
                     <span>MODE ADMIN</span>
                 </div>
-                <button class="back-btn" id="backToAppBtn">
+                <button class="back-btn" onclick="window.history.back()">
                     <span>←</span>
                     <span>Retour à l'app</span>
                 </button>
@@ -625,7 +625,7 @@
                     <div class="action-desc">Créer/modifier promos</div>
                 </div>
                 
-                <div class="action-btn" onclick="exportData('csv')">
+                <div class="action-btn" onclick="exportData()">
                     <div class="action-icon">📤</div>
                     <div class="action-label">Exporter données</div>
                     <div class="action-desc">CSV, Excel, PDF</div>
@@ -663,8 +663,7 @@
         const CONFIG = {
             storageKey: 'maxi_jdc_market_app_v30',
             syncStorageKey: 'maxi_jdc_sync_data',
-            dashboardDataKey: 'maxi_jdc_dashboard_data',
-            appUrl: '../index.html'  // URL de l'application principale
+            dashboardDataKey: 'maxi_jdc_dashboard_data'
         };
 
         // ===================== ÉTAT GLOBAL =====================
@@ -1127,14 +1126,14 @@
         // ===================== ACTIONS =====================
         function openStockManagement() {
             // Ouvrir la gestion des stocks depuis l'application principale
-            window.open('../index.html', '_blank');
-            showAlert('Redirection vers la gestion des stocks...', 'info');
+            window.open('../index.html#stock', '_blank');
+            showAlert('Ouverture de la gestion des stocks...', 'info');
         }
 
         function openPromoManagement() {
             // Ouvrir la gestion des promotions
-            window.open('../index.html', '_blank');
-            showAlert('Redirection vers la gestion des promotions...', 'info');
+            window.open('../index.html#promo', '_blank');
+            showAlert('Ouverture de la gestion des promotions...', 'info');
         }
 
         function sendNotifications() {
@@ -1237,11 +1236,6 @@
             
             // Charger les données
             loadData();
-            
-            // Configurer le bouton retour
-            $('#backToAppBtn').onclick = function() {
-                window.location.href = CONFIG.appUrl;
-            };
             
             // Mettre à jour les données toutes les 30 secondes
             setInterval(() => {
