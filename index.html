@@ -3763,7 +3763,8 @@
       lng: 10.301234
     },
     syncInterval: 30000, // 30 secondes
-    dashboardUrl: '../tools/tableau-de-bord.html'
+    // CORRECTION ICI : Changer le chemin pour pointer vers dashboard.html dans le même dossier
+    dashboardUrl: 'dashboard.html'  // <-- CORRECTION IMPORTANTE
   };
 
   // Catégories
@@ -5384,20 +5385,16 @@
     }
   }
 
+  // ===================== FONCTION POUR OUVRIR LE TABLEAU DE BORD =====================
   function openDashboard() {
-  if (!state.isAdmin) {
-    showToast('❌ Accès administrateur requis', 'error');
-    return;
+    if (!state.isAdmin) {
+      showToast('❌ Accès administrateur requis', 'error');
+      return;
+    }
+    
+    // CORRECTION ICI : Utiliser le chemin correct
+    window.open(CONFIG.dashboardUrl, '_blank');
   }
-  
-  // Ouvrir le tableau de bord dans un nouvel onglet
-  window.open(CONFIG.dashboardUrl, '_blank');
-} // <-- Ce } ferme la fonction openDashboard()
-
-// Dans la section des événements, ajoutez :
-$('adminDashboardBtn').onclick = openDashboard;
-$('adminStockBtn').onclick = openStockManagement;
-  
 
   // ===================== GESTION UTILISATEUR =====================
   function updateUserUI() {
@@ -5818,7 +5815,7 @@ $('adminStockBtn').onclick = openStockManagement;
     
     $('stockSearchInput').addEventListener('input', (e) => {
       renderStockTable(e.target.value);
-    });
+    };
     
     $('refreshStockBtn').onclick = () => {
       renderStockTable($('stockSearchInput').value);
@@ -5890,5 +5887,3 @@ $('adminStockBtn').onclick = openStockManagement;
   </script>
 </body>
 </html>
-
-
