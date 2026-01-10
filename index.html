@@ -1794,6 +1794,12 @@
       color: #ffa726;
     }
 
+    .admin-btn.dashboard {
+      border-color: #9c27b0;
+      background: rgba(156, 39, 176, 0.1);
+      color: #9c27b0;
+    }
+
     .admin-icon {
       font-size: 20px;
     }
@@ -1801,6 +1807,159 @@
     .admin-label {
       font-size: 10px;
       font-weight: 900;
+    }
+
+    /* MODAL GESTION STOCK */
+    .stock-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3500;
+      padding: 20px;
+      backdrop-filter: blur(20px);
+    }
+
+    .stock-modal-overlay.open {
+      display: flex;
+    }
+
+    .stock-modal {
+      width: 100%;
+      max-width: 800px;
+      max-height: 90vh;
+      background: linear-gradient(135deg, var(--bg0) 0%, var(--bg1) 100%);
+      border-radius: 20px;
+      border: 3px solid var(--accent2);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stock-modal-header {
+      padding: 20px;
+      background: rgba(0, 212, 255, 0.1);
+      border-bottom: 1px solid var(--accent2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stock-modal-header h3 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--accent2);
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stock-modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .stock-search {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .stock-search input {
+      flex: 1;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .stock-search input:focus {
+      border-color: var(--accent2);
+    }
+
+    .stock-table-container {
+      max-height: 400px;
+      overflow-y: auto;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+
+    .stock-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .stock-table th {
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--accent2);
+      padding: 12px;
+      text-align: left;
+      font-weight: 900;
+      font-size: 12px;
+      position: sticky;
+      top: 0;
+      border-bottom: 2px solid var(--accent2);
+    }
+
+    .stock-table td {
+      padding: 10px;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+    }
+
+    .stock-table tr:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .stock-input {
+      width: 80px;
+      padding: 6px;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .stock-input:focus {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .stock-save-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--accent);
+      background: rgba(0, 255, 136, 0.1);
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 11px;
+      transition: all 0.2s ease;
+    }
+
+    .stock-save-btn:hover {
+      background: rgba(0, 255, 136, 0.2);
+    }
+
+    .stock-modal-footer {
+      padding: 20px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
     }
 
     /* SECTION COMPTE */
@@ -2863,6 +3022,16 @@
       .similar-products-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+      
+      .stock-table th,
+      .stock-table td {
+        padding: 8px 6px;
+        font-size: 11px;
+      }
+      
+      .stock-input {
+        width: 60px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -3129,39 +3298,38 @@
     <div class="drawer-content">
       <!-- ADMIN -->
       <section class="admin-section" id="adminSection">
-  <div class="admin-header">
-    <h4>🔧 Espace Administrateur</h4>
-    <span class="admin-badge">ADMIN</span>
-  </div>
-  
-  <div class="admin-controls-grid">
-    <!-- AJOUTER CE BOUTON -->
-    <button class="admin-btn dashboard" id="adminDashboardBtn">
-      <span class="admin-icon">📊</span>
-      <span class="admin-label">Tableau de bord</span>
-    </button>
-    
-    <button class="admin-btn promo" id="adminPromoBtn">
-      <span class="admin-icon">📢</span>
-      <span class="admin-label">Gérer promotions</span>
-    </button>
-    
-    <button class="admin-btn stock" id="adminStockBtn">
-      <span class="admin-icon">📦</span>
-      <span class="admin-label">Gérer stock</span>
-    </button>
-    
-    <button class="admin-btn stats" id="adminStatsBtn">
-      <span class="admin-icon">📈</span>
-      <span class="admin-label">Statistiques</span>
-    </button>
-    
-    <button class="admin-btn settings" id="adminSettingsBtn">
-      <span class="admin-icon">⚙️</span>
-      <span class="admin-label">Paramètres</span>
-    </button>
-  </div>
-</section>
+        <div class="admin-header">
+          <h4>🔧 Espace Administrateur</h4>
+          <span class="admin-badge">ADMIN</span>
+        </div>
+        
+        <div class="admin-controls-grid">
+          <button class="admin-btn dashboard" id="adminDashboardBtn">
+            <span class="admin-icon">📊</span>
+            <span class="admin-label">Tableau de bord</span>
+          </button>
+          
+          <button class="admin-btn promo" id="adminPromoBtn">
+            <span class="admin-icon">📢</span>
+            <span class="admin-label">Gérer promotions</span>
+          </button>
+          
+          <button class="admin-btn stock" id="adminStockBtn">
+            <span class="admin-icon">📦</span>
+            <span class="admin-label">Gérer stock</span>
+          </button>
+          
+          <button class="admin-btn stats" id="adminStatsBtn">
+            <span class="admin-icon">📈</span>
+            <span class="admin-label">Statistiques</span>
+          </button>
+          
+          <button class="admin-btn settings" id="adminSettingsBtn">
+            <span class="admin-icon">⚙️</span>
+            <span class="admin-label">Paramètres</span>
+          </button>
+        </div>
+      </section>
 
       <!-- COMPTE -->
       <section class="account-section">
@@ -3476,6 +3644,51 @@
     </div>
   </div>
 
+  <!-- MODAL GESTION STOCK -->
+  <div class="stock-modal-overlay" id="stockModal">
+    <div class="stock-modal">
+      <div class="stock-modal-header">
+        <h3>📦 Gestion des Stocks</h3>
+        <button class="drawer-close" id="closeStockModalBtn">×</button>
+      </div>
+      
+      <div class="stock-modal-body">
+        <div class="stock-search">
+          <input type="text" id="stockSearchInput" placeholder="🔍 Rechercher un produit par code ou nom...">
+          <button class="form-btn" id="refreshStockBtn">🔄 Actualiser</button>
+        </div>
+        
+        <div class="stock-table-container">
+          <table class="stock-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Nom</th>
+                <th>Catégorie</th>
+                <th>Prix</th>
+                <th>Stock actuel</th>
+                <th>Nouveau stock</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="stockTableBody">
+              <!-- Rempli dynamiquement -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="stock-modal-footer">
+        <button class="form-btn" id="saveAllStockBtn">
+          💾 Sauvegarder tous les stocks
+        </button>
+        <button class="form-btn danger" id="closeStockModalBtn2">
+          ✕ Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL MAP -->
   <div class="map-modal-overlay" id="mapModal">
     <div class="map-modal">
@@ -3538,16 +3751,19 @@
     shippingFee: 3,
     whatsappNumber: "21625600978",
     itemsPerPage: 24,
-    localStorageKey: 'maxi_jdc_market_app_v28',
+    localStorageKey: 'maxi_jdc_market_app_v30',
     imagesBasePath: 'images/products/',
     historyRetentionYears: 2,
     adminPasswordKey: 'maxi_jdc_admin_password',
+    syncStorageKey: 'maxi_jdc_sync_data',
     qrCodeUrl: window.location.href,
     adminPassword: "admin123",
     storeLocation: {
       lat: 36.851234,
       lng: 10.301234
-    }
+    },
+    syncInterval: 30000, // 30 secondes
+    dashboardUrl: '../tools/tableau-de-bord.html'
   };
 
   // Catégories
@@ -3595,7 +3811,10 @@
     isAdmin: false,
     map: null,
     mapMarker: null,
-    productStocks: new Map() // Nouveau: pour gérer les stocks en temps réel
+    productStocks: new Map(),
+    pendingStockUpdates: new Map(),
+    lastSyncTime: null,
+    syncTimer: null
   };
 
   // ===================== UTILITAIRES =====================
@@ -3627,6 +3846,131 @@
       return { class: 'low', text: `${stock} restant(s)`, available: true };
     } else {
       return { class: 'ok', text: `${stock} en stock`, available: true };
+    }
+  }
+
+  // ===================== SYNCHRONISATION DES STOCKS =====================
+  function initializeSync() {
+    // Charger les données de synchronisation
+    loadSyncData();
+    
+    // Démarrer le timer de synchronisation
+    state.syncTimer = setInterval(syncStocks, CONFIG.syncInterval);
+    
+    // Synchroniser au démarrage
+    setTimeout(syncStocks, 2000);
+    
+    // Synchroniser aussi quand la page devient visible
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        syncStocks();
+      }
+    });
+  }
+
+  function loadSyncData() {
+    try {
+      const syncData = localStorage.getItem(CONFIG.syncStorageKey);
+      if (syncData) {
+        const data = JSON.parse(syncData);
+        
+        // Charger les stocks synchronisés
+        if (data.productStocks) {
+          Object.entries(data.productStocks).forEach(([key, stock]) => {
+            state.productStocks.set(key, stock);
+          });
+        }
+        
+        // Charger l'historique des ventes
+        if (data.salesHistory) {
+          // Fusionner avec l'historique local
+          state.orderHistory = [...state.orderHistory, ...data.salesHistory]
+            .filter((order, index, self) =>
+              index === self.findIndex(o => o.id === order.id)
+            )
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+        
+        state.lastSyncTime = data.lastSyncTime || null;
+        console.log('Données de synchronisation chargées');
+      }
+    } catch (error) {
+      console.error('Erreur chargement données sync:', error);
+    }
+  }
+
+  function saveSyncData() {
+    try {
+      const syncData = {
+        productStocks: Object.fromEntries(state.productStocks),
+        salesHistory: state.orderHistory,
+        lastSyncTime: new Date().toISOString(),
+        version: '1.0'
+      };
+      
+      localStorage.setItem(CONFIG.syncStorageKey, JSON.stringify(syncData));
+    } catch (error) {
+      console.error('Erreur sauvegarde données sync:', error);
+    }
+  }
+
+  function syncStocks() {
+    try {
+      // Récupérer les données de synchronisation partagées
+      const syncData = localStorage.getItem(CONFIG.syncStorageKey);
+      if (!syncData) return;
+      
+      const sharedData = JSON.parse(syncData);
+      
+      // Mettre à jour les stocks avec les données partagées
+      if (sharedData.productStocks) {
+        Object.entries(sharedData.productStocks).forEach(([key, stock]) => {
+          const currentStock = state.productStocks.get(key) || 0;
+          
+          // Prendre la valeur la plus basse (stock réel)
+          if (stock < currentStock) {
+            state.productStocks.set(key, stock);
+          }
+        });
+        
+        // Appliquer les stocks mis à jour aux produits
+        updateAllProductStocks();
+        
+        // Rafraîchir l'affichage
+        renderProducts();
+        
+        state.lastSyncTime = sharedData.lastSyncTime;
+        console.log('Stocks synchronisés:', new Date().toLocaleTimeString());
+      }
+      
+      // Sauvegarder nos propres modifications
+      if (state.pendingStockUpdates.size > 0) {
+        saveSyncData();
+        state.pendingStockUpdates.clear();
+      }
+      
+    } catch (error) {
+      console.error('Erreur synchronisation:', error);
+    }
+  }
+
+  function updateAllProductStocks() {
+    // Mettre à jour les stocks dans tous les produits
+    for (const [catKey, products] of state.products.entries()) {
+      const updatedProducts = products.map(product => {
+        const stockKey = `${product.categoryKey}_${product.code}`;
+        const currentStock = state.productStocks.get(stockKey);
+        
+        if (currentStock !== undefined) {
+          return {
+            ...product,
+            stock: currentStock
+          };
+        }
+        return product;
+      });
+      
+      state.products.set(catKey, updatedProducts);
     }
   }
 
@@ -3670,14 +4014,10 @@
     const savingsPercentageTextElement = $('savingsPercentageText');
     
     if (savings.totalSavings > 0) {
-      // Afficher la section des économies
       savingsSection.classList.add('visible');
-      
-      // Mettre à jour les montants
       totalSavingsElement.textContent = formatPrice(savings.totalSavings);
       savingsPercentageElement.textContent = `${savings.percentage}%`;
       
-      // Ajouter un texte descriptif
       let percentageText = '';
       if (savings.percentage >= 50) {
         percentageText = 'ÉNORME ÉCONOMIE !';
@@ -3690,7 +4030,6 @@
       }
       savingsPercentageTextElement.textContent = percentageText;
     } else {
-      // Cacher la section des économies
       savingsSection.classList.remove('visible');
     }
   }
@@ -3725,9 +4064,8 @@
         const code = parts[0];
         const name = parts[1];
         let priceStr = parts[2];
-        let stock = 100; // Valeur par défaut
+        let stock = 100;
         
-        // Si on a une colonne stock (4ème colonne)
         if (parts.length >= 4) {
           const stockStr = parts[3];
           stock = parseInt(stockStr) || 100;
@@ -3762,8 +4100,10 @@
         
         products.push(product);
         
-        // Stocker le stock original
-        state.productStocks.set(`${categoryKey}_${code}`, stock);
+        const stockKey = `${category.key}_${code}`;
+        if (!state.productStocks.has(stockKey)) {
+          state.productStocks.set(stockKey, stock);
+        }
       });
       
       console.log(`${categoryKey}: ${products.length} produits chargés`);
@@ -3807,7 +4147,6 @@
         const promoType = parts[4];
         let stock = 100;
         
-        // Si on a une colonne stock (6ème colonne)
         if (parts.length >= 6) {
           const stockStr = parts[5];
           stock = parseInt(stockStr) || 100;
@@ -3869,8 +4208,10 @@
         
         promotions.push(product);
         
-        // Stocker le stock original
-        state.productStocks.set(`promotions_${code}`, stock);
+        const stockKey = `promotions_${code}`;
+        if (!state.productStocks.has(stockKey)) {
+          state.productStocks.set(stockKey, stock);
+        }
       });
       
       console.log(`${promotions.length} promotions chargées`);
@@ -3883,7 +4224,6 @@
 
   async function loadAllProducts() {
     state.products.clear();
-    state.productStocks.clear();
     
     const allProducts = [];
     
@@ -3956,6 +4296,9 @@
     const newStock = Math.max(0, currentStock - quantity);
     state.productStocks.set(stockKey, newStock);
     
+    // Marquer comme modification en attente
+    state.pendingStockUpdates.set(stockKey, newStock);
+    
     // Mettre à jour le produit dans toutes les catégories
     for (const [catKey, products] of state.products.entries()) {
       const index = products.findIndex(p => p.code === product.code);
@@ -3963,6 +4306,9 @@
         state.products.get(catKey)[index].stock = newStock;
       }
     }
+    
+    // Sauvegarder les changements de stock
+    saveSyncData();
     
     return newStock;
   }
@@ -4444,7 +4790,6 @@
       cartItemsList.style.display = 'none';
       cartEmptyMessage.style.display = 'block';
       
-      // Cacher la section des économies
       $('cartSavingsSection').classList.remove('visible');
     } else {
       cartItemsList.style.display = 'flex';
@@ -4506,7 +4851,6 @@
         cartItemsList.appendChild(itemElement);
       });
       
-      // Mettre à jour l'affichage des économies
       updateSavingsDisplay();
     }
     
@@ -4603,23 +4947,121 @@
     updateCartUI();
   }
 
+  // ===================== GESTION ADMIN STOCK =====================
+  function openStockManagement() {
+    if (!state.isAdmin) {
+      showToast('❌ Accès administrateur requis', 'error');
+      return;
+    }
+    
+    renderStockTable();
+    $('stockModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function renderStockTable(searchQuery = '') {
+    const tableBody = $('stockTableBody');
+    tableBody.innerHTML = '';
+    
+    let allProducts = [];
+    for (const [catKey, products] of state.products.entries()) {
+      products.forEach(product => {
+        allProducts.push({
+          ...product,
+          fullCategory: catKey
+        });
+      });
+    }
+    
+    // Filtrer si recherche
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      allProducts = allProducts.filter(p =>
+        p.code.toLowerCase().includes(query) ||
+        p.name.toLowerCase().includes(query) ||
+        p.category.toLowerCase().includes(query)
+      );
+    }
+    
+    // Trier par code
+    allProducts.sort((a, b) => a.code.localeCompare(b.code));
+    
+    allProducts.forEach(product => {
+      const currentStock = getAvailableStock(product);
+      const row = document.createElement('tr');
+      
+      row.innerHTML = `
+        <td><strong>${product.code}</strong></td>
+        <td>${product.name}</td>
+        <td>${product.category}</td>
+        <td>${formatPrice(product.price)}</td>
+        <td>
+          <span class="${getStockStatus(currentStock).class}" style="padding: 3px 8px; border-radius: 4px;">
+            ${currentStock}
+          </span>
+        </td>
+        <td>
+          <input type="number" 
+                 class="stock-input" 
+                 data-key="${product.categoryKey}_${product.code}"
+                 value="${currentStock}"
+                 min="0"
+                 max="9999"
+                 step="1">
+        </td>
+        <td>
+          <button class="stock-save-btn" data-key="${product.categoryKey}_${product.code}">
+            💾 Sauvegarder
+          </button>
+        </td>
+      `;
+      
+      tableBody.appendChild(row);
+    });
+  }
+
+  function updateStock(productKey, newStock) {
+    const [categoryKey, code] = productKey.split('_');
+    newStock = parseInt(newStock) || 0;
+    
+    // Mettre à jour le stock global
+    state.productStocks.set(productKey, newStock);
+    
+    // Mettre à jour les produits dans toutes les catégories
+    for (const [catKey, products] of state.products.entries()) {
+      const index = products.findIndex(p => p.code === code);
+      if (index !== -1) {
+        state.products.get(catKey)[index].stock = newStock;
+      }
+    }
+    
+    // Marquer comme modification
+    state.pendingStockUpdates.set(productKey, newStock);
+    
+    // Sauvegarder
+    saveSyncData();
+    
+    // Rafraîchir l'affichage
+    renderProducts();
+    renderStockTable($('stockSearchInput').value);
+    
+    showToast(`✅ Stock mis à jour pour ${code}: ${newStock} unités`);
+  }
+
   // ===================== CARTE ET LOCALISATION =====================
   function openMapModal() {
     $('mapModal').classList.add('open');
     document.body.style.overflow = 'hidden';
     
-    // Initialiser la carte si ce n'est pas déjà fait
     if (!state.map) {
       setTimeout(() => {
         initMap();
       }, 100);
     } else {
-      // Recentrer sur la dernière position
       if (state.tempMapCoords) {
         state.map.setView([state.tempMapCoords.lat, state.tempMapCoords.lng], 15);
         state.mapMarker.setLatLng([state.tempMapCoords.lat, state.tempMapCoords.lng]);
       } else {
-        // Par défaut: centre sur Tunis
         state.map.setView([36.8065, 10.1815], 12);
       }
     }
@@ -4629,25 +5071,21 @@
     const mapElement = document.getElementById('map');
     if (!mapElement) return;
     
-    // Centre par défaut: Tunis
     const defaultLat = state.tempMapCoords?.lat || 36.8065;
     const defaultLng = state.tempMapCoords?.lng || 10.1815;
     
     state.map = L.map('map').setView([defaultLat, defaultLng], 14);
     
-    // Ajouter les tuiles OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',
       maxZoom: 19
     }).addTo(state.map);
     
-    // Créer un marqueur
     state.mapMarker = L.marker([defaultLat, defaultLng], {
       draggable: true,
       autoPan: true
     }).addTo(state.map);
     
-    // Mettre à jour les coordonnées quand le marqueur est déplacé
     state.mapMarker.on('dragend', function(event) {
       const marker = event.target;
       const position = marker.getLatLng();
@@ -4656,11 +5094,9 @@
         lng: position.lng
       };
       
-      // Mettre à jour l'aperçu de la carte
       updateMapPreview(position.lat, position.lng);
     });
     
-    // Ajouter un événement de clic sur la carte pour déplacer le marqueur
     state.map.on('click', function(event) {
       state.mapMarker.setLatLng(event.latlng);
       state.tempMapCoords = {
@@ -4671,7 +5107,6 @@
       updateMapPreview(event.latlng.lat, event.latlng.lng);
     });
     
-    // Ajouter un marqueur pour le magasin
     L.marker([CONFIG.storeLocation.lat, CONFIG.storeLocation.lng], {
       icon: L.icon({
         iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
@@ -4691,7 +5126,6 @@
       </div>
     `;
     
-    // Mettre à jour les champs de formulaire
     $('clientLat').value = lat.toFixed(6);
     $('clientLng').value = lng.toFixed(6);
   }
@@ -4712,22 +5146,19 @@
         
         state.tempMapCoords = { lat, lng };
         
-        // Mettre à jour les champs
         $('clientLat').value = lat.toFixed(6);
         $('clientLng').value = lng.toFixed(6);
         
-        // Mettre à jour l'aperçu
         updateMapPreview(lat, lng);
         
         showToast('✅ Position détectée avec succès !');
         
-        // Ouvrir la carte pour confirmation
         openMapModal();
       },
       (error) => {
         console.error('Erreur géolocalisation:', error);
         showToast('❌ Impossible de détecter votre position', 'error');
-        openMapModal(); // Ouvrir la carte pour sélection manuelle
+        openMapModal();
       },
       {
         enableHighAccuracy: true,
@@ -4744,7 +5175,6 @@
       return;
     }
     
-    // Calculer les économies par article
     const itemsWithSavings = Object.values(state.cart).map(item => {
       const itemSaving = calculateItemSavings(item);
       return {
@@ -4780,7 +5210,6 @@
     
     state.orderHistory.unshift(historyEntry);
     
-    // Limiter l'historique aux 2 dernières années
     const twoYearsAgo = new Date();
     twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
     
@@ -4789,8 +5218,8 @@
     );
     
     saveState();
+    saveSyncData(); // Sauvegarder aussi dans les données de synchronisation
     
-    // Afficher un message spécial si économies importantes
     if (orderDetails.savings && orderDetails.savings > 0) {
       showToast(`🎉 FÉLICITATIONS ! Vous avez économisé ${formatPrice(orderDetails.savings)} !`);
     } else {
@@ -4838,7 +5267,6 @@
       
       const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
       
-      // Calculer les économies pour cette commande
       const orderSavings = order.items.reduce((sum, item) => sum + (item.saving || 0), 0);
       
       const historyItem = document.createElement('div');
@@ -4909,7 +5337,6 @@
     detailsText += '─'.repeat(50) + '\n';
     detailsText += `Sous-total: ${formatPrice(order.subtotal)}\n`;
     
-    // Afficher les économies totales si > 0
     if (totalSavingsInOrder > 0) {
       const savingsPercentage = totalOriginalInOrder > 0 ? 
         Math.round((totalSavingsInOrder / totalOriginalInOrder) * 100) : 0;
@@ -4919,7 +5346,6 @@
     detailsText += `Livraison: ${order.shipping === 0 ? 'GRATUIT' : formatPrice(order.shipping)}\n`;
     detailsText += `TOTAL: ${formatPrice(order.total)}\n`;
     
-    // Message spécial si économies importantes
     if (totalSavingsInOrder > 0) {
       detailsText += `\n🎉 Vous avez économisé ${formatPrice(totalSavingsInOrder)} sur cette commande !`;
     }
@@ -4930,7 +5356,6 @@
 
   // ===================== QR CODE =====================
   function openQRModal() {
-    // Mettre à jour l'URL du QR code dynamique
     const qrCodeImg = document.querySelector('#qrCodeContainer img');
     if (qrCodeImg) {
       const qrUrl = CONFIG.qrCodeUrl || window.location.href;
@@ -4947,32 +5372,28 @@
   }
 
   // ===================== ADMIN =====================
-function toggleAdminMode() {
-  const password = prompt("Entrez le mot de passe administrateur:");
-  if (password === CONFIG.adminPassword) {
-    state.isAdmin = !state.isAdmin;
-    $('adminSection').classList.toggle('visible', state.isAdmin);
-    showToast(state.isAdmin ? '🔓 Mode admin activé' : '🔒 Mode admin désactivé');
-    localStorage.setItem(CONFIG.adminPasswordKey, state.isAdmin ? 'true' : 'false');
-  } else if (password !== null) {
-    showToast('❌ Mot de passe incorrect', 'error');
-  }
-}
-
-function openDashboard() {
-  if (!state.isAdmin) {
-    showToast('❌ Accès administrateur requis', 'error');
-    return;
-  }
-  
-  // Ouvrir le tableau de bord dans un nouvel onglet
-  window.open(CONFIG.dashboardUrl, '_blank');
-}
-
-// Dans la section des événements, ajoutez :
-$('adminDashboardBtn').onclick = openDashboard;
-$('adminStockBtn').onclick = openStockManagement;
+  function toggleAdminMode() {
+    const password = prompt("Entrez le mot de passe administrateur:");
+    if (password === CONFIG.adminPassword) {
+      state.isAdmin = !state.isAdmin;
+      $('adminSection').classList.toggle('visible', state.isAdmin);
+      showToast(state.isAdmin ? '🔓 Mode admin activé' : '🔒 Mode admin désactivé');
+      localStorage.setItem(CONFIG.adminPasswordKey, state.isAdmin ? 'true' : 'false');
+    } else if (password !== null) {
+      showToast('❌ Mot de passe incorrect', 'error');
     }
+  }
+
+  function openDashboard() {
+    if (!state.isAdmin) {
+      showToast('❌ Accès administrateur requis', 'error');
+      return;
+    }
+    
+    // Ouvrir le tableau de bord dans un nouvel onglet
+    window.open(CONFIG.dashboardUrl, '_blank');
+  }
+
   // ===================== GESTION UTILISATEUR =====================
   function updateUserUI() {
     if (state.user) {
@@ -5048,13 +5469,11 @@ $('adminStockBtn').onclick = openStockManagement;
       return;
     }
     
-    // Calculer les économies totales
     const savings = calculateTotalSavings();
     
     let shippingFee = subtotal >= CONFIG.freeShipping ? 0 : CONFIG.shippingFee;
     const total = subtotal + shippingFee;
     
-    // Générer le résumé de commande avec les économies
     let orderText = `📦 NOUVELLE COMMANDE - MAXI JDC MARKET\n`;
     orderText += `📅 ${new Date().toLocaleDateString('fr-FR', { 
       day: '2-digit', 
@@ -5077,7 +5496,6 @@ $('adminStockBtn').onclick = openStockManagement;
     orderText += `\n🛒 ARTICLES\n`;
     orderText += '─'.repeat(50) + '\n';
     
-    // Ajouter les économies par article
     Object.values(state.cart).forEach(item => {
       const itemTotal = item.price * item.quantity;
       const itemSaving = calculateItemSavings(item);
@@ -5099,7 +5517,6 @@ $('adminStockBtn').onclick = openStockManagement;
     orderText += '─'.repeat(50) + '\n';
     orderText += `Sous-total: ${formatPrice(subtotal)}\n`;
     
-    // Afficher les économies totales si > 0
     if (savings.totalSavings > 0) {
       orderText += `💰 ÉCONOMIES TOTALES: ${formatPrice(savings.totalSavings)} (${savings.percentage}%)\n`;
     }
@@ -5107,7 +5524,6 @@ $('adminStockBtn').onclick = openStockManagement;
     orderText += `Livraison: ${shippingFee === 0 ? 'GRATUIT' : formatPrice(shippingFee)}\n`;
     orderText += `TOTAL: ${formatPrice(total)}\n\n`;
     
-    // Message de félicitations si économies importantes
     if (savings.totalSavings > 0) {
       orderText += `🎉 FÉLICITATIONS ! Vous avez économisé ${formatPrice(savings.totalSavings)} sur cette commande !\n\n`;
     }
@@ -5115,11 +5531,9 @@ $('adminStockBtn').onclick = openStockManagement;
     orderText += `🕒 Heures: 7h - 1h\n`;
     orderText += `📱 WhatsApp: +216 25 600 978`;
     
-    // Afficher le modal de commande
     $('orderDetails').textContent = orderText;
     $('orderModal').classList.add('open');
     
-    // Sauvegarder dans l'historique avec les économies
     saveOrderToHistory({
       subtotal,
       shipping: shippingFee,
@@ -5129,7 +5543,6 @@ $('adminStockBtn').onclick = openStockManagement;
       savingsPercentage: savings.percentage
     });
     
-    // Vider le panier après commande
     state.cart = {};
     updateCartUI();
   }
@@ -5148,7 +5561,6 @@ $('adminStockBtn').onclick = openStockManagement;
         updateCartUI();
       }
       
-      // Charger l'état admin
       const adminState = localStorage.getItem(CONFIG.adminPasswordKey);
       state.isAdmin = adminState === 'true';
       $('adminSection').classList.toggle('visible', state.isAdmin);
@@ -5238,7 +5650,6 @@ $('adminStockBtn').onclick = openStockManagement;
     $('modalDecreaseBtn').onclick = decreaseQuantity;
     $('modalIncreaseBtn').onclick = increaseQuantity;
     
-    // Écouter les changements sur l'input de quantité
     $('modalQuantityInput').addEventListener('input', handleQuantityInputChange);
     $('modalQuantityInput').addEventListener('change', handleQuantityInputChange);
     
@@ -5261,13 +5672,14 @@ $('adminStockBtn').onclick = openStockManagement;
     
     // Admin
     $('secretAdminBtn').onclick = toggleAdminMode;
+    $('adminDashboardBtn').onclick = openDashboard;
+    $('adminStockBtn').onclick = openStockManagement;
     
     // Gestion du panier
     $('clearCartBtn').onclick = () => {
       if (Object.keys(state.cart).length === 0) return;
       
       if (confirm('Voulez-vous vraiment vider tout votre panier ?')) {
-        // Restaurer tous les stocks
         Object.values(state.cart).forEach(item => {
           const stockKey = `${item.categoryKey}_${item.code}`;
           const currentStock = state.productStocks.get(stockKey) || 0;
@@ -5282,7 +5694,6 @@ $('adminStockBtn').onclick = openStockManagement;
       }
     };
     
-    // Gestion des boutons de quantité dans le panier
     $('cartItemsList').addEventListener('click', (e) => {
       const btn = e.target.closest('[data-action]');
       if (!btn) return;
@@ -5394,8 +5805,59 @@ $('adminStockBtn').onclick = openStockManagement;
       window.open(whatsappUrl, '_blank');
     };
     
+    // Modal gestion stock
+    $('closeStockModalBtn').onclick = $('closeStockModalBtn2').onclick = () => {
+      $('stockModal').classList.remove('open');
+      document.body.style.overflow = '';
+    };
+    
+    $('stockSearchInput').addEventListener('input', (e) => {
+      renderStockTable(e.target.value);
+    });
+    
+    $('refreshStockBtn').onclick = () => {
+      renderStockTable($('stockSearchInput').value);
+      showToast('🔄 Stocks actualisés');
+    };
+    
+    $('stockTableBody').addEventListener('click', (e) => {
+      const saveBtn = e.target.closest('.stock-save-btn');
+      if (saveBtn) {
+        const productKey = saveBtn.dataset.key;
+        const input = document.querySelector(`.stock-input[data-key="${productKey}"]`);
+        if (input) {
+          updateStock(productKey, input.value);
+        }
+      }
+    });
+    
+    $('saveAllStockBtn').onclick = () => {
+      const inputs = document.querySelectorAll('.stock-input');
+      let updatedCount = 0;
+      
+      inputs.forEach(input => {
+        const productKey = input.dataset.key;
+        const newStock = parseInt(input.value) || 0;
+        const currentStock = state.productStocks.get(productKey) || 0;
+        
+        if (newStock !== currentStock) {
+          updateStock(productKey, newStock);
+          updatedCount++;
+        }
+      });
+      
+      if (updatedCount > 0) {
+        showToast(`✅ ${updatedCount} stocks mis à jour`);
+      } else {
+        showToast('ℹ️ Aucun changement détecté');
+      }
+    };
+    
     // Charger les produits
     loadAllProducts();
+    
+    // Initialiser la synchronisation
+    initializeSync();
     
     showToast('👋 Bienvenue sur MAXI JDC MARKET !');
   }
@@ -5406,16 +5868,20 @@ $('adminStockBtn').onclick = openStockManagement;
       user: state.user,
       cart: state.cart,
       orderHistory: state.orderHistory,
-      version: '28.0'
+      version: '30.0'
     };
     localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
   }
 
   // Démarrer l'application
   document.addEventListener('DOMContentLoaded', init);
+  
+  // Nettoyer le timer à la fermeture
+  window.addEventListener('beforeunload', () => {
+    if (state.syncTimer) {
+      clearInterval(state.syncTimer);
+    }
+  });
   </script>
 </body>
 </html>
-
-
-
