@@ -1215,6 +1215,7 @@
       margin-top: 15px;
     }
 
+    /* MODIFICATIONS POUR LA QUANTITÉ DIRECTE */
     .modal-quantity-controls {
       display: flex;
       align-items: center;
@@ -1226,10 +1227,10 @@
     .modal-stepper {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 8px 15px;
+      gap: 8px;
+      padding: 8px 12px;
       background: rgba(0, 0, 0, 0.3);
-      border-radius: 999px;
+      border-radius: 12px;
       border: 2px solid var(--line);
       min-width: 150px;
     }
@@ -1248,6 +1249,7 @@
       align-items: center;
       justify-content: center;
       transition: all 0.2s ease;
+      flex-shrink: 0;
     }
 
     .modal-stepper-btn:hover {
@@ -1255,12 +1257,31 @@
       background: rgba(255,255,255,0.2);
     }
 
-    .modal-quantity {
-      font-size: 20px;
-      font-weight: 900;
+    .modal-quantity-input {
+      width: 60px;
+      height: 40px;
+      border-radius: 8px;
+      border: 2px solid var(--accent);
+      background: rgba(0, 255, 136, 0.1);
       color: var(--accent);
-      min-width: 40px;
       text-align: center;
+      font-size: 16px;
+      font-weight: 900;
+      outline: none;
+      transition: all 0.2s ease;
+      padding: 0 5px;
+    }
+
+    .modal-quantity-input:focus {
+      border-color: var(--accent2);
+      background: rgba(0, 255, 136, 0.15);
+      transform: scale(1.05);
+    }
+
+    .modal-quantity-input::-webkit-inner-spin-button,
+    .modal-quantity-input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
 
     .modal-action-buttons {
@@ -2861,8 +2882,10 @@
         font-size: 18px;
       }
       
-      .modal-quantity {
-        font-size: 18px;
+      .modal-quantity-input {
+        width: 50px;
+        height: 36px;
+        font-size: 14px;
       }
       
       .modal-add-btn {
@@ -3371,12 +3394,13 @@
           </div>
         </div>
         
-        <!-- ACTIONS -->
+        <!-- ACTIONS - MODIFIÉ POUR L'ENTRÉE DIRECTE -->
         <div class="modal-actions">
           <div class="modal-quantity-controls">
             <div class="modal-stepper">
               <button class="modal-stepper-btn" id="modalDecreaseBtn">−</button>
-              <span class="modal-quantity" id="modalProductQuantity">0</span>
+              <input type="number" class="modal-quantity-input" id="modalQuantityInput" 
+                     min="0" max="999" value="0" step="1">
               <button class="modal-stepper-btn" id="modalIncreaseBtn">+</button>
             </div>
           </div>
@@ -3416,7 +3440,6 @@
       
       <div class="qr-modal-body">
         <div class="qr-code-container" id="qrCodeContainer">
-          <!-- QR Code dynamique qui pointe vers l'URL de l'application -->
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://votre-domaine.com/maxi-jdc-market" 
                alt="QR Code MAXI JDC MARKET" 
                style="width:100%;height:100%;object-fit:contain;">
@@ -3424,7 +3447,7 @@
         
         <div class="qr-instructions">
           <p>Scannez ce code avec votre téléphone pour accéder à l'application MAXI JDC MARKET.</p>
-          <p><strong>URL:</strong> https://votre-domaine.com/maxi-jdc-market</p>
+          <p><strong>Tableau de bord:</strong> <a href="tools/tableau-de-bord.html" style="color:var(--accent2);text-decoration:underline;">Accéder au tableau de bord</a></p>
         </div>
       </div>
       
@@ -3498,7 +3521,7 @@
     shippingFee: 3,
     whatsappNumber: "21625600978",
     itemsPerPage: 24,
-    localStorageKey: 'maxi_jdc_market_app_v26',
+    localStorageKey: 'maxi_jdc_market_app_v27',
     imagesBasePath: 'images/products/',
     historyRetentionYears: 2,
     adminPasswordKey: 'maxi_jdc_admin_password',
@@ -4110,7 +4133,7 @@
     }
   }
 
-  // ===================== MODAL PRODUIT =====================
+  // ===================== MODAL PRODUIT - MODIFIÉ POUR L'ENTRÉE DIRECTE =====================
   function openProductModal(product) {
     if (!product) return;
     
@@ -4149,7 +4172,10 @@
     $('modalProductCategory').textContent = product.category;
     $('modalProductStock').textContent = `✓ ${product.stock} en stock`;
     $('modalProductStock').style.color = 'var(--accent)';
-    $('modalProductQuantity').textContent = quantity;
+    
+    // Utiliser l'input de quantité au lieu du span
+    const quantityInput = $('modalQuantityInput');
+    quantityInput.value = quantity;
     
     const addBtn = $('modalAddToCartBtn');
     addBtn.disabled = quantity === 0;
@@ -4184,6 +4210,12 @@
     
     $('productModal').classList.add('open');
     document.body.style.overflow = 'hidden';
+    
+    // Focus sur l'input de quantité
+    setTimeout(() => {
+      quantityInput.focus();
+      quantityInput.select();
+    }, 300);
   }
 
   function closeProductModal() {
@@ -4196,13 +4228,47 @@
     if (!state.currentModalProduct) return;
     
     const productId = generateProductId(state.currentModalProduct);
-    const quantity = state.quantityPicks[productId] || 0;
+    const quantityInput = $('modalQuantityInput');
+    const quantity = parseInt(quantityInput.value) || 0;
     
-    $('modalProductQuantity').textContent = quantity;
+    // Sauvegarder la quantité
+    state.quantityPicks[productId] = quantity;
     
     const addBtn = $('modalAddToCartBtn');
     addBtn.disabled = quantity === 0;
     addBtn.textContent = quantity > 0 ? `🛒 Ajouter ${quantity} au panier` : '🛒 Ajouter au panier';
+  }
+
+  // ===================== GESTION DE L'ENTRÉE DIRECTE DE QUANTITÉ =====================
+  function handleQuantityInputChange() {
+    const quantityInput = $('modalQuantityInput');
+    let value = parseInt(quantityInput.value) || 0;
+    
+    // Valider les limites
+    if (value < 0) value = 0;
+    if (value > 999) value = 999;
+    
+    // Mettre à jour la valeur
+    quantityInput.value = value;
+    
+    // Mettre à jour l'interface
+    updateModalQuantity();
+  }
+
+  function increaseQuantity() {
+    const quantityInput = $('modalQuantityInput');
+    let value = parseInt(quantityInput.value) || 0;
+    value = Math.min(999, value + 1);
+    quantityInput.value = value;
+    updateModalQuantity();
+  }
+
+  function decreaseQuantity() {
+    const quantityInput = $('modalQuantityInput');
+    let value = parseInt(quantityInput.value) || 0;
+    value = Math.max(0, value - 1);
+    quantityInput.value = value;
+    updateModalQuantity();
   }
 
   // ===================== ARTICLES SIMILAIRES =====================
@@ -5019,24 +5085,19 @@
     
     $('closeProductModalBtn').onclick = $('modalCloseBottomBtn').onclick = closeProductModal;
     
-    $('modalDecreaseBtn').onclick = () => {
-      if (!state.currentModalProduct) return;
-      const productId = generateProductId(state.currentModalProduct);
-      state.quantityPicks[productId] = Math.max(0, (state.quantityPicks[productId] || 0) - 1);
-      updateModalQuantity();
-    };
+    // Gestion de la quantité - MODIFIÉ POUR L'ENTRÉE DIRECTE
+    $('modalDecreaseBtn').onclick = decreaseQuantity;
+    $('modalIncreaseBtn').onclick = increaseQuantity;
     
-    $('modalIncreaseBtn').onclick = () => {
-      if (!state.currentModalProduct) return;
-      const productId = generateProductId(state.currentModalProduct);
-      state.quantityPicks[productId] = (state.quantityPicks[productId] || 0) + 1;
-      updateModalQuantity();
-    };
+    // Écouter les changements sur l'input de quantité
+    $('modalQuantityInput').addEventListener('input', handleQuantityInputChange);
+    $('modalQuantityInput').addEventListener('change', handleQuantityInputChange);
     
     $('modalAddToCartBtn').onclick = () => {
       if (!state.currentModalProduct) return;
       const productId = generateProductId(state.currentModalProduct);
-      const quantity = state.quantityPicks[productId] || 0;
+      const quantityInput = $('modalQuantityInput');
+      const quantity = parseInt(quantityInput.value) || 0;
       
       if (quantity > 0) {
         addToCart(productId, state.currentModalProduct, quantity);
@@ -5179,7 +5240,7 @@
       user: state.user,
       cart: state.cart,
       orderHistory: state.orderHistory,
-      version: '26.0'
+      version: '27.0'
     };
     localStorage.setItem(CONFIG.localStorageKey, JSON.stringify(data));
   }
