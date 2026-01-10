@@ -40,4 +40,158 @@
 
     <div class="filtres">
         <select id="filterStatut" onchange="loadCommandes()">
-           
+            <option value="all">Tous les statuts</option>
+            <option value="nouvelle">Nouvelles</option>
+            <option value="preparation">En préparation</option>
+            <option value="pret">Prêtes</option>
+            <option value="livree">Livrées</option>
+        </select>
+        <input type="text" id="filterSearch" placeholder="Rechercher client ou téléphone..." oninput="loadCommandes()">
+        <input type="date" id="filterDate" onchange="loadCommandes()">
+        <button onclick="exporterCSV()">📥 Exporter CSV</button>
+        <button onclick="loadCommandes()" style="background: var(--accent);">🔄 Actualiser</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th width="80">ID</th>
+                <th width="150">Date</th>
+                <th>Client</th>
+                <th width="120">Téléphone</th>
+                <th width="100">Articles</th>
+                <th width="100">Total</th>
+                <th width="120">Statut</th>
+                <th width="120">Source</th>
+                <th width="150">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="commandesBody">
+            <!-- Rempli dynamiquement -->
+        </tbody>
+    </table>
+
+    <div id="emptyState" class="empty" style="display: none;">
+        <h3>Aucune commande enregistrée</h3>
+        <p>Les commandes apparaîtront ici automatiquement lorsqu'elles seront passées sur le site ou en caisse.</p>
+    </div>
+
+    <div class="nav">
+        <a href="commander.html">➕ Ajouter une vente en caisse</a>
+        <a href="index.html">🛒 Passer une commande en ligne</a>
+    </div>
+
+    <script>
+        function loadCommandes() {
+            const commandes = JSON.parse(localStorage.getItem('commandesMaxiJDC')) || [];
+            const filterStatut = document.getElementById('filterStatut').value;
+            const search = document.getElementById('filterSearch').value.toLowerCase();
+            const filterDate = document.getElementById('filterDate').value;
+            
+            const filtered = commandes.filter(cmd => {
+                if (filterStatut !== 'all' && cmd.statut !== filterStatut) return false;
+                if (search && !cmd.client.toLowerCase().includes(search) && !cmd.telephone.toLowerCase().includes(search)) return false;
+                if (filterDate && !cmd.date.includes(filterDate)) return false;
+                return true;
+            }).sort((a, b) => b.id - a.id);
+            
+            const tbody = document.getElementById('commandesBody');
+            const empty = document.getElementById('emptyState');
+            
+            if (filtered.length === 0) {
+                tbody.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+            empty.style.display = 'none';
+            
+            tbody.innerHTML = filtered.map(cmd => {
+                const statutClass = `statut-${cmd.statut}`;
+                return `
+                    <tr>
+                        <td>${cmd.id}</td>
+                        <td>${cmd.date}</td>
+                        <td>${cmd.client}</td>
+                        <td>${cmd.telephone}</td>
+                        <td>${cmd.articles.length} article(s)</td>
+                        <td><strong>${cmd.total.toFixed(2)} DT</strong></td>
+                        <td><span class="statut ${statutClass}">${cmd.statutLabel}</span></td>
+                        <td>${cmd.source === 'application_web' ? '🌐 En ligne' : '💵 Caisse'}</td>
+                        <td>
+                            <button class="btn-action btn-edit" onclick="changerStatut(${cmd.id})">🔄</button>
+                            <button class="btn-action btn-delete" onclick="supprimerCommande(${cmd.id})">🗑</button>
+                            <button class="btn-action" onclick="voirDetails(${cmd.id})" style="background:#9b59b6;">👁</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function changerStatut(id) {
+            const commandes = JSON.parse(localStorage.getItem('commandesMaxiJDC')) || [];
+            const index = commandes.findIndex(c => c.id === id);
+            if (index === -1) return;
+            
+            const statuts = ['nouvelle', 'preparation', 'pret', 'livree'];
+            const labels = ['🆕 Nouvelle', '👨‍🍳 En préparation', '✅ Prête', '🚚 Livrée'];
+            const current = statuts.indexOf(commandes[index].statut);
+            const next = (current + 1) % statuts.length;
+            
+            commandes[index].statut = statuts[next];
+            commandes[index].statutLabel = labels[next];
+            localStorage.setItem('commandesMaxiJDC', JSON.stringify(commandes));
+            loadCommandes();
+            alert(`Statut de la commande #${id} mis à jour : ${labels[next]}`);
+        }
+
+        function supprimerCommande(id) {
+            if (!confirm(`Supprimer la commande #${id} ?`)) return;
+            let commandes = JSON.parse(localStorage.getItem('commandesMaxiJDC')) || [];
+            commandes = commandes.filter(c => c.id !== id);
+            localStorage.setItem('commandesMaxiJDC', JSON.stringify(commandes));
+            loadCommandes();
+        }
+
+        function voirDetails(id) {
+            const commandes = JSON.parse(localStorage.getItem('commandesMaxiJDC')) || [];
+            const cmd = commandes.find(c => c.id === id);
+            if (!cmd) return;
+            
+            let details = `Détails Commande #${id}\n\n`;
+            details += `Client: ${cmd.client}\n`;
+            details += `Téléphone: ${cmd.telephone}\n`;
+            details += `Date: ${cmd.date}\n`;
+            details += `Statut: ${cmd.statutLabel}\n`;
+            details += `Source: ${cmd.source}\n\n`;
+            details += `Articles:\n`;
+            cmd.articles.forEach(a => {
+                details += `- ${a.qte}x ${a.nom} @ ${a.prix} DT = ${(a.qte * a.prix).toFixed(2)} DT\n`;
+            });
+            details += `\nTotal: ${cmd.total.toFixed(2)} DT`;
+            alert(details);
+        }
+
+        function exporterCSV() {
+            const commandes = JSON.parse(localStorage.getItem('commandesMaxiJDC')) || [];
+            if (commandes.length === 0) return alert("Aucune donnée à exporter.");
+            
+            let csv = "ID;Date;Client;Telephone;Articles;Total;Statut;Source\n";
+            commandes.forEach(cmd => {
+                const articles = cmd.articles.map(a => `${a.qte}x ${a.nom}`).join(', ');
+                csv += `${cmd.id};"${cmd.date}";"${cmd.client}";"${cmd.telephone}";"${articles}";${cmd.total};"${cmd.statutLabel}";"${cmd.source}"\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `commandes-maxi-jdc-${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            alert(`✅ ${commandes.length} commande(s) exportées en CSV`);
+        }
+
+        // Actualiser automatiquement toutes les 10 secondes
+        window.onload = loadCommandes;
+        setInterval(loadCommandes, 10000);
+    </script>
+</body>
+</html>
